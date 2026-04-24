@@ -13,7 +13,7 @@ export class TrendResearchAgent extends BaseAgent {
     const today = new Date().toLocaleDateString('en-CA');
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-1.5-flash',
       contents: `You are an elite Instagram growth strategist and financial content researcher for "TheStatsAndStacks", a premium Canadian personal finance brand on Instagram.
 
 Today's date is ${today}.

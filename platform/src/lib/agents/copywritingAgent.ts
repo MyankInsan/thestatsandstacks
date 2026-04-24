@@ -21,7 +21,7 @@ export class CopywritingAgent extends BaseAgent {
     const ai = getGeminiClient();
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-1.5-flash',
       contents: `You are the head copywriter for "TheStatsAndStacks", a premium Canadian personal finance Instagram brand.
 
 Write Instagram copy that is:

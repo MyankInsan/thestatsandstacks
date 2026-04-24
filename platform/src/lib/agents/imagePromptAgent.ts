@@ -21,7 +21,7 @@ export class ImagePromptAgent extends BaseAgent {
     const ai = getGeminiClient();
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-1.5-flash',
       contents: `You are a premium Instagram visual designer for "TheStatsAndStacks", a Canadian personal finance brand.
 
 Your job is to convert a slide-by-slide content plan into image generation prompts.

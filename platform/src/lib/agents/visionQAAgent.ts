@@ -34,7 +34,7 @@ export class VisionQAAgent extends BaseAgent {
       const base64Image = imageBuffer.toString('base64');
 
       const response = await ai.models.generateContent({
-        model: 'gemini-2.0-flash',
+        model: 'gemini-1.5-flash',
         contents: [
           {
             role: 'user',

@@ -23,7 +23,7 @@ export class ContentStrategyAgent extends BaseAgent {
     const ai = getGeminiClient();
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-1.5-flash',
       contents: `You are a senior Instagram content strategist for "TheStatsAndStacks", a premium Canadian finance brand.
 
 Given these trending topics, pick the SINGLE BEST one and decide the exact execution plan.
