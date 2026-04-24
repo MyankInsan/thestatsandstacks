@@ -1,0 +1,36 @@
+name: Daily Instagram Post
+
+on:
+  schedule:
+    # Runs every day at 3:00 PM UTC = 8:00 AM Pacific (Vancouver)
+    - cron: '0 15 * * *'
+  workflow_dispatch: # Allows you to manually trigger from GitHub website
+
+jobs:
+  generate-post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: platform/package-lock.json
+
+      - name: Install dependencies
+        working-directory: platform
+        run: npm ci
+
+      - name: Run Daily Pipeline
+        working-directory: platform
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          DELIVERY_EMAIL: ${{ secrets.DELIVERY_EMAIL }}
+        run: npx tsx run-daily.ts

@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model BrandSettings {
+  id              String   @id @default(cuid())
+  brandName       String   @default("TheStatsAndStacks")
+  targetAudience  String   @default("Canadians interested in personal finance")
+  brandPromise    String   @default("Clear, premium, data-first breakdowns on money, markets, and strategy.")
+  autoPublish     Boolean  @default(false)
+  updatedAt       DateTime @updatedAt
+}
+
+model ContentIdea {
+  id              String   @id @default(cuid())
+  topic           String
+  sourceUrl       String?
+  confidenceScore Float
+  isSelected      Boolean  @default(false)
+  reasoning       String
+  createdAt       DateTime @default(now())
+
+  PostBriefs      PostBrief[]
+}
+
+model PostBrief {
+  id              String   @id @default(cuid())
+  ideaId          String
+  idea            ContentIdea @relation(fields: [ideaId], references: [id])
+  
+  format          String   // Carousel, Single Image, Reel Draft
+  hook            String
+  angle           String
+  outline         Json     // Array of slide objects or outline text
+  factualClaims   Json     // List of facts that need verification
+  
+  status          String   @default("DRAFT") // DRAFT, VERIFIED, REJECTED
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  Prompts         Prompt[]
+  Posts           Post[]
+}
+
+model Prompt {
+  id              String   @id @default(cuid())
+  briefId         String
+  brief           PostBrief @relation(fields: [briefId], references: [id])
+  
+  text            String
+  direction       String
+  
+  createdAt       DateTime @default(now())
+  Assets          GeneratedAsset[]
+}
+
+model GeneratedAsset {
+  id              String   @id @default(cuid())
+  promptId        String
+  prompt          Prompt   @relation(fields: [promptId], references: [id])
+  
+  imageUrl        String
+  localPath       String?
+  visionScore     Float?
+  feedback        String?
+  status          String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  
+  createdAt       DateTime @default(now())
+  PostAssets      PostAsset[]
+}
+
+model Post {
+  id              String   @id @default(cuid())
+  briefId         String
+  brief           PostBrief @relation(fields: [briefId], references: [id])
+  
+  caption         String
+  hashtags        String
+  cta             String
+  firstComment    String?
+  
+  status          String   @default("DRAFT") // DRAFT, SCHEDULED, PUBLISHED, FAILED
+  publishDate     DateTime?
+  instagramPostId String?
+  permalink       String?
+  
+  confidenceScore Float
+  failReason      String?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  Assets          PostAsset[]
+  Analytics       Analytics?
+}
+
+model PostAsset {
+  id              String   @id @default(cuid())
+  postId          String
+  post            Post     @relation(fields: [postId], references: [id])
+  
+  assetId         String
+  asset           GeneratedAsset @relation(fields: [assetId], references: [id])
+  
+  orderIndex      Int
+}
+
+model Analytics {
+  id              String   @id @default(cuid())
+  postId          String   @unique
+  post            Post     @relation(fields: [postId], references: [id])
+  
+  impressions     Int      @default(0)
+  reach           Int      @default(0)
+  likes           Int      @default(0)
+  comments        Int      @default(0)
+  shares          Int      @default(0)
+  saves           Int      @default(0)
+  engagementRate  Float    @default(0)
+  
+  collectedAt     DateTime @default(now())
+}
