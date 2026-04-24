@@ -10,7 +10,7 @@ export class TrendResearchAgent extends BaseAgent {
     console.log(`[${this.name}] 🔍 Starting deep trend research...`);
 
     const genAI = getGeminiClient();
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
     const today = new Date().toLocaleDateString('en-CA');
 
     const prompt = `You are an elite Instagram growth strategist and financial content researcher for "TheStatsAndStacks", a premium Canadian personal finance brand on Instagram.
