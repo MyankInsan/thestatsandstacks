@@ -9,7 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@google/genai": "^1.50.1",
+    "@google/generative-ai": "^0.24.1",
     "@prisma/client": "^6.19.3",
     "bullmq": "^5.76.1",
     "ioredis": "^5.10.1",

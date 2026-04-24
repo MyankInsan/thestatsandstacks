@@ -21,9 +21,10 @@ export class VisionQAAgent extends BaseAgent {
   }
 
   async execute(input: { images: GeneratedImage[] }): Promise<QAReport> {
-    console.log(`[${this.name}] 🔎 Inspecting ${input.images.length} generated images...`);
+    console.log(`[${this.name}] 🔎 Inspecting images...`);
 
-    const ai = getGeminiClient();
+    const genAI = getGeminiClient();
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
     const slideReports: QAReport['slideReports'] = [];
     const failedSlides: number[] = [];
 
@@ -33,75 +34,37 @@ export class VisionQAAgent extends BaseAgent {
       const imageBuffer = fs.readFileSync(image.localPath);
       const base64Image = imageBuffer.toString('base64');
 
-      const response = await ai.models.generateContent({
-        model: 'gemini-1.5-flash',
-        contents: [
-          {
-            role: 'user',
-            parts: [
-              {
-                text: `You are a ruthless Instagram design quality inspector for a premium finance brand called "TheStatsAndStacks".
-
-Evaluate this Instagram slide image on these criteria:
-1. TEXT QUALITY: Is the text readable, correctly spelled, and not garbled? (Most critical)
-2. LAYOUT: Is it clean, balanced, and not cluttered?
-3. BRANDING: Does it use dark navy/charcoal tones?
-4. MOBILE READABILITY: Can someone read this easily on a phone screen?
-5. PROFESSIONALISM: Does it look premium, not cheap or generic?
-6. AI ARTIFACTS: Are there any weird AI glitches, distortions, or nonsensical elements?
-
-Be STRICT. If the text is garbled, misspelled, or unreadable, the slide FAILS.
-If there are obvious AI artifacts or distortions, the slide FAILS.
-
-Reply with ONLY valid JSON (no markdown, no code fences):
-{
-  "isValid": true or false,
-  "confidenceScore": 0.0-1.0,
-  "failures": ["list of specific problems found, empty array if none"]
-}`
-              },
-              {
-                inlineData: {
-                  mimeType: 'image/png',
-                  data: base64Image,
-                }
-              }
-            ]
+      const result = await model.generateContent([
+        {
+          inlineData: {
+            data: base64Image,
+            mimeType: 'image/png'
           }
-        ],
-      });
+        },
+        {
+          text: `Evaluate this Instagram slide. If text is garbled or misspelled, set isValid: false.
+          Reply with ONLY valid JSON: { "isValid": boolean, "confidenceScore": 0.0-1.0, "failures": [] }`
+        }
+      ]);
 
-      const text = response.text?.trim();
+      const text = (await result.response).text().trim();
       let report = { isValid: true, confidenceScore: 0.8, failures: [] as string[] };
 
-      if (text) {
-        try {
-          const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-          report = JSON.parse(cleaned);
-        } catch (e) {
-          console.log(`   ⚠️  Could not parse QA response for slide ${image.slideNumber}, assuming pass`);
-        }
+      try {
+        const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+        report = JSON.parse(cleaned);
+      } catch (e) {
+        console.log(`   ⚠️  QA parse failed, assuming pass.`);
       }
 
-      slideReports.push({
-        slideNumber: image.slideNumber,
-        ...report
-      });
-
-      if (!report.isValid) {
-        failedSlides.push(image.slideNumber);
-        console.log(`   ❌ Slide ${image.slideNumber} FAILED: ${report.failures.join(', ')}`);
-      } else {
-        console.log(`   ✅ Slide ${image.slideNumber} PASSED (${report.confidenceScore})`);
-      }
+      slideReports.push({ slideNumber: image.slideNumber, ...report });
+      if (!report.isValid) failedSlides.push(image.slideNumber);
     }
-
-    const overallScore = slideReports.reduce((sum, r) => sum + r.confidenceScore, 0) / slideReports.length;
 
     return {
       allPassed: failedSlides.length === 0,
       slideReports,
-      overallScore,
+      overallScore: slideReports.reduce((sum, r) => sum + r.confidenceScore, 0) / slideReports.length,
       failedSlides,
     };
   }

@@ -1,5 +1,4 @@
 import { BaseAgent } from './interfaces';
-import { getGeminiClient } from '../services/gemini';
 import fs from 'fs';
 import path from 'path';
 
@@ -17,65 +16,57 @@ export class ImageGenerationAgent extends BaseAgent {
     prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>,
     outputDir: string
   }): Promise<{ images: GeneratedImage[] }> {
-    console.log(`[${this.name}] 🖼️  Generating ${input.prompts.length} images with Google Imagen 3 (FREE)...`);
+    console.log(`[${this.name}] 🖼️  Generating ${input.prompts.length} images with Imagen 4 (REST)...`);
 
     fs.mkdirSync(input.outputDir, { recursive: true });
-
-    const ai = getGeminiClient();
     const images: GeneratedImage[] = [];
+    const apiKey = process.env.GEMINI_API_KEY;
 
     for (const prompt of input.prompts) {
-      console.log(`   → Generating slide ${prompt.slideNumber}: ${prompt.slideDescription.substring(0, 50)}...`);
+      console.log(`   → Generating slide ${prompt.slideNumber}...`);
 
       let retries = 0;
-      const maxRetries = 2;
-
-      while (retries <= maxRetries) {
+      while (retries < 2) {
         try {
-          const response = await ai.models.generateImages({
-            model: 'imagen-3.0-generate-002',
-            prompt: prompt.dallePrompt,
-            config: {
-              numberOfImages: 1,
-              aspectRatio: '9:16', // Portrait for Instagram
-            },
+          // Using REST API for Imagen 4
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+          
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              instances: [
+                { prompt: prompt.dallePrompt }
+              ],
+              parameters: {
+                sampleCount: 1,
+                aspectRatio: "1:1" // Or whatever is supported
+              }
+            })
           });
 
-          if (!response.generatedImages || response.generatedImages.length === 0) {
-            throw new Error('No images returned from Imagen 3');
+          const data = await response.json() as any;
+          
+          if (data.predictions && data.predictions[0] && data.predictions[0].bytesBase64Encoded) {
+            const buffer = Buffer.from(data.predictions[0].bytesBase64Encoded, 'base64');
+            const filename = `slide_${String(prompt.slideNumber).padStart(2, '0')}.png`;
+            const localPath = path.join(input.outputDir, filename);
+            fs.writeFileSync(localPath, buffer);
+            
+            images.push({ slideNumber: prompt.slideNumber, localPath });
+            console.log(`   ✅ Slide ${prompt.slideNumber} saved.`);
+            break;
+          } else {
+            throw new Error(JSON.stringify(data));
           }
-
-          const imageData = response.generatedImages[0];
-          const imageBytes = imageData.image?.imageBytes;
-          if (!imageBytes) throw new Error('No image bytes returned');
-
-          // Save to local file
-          const filename = `slide_${String(prompt.slideNumber).padStart(2, '0')}.png`;
-          const localPath = path.join(input.outputDir, filename);
-
-          const buffer = Buffer.from(imageBytes, 'base64');
-          fs.writeFileSync(localPath, buffer);
-
-          images.push({
-            slideNumber: prompt.slideNumber,
-            localPath,
-          });
-
-          console.log(`   ✅ Slide ${prompt.slideNumber} saved: ${filename}`);
-          break;
-
         } catch (error: any) {
           retries++;
-          console.error(`   ❌ Slide ${prompt.slideNumber} failed (attempt ${retries}): ${error.message}`);
-          if (retries > maxRetries) {
-            throw new Error(`Failed to generate slide ${prompt.slideNumber} after ${maxRetries + 1} attempts: ${error.message}`);
-          }
-          await new Promise(r => setTimeout(r, 2000));
+          console.error(`   ❌ Attempt ${retries} failed: ${error.message}`);
+          if (retries === 2) throw error;
         }
       }
     }
 
-    console.log(`[${this.name}] ✅ All ${images.length} images generated and saved to ${input.outputDir}`);
     return { images };
   }
 }
