@@ -21,7 +21,7 @@ export class ContentStrategyAgent extends BaseAgent {
     console.log(`[${this.name}] 🧠 Deciding content strategy...`);
 
     const genAI = getGeminiClient();
-    const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-eview'h' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
     const prompt = `You are a senior Instagram content strategist for "TheStatsAndStacks", a premium Canadian finance brand.
 
