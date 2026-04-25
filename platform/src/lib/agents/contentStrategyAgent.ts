@@ -1,5 +1,10 @@
 import { BaseAgent, TrendResearchResult } from './interfaces';
 import { getGeminiClient, getGeminiTextModelName } from '../services/gemini';
+import {
+  ContentHistoryEntry,
+  isTooSimilarToRecent,
+  noveltyPenalty,
+} from '../services/contentHistory';
 
 export interface StrategyDecision {
   topic: string;
@@ -10,6 +15,7 @@ export interface StrategyDecision {
   reasoning: string;
   targetAudience: string;
   searchKeywords: string[];
+  contentPillar?: string;
 }
 
 export class ContentStrategyAgent extends BaseAgent {
@@ -17,8 +23,9 @@ export class ContentStrategyAgent extends BaseAgent {
     super('ContentStrategyAgent');
   }
 
-  async execute(input: { trends: TrendResearchResult }): Promise<StrategyDecision> {
+  async execute(input: { trends: TrendResearchResult, contentHistory?: ContentHistoryEntry[] }): Promise<StrategyDecision> {
     console.log(`[${this.name}] 🧠 Deciding content strategy...`);
+    const contentHistory = input.contentHistory || [];
 
     const prompt = `You are a senior Instagram content strategist for "TheStatsAndStacks", a premium Canadian finance brand.
 
@@ -29,8 +36,15 @@ FORMAT DECISION RULES:
 - CAROUSEL slides should be 5-8 slides.
 - Use WATCHLIST_EDUCATION for stock-market content. Never recommend buy/sell/hold or price targets.
 - SINGLE_IMAGE is allowed only for one-number stats or simple reminders.
+- Do not choose a topic that is similar to the last 10 posts unless the angle is meaningfully different.
+- Optimize for a daily mix: Canadian money systems, tax/account explainers, investor risk protection, and occasional Canada/US stock research education.
+- Stock content should feel useful to stock-curious followers, but it must be framed as "how to research" or "what to check", not as "buy these stocks".
 
 Here are the top topics: ${JSON.stringify(input.trends.topics)}
+
+Recent posts to avoid repeating: ${JSON.stringify(contentHistory.slice(-14))}
+
+Research signal briefs: ${JSON.stringify(input.trends.signalBriefs || [])}
 
 Pick the best one. Output ONLY valid JSON (no markdown, no code fences):
 {
@@ -41,7 +55,8 @@ Pick the best one. Output ONLY valid JSON (no markdown, no code fences):
   "slideBreakdown": ["Slide 1: exact on-image headline | short supporting point | short supporting point", "Slide 2: exact on-image headline | short supporting point | short supporting point", ...],
   "reasoning": "why this format and topic",
   "targetAudience": "who this is for",
-  "searchKeywords": ["keyword1", "keyword2"]
+  "searchKeywords": ["keyword1", "keyword2"],
+  "contentPillar": "content pillar name"
 }`;
 
     try {
@@ -52,11 +67,11 @@ Pick the best one. Output ONLY valid JSON (no markdown, no code fences):
       const text = response.text().trim();
 
       const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      return JSON.parse(cleaned) as StrategyDecision;
+      return normalizeStrategy(JSON.parse(cleaned) as StrategyDecision, input.trends, contentHistory);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.warn(`[${this.name}] Gemini strategy failed; using cost-safe fallback strategy. ${message}`);
-      return getRotatingFallbackStrategy(input.trends);
+      return getRotatingFallbackStrategy(input.trends, contentHistory);
     }
   }
 }
@@ -80,6 +95,7 @@ const fallbackStrategies: StrategyDecision[] = [
     reasoning: 'Stock education can reach a broader audience while staying compliant and non-promotional.',
     targetAudience: 'Canadians curious about stocks but vulnerable to hype',
     searchKeywords: ['stock watchlist', 'how to evaluate stocks', 'investing risk'],
+    contentPillar: 'Stock education without recommendations',
   },
   {
     topic: 'Before Chasing a Hot Stock, Check These 4 Risks',
@@ -98,6 +114,7 @@ const fallbackStrategies: StrategyDecision[] = [
     reasoning: 'Risk-first stock content is engaging but avoids personalized recommendations.',
     targetAudience: 'New investors attracted to trending stocks',
     searchKeywords: ['hot stocks', 'stock risk checklist', 'investing mistakes'],
+    contentPillar: 'Risk management',
   },
   {
     topic: 'TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?',
@@ -116,6 +133,7 @@ const fallbackStrategies: StrategyDecision[] = [
     reasoning: 'Account comparisons are useful, searchable, and save-friendly.',
     targetAudience: 'Canadian earners deciding where to invest next',
     searchKeywords: ['TFSA vs RRSP', 'FHSA Canada', 'Canadian investing'],
+    contentPillar: 'Canadian account selection',
   },
   {
     topic: '5 Money Leaks Quietly Keeping Canadians Broke',
@@ -134,6 +152,7 @@ const fallbackStrategies: StrategyDecision[] = [
     reasoning: 'Mistake teardown formats are emotionally resonant and saveable.',
     targetAudience: 'Canadians who earn okay money but feel stuck',
     searchKeywords: ['budgeting Canada', 'money leaks', 'personal finance Canada'],
+    contentPillar: 'Money behavior and budgeting',
   },
   {
     topic: 'The Canadian Payday Order of Operations',
@@ -153,6 +172,7 @@ const fallbackStrategies: StrategyDecision[] = [
     reasoning: 'Checklist content gets saves because it becomes a repeatable tool.',
     targetAudience: 'Canadian workers building a monthly money routine',
     searchKeywords: ['payday routine', 'budget checklist', 'Canadian personal finance'],
+    contentPillar: 'Canadian money systems explained',
   },
   {
     topic: 'Credit Score Myths Canadians Still Believe',
@@ -171,6 +191,7 @@ const fallbackStrategies: StrategyDecision[] = [
     reasoning: 'Myth/fact posts are shareable because viewers tag friends and correct misconceptions.',
     targetAudience: 'Canadians trying to improve or protect credit',
     searchKeywords: ['credit score Canada', 'credit myths', 'Canadian credit cards'],
+    contentPillar: 'Credit education',
   },
   {
     topic: 'HISA vs GIC vs ETF: Where Should Short-Term Money Go?',
@@ -190,20 +211,111 @@ const fallbackStrategies: StrategyDecision[] = [
     reasoning: 'Timeline frameworks are practical and easy to save for future decisions.',
     targetAudience: 'Canadians deciding where to park savings',
     searchKeywords: ['HISA vs GIC', 'ETF Canada', 'short term savings Canada'],
+    contentPillar: 'Saving and investing timeline',
+  },
+  {
+    topic: 'Canada/US Stock Watchlist: The 6-Point Research Screen',
+    hook: 'A watchlist is not a buy list.',
+    format: 'WATCHLIST_EDUCATION',
+    slideCount: 8,
+    slideBreakdown: [
+      'Slide 1: A watchlist is not a buy list | Use it to organize research | Not to chase a ticker',
+      'Slide 2: Screen 1: Business quality | What does the company actually sell? | Is demand durable or cyclical?',
+      'Slide 3: Screen 2: Numbers trend | Revenue, margins, cash flow | Look for direction, not one perfect metric',
+      'Slide 4: Screen 3: Balance sheet risk | Debt, cash, refinancing needs | Rates can change the story',
+      'Slide 5: Screen 4: Valuation context | Compare price to expectations | Great businesses can still be expensive',
+      'Slide 6: Screen 5: Catalyst map | Earnings, regulation, product cycles | Know what could change the thesis',
+      'Slide 7: Screen 6: Portfolio fit | Sector exposure and position size | One ticker should not become the whole plan',
+      'Slide 8: Save this research screen | Research first | Decide later | Educational only, not financial advice',
+    ],
+    reasoning: 'Provides stock-pick energy without giving buy/sell recommendations.',
+    targetAudience: 'Canadian and US stock-curious beginners who need a safer research process',
+    searchKeywords: ['Canada US stock watchlist', 'stock research checklist', 'how to research stocks'],
+    contentPillar: 'Canadian/US market watchlist education',
+  },
+  {
+    topic: 'Earnings Season Cheat Sheet: What Beginners Should Check First',
+    hook: 'Do not read earnings like a headline.',
+    format: 'CAROUSEL',
+    slideCount: 7,
+    slideBreakdown: [
+      'Slide 1: Do not read earnings like a headline | One beat or miss is not the full story | Start with the business trend',
+      'Slide 2: Check revenue quality | Is growth broad or one-time? | Compare the reason, not just the number',
+      'Slide 3: Check margins | Costs can hide under growth | Profit quality matters',
+      'Slide 4: Check cash flow | Accounting profit is not always cash | Watch what funds the business',
+      'Slide 5: Check guidance | Management expectations reset the story | The market reacts to the future',
+      'Slide 6: Check valuation reaction | Good news can be priced in | Bad news can already be expected',
+      'Slide 7: Save before earnings season | Learn the pattern | Avoid headline trades | Educational only',
+    ],
+    reasoning: 'Timely market literacy that helps followers handle popular stock news responsibly.',
+    targetAudience: 'Beginner investors learning how public companies report results',
+    searchKeywords: ['earnings report explained', 'stock earnings checklist', 'beginner investing'],
+    contentPillar: 'Market literacy',
+  },
+  {
+    topic: 'Finfluencer Red Flags: 7 Phrases Investors Should Pause On',
+    hook: 'Good finance content does not need pressure.',
+    format: 'CAROUSEL',
+    slideCount: 7,
+    slideBreakdown: [
+      'Slide 1: Good finance content does not need pressure | Pause when advice sounds too certain | Risk deserves daylight',
+      'Slide 2: Red flag 1: Guaranteed returns | Markets do not owe anyone certainty | Ask what can go wrong',
+      'Slide 3: Red flag 2: Buy before it is too late | Urgency can block thinking | A real thesis can survive questions',
+      'Slide 4: Red flag 3: No disclosure | Incentives matter | Paid promotion should be obvious',
+      'Slide 5: Red flag 4: Only upside charts | Missing risk is still a message | Look for both sides',
+      'Slide 6: Red flag 5: Copy my trades | Your situation is not their situation | Education beats imitation',
+      'Slide 7: Save this before trusting a pick | Source it | Stress-test it | Educational only',
+    ],
+    reasoning: 'Protective content builds trust and is highly shareable.',
+    targetAudience: 'Young investors consuming finance content on social media',
+    searchKeywords: ['finfluencer red flags', 'investment scams social media', 'investing risk'],
+    contentPillar: 'Investor protection',
   },
 ];
 
-function getRotatingFallbackStrategy(trends: TrendResearchResult): StrategyDecision {
+function getRotatingFallbackStrategy(
+  trends: TrendResearchResult,
+  contentHistory: ContentHistoryEntry[] = []
+): StrategyDecision {
   const dayIndex = Math.floor(Date.now() / 86_400_000) % fallbackStrategies.length;
-  const topTopic = trends.topics[0];
+  const topTopic = [...trends.topics]
+    .sort((a, b) => (b.score - noveltyPenalty(b.title, contentHistory)) - (a.score - noveltyPenalty(a.title, contentHistory)))
+    .find((topic) => !isTooSimilarToRecent(topic.title, contentHistory));
   const matchedStrategy = topTopic
     ? fallbackStrategies.find((strategy) => strategy.topic === topTopic.title)
     : undefined;
-  const strategy = matchedStrategy || fallbackStrategies[dayIndex];
+  const eligibleFallbacks = fallbackStrategies.filter((strategy) => !isTooSimilarToRecent(strategy.topic, contentHistory));
+  const strategy = matchedStrategy || eligibleFallbacks[dayIndex % Math.max(eligibleFallbacks.length, 1)] || fallbackStrategies[dayIndex];
 
   if (!topTopic) return strategy;
   return {
     ...strategy,
     searchKeywords: topTopic.searchKeywords?.length ? topTopic.searchKeywords : strategy.searchKeywords,
+    contentPillar: topTopic.contentPillar || strategy.contentPillar,
+  };
+}
+
+function normalizeStrategy(
+  strategy: StrategyDecision,
+  trends: TrendResearchResult,
+  contentHistory: ContentHistoryEntry[]
+): StrategyDecision {
+  if (strategy.slideCount < 1 || strategy.slideCount > 9 || strategy.slideBreakdown.length !== strategy.slideCount) {
+    return getRotatingFallbackStrategy(trends, contentHistory);
+  }
+
+  if (isTooSimilarToRecent(strategy.topic, contentHistory)) {
+    const freshFallback = getRotatingFallbackStrategy(trends, contentHistory);
+    return {
+      ...freshFallback,
+      reasoning: `${freshFallback.reasoning} Chosen because the model-selected topic was too similar to recent content.`,
+    };
+  }
+
+  return {
+    ...strategy,
+    slideBreakdown: strategy.slideBreakdown.map((slide, index) => (
+      slide.toLowerCase().startsWith(`slide ${index + 1}:`) ? slide : `Slide ${index + 1}: ${slide}`
+    )),
   };
 }

@@ -10,14 +10,28 @@ npm run daily
 
 Use `env.example` as the non-secret reference for local and GitHub Actions variables.
 
-By default, image generation is cost-safe: the pipeline creates branded local PNG carousel slides, saves a `MANUAL_IMAGE_PROMPTS.md` packet for optional ChatGPT/Gemini refinement, and does not call a paid image API. To intentionally use OpenAI image generation, set both:
+By default for local runs, image generation is cost-safe: the pipeline creates branded local PNG carousel slides, saves a `MANUAL_IMAGE_PROMPTS.md` packet for optional ChatGPT/Gemini refinement, and does not call a paid image API. The GitHub Actions workflow is configured to use premium OpenAI image generation when `OPENAI_API_KEY` is present; if the secret is missing or an image call fails, it falls back to local PNG rendering.
+
+The premium path generates text-free editorial backgrounds and composites exact SVG typography on top, which keeps slide text readable while making the visuals less generic. To intentionally use OpenAI image generation locally, set:
 
 ```bash
 ALLOW_PAID_IMAGE_GENERATION=true
 OPENAI_API_KEY=your_api_key
+OPENAI_IMAGE_MODEL=gpt-image-1
+OPENAI_IMAGE_QUALITY=medium
+OPENAI_IMAGE_SIZE=1024x1536
 ```
 
-OpenAI API usage is billed separately from ChatGPT subscriptions, including ChatGPT Business. Keep `ALLOW_PAID_IMAGE_GENERATION=false` if you do not want additional API image charges. If paid image generation is enabled, the default model is `chatgpt-image-latest`.
+OpenAI API usage is billed separately from ChatGPT subscriptions, including ChatGPT Business. Keep `ALLOW_PAID_IMAGE_GENERATION=false` if you do not want additional API image charges.
+
+The daily workflow keeps a lightweight topic memory in `/tmp/thestatsandstacks-history/content-history.json` and GitHub Actions cache so it avoids repeating the same topic too soon. Optional Reddit research uses Reddit's API when these are set; unsupported scraping is intentionally not used:
+
+```bash
+ENABLE_REDDIT_RESEARCH=true
+REDDIT_CLIENT_ID=...
+REDDIT_CLIENT_SECRET=...
+REDDIT_USER_AGENT=thestatsandstacks-content-research/1.0
+```
 
 Delivery is automatic when credentials are present:
 

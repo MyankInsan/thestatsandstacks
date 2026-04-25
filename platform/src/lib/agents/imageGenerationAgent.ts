@@ -3,6 +3,7 @@ import OpenAI from 'openai';
 import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
+import { getRunSlug, sanitizeFilePart } from '../services/dateUtils';
 
 export interface GeneratedImage {
   slideNumber: number;
@@ -21,21 +22,24 @@ export class ImageGenerationAgent extends BaseAgent {
     outputDir: string
   }): Promise<{ images: GeneratedImage[] }> {
     fs.mkdirSync(input.outputDir, { recursive: true });
+    const runSlug = getRunSlug();
     if (process.env.ALLOW_PAID_IMAGE_GENERATION === 'true' && process.env.OPENAI_API_KEY) {
-      return this.generateWithOpenAI(input);
+      return this.generateWithOpenAI({ ...input, runSlug });
     }
 
     console.log(`[${this.name}] 🖼️  Using cost-safe local PNG slide generation (no paid image API calls).`);
-    return this.generateLocalSlides(input);
+    return this.generateLocalSlides({ ...input, runSlug });
   }
 
   private async generateWithOpenAI(input: {
     prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>,
-    outputDir: string
+    outputDir: string,
+    runSlug: string
   }): Promise<{ images: GeneratedImage[] }> {
-    const model = process.env.OPENAI_IMAGE_MODEL || 'chatgpt-image-latest';
-    const quality = (process.env.OPENAI_IMAGE_QUALITY || 'low') as 'low' | 'medium' | 'high' | 'auto';
-    console.log(`[${this.name}] 🖼️  Generating ${input.prompts.length} images with OpenAI ${model} (${quality}).`);
+    const model = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1';
+    const quality = (process.env.OPENAI_IMAGE_QUALITY || 'medium') as 'low' | 'medium' | 'high' | 'auto';
+    const size = (process.env.OPENAI_IMAGE_SIZE || '1024x1536') as '1024x1024' | '1024x1536' | '1536x1024' | 'auto';
+    console.log(`[${this.name}] 🖼️  Generating ${input.prompts.length} premium background images with OpenAI ${model} (${quality}, ${size}).`);
 
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const images: GeneratedImage[] = [];
@@ -48,7 +52,7 @@ export class ImageGenerationAgent extends BaseAgent {
           const response = await openai.images.generate({
             model,
             prompt: prompt.dallePrompt,
-            size: '1024x1024',
+            size,
             quality,
             output_format: 'png',
             n: 1,
@@ -58,9 +62,9 @@ export class ImageGenerationAgent extends BaseAgent {
           if (!imageData) throw new Error('No base64 image data returned by OpenAI');
 
           const buffer = Buffer.from(imageData, 'base64');
-          const filename = `slide_${String(prompt.slideNumber).padStart(2, '0')}.png`;
+          const filename = buildSlideFilename(input.runSlug, prompt.slideNumber);
           const localPath = path.join(input.outputDir, filename);
-          fs.writeFileSync(localPath, buffer);
+          await this.writePremiumCompositedSlide(buffer, prompt.slideNumber, prompt.slideDescription, localPath, input.runSlug);
 
           images.push({ slideNumber: prompt.slideNumber, localPath, mimeType: 'image/png', source: 'openai' });
           console.log(`   ✅ Slide ${prompt.slideNumber} saved.`);
@@ -69,7 +73,11 @@ export class ImageGenerationAgent extends BaseAgent {
           retries++;
           const message = error instanceof Error ? error.message : 'Unknown image generation error';
           console.error(`   ❌ Attempt ${retries} failed: ${message}`);
-          if (retries === 2) throw error;
+          if (retries === 2) {
+            console.warn(`   ⚠️  Falling back to local renderer for slide ${prompt.slideNumber}.`);
+            images.push(await this.generateLocalSlide(prompt, input.outputDir, input.runSlug));
+            break;
+          }
         }
       }
     }
@@ -79,23 +87,47 @@ export class ImageGenerationAgent extends BaseAgent {
 
   private async generateLocalSlides(input: {
     prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>,
-    outputDir: string
+    outputDir: string,
+    runSlug: string
   }): Promise<{ images: GeneratedImage[] }> {
     const images: GeneratedImage[] = [];
 
     for (const prompt of input.prompts) {
-      const filename = `slide_${String(prompt.slideNumber).padStart(2, '0')}.png`;
-      const localPath = path.join(input.outputDir, filename);
-      const svg = this.createSlideSvg(prompt.slideNumber, prompt.slideDescription);
-      await sharp(Buffer.from(svg)).png().toFile(localPath);
-      images.push({ slideNumber: prompt.slideNumber, localPath, mimeType: 'image/png', source: 'local' });
+      images.push(await this.generateLocalSlide(prompt, input.outputDir, input.runSlug));
       console.log(`   ✅ Slide ${prompt.slideNumber} saved locally.`);
     }
 
     return { images };
   }
 
-  private createSlideSvg(slideNumber: number, description: string): string {
+  private async generateLocalSlide(
+    prompt: { slideNumber: number; slideDescription: string; dallePrompt: string },
+    outputDir: string,
+    runSlug: string
+  ): Promise<GeneratedImage> {
+    const filename = buildSlideFilename(runSlug, prompt.slideNumber);
+    const localPath = path.join(outputDir, filename);
+    const svg = this.createSlideSvg(prompt.slideNumber, prompt.slideDescription, runSlug);
+    await sharp(Buffer.from(svg)).png().toFile(localPath);
+    return { slideNumber: prompt.slideNumber, localPath, mimeType: 'image/png', source: 'local' };
+  }
+
+  private async writePremiumCompositedSlide(
+    background: Buffer,
+    slideNumber: number,
+    description: string,
+    localPath: string,
+    runSlug: string
+  ): Promise<void> {
+    const overlay = this.createPremiumOverlaySvg(slideNumber, description, runSlug);
+    await sharp(background)
+      .resize(1080, 1350, { fit: 'cover' })
+      .composite([{ input: Buffer.from(overlay), top: 0, left: 0 }])
+      .png()
+      .toFile(localPath);
+  }
+
+  private createSlideSvg(slideNumber: number, description: string, runSlug: string): string {
     const cleanDescription = description.replace(/^Slide\s+\d+:\s*/i, '').trim();
     const [headlinePart, ...supportingPoints] = cleanDescription.split('|').map((part) => part.trim()).filter(Boolean);
     const title = headlinePart || cleanDescription || description;
@@ -106,7 +138,7 @@ export class ImageGenerationAgent extends BaseAgent {
 
     const eyebrow = slideNumber === 1 ? 'CANADIAN MONEY MAP' : `FRAME ${String(slideNumber).padStart(2, '0')}`;
     const footer = slideNumber === 1 ? 'Swipe for the decision framework' : 'Educational only, not financial advice';
-    const theme = getDailyTheme();
+    const theme = getDailyTheme(`${runSlug}:${cleanDescription}`);
     const pointCards = buildPointCards(supportingPoints.slice(0, 3), theme);
     const accent = slideNumber % 2 === 0 ? theme.accent : theme.secondaryAccent;
     const secondaryAccent = slideNumber % 2 === 0 ? theme.secondaryAccent : theme.accent;
@@ -157,6 +189,52 @@ export class ImageGenerationAgent extends BaseAgent {
   <text x="118" y="1208" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="25">${escapeXml(footer)}</text>
   <circle cx="902" cy="1200" r="56" fill="${accent}" opacity="0.16"/>
   <circle cx="902" cy="1200" r="22" fill="${secondaryAccent}" opacity="0.95"/>
+  </svg>`;
+  }
+
+  private createPremiumOverlaySvg(slideNumber: number, description: string, runSlug: string): string {
+    const cleanDescription = description.replace(/^Slide\s+\d+:\s*/i, '').trim();
+    const [headlinePart, ...supportingPoints] = cleanDescription.split('|').map((part) => part.trim()).filter(Boolean);
+    const title = headlinePart || cleanDescription || description;
+    const titleLines = wrapText(title, 22).slice(0, 5);
+    const titleTspans = titleLines
+      .map((line, index) => `<tspan x="112" y="${330 + index * 74}">${escapeXml(line)}</tspan>`)
+      .join('');
+    const theme = getDailyTheme(`${runSlug}:premium:${cleanDescription}`);
+    const accent = slideNumber % 2 === 0 ? theme.accent : theme.secondaryAccent;
+    const secondaryAccent = slideNumber % 2 === 0 ? theme.secondaryAccent : theme.accent;
+    const points = supportingPoints.length ? supportingPoints.slice(0, 3) : ['Save the framework', 'Verify the details', 'Decide without hype'];
+
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+  <defs>
+    <linearGradient id="scrim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#020617" stop-opacity="0.92"/>
+      <stop offset="56%" stop-color="#020617" stop-opacity="0.76"/>
+      <stop offset="100%" stop-color="#020617" stop-opacity="0.45"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a" stop-opacity="0.84"/>
+      <stop offset="100%" stop-color="#020617" stop-opacity="0.68"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="22" stdDeviation="26" flood-color="#000000" flood-opacity="0.38"/>
+    </filter>
+  </defs>
+  <rect width="1080" height="1350" fill="url(#scrim)"/>
+  <rect x="54" y="54" width="972" height="1242" rx="34" fill="none" stroke="#ffffff" stroke-opacity="0.14" stroke-width="2"/>
+  <rect x="86" y="92" width="908" height="1170" rx="30" fill="url(#glass)" stroke="#ffffff" stroke-opacity="0.1" filter="url(#softShadow)"/>
+  <rect x="112" y="128" width="98" height="9" rx="4.5" fill="${accent}"/>
+  <rect x="226" y="128" width="58" height="9" rx="4.5" fill="${secondaryAccent}"/>
+  <text x="112" y="190" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="900">TheStatsAndStacks</text>
+  <text x="112" y="262" fill="${secondaryAccent}" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="900">${slideNumber === 1 ? 'PREMIUM MONEY BRIEF' : `FRAME ${String(slideNumber).padStart(2, '0')}`}</text>
+  <text fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="900">${titleTspans}</text>
+  ${points.map((point, index) => buildOverlayPoint(point, index, accent, secondaryAccent)).join('\n  ')}
+  <rect x="112" y="1012" width="856" height="124" rx="24" fill="#020617" fill-opacity="0.48" stroke="#ffffff" stroke-opacity="0.1"/>
+  <text x="152" y="1066" fill="${accent}" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="900">Built for saves, not hype.</text>
+  <text x="152" y="1110" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Clear framework. Better questions. No guru talk.</text>
+  <text x="112" y="1208" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="24">${slideNumber === 1 ? 'Swipe for the framework' : 'Educational only, not financial advice'}</text>
+  <circle cx="902" cy="1200" r="55" fill="${accent}" opacity="0.14"/>
+  <circle cx="902" cy="1200" r="22" fill="${secondaryAccent}" opacity="0.96"/>
 </svg>`;
   }
 }
@@ -255,7 +333,7 @@ function buildChip(x: number, y: number, label: string, color: string): string {
   <text x="${x + 68}" y="${y}" text-anchor="middle" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900">${label}</text>`;
 }
 
-function getDailyTheme(): SlideTheme {
+function getDailyTheme(seed = ''): SlideTheme {
   const themes: SlideTheme[] = [
     {
       name: 'market-terminal',
@@ -329,7 +407,33 @@ function getDailyTheme(): SlideTheme {
     },
   ];
 
-  return themes[Math.floor(Date.now() / 86_400_000) % themes.length];
+  const dayIndex = Math.floor(Date.now() / 86_400_000);
+  return themes[Math.abs(hashString(`${dayIndex}:${seed}`)) % themes.length];
+}
+
+function buildSlideFilename(runSlug: string, slideNumber: number): string {
+  return `${sanitizeFilePart(runSlug)}_slide_${String(slideNumber).padStart(2, '0')}.png`;
+}
+
+function buildOverlayPoint(point: string, index: number, accent: string, secondaryAccent: string): string {
+  const y = 680 + index * 102;
+  const color = index === 1 ? secondaryAccent : accent;
+  const tspans = wrapText(point, 42).slice(0, 2)
+    .map((line, lineIndex) => `<tspan x="210" y="${y + 43 + lineIndex * 31}">${escapeXml(line)}</tspan>`)
+    .join('');
+
+  return `<rect x="112" y="${y}" width="856" height="84" rx="22" fill="#020617" fill-opacity="0.5" stroke="#ffffff" stroke-opacity="0.1"/>
+  <circle cx="160" cy="${y + 42}" r="20" fill="${color}" opacity="0.96"/>
+  <text fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="800">${tspans}</text>`;
+}
+
+function hashString(value: string): number {
+  let hash = 0;
+  for (let index = 0; index < value.length; index++) {
+    hash = ((hash << 5) - hash) + value.charCodeAt(index);
+    hash |= 0;
+  }
+  return hash;
 }
 
 function escapeXml(value: string): string {

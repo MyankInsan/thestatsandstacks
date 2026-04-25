@@ -28,6 +28,10 @@ Rules:
 - If the topic mentions stocks, do not recommend buy/sell/hold.
 - Do not use price targets, guaranteed returns, or personalized investment advice.
 - Use "educational only, not financial advice" language.
+- Write for saves and shares: clear first line, useful framework, no cheap engagement bait.
+- Use 6-10 focused hashtags, not a spam wall.
+- Naturally include search terms from: ${input.strategy.searchKeywords.join(', ')}
+- Vary the CTA. Prefer save/share/profile-follow prompts only when they fit the post.
 
 Output ONLY valid JSON:
 {
@@ -49,15 +53,16 @@ Output ONLY valid JSON:
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.warn(`[${this.name}] Gemini copywriting failed; using fallback copy. ${message}`);
-      const isStockEducation = input.strategy.format === 'WATCHLIST_EDUCATION' || /stock|watchlist|invest/i.test(input.strategy.topic);
+      const isStockEducation = input.strategy.format === 'WATCHLIST_EDUCATION'
+        || /stock|watchlist|invest|earnings|market|etf/i.test(input.strategy.topic);
       return {
-        caption: `${input.strategy.topic}\n\nThis is educational general information for Canadians, not personalized financial advice. Save this as a starting point, then verify current rules, risks, and your own situation before making financial decisions.`,
+        caption: `${input.strategy.topic}\n\nUse this as a research framework, not a shortcut.\n\nThe goal is not to chase a headline. The goal is to ask better questions before money is at risk.\n\nEducational general information only, not personalized financial advice.`,
         hashtags: isStockEducation
-          ? '#CanadianFinance #InvestingCanada #StockMarketEducation #LongTermInvesting #MoneyTips #PersonalFinanceCanada #RiskManagement'
-          : '#CanadianFinance #PersonalFinanceCanada #TFSA #RRSP #FHSA #MoneyTips #InvestingCanada',
-        cta: 'Save this before your next contribution.',
+          ? '#CanadianFinance #InvestingCanada #StockMarketEducation #LongTermInvesting #PersonalFinanceCanada #RiskManagement #MoneyTips'
+          : '#CanadianFinance #PersonalFinanceCanada #MoneyTips #InvestingCanada #FinancialLiteracy #CanadianInvesting',
+        cta: isStockEducation ? 'Save this before researching your next ticker.' : 'Save this before your next money decision.',
         firstComment: isStockEducation
-          ? 'What is the first thing you check before adding a stock to your watchlist?'
+          ? 'What do you check first: business quality, valuation, or risk?'
           : 'Which account are you comparing right now: TFSA, RRSP, or FHSA?',
         altText: `TheStatsAndStacks carousel about ${input.strategy.topic}.`,
       };

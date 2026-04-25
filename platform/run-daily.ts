@@ -10,13 +10,20 @@ import { VisionQAAgent } from './src/lib/agents/visionQAAgent';
 import { CopywritingAgent } from './src/lib/agents/copywritingAgent';
 import { emailPostToPhone } from './src/lib/services/emailDelivery';
 import { sendPostToTelegram } from './src/lib/services/telegramDelivery';
+import { appendContentHistory, loadContentHistory } from './src/lib/services/contentHistory';
+import { getLocalDateKey, getLocalTimestamp, getRunSlug } from './src/lib/services/dateUtils';
 import path from 'path';
 import fs from 'fs';
 
 async function main() {
   const startTime = Date.now();
-  const today = new Date().toISOString().split('T')[0];
+  const now = new Date();
+  const today = getLocalDateKey(now);
+  const runSlug = getRunSlug(now);
+  process.env.CONTENT_RUN_SLUG = today;
   const outputDir = path.join('/tmp', 'thestatsandstacks', today);
+  const historyPath = process.env.CONTENT_HISTORY_PATH || path.join('/tmp', 'thestatsandstacks-history', 'content-history.json');
+  const contentHistory = loadContentHistory(historyPath);
   fs.rmSync(outputDir, { recursive: true, force: true });
   fs.mkdirSync(outputDir, { recursive: true });
 
@@ -24,6 +31,7 @@ async function main() {
   console.log('═══════════════════════════════════════════════════════');
   console.log('  🚀 THESTATSANDSTACKS — DAILY PIPELINE');
   console.log(`  📅 ${today}`);
+  console.log(`  🧠 History entries loaded: ${contentHistory.length}`);
   console.log('  🌐 Running on GitHub Actions');
   console.log('═══════════════════════════════════════════════════════');
   console.log('');
@@ -31,13 +39,16 @@ async function main() {
   // ── AGENT 1: TREND RESEARCH ──
   console.log('━━━ AGENT 1: TREND RESEARCH ━━━');
   const researchAgent = new TrendResearchAgent();
-  const trends = await researchAgent.execute({});
+  const trends = await researchAgent.execute({ contentHistory });
+  const researchBriefPath = path.join(outputDir, 'RESEARCH_BRIEF.md');
+  fs.writeFileSync(researchBriefPath, buildResearchBrief(trends, contentHistory), 'utf-8');
+  console.log(`   Research brief saved: ${researchBriefPath}`);
   console.log('');
 
   // ── AGENT 2: CONTENT STRATEGY ──
   console.log('━━━ AGENT 2: CONTENT STRATEGY ━━━');
   const strategyAgent = new ContentStrategyAgent();
-  const strategy = await strategyAgent.execute({ trends });
+  const strategy = await strategyAgent.execute({ trends, contentHistory });
   console.log('');
 
   // ── AGENT 3: IMAGE PROMPTS ──
@@ -118,6 +129,7 @@ async function main() {
       strategy,
       qaReport,
       manualPromptPath,
+      researchBriefPath,
     });
   } else {
     console.log('━━━ TELEGRAM SKIPPED ━━━');
@@ -125,6 +137,16 @@ async function main() {
   }
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+  appendContentHistory(historyPath, {
+    date: today,
+    topic: strategy.topic,
+    hook: strategy.hook,
+    format: strategy.format,
+    slideCount: generatedImages.images.length,
+    keywords: strategy.searchKeywords || [],
+    visualSignature: runSlug,
+  });
+
   console.log('');
   console.log('═══════════════════════════════════════════════════════');
   console.log(`  ✅ DONE — ${elapsed}s — ${generatedImages.images.length} slides generated`);
@@ -138,7 +160,7 @@ function buildPostReadyFile(input: {
   imagePaths: string[],
 }): string {
   return `THESTATSANDSTACKS DAILY POST
-Generated: ${new Date().toLocaleString('en-CA', { timeZone: 'America/Vancouver' })}
+Generated: ${getLocalTimestamp()}
 
 TOPIC
 ${input.strategy.topic}
@@ -163,6 +185,43 @@ ${input.copy.altText}
 
 SLIDES
 ${input.imagePaths.map((imagePath, index) => `Slide ${index + 1}: ${imagePath}`).join('\n')}
+`;
+}
+
+function buildResearchBrief(
+  trends: Awaited<ReturnType<TrendResearchAgent['execute']>>,
+  contentHistory: ReturnType<typeof loadContentHistory>
+): string {
+  return `# TheStatsAndStacks Research Brief
+
+Generated: ${getLocalTimestamp()}
+
+## Recent Content Memory
+
+${contentHistory.length
+  ? contentHistory.slice(-10).map((entry) => `- ${entry.date}: ${entry.topic} (${entry.format})`).join('\n')
+  : '- No cached history found for this runner.'}
+
+## Research Signals
+
+${(trends.signalBriefs || []).map((signal) => `### ${signal.source} (${signal.status})
+
+${signal.summary}
+
+Seeds: ${signal.topicSeeds.length ? signal.topicSeeds.join(' | ') : 'none'}
+
+Sources: ${signal.sourceUrls.length ? signal.sourceUrls.join(' | ') : 'none'}
+`).join('\n')}
+
+## Ranked Topic Candidates
+
+${trends.topics.map((topic, index) => `${index + 1}. ${topic.title}
+   - Score: ${topic.score}
+   - Format: ${topic.suggestedFormat || 'unspecified'} (${topic.suggestedSlideCount || '?'} slides)
+   - Pillar: ${topic.contentPillar || 'unspecified'}
+   - Why now: ${topic.freshnessSignal || topic.reasoning}
+   - Keywords: ${(topic.searchKeywords || []).join(', ') || 'none'}
+   - Sources: ${(topic.sourceUrls || []).join(' | ') || 'none'}`).join('\n\n')}
 `;
 }
 

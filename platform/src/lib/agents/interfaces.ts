@@ -7,7 +7,17 @@ export interface TrendResearchResult {
     suggestedSlideCount?: number;
     searchKeywords?: string[];
     sourceUrls?: string[];
+    contentPillar?: string;
+    freshnessSignal?: string;
   }>;
+  signalBriefs?: Array<{
+    source: string;
+    status: 'live' | 'fallback' | 'disabled';
+    summary: string;
+    topicSeeds: string[];
+    sourceUrls: string[];
+  }>;
+  generatedAt?: string;
 }
 
 export interface ContentStrategyResult {
