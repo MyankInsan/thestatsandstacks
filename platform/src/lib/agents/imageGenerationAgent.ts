@@ -23,11 +23,12 @@ export class ImageGenerationAgent extends BaseAgent {
   }): Promise<{ images: GeneratedImage[] }> {
     fs.mkdirSync(input.outputDir, { recursive: true });
     const runSlug = getRunSlug();
-    if (process.env.ALLOW_PAID_IMAGE_GENERATION === 'true' && process.env.OPENAI_API_KEY) {
+    const freeOnly = process.env.FREE_IMAGE_GENERATION_ONLY !== 'false';
+    if (!freeOnly && process.env.ALLOW_PAID_IMAGE_GENERATION === 'true' && process.env.OPENAI_API_KEY) {
       return this.generateWithOpenAI({ ...input, runSlug });
     }
 
-    console.log(`[${this.name}] 🖼️  Using cost-safe local PNG slide generation (no paid image API calls).`);
+    console.log(`[${this.name}] 🖼️  Using free local PNG slide generation (paid image APIs disabled).`);
     return this.generateLocalSlides({ ...input, runSlug });
   }
 
@@ -139,10 +140,11 @@ export class ImageGenerationAgent extends BaseAgent {
     const eyebrow = slideNumber === 1 ? 'CANADIAN MONEY MAP' : `FRAME ${String(slideNumber).padStart(2, '0')}`;
     const footer = slideNumber === 1 ? 'Swipe for the decision framework' : 'Educational only, not financial advice';
     const theme = getDailyTheme(`${runSlug}:${cleanDescription}`);
+    const visualContext = getVisualContext(cleanDescription);
     const pointCards = buildPointCards(supportingPoints.slice(0, 3), theme);
     const accent = slideNumber % 2 === 0 ? theme.accent : theme.secondaryAccent;
     const secondaryAccent = slideNumber % 2 === 0 ? theme.secondaryAccent : theme.accent;
-    const visual = buildVisualSystem(slideNumber, accent, secondaryAccent, theme);
+    const visual = buildVisualSystem(slideNumber, accent, secondaryAccent, theme, visualContext);
 
     return `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
   <defs>
@@ -254,6 +256,13 @@ interface SlideTheme {
   backgroundShape: string;
 }
 
+interface VisualContext {
+  label: string;
+  chips: [string, string, string, string];
+  leftLabel: string;
+  rightLabel: string;
+}
+
 function buildPointCards(points: string[], theme: SlideTheme): string {
   if (points.length === 0) {
     return `<rect x="118" y="706" width="842" height="172" rx="24" fill="${theme.card}" stroke="${theme.stroke}"/>
@@ -273,54 +282,60 @@ function buildPointCards(points: string[], theme: SlideTheme): string {
   }).join('\n  ');
 }
 
-function buildVisualSystem(slideNumber: number, accent: string, secondaryAccent: string, theme: SlideTheme): string {
+function buildVisualSystem(
+  slideNumber: number,
+  accent: string,
+  secondaryAccent: string,
+  theme: SlideTheme,
+  context: VisualContext
+): string {
   const chipY = 565;
   const sparkline = slideNumber % 2 === 0
     ? 'M 126 636 C 210 606 258 646 334 610 S 480 572 548 612 S 690 666 780 598 S 910 560 956 584'
     : 'M 126 636 C 210 674 270 588 346 620 S 492 668 566 596 S 704 552 778 602 S 892 656 956 578';
 
   if (theme.visualKind === 'bars') {
-    return `<text x="118" y="514" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="800">PRIORITY SCOREBOARD</text>
+    return `<text x="118" y="514" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="800">${escapeXml(context.label)}</text>
   <rect x="118" y="540" width="842" height="92" rx="24" fill="#07111f" stroke="${theme.stroke}"/>
-  ${buildBar(154, 600, 132, accent, 'RISK')}
-  ${buildBar(356, 575, 170, secondaryAccent, 'TAX')}
-  ${buildBar(590, 615, 118, accent, 'TIME')}
-  ${buildBar(772, 560, 185, secondaryAccent, 'GOAL')}`;
+  ${buildBar(154, 600, 132, accent, context.chips[0])}
+  ${buildBar(356, 575, 170, secondaryAccent, context.chips[1])}
+  ${buildBar(590, 615, 118, accent, context.chips[2])}
+  ${buildBar(772, 560, 185, secondaryAccent, context.chips[3])}`;
   }
 
   if (theme.visualKind === 'ladder') {
-    return `<text x="118" y="514" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="800">STEP-BY-STEP MONEY LADDER</text>
+    return `<text x="118" y="514" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="800">${escapeXml(context.label)}</text>
   <rect x="118" y="540" width="842" height="92" rx="24" fill="#07111f" stroke="${theme.stroke}"/>
   <path d="M 156 602 L 302 602 L 302 572 L 450 572 L 450 612 L 606 612 L 606 558 L 770 558 L 770 586 L 930 586" fill="none" stroke="${secondaryAccent}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
   <circle cx="156" cy="602" r="12" fill="${accent}"/><circle cx="450" cy="612" r="12" fill="${accent}"/><circle cx="930" cy="586" r="12" fill="${accent}"/>`;
   }
 
   if (theme.visualKind === 'matrix') {
-    return `<text x="118" y="514" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="800">MYTH / FACT FILTER</text>
+    return `<text x="118" y="514" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="800">${escapeXml(context.label)}</text>
   <rect x="118" y="540" width="842" height="92" rx="24" fill="#07111f" stroke="${theme.stroke}"/>
-  <rect x="154" y="565" width="160" height="42" rx="21" fill="${secondaryAccent}" opacity="0.18" stroke="${secondaryAccent}"/><text x="234" y="593" text-anchor="middle" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="900">MYTH</text>
+  <rect x="154" y="565" width="160" height="42" rx="21" fill="${secondaryAccent}" opacity="0.18" stroke="${secondaryAccent}"/><text x="234" y="593" text-anchor="middle" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="900">${escapeXml(context.chips[0])}</text>
   <path d="M 348 586 L 522 586" stroke="${accent}" stroke-width="7" stroke-linecap="round"/>
-  <rect x="556" y="565" width="160" height="42" rx="21" fill="${accent}" opacity="0.18" stroke="${accent}"/><text x="636" y="593" text-anchor="middle" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="900">FACT</text>
-  <text x="786" y="594" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800">FILTER</text>`;
+  <rect x="556" y="565" width="160" height="42" rx="21" fill="${accent}" opacity="0.18" stroke="${accent}"/><text x="636" y="593" text-anchor="middle" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="900">${escapeXml(context.chips[1])}</text>
+  <text x="786" y="594" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800">${escapeXml(context.chips[2])}</text>`;
   }
 
   if (theme.visualKind === 'radar') {
-    return `<text x="118" y="514" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="800">TIMELINE RISK MAP</text>
+    return `<text x="118" y="514" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="800">${escapeXml(context.label)}</text>
   <rect x="118" y="540" width="842" height="92" rx="24" fill="#07111f" stroke="${theme.stroke}"/>
   <path d="M 158 600 L 342 560 L 526 600 L 710 560 L 916 600" fill="none" stroke="${secondaryAccent}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M 158 600 L 342 560 L 526 600 L 710 560 L 916 600 L 916 625 L 158 625 Z" fill="${accent}" opacity="0.12"/>
-  <text x="164" y="590" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="800">CASH</text>
-  <text x="820" y="590" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="800">GROWTH</text>`;
+  <text x="164" y="590" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="800">${escapeXml(context.leftLabel)}</text>
+  <text x="820" y="590" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="800">${escapeXml(context.rightLabel)}</text>`;
   }
 
   return `<rect x="118" y="540" width="842" height="92" rx="24" fill="#07111f" stroke="#263b52"/>
-  ${buildChip(145, chipY, 'TFSA', accent)}
-  ${buildChip(326, chipY, 'RRSP', secondaryAccent)}
-  ${buildChip(510, chipY, 'FHSA', accent)}
-  <text x="725" y="594" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800">CANADA</text>
+  ${buildChip(145, chipY, context.chips[0], accent)}
+  ${buildChip(326, chipY, context.chips[1], secondaryAccent)}
+  ${buildChip(510, chipY, context.chips[2], accent)}
+  <text x="725" y="594" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800">${escapeXml(context.chips[3])}</text>
   <path d="${sparkline}" fill="none" stroke="${secondaryAccent}" stroke-width="7" stroke-linecap="round" opacity="0.95"/>
   <circle cx="956" cy="${slideNumber % 2 === 0 ? 584 : 578}" r="10" fill="${accent}"/>
-  <text x="118" y="514" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="800">ACCOUNT PRIORITY FRAMEWORK</text>`;
+  <text x="118" y="514" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="800">${escapeXml(context.label)}</text>`;
 }
 
 function buildBar(x: number, y: number, height: number, color: string, label: string): string {
@@ -330,7 +345,65 @@ function buildBar(x: number, y: number, height: number, color: string, label: st
 
 function buildChip(x: number, y: number, label: string, color: string): string {
   return `<rect x="${x}" y="${y - 34}" width="136" height="54" rx="27" fill="${color}" opacity="0.16" stroke="${color}" stroke-width="2"/>
-  <text x="${x + 68}" y="${y}" text-anchor="middle" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900">${label}</text>`;
+  <text x="${x + 68}" y="${y}" text-anchor="middle" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900">${escapeXml(label)}</text>`;
+}
+
+function getVisualContext(description: string): VisualContext {
+  const lower = description.toLowerCase();
+  if (/earnings|revenue|margin|cash flow|guidance/.test(lower)) {
+    return {
+      label: 'EARNINGS QUALITY CHECK',
+      chips: ['REV', 'MARGIN', 'CASH', 'GUIDE'],
+      leftLabel: 'REPORT',
+      rightLabel: 'THESIS',
+    };
+  }
+  if (/stock|watchlist|valuation|ticker|portfolio|balance sheet|catalyst/.test(lower)) {
+    return {
+      label: 'RESEARCH SCREEN',
+      chips: ['QUALITY', 'RISK', 'VALUE', 'FIT'],
+      leftLabel: 'HYPE',
+      rightLabel: 'THESIS',
+    };
+  }
+  if (/payday|bill|debt|emergency|spend|budget|money disappears/.test(lower)) {
+    return {
+      label: 'MONEY FLOW SYSTEM',
+      chips: ['BILLS', 'BUFFER', 'DEBT', 'INVEST'],
+      leftLabel: 'CASH IN',
+      rightLabel: 'PLAN',
+    };
+  }
+  if (/credit|score|balance|utilization|card/.test(lower)) {
+    return {
+      label: 'CREDIT SIGNAL FILTER',
+      chips: ['MYTH', 'FACT', 'SCORE', 'RISK'],
+      leftLabel: 'NOISE',
+      rightLabel: 'SIGNAL',
+    };
+  }
+  if (/tfsa|rrsp|fhsa|account|contribution/.test(lower)) {
+    return {
+      label: 'ACCOUNT PRIORITY FRAMEWORK',
+      chips: ['TFSA', 'RRSP', 'FHSA', 'GOAL'],
+      leftLabel: 'TODAY',
+      rightLabel: 'FUTURE',
+    };
+  }
+  if (/tax|deduction|refund|filing/.test(lower)) {
+    return {
+      label: 'TAX CHECKLIST MAP',
+      chips: ['DOCS', 'DATES', 'ROOM', 'PROOF'],
+      leftLabel: 'CLAIM',
+      rightLabel: 'VERIFY',
+    };
+  }
+  return {
+    label: 'DECISION FRAMEWORK',
+    chips: ['GOAL', 'TIME', 'RISK', 'NEXT'],
+    leftLabel: 'QUESTION',
+    rightLabel: 'ACTION',
+  };
 }
 
 function getDailyTheme(seed = ''): SlideTheme {

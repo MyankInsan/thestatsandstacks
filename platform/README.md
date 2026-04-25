@@ -10,11 +10,14 @@ npm run daily
 
 Use `env.example` as the non-secret reference for local and GitHub Actions variables.
 
-By default for local runs, image generation is cost-safe: the pipeline creates branded local PNG carousel slides, saves a `MANUAL_IMAGE_PROMPTS.md` packet for optional ChatGPT/Gemini refinement, and does not call a paid image API. The GitHub Actions workflow is configured to use premium OpenAI image generation when `OPENAI_API_KEY` is present; if the secret is missing or an image call fails, it falls back to local PNG rendering.
+By default, image generation is free and local: the pipeline creates branded PNG carousel slides with SVG + Sharp, saves a `MANUAL_IMAGE_PROMPTS.md` packet for optional manual refinement, and does not call a paid image API. The GitHub Actions workflow is locked to `FREE_IMAGE_GENERATION_ONLY=true`, so the daily Telegram images will not use OpenAI image generation even if an OpenAI key exists in repository secrets.
 
-The premium path generates text-free editorial backgrounds and composites exact SVG typography on top, which keeps slide text readable while making the visuals less generic. To intentionally use OpenAI image generation locally, set:
+The local renderer uses exact SVG typography, content-aware mini visual systems, and topic/date-based visual variation so slides stay readable and do not repeat the same generic account-map look every day.
+
+To intentionally use OpenAI image generation locally later, you would need to opt out of free-only mode and set:
 
 ```bash
+FREE_IMAGE_GENERATION_ONLY=false
 ALLOW_PAID_IMAGE_GENERATION=true
 OPENAI_API_KEY=your_api_key
 OPENAI_IMAGE_MODEL=gpt-image-1
@@ -22,7 +25,7 @@ OPENAI_IMAGE_QUALITY=medium
 OPENAI_IMAGE_SIZE=1024x1536
 ```
 
-OpenAI API usage is billed separately from ChatGPT subscriptions, including ChatGPT Business. Keep `ALLOW_PAID_IMAGE_GENERATION=false` if you do not want additional API image charges.
+OpenAI API usage is billed separately from ChatGPT subscriptions, including ChatGPT Business. Keep `FREE_IMAGE_GENERATION_ONLY=true` and `ALLOW_PAID_IMAGE_GENERATION=false` if you do not want image charges.
 
 The daily workflow keeps a lightweight topic memory in `/tmp/thestatsandstacks-history/content-history.json` and GitHub Actions cache so it avoids repeating the same topic too soon. Optional Reddit research uses Reddit's API when these are set; unsupported scraping is intentionally not used:
 
