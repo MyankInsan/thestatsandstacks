@@ -1,5 +1,42 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Daily Automation
+
+Run the GitHub Actions-compatible daily pipeline locally:
+
+```bash
+npm run daily
+```
+
+Use `env.example` as the non-secret reference for local and GitHub Actions variables.
+
+By default, image generation is cost-safe: the pipeline creates branded local PNG carousel slides, saves a `MANUAL_IMAGE_PROMPTS.md` packet for optional ChatGPT/Gemini refinement, and does not call a paid image API. To intentionally use OpenAI image generation, set both:
+
+```bash
+ALLOW_PAID_IMAGE_GENERATION=true
+OPENAI_API_KEY=your_api_key
+```
+
+OpenAI API usage is billed separately from ChatGPT subscriptions, including ChatGPT Business. Keep `ALLOW_PAID_IMAGE_GENERATION=false` if you do not want additional API image charges. If paid image generation is enabled, the default model is `chatgpt-image-latest`.
+
+Delivery is automatic when credentials are present:
+
+```bash
+GMAIL_ADDRESS=...
+GMAIL_APP_PASSWORD=...
+DELIVERY_EMAIL=...
+TELEGRAM_BOT_TOKEN=...
+TELEGRAM_CHAT_ID=...
+```
+
+Useful checks:
+
+```bash
+npm run lint
+npm run typecheck
+npm test
+```
+
 ## Getting Started
 
 First, run the development server:

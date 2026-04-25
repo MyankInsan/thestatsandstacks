@@ -3,10 +3,10 @@ export interface TrendResearchResult {
     title: string;
     score: number;
     reasoning: string;
-    suggestedFormat?: string;
+    suggestedFormat?: 'CAROUSEL' | 'SINGLE_IMAGE' | 'WATCHLIST_EDUCATION' | string;
     suggestedSlideCount?: number;
     searchKeywords?: string[];
-    sourceUrls: string[];
+    sourceUrls?: string[];
   }>;
 }
 
@@ -20,7 +20,7 @@ export interface ContentStrategyResult {
 export interface EditorialBriefResult {
   hookVariants: string[];
   angle: string;
-  outline: any[];
+  outline: string[];
   factualClaimsToVerify: string[];
 }
 
@@ -53,5 +53,5 @@ export abstract class BaseAgent {
     this.name = name;
   }
   
-  abstract execute(input: any): Promise<any>;
+  abstract execute(input: unknown): Promise<unknown>;
 }

@@ -15,10 +15,11 @@ export async function GET(
   }
 
   const imageBuffer = fs.readFileSync(imagePath);
+  const contentType = imagePath.endsWith('.svg') ? 'image/svg+xml' : 'image/png';
 
   return new NextResponse(imageBuffer, {
     headers: {
-      'Content-Type': 'image/png',
+      'Content-Type': contentType,
       'Cache-Control': 'public, max-age=86400',
     },
   });

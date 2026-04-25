@@ -2,8 +2,8 @@ name: Daily Instagram Post
 
 on:
   schedule:
-    # Runs every day at 3:00 PM UTC = 8:00 AM Pacific (Vancouver)
-    - cron: '0 15 * * *'
+    # Runs at both possible UTC offsets, then a Vancouver-time guard below keeps only 8:00 AM local.
+    - cron: '0 15,16 * * *'
   workflow_dispatch: # Allows you to manually trigger from GitHub website
 
 jobs:
@@ -15,7 +15,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Check Vancouver send window
+        id: send-window
+        run: |
+          local_hour="$(TZ=America/Vancouver date +%H)"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$local_hour" = "08" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping because Vancouver local hour is $local_hour, not 08."
+          fi
+
       - name: Setup Node.js
+        if: steps.send-window.outputs.should_run == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -23,14 +35,28 @@ jobs:
           cache-dependency-path: platform/package-lock.json
 
       - name: Install dependencies
+        if: steps.send-window.outputs.should_run == 'true'
         working-directory: platform
         run: npm ci
 
       - name: Run Daily Pipeline
+        if: steps.send-window.outputs.should_run == 'true'
         working-directory: platform
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_TEXT_MODEL: gemini-2.5-flash
+          ALLOW_PAID_IMAGE_GENERATION: "false"
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           DELIVERY_EMAIL: ${{ secrets.DELIVERY_EMAIL }}
-        run: npx tsx run-daily.ts
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: npm run daily
+
+      - name: Upload generated slides
+        if: always() && steps.send-window.outputs.should_run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: thestatsandstacks-daily-output
+          path: /tmp/thestatsandstacks
+          if-no-files-found: warn

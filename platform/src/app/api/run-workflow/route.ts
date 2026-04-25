@@ -7,8 +7,9 @@ export async function POST() {
   try {
     const result = await runDailyWorkflow();
     return NextResponse.json(result);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Workflow failed:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Unknown workflow error';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

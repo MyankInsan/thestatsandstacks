@@ -1,5 +1,6 @@
 // Standalone daily pipeline runner for GitHub Actions
 // This runs WITHOUT the Next.js server or database — just agents + email
+import 'dotenv/config';
 
 import { TrendResearchAgent } from './src/lib/agents/trendResearchAgent';
 import { ContentStrategyAgent } from './src/lib/agents/contentStrategyAgent';
@@ -8,6 +9,7 @@ import { ImageGenerationAgent } from './src/lib/agents/imageGenerationAgent';
 import { VisionQAAgent } from './src/lib/agents/visionQAAgent';
 import { CopywritingAgent } from './src/lib/agents/copywritingAgent';
 import { emailPostToPhone } from './src/lib/services/emailDelivery';
+import { sendPostToTelegram } from './src/lib/services/telegramDelivery';
 import path from 'path';
 import fs from 'fs';
 
@@ -15,6 +17,8 @@ async function main() {
   const startTime = Date.now();
   const today = new Date().toISOString().split('T')[0];
   const outputDir = path.join('/tmp', 'thestatsandstacks', today);
+  fs.rmSync(outputDir, { recursive: true, force: true });
+  fs.mkdirSync(outputDir, { recursive: true });
 
   console.log('');
   console.log('═══════════════════════════════════════════════════════');
@@ -40,12 +44,19 @@ async function main() {
   console.log('━━━ AGENT 3: IMAGE PROMPTS ━━━');
   const imagePromptAgent = new ImagePromptAgent();
   const promptSet = await imagePromptAgent.execute({ strategy });
+  const manualPromptPath = path.join(outputDir, 'MANUAL_IMAGE_PROMPTS.md');
+  fs.writeFileSync(
+    manualPromptPath,
+    buildManualImagePromptPacket(strategy, promptSet.prompts),
+    'utf-8'
+  );
+  console.log(`   Manual image prompt packet saved: ${manualPromptPath}`);
   console.log('');
 
-  // ── AGENT 4: IMAGE GENERATION (Imagen 3) ──
-  console.log('━━━ AGENT 4: IMAGE GENERATION (Imagen 3) ━━━');
+  // ── AGENT 4: IMAGE GENERATION ──
+  console.log('━━━ AGENT 4: IMAGE GENERATION ━━━');
   const imageGenAgent = new ImageGenerationAgent();
-  let generatedImages = await imageGenAgent.execute({
+  const generatedImages = await imageGenAgent.execute({
     prompts: promptSet.prompts,
     outputDir,
   });
@@ -77,23 +88,111 @@ async function main() {
   const copy = await copyAgent.execute({ strategy });
   console.log('');
 
+  const postReadyPath = path.join(outputDir, 'POST_READY.txt');
+  fs.writeFileSync(
+    postReadyPath,
+    buildPostReadyFile({ strategy, copy, qaReport, imagePaths: generatedImages.images.map((image) => image.localPath) }),
+    'utf-8'
+  );
+  console.log(`   Post package saved: ${postReadyPath}`);
+
   // ── EMAIL TO PHONE ──
-  console.log('━━━ SENDING EMAIL ━━━');
-  await emailPostToPhone({
-    images: generatedImages.images,
-    copy,
-    strategy,
-    qaReport,
-  });
+  if (process.env.GMAIL_ADDRESS && process.env.GMAIL_APP_PASSWORD && process.env.DELIVERY_EMAIL) {
+    console.log('━━━ SENDING EMAIL ━━━');
+    await emailPostToPhone({
+      images: generatedImages.images,
+      copy,
+      strategy,
+      qaReport,
+    });
+  } else {
+    console.log('━━━ EMAIL SKIPPED ━━━');
+    console.log('   Email delivery skipped because Gmail delivery secrets are not set.');
+  }
+
+  if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
+    console.log('━━━ SENDING TELEGRAM ━━━');
+    await sendPostToTelegram({
+      images: generatedImages.images,
+      copy,
+      strategy,
+      qaReport,
+      manualPromptPath,
+    });
+  } else {
+    console.log('━━━ TELEGRAM SKIPPED ━━━');
+    console.log('   Telegram delivery skipped because TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID are not set.');
+  }
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
   console.log('');
   console.log('═══════════════════════════════════════════════════════');
-  console.log(`  ✅ DONE — ${elapsed}s — ${generatedImages.images.length} slides emailed to your phone`);
+  console.log(`  ✅ DONE — ${elapsed}s — ${generatedImages.images.length} slides generated`);
   console.log('═══════════════════════════════════════════════════════');
+}
+
+function buildPostReadyFile(input: {
+  strategy: Awaited<ReturnType<ContentStrategyAgent['execute']>>,
+  copy: Awaited<ReturnType<CopywritingAgent['execute']>>,
+  qaReport: Awaited<ReturnType<VisionQAAgent['execute']>>,
+  imagePaths: string[],
+}): string {
+  return `THESTATSANDSTACKS DAILY POST
+Generated: ${new Date().toLocaleString('en-CA', { timeZone: 'America/Vancouver' })}
+
+TOPIC
+${input.strategy.topic}
+
+FORMAT
+${input.strategy.format} (${input.imagePaths.length} slides)
+
+QA SCORE
+${(input.qaReport.overallScore * 100).toFixed(0)}%
+
+CAPTION
+${input.copy.caption}
+
+HASHTAGS
+${input.copy.hashtags}
+
+FIRST COMMENT
+${input.copy.firstComment}
+
+ALT TEXT
+${input.copy.altText}
+
+SLIDES
+${input.imagePaths.map((imagePath, index) => `Slide ${index + 1}: ${imagePath}`).join('\n')}
+`;
 }
 
 main().catch((err) => {
   console.error('Pipeline failed:', err);
   process.exit(1);
 });
+
+function buildManualImagePromptPacket(
+  strategy: Awaited<ReturnType<ContentStrategyAgent['execute']>>,
+  prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>
+): string {
+  return `# TheStatsAndStacks Manual Image Prompts
+
+Topic: ${strategy.topic}
+Format: ${strategy.format}
+Hook: ${strategy.hook}
+
+Use this file if you want to manually generate images in ChatGPT or Gemini using your existing subscriptions. Generate one slide at a time, download each image, and keep the slide numbers in order.
+
+## Style Lock
+
+Premium faceless Canadian personal finance carousel. Dark navy and charcoal base, emerald green and muted gold accents, editorial layout, high-trust finance tone, crisp readable typography, no fake statistics, no personalized financial advice, no hype.
+
+${prompts.map((prompt) => `## Slide ${prompt.slideNumber}
+
+${prompt.slideDescription}
+
+\`\`\`text
+${prompt.dallePrompt}
+\`\`\`
+`).join('\n')}`;
+}

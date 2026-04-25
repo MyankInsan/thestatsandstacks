@@ -20,9 +20,10 @@ export class PublisherAgent extends BaseAgent {
       
       console.log('Successfully published to Instagram!');
       return { success: true, permalink: 'https://instagram.com/p/mock123' };
-    } catch (e: any) {
+    } catch (e) {
       console.error('Failed to publish', e);
-      return { success: false, error: e.message };
+      const message = e instanceof Error ? e.message : 'Unknown publishing error';
+      return { success: false, error: message };
     }
   }
 }

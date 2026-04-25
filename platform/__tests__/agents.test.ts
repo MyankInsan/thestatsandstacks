@@ -1,7 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
 import { PublisherAgent } from '../src/lib/agents/publisherAgent';
 
-describe('Publisher Agent Fail-Safe Logic', () => {
-  it('should reject publish if confidence score is below 0.85', async () => {
+test('PublisherAgent rejects publish if confidence score is below 0.85', async () => {
     const agent = new PublisherAgent();
     
     const result = await agent.execute({
@@ -16,11 +17,11 @@ describe('Publisher Agent Fail-Safe Logic', () => {
       imageUrls: ['url1']
     });
 
-    expect(result.success).toBe(false);
-    expect(result.error).toContain('Confidence score below threshold');
-  });
+  assert.equal(result.success, false);
+  assert.match(result.error || '', /Confidence score below threshold/);
+});
 
-  it('should pass and attempt publish if confidence is high', async () => {
+test('PublisherAgent passes and attempts publish if confidence is high', async () => {
     const agent = new PublisherAgent();
     
     const result = await agent.execute({
@@ -35,6 +36,5 @@ describe('Publisher Agent Fail-Safe Logic', () => {
       imageUrls: ['url1']
     });
 
-    expect(result.success).toBe(true);
-  });
+  assert.equal(result.success, true);
 });

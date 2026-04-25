@@ -1,6 +1,4 @@
 import nodemailer from 'nodemailer';
-import fs from 'fs';
-import path from 'path';
 import { GeneratedImage } from '../agents/imageGenerationAgent';
 import { CopyBundle } from '../agents/copywritingAgent';
 import { StrategyDecision } from '../agents/contentStrategyAgent';
@@ -27,8 +25,9 @@ export async function emailPostToPhone(input: {
 
   // Build image attachments
   const attachments = images.map((img, i) => ({
-    filename: `TheStatsAndStacks_Slide_${i + 1}.png`,
+    filename: `TheStatsAndStacks_Slide_${i + 1}${img.localPath.endsWith('.svg') ? '.svg' : '.png'}`,
     path: img.localPath,
+    contentType: img.mimeType,
     cid: `slide${i + 1}`, // For embedding in HTML
   }));
 

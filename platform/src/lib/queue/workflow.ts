@@ -40,7 +40,7 @@ export async function runDailyWorkflow() {
         topic: t.title,
         confidenceScore: t.score,
         reasoning: t.reasoning,
-        sourceUrl: (t as any).sourceUrls?.[0] || null,
+        sourceUrl: t.sourceUrls?.[0] || null,
       }
     });
   }
@@ -85,7 +85,7 @@ export async function runDailyWorkflow() {
   // ═══════════════════════════════════════════════════════
   console.log('━━━ AGENT 4: IMAGE GENERATION (DALL-E 3) ━━━');
   const imageGenAgent = new ImageGenerationAgent();
-  let generatedImages = await imageGenAgent.execute({
+  const generatedImages = await imageGenAgent.execute({
     prompts: promptSet.prompts,
     outputDir,
   });
@@ -238,7 +238,7 @@ ${qaReport.slideReports.map(r => `Slide ${r.slideNumber}: ${r.isValid ? '✅ PAS
     const asset = await prisma.generatedAsset.create({
       data: {
         promptId: prompt.id,
-        imageUrl: `/api/images/${today}/slide_${String(img.slideNumber).padStart(2, '0')}.png`,
+        imageUrl: `/api/images/${today}/${path.basename(img.localPath)}`,
         localPath: img.localPath,
         visionScore: qaReport.slideReports.find(r => r.slideNumber === img.slideNumber)?.confidenceScore || 0,
         status: 'APPROVED',

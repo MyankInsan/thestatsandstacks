@@ -35,7 +35,7 @@ Extract specific factual claims that MUST be verified by compliance (e.g. "TFSA 
         },
         {
           role: 'user',
-          content: `Strategy: ${JSON.stringify(input.strategy)}\n\nOutput JSON schema: { "hookVariants": string[], "angle": string, "outline": any[], "factualClaimsToVerify": string[] }`
+          content: `Strategy: ${JSON.stringify(input.strategy)}\n\nOutput JSON schema: { "hookVariants": string[], "angle": string, "outline": string[], "factualClaimsToVerify": string[] }`
         }
       ],
       response_format: { type: "json_object" }
