@@ -9,7 +9,7 @@ import {
 export interface StrategyDecision {
   topic: string;
   hook: string;
-  format: 'CAROUSEL' | 'SINGLE_IMAGE' | 'WATCHLIST_EDUCATION';
+  format: 'CAROUSEL' | 'SINGLE_IMAGE' | 'WATCHLIST_EDUCATION' | 'REEL_DRAFT';
   slideCount: number;
   slideBreakdown: string[];
   reasoning: string;
@@ -23,9 +23,14 @@ export class ContentStrategyAgent extends BaseAgent {
     super('ContentStrategyAgent');
   }
 
-  async execute(input: { trends: TrendResearchResult, contentHistory?: ContentHistoryEntry[] }): Promise<StrategyDecision> {
+  async execute(input: {
+    trends: TrendResearchResult,
+    contentHistory?: ContentHistoryEntry[],
+    videoGenerationAvailable?: boolean,
+  }): Promise<StrategyDecision> {
     console.log(`[${this.name}] 🧠 Deciding content strategy...`);
     const contentHistory = input.contentHistory || [];
+    const videoGenerationAvailable = input.videoGenerationAvailable === true;
 
     const prompt = `You are a senior Instagram content strategist for "TheStatsAndStacks", a premium Canadian finance brand.
 
@@ -36,6 +41,8 @@ FORMAT DECISION RULES:
 - CAROUSEL slides should be 5-8 slides.
 - Use WATCHLIST_EDUCATION for stock-market content. Never recommend buy/sell/hold or price targets.
 - SINGLE_IMAGE is allowed only for one-number stats or simple reminders.
+- Use REEL_DRAFT only when video rendering is available AND the topic benefits from motion, pacing, or a sequential punch-list. REEL_DRAFT should be 4-7 short frames and will be rendered locally from branded slides into a vertical MP4; do not require voiceover, paid video APIs, or stock footage.
+- Video rendering availability for this run: ${videoGenerationAvailable ? 'available' : 'not available'}.
 - Do not choose a topic that is similar to the last 10 posts unless the angle is meaningfully different.
 - Optimize for a daily mix: Canadian money systems, tax/account explainers, investor risk protection, and occasional Canada/US stock research education.
 - Stock content should feel useful to stock-curious followers, but it must be framed as "how to research" or "what to check", not as "buy these stocks".
@@ -50,7 +57,7 @@ Pick the best one. Output ONLY valid JSON (no markdown, no code fences):
 {
   "topic": "exact topic title",
   "hook": "the hook text for slide 1",
-  "format": "CAROUSEL" or "SINGLE_IMAGE" or "WATCHLIST_EDUCATION",
+  "format": "CAROUSEL" or "SINGLE_IMAGE" or "WATCHLIST_EDUCATION" or "REEL_DRAFT",
   "slideCount": number,
   "slideBreakdown": ["Slide 1: exact on-image headline | short supporting point | short supporting point", "Slide 2: exact on-image headline | short supporting point | short supporting point", ...],
   "reasoning": "why this format and topic",
@@ -67,11 +74,11 @@ Pick the best one. Output ONLY valid JSON (no markdown, no code fences):
       const text = response.text().trim();
 
       const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      return normalizeStrategy(JSON.parse(cleaned) as StrategyDecision, input.trends, contentHistory);
+      return normalizeStrategy(JSON.parse(cleaned) as StrategyDecision, input.trends, contentHistory, videoGenerationAvailable);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.warn(`[${this.name}] Gemini strategy failed; using cost-safe fallback strategy. ${message}`);
-      return getRotatingFallbackStrategy(input.trends, contentHistory);
+      return getRotatingFallbackStrategy(input.trends, contentHistory, videoGenerationAvailable);
     }
   }
 }
@@ -152,6 +159,24 @@ const fallbackStrategies: StrategyDecision[] = [
     reasoning: 'Mistake teardown formats are emotionally resonant and saveable.',
     targetAudience: 'Canadians who earn okay money but feel stuck',
     searchKeywords: ['budgeting Canada', 'money leaks', 'personal finance Canada'],
+    contentPillar: 'Money behavior and budgeting',
+  },
+  {
+    topic: '5 Money Leaks Canadians Can Fix This Week',
+    hook: 'One leak fixed is momentum.',
+    format: 'REEL_DRAFT',
+    slideCount: 6,
+    slideBreakdown: [
+      'Slide 1: One leak fixed is momentum | Start with the leak you can see | Then automate the fix',
+      'Slide 2: Leak 1: Subscription drift | Cancel one unused charge | Redirect it before it disappears',
+      'Slide 3: Leak 2: Minimum-payment autopilot | Interest can quietly win | Know the true payoff cost',
+      'Slide 4: Leak 3: No payday order | Money needs a route | Bills, buffer, debt, goals, then spending',
+      'Slide 5: Leak 4: Idle cash with no job | Emergency cash is good | Random cash needs a purpose',
+      'Slide 6: Save this weekly leak check | Pick one fix today | Educational only, not financial advice',
+    ],
+    reasoning: 'A short Reel draft works well for fast sequential fixes while still reusing the branded local slide renderer.',
+    targetAudience: 'Canadians who want practical money fixes without a full budgeting overhaul',
+    searchKeywords: ['money leaks', 'budgeting Canada', 'payday routine'],
     contentPillar: 'Money behavior and budgeting',
   },
   {
@@ -275,17 +300,24 @@ const fallbackStrategies: StrategyDecision[] = [
 
 function getRotatingFallbackStrategy(
   trends: TrendResearchResult,
-  contentHistory: ContentHistoryEntry[] = []
+  contentHistory: ContentHistoryEntry[] = [],
+  videoGenerationAvailable = false
 ): StrategyDecision {
   const dayIndex = Math.floor(Date.now() / 86_400_000) % fallbackStrategies.length;
+  const allowedFallbacks = fallbackStrategies.filter((strategy) => (
+    videoGenerationAvailable || strategy.format !== 'REEL_DRAFT'
+  ));
   const topTopic = [...trends.topics]
     .sort((a, b) => (b.score - noveltyPenalty(b.title, contentHistory)) - (a.score - noveltyPenalty(a.title, contentHistory)))
     .find((topic) => !isTooSimilarToRecent(topic.title, contentHistory));
   const matchedStrategy = topTopic
-    ? fallbackStrategies.find((strategy) => strategy.topic === topTopic.title)
+    ? allowedFallbacks.find((strategy) => strategy.topic === topTopic.title)
     : undefined;
-  const eligibleFallbacks = fallbackStrategies.filter((strategy) => !isTooSimilarToRecent(strategy.topic, contentHistory));
-  const strategy = matchedStrategy || eligibleFallbacks[dayIndex % Math.max(eligibleFallbacks.length, 1)] || fallbackStrategies[dayIndex];
+  const eligibleFallbacks = allowedFallbacks.filter((strategy) => !isTooSimilarToRecent(strategy.topic, contentHistory));
+  const strategy = matchedStrategy
+    || eligibleFallbacks[dayIndex % Math.max(eligibleFallbacks.length, 1)]
+    || allowedFallbacks[dayIndex % Math.max(allowedFallbacks.length, 1)]
+    || fallbackStrategies[dayIndex];
 
   if (!topTopic) return strategy;
   return {
@@ -298,14 +330,28 @@ function getRotatingFallbackStrategy(
 function normalizeStrategy(
   strategy: StrategyDecision,
   trends: TrendResearchResult,
-  contentHistory: ContentHistoryEntry[]
+  contentHistory: ContentHistoryEntry[],
+  videoGenerationAvailable = false
 ): StrategyDecision {
+  const validFormats: StrategyDecision['format'][] = ['CAROUSEL', 'SINGLE_IMAGE', 'WATCHLIST_EDUCATION', 'REEL_DRAFT'];
+  if (!validFormats.includes(strategy.format)) {
+    return getRotatingFallbackStrategy(trends, contentHistory, videoGenerationAvailable);
+  }
+
+  if (strategy.format === 'REEL_DRAFT' && !videoGenerationAvailable) {
+    const imageFallback = getRotatingFallbackStrategy(trends, contentHistory, videoGenerationAvailable);
+    return {
+      ...imageFallback,
+      reasoning: `${imageFallback.reasoning} Chosen because local video rendering is not available on this run.`,
+    };
+  }
+
   if (strategy.slideCount < 1 || strategy.slideCount > 9 || strategy.slideBreakdown.length !== strategy.slideCount) {
-    return getRotatingFallbackStrategy(trends, contentHistory);
+    return getRotatingFallbackStrategy(trends, contentHistory, videoGenerationAvailable);
   }
 
   if (isTooSimilarToRecent(strategy.topic, contentHistory)) {
-    const freshFallback = getRotatingFallbackStrategy(trends, contentHistory);
+    const freshFallback = getRotatingFallbackStrategy(trends, contentHistory, videoGenerationAvailable);
     return {
       ...freshFallback,
       reasoning: `${freshFallback.reasoning} Chosen because the model-selected topic was too similar to recent content.`,

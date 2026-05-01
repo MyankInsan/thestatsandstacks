@@ -1,12 +1,17 @@
 import fs from 'fs';
 import path from 'path';
 import { GeneratedImage } from '../agents/imageGenerationAgent';
+import { GeneratedVideo } from '../agents/videoGenerationAgent';
 import { CopyBundle } from '../agents/copywritingAgent';
 import { StrategyDecision } from '../agents/contentStrategyAgent';
 import { QAReport } from '../agents/visionQAAgent';
 
+const TELEGRAM_RETRY_ATTEMPTS = 4;
+const TELEGRAM_TIMEOUT_MS = 30_000;
+
 export async function sendPostToTelegram(input: {
   images: GeneratedImage[],
+  videos?: GeneratedVideo[],
   copy: CopyBundle,
   strategy: StrategyDecision,
   qaReport: QAReport,
@@ -25,6 +30,7 @@ export async function sendPostToTelegram(input: {
     `Topic: ${input.strategy.topic}`,
     `Format: ${input.strategy.format} (${input.images.length} slides)`,
     `QA Score: ${(input.qaReport.overallScore * 100).toFixed(0)}%`,
+    input.videos?.length ? `Video: ${input.videos.length} MP4 attached` : '',
     '',
     input.copy.caption,
     '',
@@ -43,6 +49,16 @@ export async function sendPostToTelegram(input: {
       filePath: image.localPath,
       caption: `Slide ${image.slideNumber}`,
       contentType: image.mimeType,
+    });
+  }
+
+  for (const video of input.videos || []) {
+    await uploadTelegramDocument({
+      token,
+      chatId,
+      filePath: video.localPath,
+      caption: `Reel draft (${video.durationSeconds}s)`,
+      contentType: video.mimeType,
     });
   }
 
@@ -66,19 +82,21 @@ export async function sendPostToTelegram(input: {
     });
   }
 
-  console.log(`[TelegramDelivery] ✅ Sent ${input.images.length} slides to Telegram.`);
+  console.log(`[TelegramDelivery] ✅ Sent ${input.images.length} slides${input.videos?.length ? ` and ${input.videos.length} video(s)` : ''} to Telegram.`);
 }
 
 async function callTelegram(token: string, method: string, body: Record<string, unknown>) {
-  const response = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
+  await withTelegramRetry(method, async () => {
+    const response = await fetchWithTimeout(`https://api.telegram.org/bot${token}/${method}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
 
-  if (!response.ok) {
-    throw new Error(`Telegram ${method} failed: ${response.status} ${await response.text()}`);
-  }
+    if (!response.ok) {
+      throw new Error(`Telegram ${method} failed: ${response.status} ${await response.text()}`);
+    }
+  });
 }
 
 async function uploadTelegramDocument(input: {
@@ -88,22 +106,63 @@ async function uploadTelegramDocument(input: {
   caption: string,
   contentType: string,
 }) {
-  const fileBuffer = fs.readFileSync(input.filePath);
-  const form = new FormData();
-  form.append('chat_id', input.chatId);
-  form.append('caption', input.caption);
-  form.append(
-    'document',
-    new Blob([new Uint8Array(fileBuffer)], { type: input.contentType }),
-    path.basename(input.filePath)
-  );
-
-  const response = await fetch(`https://api.telegram.org/bot${input.token}/sendDocument`, {
-    method: 'POST',
-    body: form,
-  });
-
-  if (!response.ok) {
-    throw new Error(`Telegram sendDocument failed: ${response.status} ${await response.text()}`);
+  const stats = fs.statSync(input.filePath);
+  if (stats.size > 49 * 1024 * 1024) {
+    throw new Error(`Telegram upload skipped because ${path.basename(input.filePath)} is larger than the Bot API upload limit.`);
   }
+
+  await withTelegramRetry(`sendDocument:${path.basename(input.filePath)}`, async () => {
+    const fileBuffer = fs.readFileSync(input.filePath);
+    const form = new FormData();
+    form.append('chat_id', input.chatId);
+    form.append('caption', input.caption);
+    form.append(
+      'document',
+      new Blob([new Uint8Array(fileBuffer)], { type: input.contentType }),
+      path.basename(input.filePath)
+    );
+
+    const response = await fetchWithTimeout(`https://api.telegram.org/bot${input.token}/sendDocument`, {
+      method: 'POST',
+      body: form,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Telegram sendDocument failed: ${response.status} ${await response.text()}`);
+    }
+  });
+}
+
+async function withTelegramRetry(label: string, operation: () => Promise<void>): Promise<void> {
+  let lastError: unknown;
+
+  for (let attempt = 1; attempt <= TELEGRAM_RETRY_ATTEMPTS; attempt++) {
+    try {
+      await operation();
+      return;
+    } catch (error) {
+      lastError = error;
+      if (attempt === TELEGRAM_RETRY_ATTEMPTS) break;
+      const delayMs = 1_500 * attempt * attempt;
+      console.warn(`[TelegramDelivery] ${label} failed on attempt ${attempt}; retrying in ${delayMs}ms.`);
+      await delay(delayMs);
+    }
+  }
+
+  const message = lastError instanceof Error ? lastError.message : String(lastError);
+  throw new Error(`[TelegramDelivery] ${label} failed after ${TELEGRAM_RETRY_ATTEMPTS} attempts: ${message}`);
+}
+
+async function fetchWithTimeout(url: string, init: RequestInit): Promise<Response> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), TELEGRAM_TIMEOUT_MS);
+  try {
+    return await fetch(url, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

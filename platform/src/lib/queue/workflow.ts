@@ -1,12 +1,16 @@
 import path from 'path';
 import fs from 'fs';
 import { PrismaClient } from '@prisma/client';
+import { CostGuardAgent } from '../agents/costGuardAgent';
 import { TrendResearchAgent } from '../agents/trendResearchAgent';
 import { ContentStrategyAgent } from '../agents/contentStrategyAgent';
+import { ComplianceQAAgent } from '../agents/complianceQAAgent';
 import { ImagePromptAgent } from '../agents/imagePromptAgent';
 import { ImageGenerationAgent } from '../agents/imageGenerationAgent';
 import { VisionQAAgent } from '../agents/visionQAAgent';
 import { CopywritingAgent } from '../agents/copywritingAgent';
+import { VideoGenerationAgent, VideoGenerationResult } from '../agents/videoGenerationAgent';
+import { VideoQAAgent, VideoQAReport } from '../agents/videoQAAgent';
 
 const prisma = new PrismaClient();
 
@@ -24,6 +28,18 @@ export async function runDailyWorkflow() {
   console.log(`  📅 Date: ${today}`);
   console.log(`  📁 Output: ${outputDir}`);
   console.log('═══════════════════════════════════════════════════════');
+  console.log('');
+
+  // ═══════════════════════════════════════════════════════
+  // AGENT 0: ZERO-COST GUARD
+  // ═══════════════════════════════════════════════════════
+  console.log('━━━ AGENT 0: ZERO-COST GUARD ━━━');
+  const costGuard = await new CostGuardAgent().execute();
+  console.log(`   ${costGuard.policy}`);
+  for (const note of costGuard.notes) console.log(`   ${note}`);
+  if (!costGuard.isSafe) {
+    throw new Error(`Zero-cost guard blocked the run: ${costGuard.failures.join(' ')}`);
+  }
   console.log('');
 
   // ═══════════════════════════════════════════════════════
@@ -51,7 +67,20 @@ export async function runDailyWorkflow() {
   // ═══════════════════════════════════════════════════════
   console.log('━━━ AGENT 2: CONTENT STRATEGY ━━━');
   const strategyAgent = new ContentStrategyAgent();
-  const strategy = await strategyAgent.execute({ trends });
+  const videoGenerationAvailable = VideoGenerationAgent.isAvailable();
+  const strategy = await strategyAgent.execute({ trends, videoGenerationAvailable });
+  console.log('');
+
+  // ═══════════════════════════════════════════════════════
+  // AGENT 3: COMPLIANCE QA
+  // ═══════════════════════════════════════════════════════
+  console.log('━━━ AGENT 3: COMPLIANCE QA ━━━');
+  const complianceAgent = new ComplianceQAAgent();
+  const strategyCompliance = await complianceAgent.execute({ strategy });
+  if (!strategyCompliance.isValid) {
+    throw new Error(`Strategy compliance failed: ${strategyCompliance.failures.join(' ')}`);
+  }
+  console.log(`   Compliance score: ${(strategyCompliance.confidenceScore * 100).toFixed(0)}%`);
   console.log('');
 
   // Save to DB
@@ -73,17 +102,17 @@ export async function runDailyWorkflow() {
   });
 
   // ═══════════════════════════════════════════════════════
-  // AGENT 3: IMAGE PROMPT GENERATION
+  // AGENT 4: IMAGE PROMPT GENERATION
   // ═══════════════════════════════════════════════════════
-  console.log('━━━ AGENT 3: IMAGE PROMPTS ━━━');
+  console.log('━━━ AGENT 4: IMAGE PROMPTS ━━━');
   const imagePromptAgent = new ImagePromptAgent();
   const promptSet = await imagePromptAgent.execute({ strategy });
   console.log('');
 
   // ═══════════════════════════════════════════════════════
-  // AGENT 4: IMAGE GENERATION (DALL-E 3)
+  // AGENT 5: IMAGE GENERATION
   // ═══════════════════════════════════════════════════════
-  console.log('━━━ AGENT 4: IMAGE GENERATION (DALL-E 3) ━━━');
+  console.log('━━━ AGENT 5: IMAGE GENERATION ━━━');
   const imageGenAgent = new ImageGenerationAgent();
   const generatedImages = await imageGenAgent.execute({
     prompts: promptSet.prompts,
@@ -92,9 +121,9 @@ export async function runDailyWorkflow() {
   console.log('');
 
   // ═══════════════════════════════════════════════════════
-  // AGENT 5: VISION QA (Check every image, regenerate failures)
+  // AGENT 6: VISION QA (Check every image, regenerate failures)
   // ═══════════════════════════════════════════════════════
-  console.log('━━━ AGENT 5: VISION QA INSPECTION ━━━');
+  console.log('━━━ AGENT 6: VISION QA INSPECTION ━━━');
   const qaAgent = new VisionQAAgent();
   let qaReport = await qaAgent.execute({ images: generatedImages.images });
 
@@ -142,11 +171,56 @@ export async function runDailyWorkflow() {
   console.log('');
 
   // ═══════════════════════════════════════════════════════
-  // AGENT 6: COPYWRITING (Caption, Hashtags, Comments)
+  // AGENT 7: VIDEO GENERATION + QA (free local FFmpeg)
   // ═══════════════════════════════════════════════════════
-  console.log('━━━ AGENT 6: COPYWRITING ━━━');
+  const videoGenAgent = new VideoGenerationAgent();
+  let generatedVideo: VideoGenerationResult = {
+    video: null,
+    skippedReason: 'Video generation was not requested for this strategy.',
+  };
+  let videoQaReport: VideoQAReport | null = null;
+
+  if (VideoGenerationAgent.shouldRenderForStrategy(strategy)) {
+    generatedVideo = await videoGenAgent.execute({
+      images: generatedImages.images,
+      strategy,
+      outputDir,
+    });
+  }
+
+  if (generatedVideo.video) {
+    console.log('━━━ AGENT 7: VIDEO QA INSPECTION ━━━');
+    const videoQaAgent = new VideoQAAgent();
+    videoQaReport = await videoQaAgent.execute({ video: generatedVideo.video });
+    if (!videoQaReport.isValid) {
+      console.log(`   ⚠️  Video QA failed: ${videoQaReport.failures.join(', ')}`);
+    } else {
+      console.log(`   🎬 Video QA Score: ${(videoQaReport.confidenceScore * 100).toFixed(1)}%`);
+    }
+    console.log('');
+  } else if (VideoGenerationAgent.shouldRenderForStrategy(strategy)) {
+    console.log('━━━ AGENT 7: VIDEO GENERATION SKIPPED ━━━');
+    console.log(`   ${generatedVideo.skippedReason}`);
+    console.log('');
+  }
+
+  // ═══════════════════════════════════════════════════════
+  // AGENT 8: COPYWRITING (Caption, Hashtags, Comments)
+  // ═══════════════════════════════════════════════════════
+  console.log('━━━ AGENT 8: COPYWRITING ━━━');
   const copyAgent = new CopywritingAgent();
   const copy = await copyAgent.execute({ strategy });
+  console.log('');
+
+  // ═══════════════════════════════════════════════════════
+  // AGENT 9: FINAL COMPLIANCE QA
+  // ═══════════════════════════════════════════════════════
+  console.log('━━━ AGENT 9: FINAL COMPLIANCE QA ━━━');
+  const copyCompliance = await complianceAgent.execute({ strategy, copy });
+  if (!copyCompliance.isValid) {
+    throw new Error(`Final compliance failed: ${copyCompliance.failures.join(' ')}`);
+  }
+  console.log(`   Compliance score: ${(copyCompliance.confidenceScore * 100).toFixed(0)}%`);
   console.log('');
 
   // ═══════════════════════════════════════════════════════
@@ -155,6 +229,7 @@ export async function runDailyWorkflow() {
   console.log('━━━ SAVING OUTPUT ━━━');
 
   // Write the complete post file
+  const finalConfidenceScore = combineMediaConfidence(qaReport.overallScore, videoQaReport);
   const postContent = `═══════════════════════════════════════════════════════
 THESTATSANDSTACKS — DAILY POST
 Generated: ${new Date().toLocaleString('en-CA', { timeZone: 'America/Vancouver' })}
@@ -163,7 +238,8 @@ Generated: ${new Date().toLocaleString('en-CA', { timeZone: 'America/Vancouver' 
 📌 TOPIC: ${strategy.topic}
 📐 FORMAT: ${strategy.format} (${strategy.slideCount} slides)
 🎯 TARGET: ${strategy.targetAudience}
-📊 QA SCORE: ${(qaReport.overallScore * 100).toFixed(1)}%
+📊 QA SCORE: ${(finalConfidenceScore * 100).toFixed(1)}%
+🎬 VIDEO: ${generatedVideo.video ? generatedVideo.video.localPath : generatedVideo.skippedReason || 'Not generated'}
 
 ═══════════════════════════════════════════════════════
 📝 CAPTION (Copy and paste this into Instagram):
@@ -196,6 +272,12 @@ ${copy.altText}
 ${generatedImages.images.map(img => `Slide ${img.slideNumber}: ${img.localPath}`).join('\n')}
 
 ═══════════════════════════════════════════════════════
+🎬 VIDEO (If generated):
+═══════════════════════════════════════════════════════
+
+${generatedVideo.video ? `${generatedVideo.video.localPath}\nDuration: ${generatedVideo.video.durationSeconds}s\nQA: ${videoQaReport ? `${videoQaReport.isValid ? 'PASSED' : 'FAILED'} (${(videoQaReport.confidenceScore * 100).toFixed(0)}%)` : 'Not inspected'}` : generatedVideo.skippedReason || 'Not generated'}
+
+═══════════════════════════════════════════════════════
 📋 SLIDE BREAKDOWN:
 ═══════════════════════════════════════════════════════
 
@@ -206,6 +288,7 @@ ${strategy.slideBreakdown.join('\n')}
 ═══════════════════════════════════════════════════════
 
 ${qaReport.slideReports.map(r => `Slide ${r.slideNumber}: ${r.isValid ? '✅ PASSED' : '❌ FAILED'} (${(r.confidenceScore * 100).toFixed(0)}%) ${r.failures.length > 0 ? '— ' + r.failures.join(', ') : ''}`).join('\n')}
+${videoQaReport ? `\nVideo: ${videoQaReport.isValid ? '✅ PASSED' : '❌ FAILED'} (${(videoQaReport.confidenceScore * 100).toFixed(0)}%) ${videoQaReport.failures.length > 0 ? '— ' + videoQaReport.failures.join(', ') : ''}` : ''}
 `;
 
   const postFilePath = path.join(outputDir, 'POST_READY.txt');
@@ -221,7 +304,7 @@ ${qaReport.slideReports.map(r => `Slide ${r.slideNumber}: ${r.isValid ? '✅ PAS
       cta: copy.cta,
       firstComment: copy.firstComment,
       status: 'DRAFT',
-      confidenceScore: qaReport.overallScore,
+      confidenceScore: finalConfidenceScore,
     }
   });
 
@@ -254,6 +337,34 @@ ${qaReport.slideReports.map(r => `Slide ${r.slideNumber}: ${r.isValid ? '✅ PAS
     });
   }
 
+  if (generatedVideo.video && (!videoQaReport || videoQaReport.isValid)) {
+    const videoPrompt = await prisma.prompt.create({
+      data: {
+        briefId: savedBrief.id,
+        text: 'Free local FFmpeg Reel draft rendered from approved branded slides.',
+        direction: 'Video Reel Draft',
+      }
+    });
+
+    const videoAsset = await prisma.generatedAsset.create({
+      data: {
+        promptId: videoPrompt.id,
+        imageUrl: `/api/images/${today}/${path.basename(generatedVideo.video.localPath)}`,
+        localPath: generatedVideo.video.localPath,
+        visionScore: videoQaReport?.confidenceScore || 0.8,
+        status: 'APPROVED',
+      }
+    });
+
+    await prisma.postAsset.create({
+      data: {
+        postId: savedPost.id,
+        assetId: videoAsset.id,
+        orderIndex: generatedImages.images.length + 1,
+      }
+    });
+  }
+
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
 
   // ═══════════════════════════════════════════════════════
@@ -264,6 +375,7 @@ ${qaReport.slideReports.map(r => `Slide ${r.slideNumber}: ${r.isValid ? '✅ PAS
     const { emailPostToPhone } = await import('../services/emailDelivery');
     await emailPostToPhone({
       images: generatedImages.images,
+      videos: generatedVideo.video ? [generatedVideo.video] : [],
       copy,
       strategy,
       qaReport,
@@ -280,6 +392,7 @@ ${qaReport.slideReports.map(r => `Slide ${r.slideNumber}: ${r.isValid ? '✅ PAS
   console.log(`  📁 Local backup saved at: ${outputDir}`);
   console.log(`  📧 Post emailed to your phone`);
   console.log(`  🖼️  ${generatedImages.images.length} images generated`);
+  console.log(`  🎬 ${generatedVideo.video ? '1 video generated' : 'No video generated'}`);
   console.log('═══════════════════════════════════════════════════════');
   console.log('');
 
@@ -289,7 +402,13 @@ ${qaReport.slideReports.map(r => `Slide ${r.slideNumber}: ${r.isValid ? '✅ PAS
     topic: strategy.topic,
     format: strategy.format,
     slideCount: strategy.slideCount,
-    qaScore: qaReport.overallScore,
+    qaScore: finalConfidenceScore,
+    videoPath: generatedVideo.video?.localPath || null,
     elapsed,
   };
+}
+
+function combineMediaConfidence(imageScore: number, videoQaReport: VideoQAReport | null): number {
+  if (!videoQaReport) return imageScore;
+  return Number(((imageScore * 0.7) + (videoQaReport.confidenceScore * 0.3)).toFixed(3));
 }

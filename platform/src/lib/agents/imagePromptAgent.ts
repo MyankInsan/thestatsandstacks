@@ -47,6 +47,11 @@ function buildPremiumImagePrompt(strategy: StrategyDecision, slide: string, slid
 
 function getVisualMode(format: StrategyDecision['format'], topic: string, slideNumber: number): string {
   const lower = topic.toLowerCase();
+  if (format === 'REEL_DRAFT') {
+    return slideNumber % 2 === 0
+      ? 'vertical short-form finance reel frame with kinetic editorial pacing, bold abstract routing lines, and clean negative space'
+      : 'high-contrast mobile video cover frame with layered finance UI depth, motion-ready composition, and calm premium energy';
+  }
   if (format === 'WATCHLIST_EDUCATION') {
     return slideNumber % 2 === 0
       ? 'analyst desk with abstract watchlist cards, risk gauge shapes, and layered market-screen depth'

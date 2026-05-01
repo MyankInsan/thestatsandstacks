@@ -3,13 +3,18 @@
 ## 1. System Architecture Diagram
 ```mermaid
 graph TD
-    A[Cloud Scheduler (Cron Jobs)] -->|Triggers Daily| B(Trend Research Agent)
+    A[Cloud Scheduler / GitHub Actions Cron] -->|Triggers Daily| Z(Zero-Cost Guard)
+    Z --> B(Trend Research Agent)
     B --> C(Content Strategy Agent)
     C --> D(Editorial Planning Agent)
     D --> E(Image Prompt Agent)
     E --> F(Image Generation Agent)
     F --> G(Vision QA Critic)
-    G --> H(Finance Accuracy & Compliance)
+    G --> V{Video needed?}
+    V -->|Yes| W(Free Local Video Generator)
+    W --> X(Video QA Critic)
+    V -->|No| H(Finance Accuracy & Compliance)
+    X --> H
     H --> I(Copywriting Agent)
     I --> J(Packaging Agent)
     J --> K(Music/Audio Agent)
@@ -41,6 +46,8 @@ graph TD
 - **Database**: PostgreSQL with Prisma ORM
 - **Queue/Orchestration**: Redis + BullMQ (Handles multi-step agent workflows with retries)
 - **AI Models**: OpenAI GPT-4o (Agents, Copy, Finance Checks), DALL-E 3 (Image Generation)
+- **Video Rendering**: Free local FFmpeg MP4 rendering from approved carousel frames; optional open-source text-to-video models can be explored separately if local GPU capacity exists.
+- **Zero-Cost Mode**: Paid image/video APIs are blocked by default; daily cloud runs use local Sharp images and FFmpeg video rendering only.
 - **Deployment**: Google Cloud Run (Next.js app & background worker), Cloud Scheduler (Cron), Cloud Storage (Assets)
 - **Auth**: NextAuth / simple auth for Admin Dashboard
 

@@ -2,11 +2,15 @@
 // This runs WITHOUT the Next.js server or database — just agents + email
 import 'dotenv/config';
 
+import { CostGuardAgent } from './src/lib/agents/costGuardAgent';
 import { TrendResearchAgent } from './src/lib/agents/trendResearchAgent';
 import { ContentStrategyAgent } from './src/lib/agents/contentStrategyAgent';
+import { ComplianceQAAgent } from './src/lib/agents/complianceQAAgent';
 import { ImagePromptAgent } from './src/lib/agents/imagePromptAgent';
 import { ImageGenerationAgent } from './src/lib/agents/imageGenerationAgent';
 import { VisionQAAgent } from './src/lib/agents/visionQAAgent';
+import { VideoGenerationAgent, VideoGenerationResult } from './src/lib/agents/videoGenerationAgent';
+import { VideoQAAgent, VideoQAReport } from './src/lib/agents/videoQAAgent';
 import { CopywritingAgent } from './src/lib/agents/copywritingAgent';
 import { emailPostToPhone } from './src/lib/services/emailDelivery';
 import { sendPostToTelegram } from './src/lib/services/telegramDelivery';
@@ -36,6 +40,16 @@ async function main() {
   console.log('═══════════════════════════════════════════════════════');
   console.log('');
 
+  // ── AGENT 0: ZERO-COST GUARD ──
+  console.log('━━━ AGENT 0: ZERO-COST GUARD ━━━');
+  const costGuard = await new CostGuardAgent().execute();
+  console.log(`   ${costGuard.policy}`);
+  for (const note of costGuard.notes) console.log(`   ${note}`);
+  if (!costGuard.isSafe) {
+    throw new Error(`Zero-cost guard blocked the run: ${costGuard.failures.join(' ')}`);
+  }
+  console.log('');
+
   // ── AGENT 1: TREND RESEARCH ──
   console.log('━━━ AGENT 1: TREND RESEARCH ━━━');
   const researchAgent = new TrendResearchAgent();
@@ -48,11 +62,22 @@ async function main() {
   // ── AGENT 2: CONTENT STRATEGY ──
   console.log('━━━ AGENT 2: CONTENT STRATEGY ━━━');
   const strategyAgent = new ContentStrategyAgent();
-  const strategy = await strategyAgent.execute({ trends, contentHistory });
+  const videoGenerationAvailable = VideoGenerationAgent.isAvailable();
+  const strategy = await strategyAgent.execute({ trends, contentHistory, videoGenerationAvailable });
   console.log('');
 
-  // ── AGENT 3: IMAGE PROMPTS ──
-  console.log('━━━ AGENT 3: IMAGE PROMPTS ━━━');
+  // ── AGENT 3: COMPLIANCE QA ──
+  console.log('━━━ AGENT 3: COMPLIANCE QA ━━━');
+  const complianceAgent = new ComplianceQAAgent();
+  const strategyCompliance = await complianceAgent.execute({ strategy });
+  if (!strategyCompliance.isValid) {
+    throw new Error(`Strategy compliance failed: ${strategyCompliance.failures.join(' ')}`);
+  }
+  console.log(`   Compliance score: ${(strategyCompliance.confidenceScore * 100).toFixed(0)}%`);
+  console.log('');
+
+  // ── AGENT 4: IMAGE PROMPTS ──
+  console.log('━━━ AGENT 4: IMAGE PROMPTS ━━━');
   const imagePromptAgent = new ImagePromptAgent();
   const promptSet = await imagePromptAgent.execute({ strategy });
   const manualPromptPath = path.join(outputDir, 'MANUAL_IMAGE_PROMPTS.md');
@@ -64,8 +89,8 @@ async function main() {
   console.log(`   Manual image prompt packet saved: ${manualPromptPath}`);
   console.log('');
 
-  // ── AGENT 4: IMAGE GENERATION ──
-  console.log('━━━ AGENT 4: IMAGE GENERATION ━━━');
+  // ── AGENT 5: IMAGE GENERATION ──
+  console.log('━━━ AGENT 5: IMAGE GENERATION ━━━');
   const imageGenAgent = new ImageGenerationAgent();
   const generatedImages = await imageGenAgent.execute({
     prompts: promptSet.prompts,
@@ -73,8 +98,8 @@ async function main() {
   });
   console.log('');
 
-  // ── AGENT 5: VISION QA (check + regenerate) ──
-  console.log('━━━ AGENT 5: VISION QA ━━━');
+  // ── AGENT 6: VISION QA (check + regenerate) ──
+  console.log('━━━ AGENT 6: VISION QA ━━━');
   const qaAgent = new VisionQAAgent();
   let qaReport = await qaAgent.execute({ images: generatedImages.images });
 
@@ -93,16 +118,62 @@ async function main() {
   console.log(`   📊 Overall QA Score: ${(qaReport.overallScore * 100).toFixed(1)}%`);
   console.log('');
 
-  // ── AGENT 6: COPYWRITING ──
-  console.log('━━━ AGENT 6: COPYWRITING ━━━');
+  // ── AGENT 7: VIDEO GENERATION + QA ──
+  let generatedVideo: VideoGenerationResult = {
+    video: null,
+    skippedReason: 'Video generation was not requested for this strategy.',
+  };
+  let videoQaReport: VideoQAReport | null = null;
+
+  if (VideoGenerationAgent.shouldRenderForStrategy(strategy)) {
+    console.log('━━━ AGENT 7: VIDEO GENERATION ━━━');
+    const videoGenAgent = new VideoGenerationAgent();
+    generatedVideo = await videoGenAgent.execute({
+      images: generatedImages.images,
+      strategy,
+      outputDir,
+    });
+
+    if (generatedVideo.video) {
+      const videoQaAgent = new VideoQAAgent();
+      videoQaReport = await videoQaAgent.execute({ video: generatedVideo.video });
+      console.log(`   🎬 Video QA Score: ${(videoQaReport.confidenceScore * 100).toFixed(1)}%`);
+      if (!videoQaReport.isValid) {
+        console.log(`   ⚠️  Video QA failed: ${videoQaReport.failures.join(', ')}`);
+      }
+    } else {
+      console.log(`   Video skipped: ${generatedVideo.skippedReason}`);
+    }
+    console.log('');
+  }
+
+  // ── AGENT 8: COPYWRITING ──
+  console.log('━━━ AGENT 8: COPYWRITING ━━━');
   const copyAgent = new CopywritingAgent();
   const copy = await copyAgent.execute({ strategy });
+  console.log('');
+
+  // ── AGENT 9: FINAL COMPLIANCE QA ──
+  console.log('━━━ AGENT 9: FINAL COMPLIANCE QA ━━━');
+  const copyCompliance = await complianceAgent.execute({ strategy, copy });
+  if (!copyCompliance.isValid) {
+    throw new Error(`Final compliance failed: ${copyCompliance.failures.join(' ')}`);
+  }
+  console.log(`   Compliance score: ${(copyCompliance.confidenceScore * 100).toFixed(0)}%`);
   console.log('');
 
   const postReadyPath = path.join(outputDir, 'POST_READY.txt');
   fs.writeFileSync(
     postReadyPath,
-    buildPostReadyFile({ strategy, copy, qaReport, imagePaths: generatedImages.images.map((image) => image.localPath) }),
+    buildPostReadyFile({
+      strategy,
+      copy,
+      qaReport,
+      imagePaths: generatedImages.images.map((image) => image.localPath),
+      videoPath: generatedVideo.video?.localPath,
+      videoQaReport,
+      videoSkippedReason: generatedVideo.skippedReason,
+    }),
     'utf-8'
   );
   console.log(`   Post package saved: ${postReadyPath}`);
@@ -112,6 +183,7 @@ async function main() {
     console.log('━━━ SENDING EMAIL ━━━');
     await emailPostToPhone({
       images: generatedImages.images,
+      videos: generatedVideo.video ? [generatedVideo.video] : [],
       copy,
       strategy,
       qaReport,
@@ -125,6 +197,7 @@ async function main() {
     console.log('━━━ SENDING TELEGRAM ━━━');
     await sendPostToTelegram({
       images: generatedImages.images,
+      videos: generatedVideo.video ? [generatedVideo.video] : [],
       copy,
       strategy,
       qaReport,
@@ -149,7 +222,7 @@ async function main() {
 
   console.log('');
   console.log('═══════════════════════════════════════════════════════');
-  console.log(`  ✅ DONE — ${elapsed}s — ${generatedImages.images.length} slides generated`);
+  console.log(`  ✅ DONE — ${elapsed}s — ${generatedImages.images.length} slides${generatedVideo.video ? ' + 1 video' : ''} generated`);
   console.log('═══════════════════════════════════════════════════════');
 }
 
@@ -158,6 +231,9 @@ function buildPostReadyFile(input: {
   copy: Awaited<ReturnType<CopywritingAgent['execute']>>,
   qaReport: Awaited<ReturnType<VisionQAAgent['execute']>>,
   imagePaths: string[],
+  videoPath?: string,
+  videoQaReport?: VideoQAReport | null,
+  videoSkippedReason?: string,
 }): string {
   return `THESTATSANDSTACKS DAILY POST
 Generated: ${getLocalTimestamp()}
@@ -185,6 +261,11 @@ ${input.copy.altText}
 
 SLIDES
 ${input.imagePaths.map((imagePath, index) => `Slide ${index + 1}: ${imagePath}`).join('\n')}
+
+VIDEO
+${input.videoPath
+  ? `${input.videoPath}\nQA: ${input.videoQaReport ? `${input.videoQaReport.isValid ? 'PASSED' : 'FAILED'} (${(input.videoQaReport.confidenceScore * 100).toFixed(0)}%)` : 'Not inspected'}`
+  : input.videoSkippedReason || 'Not generated'}
 `;
 }
 

@@ -12,7 +12,22 @@ Use `env.example` as the non-secret reference for local and GitHub Actions varia
 
 By default, image generation is free and local: the pipeline creates branded PNG carousel slides with SVG + Sharp, saves a `MANUAL_IMAGE_PROMPTS.md` packet for optional manual refinement, and does not call a paid image API. The GitHub Actions workflow is locked to `FREE_IMAGE_GENERATION_ONLY=true`, so the daily Telegram images will not use OpenAI image generation even if an OpenAI key exists in repository secrets.
 
+`ZERO_COST_MODE=true` is enabled by default. If someone accidentally turns on paid image/video generation env vars, the pipeline stops before generating assets instead of risking a charge.
+
 The local renderer uses exact SVG typography, content-aware mini visual systems, and topic/date-based visual variation so slides stay readable and do not repeat the same generic account-map look every day.
+
+Video generation is also free and local. The workflow can render a vertical MP4 Reel draft from the approved slide assets using FFmpeg, then run a video QA pass. This is intentionally not a paid text-to-video API: the system chooses `REEL_DRAFT` only when local FFmpeg is available, or you can force a Reel draft from every post.
+
+```bash
+# macOS example
+brew install ffmpeg
+
+# auto = only when strategy chooses REEL_DRAFT
+# always = render a Reel draft from carousel slides too
+# disabled = never render video
+VIDEO_GENERATION_MODE=auto
+VIDEO_SECONDS_PER_SLIDE=2.6
+```
 
 To intentionally use OpenAI image generation locally later, you would need to opt out of free-only mode and set:
 
@@ -26,6 +41,8 @@ OPENAI_IMAGE_SIZE=1024x1536
 ```
 
 OpenAI API usage is billed separately from ChatGPT subscriptions, including ChatGPT Business. Keep `FREE_IMAGE_GENERATION_ONLY=true` and `ALLOW_PAID_IMAGE_GENERATION=false` if you do not want image charges.
+
+Caption packaging is intentionally conservative for Instagram: captions are normalized below 1,100 characters, hashtags are capped at 5, and hashtags are kept out of the caption body so the final copy is easier to paste into Instagram.
 
 The daily workflow keeps a lightweight topic memory in `/tmp/thestatsandstacks-history/content-history.json` and GitHub Actions cache so it avoids repeating the same topic too soon. Optional Reddit research uses Reddit's API when these are set; unsupported scraping is intentionally not used:
 
@@ -45,6 +62,8 @@ DELIVERY_EMAIL=...
 TELEGRAM_BOT_TOKEN=...
 TELEGRAM_CHAT_ID=...
 ```
+
+For Telegram delivery while your computer is off, run through the included GitHub Actions schedule and set the Telegram secrets in GitHub. The workflow runs on a GitHub-hosted Ubuntu runner, installs FFmpeg, generates media, then sends images and any generated MP4 to Telegram. Your laptop and current Wi-Fi do not need to be online for that cloud run.
 
 Useful checks:
 

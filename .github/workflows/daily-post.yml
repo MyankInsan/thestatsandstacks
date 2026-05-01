@@ -2,12 +2,14 @@ name: Daily Instagram Post
 
 on:
   schedule:
-    # Runs at both possible UTC offsets, then a Vancouver-time guard below keeps only 8:00 AM local.
-    - cron: '0 15,16 * * *'
+    # Runs at both possible UTC offsets; the guard below chooses the one matching 8:00 AM Vancouver.
+    - cron: '0 15 * * *'
+    - cron: '0 16 * * *'
   workflow_dispatch: # Allows you to manually trigger from GitHub website
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  NODE_OPTIONS: "--dns-result-order=ipv4first"
 
 jobs:
   generate-post:
@@ -21,12 +23,14 @@ jobs:
       - name: Check Vancouver send window
         id: send-window
         run: |
-          local_hour="$(TZ=America/Vancouver date +%H)"
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$local_hour" = "08" ]; then
+          scheduled_hour="$(echo "${{ github.event.schedule }}" | awk '{print $2}')"
+          target_utc_hour="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=8, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$scheduled_hour" = "$target_utc_hour" ]; then
             echo "should_run=true" >> "$GITHUB_OUTPUT"
           else
             echo "should_run=false" >> "$GITHUB_OUTPUT"
-            echo "Skipping because Vancouver local hour is $local_hour, not 08."
+            echo "Skipping because cron UTC hour $scheduled_hour does not match today's 8 AM Vancouver UTC hour $target_utc_hour."
           fi
 
       - name: Setup Node.js
@@ -51,6 +55,12 @@ jobs:
         working-directory: platform
         run: npm ci
 
+      - name: Install free video tooling
+        if: steps.send-window.outputs.should_run == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
       - name: Run Daily Pipeline
         if: steps.send-window.outputs.should_run == 'true'
         working-directory: platform
@@ -59,9 +69,14 @@ jobs:
           GEMINI_TEXT_MODEL: gemini-2.5-flash
           WORKFLOW_TIME_ZONE: America/Vancouver
           CONTENT_HISTORY_PATH: /tmp/thestatsandstacks-history/content-history.json
+          ZERO_COST_MODE: "true"
           FREE_IMAGE_GENERATION_ONLY: "true"
           ALLOW_PAID_IMAGE_GENERATION: "false"
-          ENABLE_REDDIT_RESEARCH: "false"
+          VIDEO_GENERATION_MODE: "auto"
+          VIDEO_SECONDS_PER_SLIDE: "2.6"
+          VIDEO_FFMPEG_PRESET: veryfast
+          VIDEO_FFMPEG_CRF: "20"
+          ENABLE_REDDIT_RESEARCH: "true"
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
           REDDIT_USER_AGENT: thestatsandstacks-content-research/1.0
@@ -71,11 +86,3 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: npm run daily
-
-      - name: Upload generated slides
-        if: always() && steps.send-window.outputs.should_run == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: thestatsandstacks-daily-output
-          path: /tmp/thestatsandstacks
-          if-no-files-found: warn

@@ -21,7 +21,7 @@ export interface TrendResearchResult {
 }
 
 export interface ContentStrategyResult {
-  format: 'CAROUSEL' | 'SINGLE_IMAGE' | 'REEL_DRAFT';
+  format: 'CAROUSEL' | 'SINGLE_IMAGE' | 'WATCHLIST_EDUCATION' | 'REEL_DRAFT';
   topic: string;
   hook: string;
   reasoning: string;
