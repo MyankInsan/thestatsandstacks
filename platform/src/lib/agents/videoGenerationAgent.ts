@@ -101,10 +101,11 @@ export class VideoGenerationAgent extends BaseAgent {
     images: GeneratedImage[];
     strategy: StrategyDecision;
     outputDir: string;
+    force?: boolean;
   }): Promise<VideoGenerationResult> {
     console.log(`[${this.name}] Rendering Instagram-safe animated Reel...`);
 
-    if (!VideoGenerationAgent.shouldRenderForStrategy(input.strategy)) {
+    if (!input.force && !VideoGenerationAgent.shouldRenderForStrategy(input.strategy)) {
       return { video: null, skippedReason: 'Video generation mode did not request a video for this strategy.' };
     }
 

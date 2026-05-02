@@ -2,6 +2,7 @@ import { BaseAgent } from './interfaces';
 import { GeneratedImage } from './imageGenerationAgent';
 import { getGeminiClient, getGeminiTextModelName } from '../services/gemini';
 import fs from 'fs';
+import sharp from 'sharp';
 
 export interface QAReport {
   allPassed: boolean;
@@ -31,12 +32,31 @@ export class VisionQAAgent extends BaseAgent {
 
       if (image.source === 'local') {
         const stats = fs.existsSync(image.localPath) ? fs.statSync(image.localPath) : null;
-        const isValid = Boolean(stats && stats.size > 10_000);
+        const failures: string[] = [];
+
+        if (!stats || stats.size <= 80_000) {
+          failures.push('Local PNG slide was missing or unexpectedly small.');
+        }
+
+        try {
+          const metadata = await sharp(image.localPath).metadata();
+          if (metadata.width !== 1080 || metadata.height !== 1350) {
+            failures.push(`Local PNG dimensions were ${metadata.width || 0}x${metadata.height || 0}, expected 1080x1350.`);
+          }
+        } catch {
+          failures.push('Local PNG metadata could not be inspected.');
+        }
+
+        if (image.layoutWarnings?.length) {
+          failures.push(...image.layoutWarnings);
+        }
+
+        const isValid = failures.length === 0;
         const report = {
           slideNumber: image.slideNumber,
           isValid,
-          confidenceScore: isValid ? 0.98 : 0.2,
-          failures: isValid ? [] : ['Local PNG slide was missing or unexpectedly small'],
+          confidenceScore: isValid ? 0.99 : 0.25,
+          failures,
         };
         slideReports.push(report);
         if (!report.isValid) failedSlides.push(image.slideNumber);

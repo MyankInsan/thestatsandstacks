@@ -4,6 +4,7 @@ import { CostGuardAgent } from '../src/lib/agents/costGuardAgent';
 import { ComplianceQAAgent } from '../src/lib/agents/complianceQAAgent';
 import { PublisherAgent } from '../src/lib/agents/publisherAgent';
 import { normalizeCopyBundle } from '../src/lib/agents/copywritingAgent';
+import { MediaPlanAgent } from '../src/lib/agents/mediaPlanAgent';
 
 test('PublisherAgent rejects publish if confidence score is below 0.85', async () => {
     const agent = new PublisherAgent();
@@ -111,6 +112,50 @@ test('ComplianceQAAgent blocks investment recommendation language', async () => 
 
   assert.equal(report.isValid, false);
   assert.ok(report.failures.length >= 2);
+});
+
+test('MediaPlanAgent selects video only on free video days for motion-friendly topics', async () => {
+  const plan = await new MediaPlanAgent().execute({
+    strategy: {
+      topic: 'How to read candlesticks before chasing a stock',
+      hook: 'Candles are context, not a signal.',
+      format: 'WATCHLIST_EDUCATION',
+      slideCount: 7,
+      slideBreakdown: [],
+      reasoning: 'Animated chart lesson',
+      targetAudience: 'Canadians learning investing basics',
+      searchKeywords: ['candlestick chart'],
+    },
+    videoAvailable: true,
+    videoRequestedToday: true,
+  });
+
+  assert.equal(plan.kind, 'VIDEO');
+  assert.equal(plan.shouldGenerateImages, false);
+  assert.equal(plan.shouldGenerateVideo, true);
+  assert.equal(plan.imageCount, 0);
+});
+
+test('MediaPlanAgent keeps carousels bounded when video is not requested', async () => {
+  const plan = await new MediaPlanAgent().execute({
+    strategy: {
+      topic: 'TFSA vs RRSP vs FHSA: Which Account First?',
+      hook: 'The order matters.',
+      format: 'CAROUSEL',
+      slideCount: 12,
+      slideBreakdown: [],
+      reasoning: 'Step-by-step framework',
+      targetAudience: 'Canadian savers',
+      searchKeywords: ['TFSA RRSP FHSA'],
+    },
+    videoAvailable: true,
+    videoRequestedToday: false,
+  });
+
+  assert.equal(plan.kind, 'CAROUSEL');
+  assert.equal(plan.shouldGenerateImages, true);
+  assert.equal(plan.shouldGenerateVideo, false);
+  assert.equal(plan.imageCount, 8);
 });
 
 function restoreEnv(key: string, value: string | undefined): void {

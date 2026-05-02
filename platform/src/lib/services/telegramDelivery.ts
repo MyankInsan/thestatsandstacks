@@ -24,11 +24,12 @@ export async function sendPostToTelegram(input: {
     console.log('[TelegramDelivery] Skipped (TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set).');
     return;
   }
+  const mediaSummary = buildMediaSummary(input.images.length, input.videos?.length || 0);
 
   const summary = [
     `TheStatsAndStacks daily post`,
     `Topic: ${input.strategy.topic}`,
-    `Format: ${input.strategy.format} (${input.images.length} slides)`,
+    `Format: ${input.strategy.format} (${mediaSummary})`,
     `QA Score: ${(input.qaReport.overallScore * 100).toFixed(0)}%`,
     input.videos?.length ? `Video: ${input.videos.length} animated educational MP4 attached` : '',
     '',
@@ -165,4 +166,11 @@ async function fetchWithTimeout(url: string, init: RequestInit): Promise<Respons
 
 function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function buildMediaSummary(imageCount: number, videoCount: number): string {
+  const parts: string[] = [];
+  if (imageCount > 0) parts.push(`${imageCount} slide${imageCount === 1 ? '' : 's'}`);
+  if (videoCount > 0) parts.push(`${videoCount} video${videoCount === 1 ? '' : 's'}`);
+  return parts.length ? parts.join(' + ') : 'no media';
 }

@@ -22,6 +22,7 @@ export async function emailPostToPhone(input: {
 }) {
   const { images, videos = [], copy, strategy, qaReport } = input;
   const today = new Date().toLocaleDateString('en-CA');
+  const mediaSummary = buildMediaSummary(images.length, videos.length);
 
   console.log(`[EmailDelivery] 📧 Sending post to your phone via email...`);
 
@@ -50,7 +51,7 @@ export async function emailPostToPhone(input: {
     <div style="padding: 20px 0;">
       <p style="color: #94A3B8; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">📌 Topic</p>
       <p style="color: white; font-size: 16px; font-weight: bold; margin: 0;">${strategy.topic}</p>
-      <p style="color: #64748B; font-size: 12px; margin-top: 4px;">${strategy.format} • ${strategy.slideCount} slides • QA Score: ${(qaReport.overallScore * 100).toFixed(0)}%</p>
+      <p style="color: #64748B; font-size: 12px; margin-top: 4px;">${strategy.format} • ${mediaSummary} • QA Score: ${(qaReport.overallScore * 100).toFixed(0)}%</p>
     </div>
 
     <div style="background: #1E293B; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
@@ -68,7 +69,7 @@ export async function emailPostToPhone(input: {
       <p style="color: #E2E8F0; font-size: 13px; margin: 0;">${copy.firstComment}</p>
     </div>
 
-    <div style="padding: 16px 0;">
+    ${images.length ? `<div style="padding: 16px 0;">
       <p style="color: #94A3B8; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">🖼️ YOUR SLIDES — Save these images to your phone:</p>
       ${images.map((img, i) => `
         <div style="margin-bottom: 8px;">
@@ -76,7 +77,7 @@ export async function emailPostToPhone(input: {
           <p style="color: #64748B; font-size: 10px; margin-top: 2px;">Slide ${i + 1}</p>
         </div>
       `).join('')}
-    </div>
+    </div>` : ''}
 
     ${videos.length ? `
       <div style="background: #1E293B; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
@@ -99,7 +100,7 @@ ${today}
 ═══════════════════════════════════════
 
 📌 TOPIC: ${strategy.topic}
-📐 FORMAT: ${strategy.format} (${strategy.slideCount} slides)
+📐 FORMAT: ${strategy.format} (${mediaSummary})
 📊 QA SCORE: ${(qaReport.overallScore * 100).toFixed(0)}%
 
 ───────────────────────────────────────
@@ -122,7 +123,7 @@ ${copy.firstComment}
 
 ───────────────────────────────────────
 
-Images are attached to this email.
+${images.length ? 'Images are attached to this email.' : 'No carousel images were generated for this run.'}
 ${videos.length ? 'Animated educational Reel MP4 is attached as well.\n' : ''}
 Save them to your phone gallery, then post to Instagram.
   `;
@@ -137,4 +138,11 @@ Save them to your phone gallery, then post to Instagram.
   });
 
   console.log(`[EmailDelivery] ✅ Email sent to ${process.env.DELIVERY_EMAIL}`);
+}
+
+function buildMediaSummary(imageCount: number, videoCount: number): string {
+  const parts: string[] = [];
+  if (imageCount > 0) parts.push(`${imageCount} slide${imageCount === 1 ? '' : 's'}`);
+  if (videoCount > 0) parts.push(`${videoCount} video${videoCount === 1 ? '' : 's'}`);
+  return parts.length ? parts.join(' + ') : 'no media';
 }

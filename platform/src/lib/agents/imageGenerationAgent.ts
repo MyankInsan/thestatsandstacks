@@ -10,6 +10,7 @@ export interface GeneratedImage {
   localPath: string;
   mimeType: string;
   source: 'local' | 'openai';
+  layoutWarnings?: string[];
 }
 
 interface ParsedSlide {
@@ -46,6 +47,11 @@ interface TextBlockLayout {
   bottomY: number;
 }
 
+interface SlideRender {
+  svg: string;
+  layoutWarnings: string[];
+}
+
 const SLIDE_WIDTH = 1080;
 const SLIDE_HEIGHT = 1350;
 const PANEL_X = 74;
@@ -54,6 +60,9 @@ const PANEL_W = 932;
 const PANEL_H = 1206;
 const CONTENT_X = 116;
 const CONTENT_W = 848;
+const POINT_ROW_H = 76;
+const POINT_ROW_GAP = 88;
+const SAVE_CARD_H = 104;
 
 export class ImageGenerationAgent extends BaseAgent {
   constructor() {
@@ -108,9 +117,9 @@ export class ImageGenerationAgent extends BaseAgent {
           const buffer = Buffer.from(imageData, 'base64');
           const filename = buildSlideFilename(input.runSlug, prompt.slideNumber);
           const localPath = path.join(input.outputDir, filename);
-          await this.writePremiumCompositedSlide(buffer, prompt.slideNumber, prompt.slideDescription, localPath, input.runSlug);
+          const layoutWarnings = await this.writePremiumCompositedSlide(buffer, prompt.slideNumber, prompt.slideDescription, localPath, input.runSlug);
 
-          images.push({ slideNumber: prompt.slideNumber, localPath, mimeType: 'image/png', source: 'openai' });
+          images.push({ slideNumber: prompt.slideNumber, localPath, mimeType: 'image/png', source: 'openai', layoutWarnings });
           console.log(`   Slide ${prompt.slideNumber} saved.`);
           break;
         } catch (error) {
@@ -151,9 +160,15 @@ export class ImageGenerationAgent extends BaseAgent {
   ): Promise<GeneratedImage> {
     const filename = buildSlideFilename(runSlug, prompt.slideNumber);
     const localPath = path.join(outputDir, filename);
-    const svg = this.createSlideSvg(prompt.slideNumber, prompt.slideDescription, runSlug);
-    await sharp(Buffer.from(svg)).png().toFile(localPath);
-    return { slideNumber: prompt.slideNumber, localPath, mimeType: 'image/png', source: 'local' };
+    const rendered = this.createSlideSvg(prompt.slideNumber, prompt.slideDescription, runSlug);
+    await sharp(Buffer.from(rendered.svg)).png().toFile(localPath);
+    return {
+      slideNumber: prompt.slideNumber,
+      localPath,
+      mimeType: 'image/png',
+      source: 'local',
+      layoutWarnings: rendered.layoutWarnings,
+    };
   }
 
   private async writePremiumCompositedSlide(
@@ -162,16 +177,17 @@ export class ImageGenerationAgent extends BaseAgent {
     description: string,
     localPath: string,
     runSlug: string
-  ): Promise<void> {
+  ): Promise<string[]> {
     const overlay = this.createSlideSvg(slideNumber, description, `${runSlug}:overlay`);
     await sharp(background)
       .resize(SLIDE_WIDTH, SLIDE_HEIGHT, { fit: 'cover' })
-      .composite([{ input: Buffer.from(overlay), top: 0, left: 0 }])
+      .composite([{ input: Buffer.from(overlay.svg), top: 0, left: 0 }])
       .png()
       .toFile(localPath);
+    return overlay.layoutWarnings;
   }
 
-  private createSlideSvg(slideNumber: number, description: string, runSlug: string): string {
+  private createSlideSvg(slideNumber: number, description: string, runSlug: string): SlideRender {
     const parsed = parseSlideDescription(description);
     const theme = getDailyTheme(`${runSlug}:${description}`);
     const context = getVisualContext(description);
@@ -179,13 +195,25 @@ export class ImageGenerationAgent extends BaseAgent {
     const slideTheme = { ...theme, visualKind };
     const titleLayout = layoutTitle(parsed.title);
     const eyebrow = slideNumber === 1 ? context.label : `${context.label} / FRAME ${String(slideNumber).padStart(2, '0')}`;
-    const visualY = clamp(titleLayout.bottomY + 42, 494, 570);
-    const visualH = titleLayout.lines.length >= 4 ? 220 : 250;
-    const pointsY = visualY + visualH + 38;
+    const visualY = clamp(titleLayout.bottomY + 34, 386, 512);
+    const visualH = titleLayout.lines.length >= 4 ? 252 : titleLayout.lines.length === 3 ? 286 : 320;
+    const pointsY = visualY + visualH + 30;
     const pointRows = normalizePoints(parsed.points, slideNumber);
-    const footerY = 1106;
+    const pointsBottom = pointsY + (pointRows.length - 1) * POINT_ROW_GAP + POINT_ROW_H;
+    const footerY = clamp(pointsBottom + 34, 1038, 1122);
+    const layoutWarnings = getSlideLayoutWarnings({
+      titleBottomY: titleLayout.bottomY,
+      visualY,
+      visualBottomY: visualY + visualH,
+      pointsY,
+      pointsBottomY: pointsBottom,
+      footerY,
+      saveBottomY: footerY + SAVE_CARD_H,
+    });
 
-    return `<?xml version="1.0" encoding="UTF-8"?>
+    return {
+      layoutWarnings,
+      svg: `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${SLIDE_WIDTH}" height="${SLIDE_HEIGHT}" viewBox="0 0 ${SLIDE_WIDTH} ${SLIDE_HEIGHT}">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
@@ -222,7 +250,8 @@ export class ImageGenerationAgent extends BaseAgent {
   ${renderPointCards(pointRows, pointsY, slideTheme)}
   ${renderSaveCard(footerY, slideTheme)}
   ${renderFooter(slideNumber, slideTheme)}
-</svg>`;
+</svg>`,
+    };
   }
 }
 
@@ -283,6 +312,7 @@ function renderVisualSystem(
   const innerY = y + 46;
   const innerW = width - 56;
   const bottomY = y + height - 28;
+  const bodyH = Math.max(136, height - 116);
   const label = `<text x="${x + 28}" y="${y + 34}" fill="#9fb2c8" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="900" letter-spacing="1">${escapeXml(context.label)}</text>`;
   const shell = `<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="18" fill="#07111f" stroke="${theme.stroke}" stroke-width="1.6"/>
   <rect x="${x + 1}" y="${y + 1}" width="${width - 2}" height="58" rx="17" fill="#0b1626" opacity="0.72"/>`;
@@ -290,39 +320,44 @@ function renderVisualSystem(
   if (theme.visualKind === 'accounts') {
     return `${shell}
   ${label}
-  ${renderEditorialCards(innerX, innerY + 16, innerW, 132, theme, context.chips, ['Priority', 'Tax room', 'Goal fit', 'Next move'])}
+  ${renderEditorialCards(innerX, innerY + 14, innerW, Math.min(150, bodyH), theme, context.chips, ['Priority', 'Tax room', 'Goal fit', 'Next move'])}
   ${renderSignalFooter(innerX, bottomY, innerW, theme, context.leftLabel, context.rightLabel)}`;
   }
 
   if (theme.visualKind === 'market') {
     return `${shell}
   ${label}
-  ${renderMiniCandles(innerX, innerY + 10, innerW - 228, 132, theme)}
-  <rect x="${innerX + innerW - 190}" y="${innerY + 12}" width="184" height="126" rx="22" fill="${theme.card}" stroke="${theme.stroke}"/>
+  ${renderMiniCandles(innerX, innerY + 10, innerW - 238, bodyH, theme)}
+  <rect x="${innerX + innerW - 198}" y="${innerY + 12}" width="192" height="${bodyH - 2}" rx="22" fill="${theme.card}" stroke="${theme.stroke}"/>
   <text x="${innerX + innerW - 160}" y="${innerY + 58}" fill="${theme.secondaryAccent}" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="900">CHECK</text>
   <text x="${innerX + innerW - 160}" y="${innerY + 96}" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900">Risk first</text>
-  <text x="${innerX + innerW - 160}" y="${innerY + 124}" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700">No buy signals</text>`;
+  <text x="${innerX + innerW - 160}" y="${innerY + 124}" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700">No buy signals</text>
+  <rect x="${innerX + innerW - 160}" y="${innerY + 154}" width="126" height="12" rx="6" fill="#1f3147"/>
+  <rect x="${innerX + innerW - 160}" y="${innerY + 154}" width="82" height="12" rx="6" fill="${theme.accent}"/>`;
   }
 
   if (theme.visualKind === 'cashflow') {
     return `${shell}
   ${label}
-  ${renderLedgerFlow(innerX, innerY + 14, innerW, 134, theme, context.chips)}
+  ${renderLedgerFlow(innerX, innerY + 14, innerW, bodyH, theme, context.chips)}
   ${renderSignalFooter(innerX, bottomY, innerW, theme, context.leftLabel, context.rightLabel)}`;
   }
 
   if (theme.visualKind === 'credit' || theme.visualKind === 'tax') {
     const rows = theme.visualKind === 'credit' ? ['MYTH', 'FACT', 'VERIFY'] : ['DOCS', 'ROOM', 'PROOF'];
+    const rowH = 44;
+    const rowGap = 14;
+    const startY = innerY + Math.max(8, Math.floor((bodyH - rows.length * rowH - (rows.length - 1) * rowGap) / 2));
     return `${shell}
   ${label}
   ${rows.map((row, index) => {
-    const rowY = innerY + index * 48 + 10;
+    const rowY = startY + index * (rowH + rowGap);
     const color = index === 1 ? theme.secondaryAccent : theme.accent;
     return `<g>
-      <rect x="${innerX}" y="${rowY}" width="${innerW}" height="38" rx="12" fill="${theme.card}" stroke="${theme.stroke}"/>
-      <rect x="${innerX}" y="${rowY}" width="${Math.round(innerW * (0.45 + index * 0.16))}" height="38" rx="12" fill="${color}" opacity="0.24"/>
-      <text x="${innerX + 20}" y="${rowY + 26}" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900">${row}</text>
-      <text x="${innerX + innerW - 20}" y="${rowY + 26}" text-anchor="end" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800">${escapeXml(context.chips[index])}</text>
+      <rect x="${innerX}" y="${rowY}" width="${innerW}" height="${rowH}" rx="13" fill="${theme.card}" stroke="${theme.stroke}"/>
+      <rect x="${innerX}" y="${rowY}" width="${Math.round(innerW * (0.45 + index * 0.16))}" height="${rowH}" rx="13" fill="${color}" opacity="0.24"/>
+      <text x="${innerX + 20}" y="${rowY + 29}" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900">${row}</text>
+      <text x="${innerX + innerW - 20}" y="${rowY + 29}" text-anchor="end" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800">${escapeXml(context.chips[index])}</text>
     </g>`;
   }).join('')}`;
   }
@@ -335,15 +370,15 @@ function renderVisualSystem(
 
 function renderPointCards(points: string[], y: number, theme: SlideTheme): string {
   return points.slice(0, 3).map((point, index) => {
-    const rowY = y + index * 94;
+    const rowY = y + index * POINT_ROW_GAP;
     const color = index === 1 ? theme.secondaryAccent : theme.accent;
     const lines = wrapText(point, 56, 2);
     return `<g>
-      <rect x="${CONTENT_X}" y="${rowY}" width="${CONTENT_W}" height="78" rx="16" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.5"/>
-      <rect x="${CONTENT_X + 24}" y="${rowY + 22}" width="34" height="34" rx="10" fill="${color}" opacity="0.2" stroke="${color}" stroke-width="1.5"/>
-      <text x="${CONTENT_X + 41}" y="${rowY + 46}" text-anchor="middle" fill="${color}" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900">${index + 1}</text>
-      <text x="${CONTENT_X + 82}" y="${rowY + 33}" fill="#e5eefb" font-family="Arial, Helvetica, sans-serif" font-size="${lines.length > 1 ? 20 : 22}" font-weight="850">
-        ${lines.map((line, lineIndex) => `<tspan x="${CONTENT_X + 82}" dy="${lineIndex === 0 ? 0 : 26}">${escapeXml(line)}</tspan>`).join('')}
+      <rect x="${CONTENT_X}" y="${rowY}" width="${CONTENT_W}" height="${POINT_ROW_H}" rx="16" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.5"/>
+      <rect x="${CONTENT_X + 24}" y="${rowY + 21}" width="34" height="34" rx="10" fill="${color}" opacity="0.2" stroke="${color}" stroke-width="1.5"/>
+      <text x="${CONTENT_X + 41}" y="${rowY + 45}" text-anchor="middle" fill="${color}" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900">${index + 1}</text>
+      <text x="${CONTENT_X + 82}" y="${rowY + 32}" fill="#e5eefb" font-family="Arial, Helvetica, sans-serif" font-size="${lines.length > 1 ? 19 : 21}" font-weight="850">
+        ${lines.map((line, lineIndex) => `<tspan x="${CONTENT_X + 82}" dy="${lineIndex === 0 ? 0 : 25}">${escapeXml(line)}</tspan>`).join('')}
       </text>
     </g>`;
   }).join('');
@@ -351,7 +386,7 @@ function renderPointCards(points: string[], y: number, theme: SlideTheme): strin
 
 function renderSaveCard(y: number, theme: SlideTheme): string {
   return `<g>
-    <rect x="${CONTENT_X}" y="${y}" width="${CONTENT_W}" height="104" rx="24" fill="#07111f" stroke="${theme.stroke}" stroke-width="1.5"/>
+    <rect x="${CONTENT_X}" y="${y}" width="${CONTENT_W}" height="${SAVE_CARD_H}" rx="24" fill="#07111f" stroke="${theme.stroke}" stroke-width="1.5"/>
     <text x="${CONTENT_X + 36}" y="${y + 44}" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">Built for saves, not hype.</text>
     <text x="${CONTENT_X + 36}" y="${y + 78}" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Clear rules. Better decisions. No guru talk.</text>
   </g>`;
@@ -443,20 +478,25 @@ function renderLedgerFlow(
   theme: SlideTheme,
   labels: string[]
 ): string {
-  const rowH = 30;
-  const rowGap = 9;
+  const rowH = 32;
+  const rowGap = 10;
   const amounts = ['55%', '15%', '20%', '10%'];
+  const firstRowY = y + Math.max(18, Math.floor((height - (rowH * 4 + rowGap * 3)) / 2));
+  const labelW = 118;
+  const amountW = 66;
   return `<g>
     <rect x="${x}" y="${y}" width="${width}" height="${height}" rx="16" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.4"/>
     ${labels.slice(0, 4).map((label, index) => {
-      const rowY = y + 18 + index * (rowH + rowGap);
+      const rowY = firstRowY + index * (rowH + rowGap);
       const color = index === 0 ? theme.accent : index === 1 ? theme.secondaryAccent : theme.tertiaryAccent;
-      const barW = Math.round(width * (0.34 + index * 0.09));
+      const barTrackX = x + labelW + 32;
+      const barTrackW = width - labelW - amountW - 64;
+      const barW = Math.round(barTrackW * (0.44 + index * 0.1));
       return `<g>
-        <text x="${x + 22}" y="${rowY + 21}" fill="#e5eefb" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="900">${escapeXml(label)}</text>
-        <rect x="${x + 144}" y="${rowY}" width="${width - 244}" height="${rowH}" rx="9" fill="#06101d" stroke="#1f3147" stroke-width="1"/>
-        <rect x="${x + 144}" y="${rowY}" width="${barW}" height="${rowH}" rx="9" fill="${color}" opacity="0.28"/>
-        <text x="${x + width - 24}" y="${rowY + 21}" text-anchor="end" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900">${amounts[index]}</text>
+        <text x="${x + 22}" y="${rowY + 22}" fill="#e5eefb" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="900">${escapeXml(label)}</text>
+        <rect x="${barTrackX}" y="${rowY}" width="${barTrackW}" height="${rowH}" rx="9" fill="#06101d" stroke="#1f3147" stroke-width="1"/>
+        <rect x="${barTrackX}" y="${rowY}" width="${barW}" height="${rowH}" rx="9" fill="${color}" opacity="0.32"/>
+        <text x="${x + width - 24}" y="${rowY + 22}" text-anchor="end" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="900">${amounts[index]}</text>
       </g>`;
     }).join('')}
   </g>`;
@@ -497,10 +537,11 @@ function renderSignalFooter(
   rightLabel: string
 ): string {
   return `<g>
-    <line x1="${x}" y1="${bottomY - 32}" x2="${x + width}" y2="${bottomY - 32}" stroke="${theme.stroke}" stroke-width="1.4"/>
-    <rect x="${x}" y="${bottomY - 18}" width="108" height="28" rx="8" fill="${theme.accent}" opacity="0.15"/>
-    <text x="${x + 14}" y="${bottomY + 2}" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900">${escapeXml(leftLabel)}</text>
-    <text x="${x + width}" y="${bottomY + 2}" text-anchor="end" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900">${escapeXml(rightLabel)}</text>
+    <rect x="${x}" y="${bottomY - 32}" width="${width}" height="40" rx="14" fill="#050d19" stroke="${theme.stroke}" stroke-width="1.2"/>
+    <rect x="${x + 16}" y="${bottomY - 16}" width="${Math.round(width * 0.42)}" height="8" rx="4" fill="${theme.accent}" opacity="0.72"/>
+    <rect x="${x + Math.round(width * 0.52)}" y="${bottomY - 16}" width="${Math.round(width * 0.22)}" height="8" rx="4" fill="${theme.secondaryAccent}" opacity="0.52"/>
+    <text x="${x + 18}" y="${bottomY + 1}" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="900">${escapeXml(leftLabel)}</text>
+    <text x="${x + width - 18}" y="${bottomY + 1}" text-anchor="end" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="900">${escapeXml(rightLabel)}</text>
   </g>`;
 }
 
@@ -510,6 +551,34 @@ function normalizePoints(points: string[], slideNumber: number): string[] {
     : ['Check the rule', 'Check the risk', 'Decide without hype'];
   const merged = [...points, ...defaults].map((point) => clampText(point, 88));
   return uniqueTexts(merged).slice(0, 3);
+}
+
+function getSlideLayoutWarnings(input: {
+  titleBottomY: number;
+  visualY: number;
+  visualBottomY: number;
+  pointsY: number;
+  pointsBottomY: number;
+  footerY: number;
+  saveBottomY: number;
+}): string[] {
+  const warnings: string[] = [];
+  if (input.visualY - input.titleBottomY < 28) {
+    warnings.push('Headline and visual module are too close.');
+  }
+  if (input.pointsY - input.visualBottomY < 24) {
+    warnings.push('Visual module and point cards are too close.');
+  }
+  if (input.footerY - input.pointsBottomY < 28) {
+    warnings.push('Point cards and save card are too close.');
+  }
+  if (input.saveBottomY > 1218) {
+    warnings.push('Save card is too low for the footer safe area.');
+  }
+  if (input.pointsBottomY > input.footerY - 18) {
+    warnings.push('Point cards overlap the save card.');
+  }
+  return warnings;
 }
 
 function getVisualKind(description: string, context: VisualContext): SlideTheme['visualKind'] {

@@ -6,9 +6,10 @@ import { CostGuardAgent } from './src/lib/agents/costGuardAgent';
 import { TrendResearchAgent } from './src/lib/agents/trendResearchAgent';
 import { ContentStrategyAgent } from './src/lib/agents/contentStrategyAgent';
 import { ComplianceQAAgent } from './src/lib/agents/complianceQAAgent';
+import { MediaPlanAgent, type MediaPlan } from './src/lib/agents/mediaPlanAgent';
 import { ImagePromptAgent } from './src/lib/agents/imagePromptAgent';
 import { ImageGenerationAgent } from './src/lib/agents/imageGenerationAgent';
-import { VisionQAAgent } from './src/lib/agents/visionQAAgent';
+import { VisionQAAgent, type QAReport } from './src/lib/agents/visionQAAgent';
 import { VideoGenerationAgent, VideoGenerationResult } from './src/lib/agents/videoGenerationAgent';
 import { VideoQAAgent, VideoQAReport } from './src/lib/agents/videoQAAgent';
 import { CopywritingAgent } from './src/lib/agents/copywritingAgent';
@@ -76,85 +77,139 @@ async function main() {
   console.log(`   Compliance score: ${(strategyCompliance.confidenceScore * 100).toFixed(0)}%`);
   console.log('');
 
-  // ── AGENT 4: IMAGE PROMPTS ──
-  console.log('━━━ AGENT 4: IMAGE PROMPTS ━━━');
-  const imagePromptAgent = new ImagePromptAgent();
-  const promptSet = await imagePromptAgent.execute({ strategy });
-  const manualPromptPath = path.join(outputDir, 'MANUAL_IMAGE_PROMPTS.md');
-  fs.writeFileSync(
-    manualPromptPath,
-    buildManualImagePromptPacket(strategy, promptSet.prompts),
-    'utf-8'
-  );
-  console.log(`   Manual image prompt packet saved: ${manualPromptPath}`);
-  console.log('');
-
-  // ── AGENT 5: IMAGE GENERATION ──
-  console.log('━━━ AGENT 5: IMAGE GENERATION ━━━');
-  const imageGenAgent = new ImageGenerationAgent();
-  const generatedImages = await imageGenAgent.execute({
-    prompts: promptSet.prompts,
-    outputDir,
+  // ── AGENT 4: MEDIA PLAN ──
+  console.log('━━━ AGENT 4: MEDIA PLAN ━━━');
+  const mediaPlan = await new MediaPlanAgent().execute({
+    strategy,
+    videoAvailable: VideoGenerationAgent.isAvailable(),
+    videoRequestedToday: VideoGenerationAgent.willRenderToday(now),
   });
+  console.log(`   Plan: ${mediaPlan.kind}`);
+  console.log(`   Images: ${mediaPlan.shouldGenerateImages ? mediaPlan.imageCount : 0}`);
+  console.log(`   Video: ${mediaPlan.shouldGenerateVideo ? 'yes' : 'no'}`);
+  console.log(`   Why: ${mediaPlan.rationale}`);
   console.log('');
 
-  // ── AGENT 6: VISION QA (check + regenerate) ──
-  console.log('━━━ AGENT 6: VISION QA ━━━');
-  const qaAgent = new VisionQAAgent();
-  let qaReport = await qaAgent.execute({ images: generatedImages.images });
+  let promptSet: Awaited<ReturnType<ImagePromptAgent['execute']>> = { prompts: [] };
+  let manualPromptPath: string | undefined;
+  let generatedImages: Awaited<ReturnType<ImageGenerationAgent['execute']>> = { images: [] };
+  let qaReport: QAReport = {
+    allPassed: true,
+    slideReports: [],
+    overallScore: 1,
+    failedSlides: [],
+  };
 
-  let regen = 0;
-  while (!qaReport.allPassed && regen < 2) {
-    regen++;
-    console.log(`   🔄 Regenerating ${qaReport.failedSlides.length} failed slides (attempt ${regen})...`);
-    const failedPrompts = promptSet.prompts.filter(p => qaReport.failedSlides.includes(p.slideNumber));
-    const regenResult = await imageGenAgent.execute({ prompts: failedPrompts, outputDir });
-    for (const img of regenResult.images) {
-      const idx = generatedImages.images.findIndex(i => i.slideNumber === img.slideNumber);
-      if (idx >= 0) generatedImages.images[idx] = img;
+  if (mediaPlan.shouldGenerateImages) {
+    // ── AGENT 5: IMAGE PROMPTS ──
+    console.log('━━━ AGENT 5: IMAGE PROMPTS ━━━');
+    const imagePromptAgent = new ImagePromptAgent();
+    promptSet = await imagePromptAgent.execute({ strategy });
+    const plannedPrompts = promptSet.prompts.slice(0, mediaPlan.imageCount);
+    if (plannedPrompts.length === 0) {
+      throw new Error('Media plan requested images, but no image prompts were generated.');
     }
-    qaReport = await qaAgent.execute({ images: generatedImages.images });
-  }
-  console.log(`   📊 Overall QA Score: ${(qaReport.overallScore * 100).toFixed(1)}%`);
-  console.log('');
+    manualPromptPath = path.join(outputDir, 'MANUAL_IMAGE_PROMPTS.md');
+    fs.writeFileSync(
+      manualPromptPath,
+      buildManualImagePromptPacket(strategy, plannedPrompts),
+      'utf-8'
+    );
+    console.log(`   Manual image prompt packet saved: ${manualPromptPath}`);
+    console.log('');
 
-  // ── AGENT 7: VIDEO GENERATION + QA ──
+    // ── AGENT 6: IMAGE GENERATION ──
+    console.log('━━━ AGENT 6: IMAGE GENERATION ━━━');
+    const imageGenAgent = new ImageGenerationAgent();
+    generatedImages = await imageGenAgent.execute({
+      prompts: plannedPrompts,
+      outputDir,
+    });
+    console.log('');
+
+    // ── AGENT 7: VISION QA (check + regenerate) ──
+    console.log('━━━ AGENT 7: VISION QA ━━━');
+    const qaAgent = new VisionQAAgent();
+    qaReport = await qaAgent.execute({ images: generatedImages.images });
+
+    let regen = 0;
+    while (!qaReport.allPassed && regen < 2) {
+      regen++;
+      console.log(`   🔄 Regenerating ${qaReport.failedSlides.length} failed slides (attempt ${regen})...`);
+      const failedPrompts = plannedPrompts.filter(p => qaReport.failedSlides.includes(p.slideNumber));
+      const regenResult = await imageGenAgent.execute({ prompts: failedPrompts, outputDir });
+      for (const img of regenResult.images) {
+        const idx = generatedImages.images.findIndex(i => i.slideNumber === img.slideNumber);
+        if (idx >= 0) generatedImages.images[idx] = img;
+      }
+      qaReport = await qaAgent.execute({ images: generatedImages.images });
+    }
+    console.log(`   📊 Overall QA Score: ${(qaReport.overallScore * 100).toFixed(1)}%`);
+    if (!qaReport.allPassed) {
+      throw new Error(`Image QA failed after regeneration: ${qaReport.slideReports.flatMap((report) => report.failures).join(' ')}`);
+    }
+    console.log('');
+  } else {
+    console.log('━━━ AGENT 5-7: IMAGE PATH SKIPPED ━━━');
+    console.log(`   ${mediaPlan.kind} selected, so no carousel images will be generated today.`);
+    console.log('');
+  }
+
+  // ── AGENT 8: VIDEO GENERATION + QA ──
   let generatedVideo: VideoGenerationResult = {
     video: null,
-    skippedReason: 'Video generation was not requested for this strategy.',
+    skippedReason: `Media plan selected ${mediaPlan.kind}; video generation was not requested.`,
   };
   let videoQaReport: VideoQAReport | null = null;
 
-  if (VideoGenerationAgent.shouldRenderForStrategy(strategy)) {
-    console.log('━━━ AGENT 7: VIDEO GENERATION ━━━');
+  if (mediaPlan.shouldGenerateVideo) {
+    console.log('━━━ AGENT 8: VIDEO GENERATION ━━━');
     const videoGenAgent = new VideoGenerationAgent();
-    generatedVideo = await videoGenAgent.execute({
-      images: generatedImages.images,
-      strategy,
-      outputDir,
-    });
+    const videoQaAgent = new VideoQAAgent();
+    let videoAttempt = 0;
 
-    if (generatedVideo.video) {
-      const videoQaAgent = new VideoQAAgent();
+    while (videoAttempt < 3) {
+      if (videoAttempt > 0) {
+        console.log(`   🔄 Regenerating video after QA failure (attempt ${videoAttempt + 1})...`);
+      }
+      generatedVideo = await videoGenAgent.execute({
+        images: generatedImages.images,
+        strategy,
+        outputDir,
+        force: true,
+      });
+
+      if (!generatedVideo.video) {
+        throw new Error(`Video generation failed: ${generatedVideo.skippedReason || 'no MP4 was produced'}`);
+      }
+
       videoQaReport = await videoQaAgent.execute({ video: generatedVideo.video });
       console.log(`   🎬 Video QA Score: ${(videoQaReport.confidenceScore * 100).toFixed(1)}%`);
-      if (!videoQaReport.isValid) {
-        console.log(`   ⚠️  Video QA failed: ${videoQaReport.failures.join(', ')}`);
+      if (videoQaReport.isValid) {
+        break;
       }
-    } else {
-      console.log(`   Video skipped: ${generatedVideo.skippedReason}`);
+      console.log(`   ⚠️  Video QA failed: ${videoQaReport.failures.join(', ')}`);
+      videoAttempt++;
+    }
+
+    if (!videoQaReport?.isValid) {
+      throw new Error(`Video QA failed after regeneration: ${videoQaReport?.failures.join(' ') || 'unknown video QA failure'}`);
     }
     console.log('');
   }
 
-  // ── AGENT 8: COPYWRITING ──
-  console.log('━━━ AGENT 8: COPYWRITING ━━━');
+  if (!generatedImages.images.length && !generatedVideo.video) {
+    throw new Error('Pipeline produced no postable media. Delivery was stopped.');
+  }
+
+  // ── AGENT 9: COPYWRITING ──
+  console.log('━━━ AGENT 9: COPYWRITING ━━━');
   const copyAgent = new CopywritingAgent();
   const copy = await copyAgent.execute({ strategy });
   console.log('');
 
-  // ── AGENT 9: FINAL COMPLIANCE QA ──
-  console.log('━━━ AGENT 9: FINAL COMPLIANCE QA ━━━');
+  // ── AGENT 10: FINAL COMPLIANCE QA ──
+  console.log('━━━ AGENT 10: FINAL COMPLIANCE QA ━━━');
   const copyCompliance = await complianceAgent.execute({ strategy, copy });
   if (!copyCompliance.isValid) {
     throw new Error(`Final compliance failed: ${copyCompliance.failures.join(' ')}`);
@@ -167,6 +222,7 @@ async function main() {
     postReadyPath,
     buildPostReadyFile({
       strategy,
+      mediaPlan,
       copy,
       qaReport,
       imagePaths: generatedImages.images.map((image) => image.localPath),
@@ -228,6 +284,7 @@ async function main() {
 
 function buildPostReadyFile(input: {
   strategy: Awaited<ReturnType<ContentStrategyAgent['execute']>>,
+  mediaPlan: MediaPlan,
   copy: Awaited<ReturnType<CopywritingAgent['execute']>>,
   qaReport: Awaited<ReturnType<VisionQAAgent['execute']>>,
   imagePaths: string[],
@@ -242,7 +299,7 @@ TOPIC
 ${input.strategy.topic}
 
 FORMAT
-${input.strategy.format} (${input.imagePaths.length} slides)
+${input.mediaPlan.kind} (${input.imagePaths.length} slide${input.imagePaths.length === 1 ? '' : 's'}${input.videoPath ? ' + 1 video' : ''})
 
 QA SCORE
 ${(input.qaReport.overallScore * 100).toFixed(0)}%
