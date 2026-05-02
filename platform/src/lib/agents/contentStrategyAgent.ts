@@ -42,6 +42,9 @@ FORMAT DECISION RULES:
 - Use WATCHLIST_EDUCATION for stock-market content. Never recommend buy/sell/hold or price targets.
 - SINGLE_IMAGE is allowed only for one-number stats or simple reminders.
 - Use REEL_DRAFT only when video rendering is available AND the topic benefits from motion, pacing, charts, or a sequential teaching flow. The video renderer creates animated educational vertical MP4s with generated chart/finance graphics and synthetic background music; do not require voiceover, paid video APIs, or stock footage.
+- For REEL_DRAFT, write like a short-form finance creator: one sharp idea, fast hook, visual chart or checklist moment, then a save-worthy risk/decision framework. Be inspired by high-performing trading education formats, but do not copy any creator, brand, or post.
+- For REEL_DRAFT on-image text must be sparse: max 8 words per headline, max 2 short supporting points per scene, no paragraph copy, no duplicated "Point 1"/"Slide 1" labels.
+- For REEL_DRAFT stock content, teach how to read charts, earnings, valuation, risk, or position sizing. Never frame it as a stock recommendation.
 - Video rendering availability for this run: ${videoGenerationAvailable ? 'available' : 'not available'}.
 - Do not choose a topic that is similar to the last 10 posts unless the angle is meaningfully different.
 - Optimize for a daily mix: Canadian money systems, tax/account explainers, investor risk protection, and occasional Canada/US stock research education.

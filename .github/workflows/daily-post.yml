@@ -72,6 +72,8 @@ jobs:
           ZERO_COST_MODE: "true"
           FREE_IMAGE_GENERATION_ONLY: "true"
           ALLOW_PAID_IMAGE_GENERATION: "false"
+          GEMINI_IMAGE_GENERATION_ENABLED: "false"
+          ALLOW_GEMINI_IMAGE_API_SPEND: "false"
           VIDEO_GENERATION_MODE: "alternating"
           VIDEO_SCENE_SECONDS: "2.8"
           VIDEO_FPS: "20"

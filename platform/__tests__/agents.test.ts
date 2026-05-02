@@ -70,20 +70,28 @@ test('CostGuardAgent blocks paid image generation in zero-cost mode', async () =
   const originalZeroCost = process.env.ZERO_COST_MODE;
   const originalFreeOnly = process.env.FREE_IMAGE_GENERATION_ONLY;
   const originalPaidImages = process.env.ALLOW_PAID_IMAGE_GENERATION;
+  const originalGeminiImages = process.env.GEMINI_IMAGE_GENERATION_ENABLED;
+  const originalGeminiSpend = process.env.ALLOW_GEMINI_IMAGE_API_SPEND;
 
   process.env.ZERO_COST_MODE = 'true';
   process.env.FREE_IMAGE_GENERATION_ONLY = 'false';
   process.env.ALLOW_PAID_IMAGE_GENERATION = 'true';
+  process.env.GEMINI_IMAGE_GENERATION_ENABLED = 'true';
+  process.env.ALLOW_GEMINI_IMAGE_API_SPEND = 'true';
 
   try {
     const report = await new CostGuardAgent().execute();
     assert.equal(report.isSafe, false);
     assert.match(report.failures.join(' '), /ALLOW_PAID_IMAGE_GENERATION/);
     assert.match(report.failures.join(' '), /FREE_IMAGE_GENERATION_ONLY/);
+    assert.match(report.failures.join(' '), /GEMINI_IMAGE_GENERATION_ENABLED/);
+    assert.match(report.failures.join(' '), /ALLOW_GEMINI_IMAGE_API_SPEND/);
   } finally {
     restoreEnv('ZERO_COST_MODE', originalZeroCost);
     restoreEnv('FREE_IMAGE_GENERATION_ONLY', originalFreeOnly);
     restoreEnv('ALLOW_PAID_IMAGE_GENERATION', originalPaidImages);
+    restoreEnv('GEMINI_IMAGE_GENERATION_ENABLED', originalGeminiImages);
+    restoreEnv('ALLOW_GEMINI_IMAGE_API_SPEND', originalGeminiSpend);
   }
 });
 

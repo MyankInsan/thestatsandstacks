@@ -29,6 +29,12 @@ export class CostGuardAgent extends BaseAgent {
       if (process.env.OPENAI_VIDEO_API_KEY || process.env.SORA_API_KEY || process.env.RUNWAY_API_KEY) {
         failures.push('A paid video-generation API key appears to be configured.');
       }
+      if (process.env.GEMINI_IMAGE_GENERATION_ENABLED === 'true') {
+        failures.push('GEMINI_IMAGE_GENERATION_ENABLED is true; Gemini/Nano Banana image API usage can incur per-image charges.');
+      }
+      if (process.env.ALLOW_GEMINI_IMAGE_API_SPEND === 'true') {
+        failures.push('ALLOW_GEMINI_IMAGE_API_SPEND is true.');
+      }
     }
 
     const videoMode = VideoGenerationAgent.getMode();
@@ -36,6 +42,7 @@ export class CostGuardAgent extends BaseAgent {
     notes.push(VideoGenerationAgent.isAvailable()
       ? 'FFmpeg is available for free local video rendering.'
       : 'FFmpeg is not available; video rendering will be skipped safely.');
+    notes.push('Gemini/Nano Banana image generation is disabled in $0 mode; local Sharp/FFmpeg generation remains the free path.');
 
     return {
       zeroCostMode,
