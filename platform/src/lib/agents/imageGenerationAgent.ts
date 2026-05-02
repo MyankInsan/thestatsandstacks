@@ -179,9 +179,9 @@ export class ImageGenerationAgent extends BaseAgent {
     const slideTheme = { ...theme, visualKind };
     const titleLayout = layoutTitle(parsed.title);
     const eyebrow = slideNumber === 1 ? context.label : `${context.label} / FRAME ${String(slideNumber).padStart(2, '0')}`;
-    const visualY = clamp(titleLayout.bottomY + 48, 510, 604);
-    const visualH = titleLayout.lines.length >= 4 ? 214 : 244;
-    const pointsY = visualY + visualH + 34;
+    const visualY = clamp(titleLayout.bottomY + 42, 494, 570);
+    const visualH = titleLayout.lines.length >= 4 ? 220 : 250;
+    const pointsY = visualY + visualH + 38;
     const pointRows = normalizePoints(parsed.points, slideNumber);
     const footerY = 1106;
 
@@ -284,25 +284,14 @@ function renderVisualSystem(
   const innerW = width - 56;
   const bottomY = y + height - 28;
   const label = `<text x="${x + 28}" y="${y + 34}" fill="#9fb2c8" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="900" letter-spacing="1">${escapeXml(context.label)}</text>`;
-  const shell = `<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="26" fill="#07111f" stroke="${theme.stroke}" stroke-width="1.6"/>`;
+  const shell = `<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="18" fill="#07111f" stroke="${theme.stroke}" stroke-width="1.6"/>
+  <rect x="${x + 1}" y="${y + 1}" width="${width - 2}" height="58" rx="17" fill="#0b1626" opacity="0.72"/>`;
 
   if (theme.visualKind === 'accounts') {
-    const cardW = 190;
-    const gap = (innerW - cardW * 4) / 3;
     return `${shell}
   ${label}
-  ${context.chips.map((chip, index) => {
-    const cx = innerX + index * (cardW + gap);
-    const active = index === 0 || index === 2;
-    const color = active ? theme.accent : theme.secondaryAccent;
-    return `<g>
-      <rect x="${cx}" y="${innerY + 18}" width="${cardW}" height="88" rx="22" fill="${color}" opacity="${active ? 0.2 : 0.11}" stroke="${color}" stroke-width="2"/>
-      <text x="${cx + cardW / 2}" y="${innerY + 72}" text-anchor="middle" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900">${escapeXml(chip)}</text>
-    </g>`;
-  }).join('')}
-  <path d="M${innerX + 38} ${bottomY - 20} C${innerX + 228} ${bottomY - 96}, ${innerX + 430} ${bottomY - 8}, ${innerX + 612} ${bottomY - 68} S${innerX + 736} ${bottomY - 72}, ${innerX + innerW - 42} ${bottomY - 22}" fill="none" stroke="${theme.tertiaryAccent}" stroke-width="8" stroke-linecap="round" opacity="0.92"/>
-  <text x="${innerX}" y="${bottomY - 8}" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800">${escapeXml(context.leftLabel)}</text>
-  <text x="${innerX + innerW}" y="${bottomY - 8}" text-anchor="end" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800">${escapeXml(context.rightLabel)}</text>`;
+  ${renderEditorialCards(innerX, innerY + 16, innerW, 132, theme, context.chips, ['Priority', 'Tax room', 'Goal fit', 'Next move'])}
+  ${renderSignalFooter(innerX, bottomY, innerW, theme, context.leftLabel, context.rightLabel)}`;
   }
 
   if (theme.visualKind === 'market') {
@@ -318,8 +307,8 @@ function renderVisualSystem(
   if (theme.visualKind === 'cashflow') {
     return `${shell}
   ${label}
-  <path d="M${innerX + 48} ${innerY + 88} C${innerX + 246} ${innerY + 12}, ${innerX + 320} ${innerY + 154}, ${innerX + 500} ${innerY + 74} S${innerX + 680} ${innerY + 42}, ${innerX + innerW - 44} ${innerY + 110}" fill="none" stroke="${theme.accent}" stroke-width="10" stroke-linecap="round" opacity="0.9"/>
-  ${context.chips.slice(0, 4).map((chip, index) => renderSmallNode(innerX + 44 + index * 188, innerY + 52 + (index % 2) * 38, chip, index % 2 === 0 ? theme.accent : theme.secondaryAccent)).join('')}`;
+  ${renderLedgerFlow(innerX, innerY + 14, innerW, 134, theme, context.chips)}
+  ${renderSignalFooter(innerX, bottomY, innerW, theme, context.leftLabel, context.rightLabel)}`;
   }
 
   if (theme.visualKind === 'credit' || theme.visualKind === 'tax') {
@@ -340,21 +329,21 @@ function renderVisualSystem(
 
   return `${shell}
   ${label}
-  <rect x="${innerX}" y="${innerY + 16}" width="${innerW}" height="112" rx="24" fill="${theme.card}" stroke="${theme.stroke}"/>
-  ${context.chips.slice(0, 3).map((chip, index) => renderChip(innerX + 34 + index * 238, innerY + 84, chip, index === 1 ? theme.secondaryAccent : theme.accent)).join('')}
-  <path d="M${innerX + 50} ${bottomY - 28} C${innerX + 220} ${bottomY - 92}, ${innerX + 384} ${bottomY - 18}, ${innerX + 548} ${bottomY - 70} S${innerX + 714} ${bottomY - 34}, ${innerX + innerW - 28} ${bottomY - 58}" fill="none" stroke="${theme.tertiaryAccent}" stroke-width="8" stroke-linecap="round"/>`;
+  ${renderDecisionMatrix(innerX, innerY + 14, innerW, 132, theme, context.chips)}
+  ${renderSignalFooter(innerX, bottomY, innerW, theme, context.leftLabel, context.rightLabel)}`;
 }
 
 function renderPointCards(points: string[], y: number, theme: SlideTheme): string {
   return points.slice(0, 3).map((point, index) => {
-    const rowY = y + index * 88;
+    const rowY = y + index * 94;
     const color = index === 1 ? theme.secondaryAccent : theme.accent;
-    const lines = wrapText(point, 48, 2);
+    const lines = wrapText(point, 56, 2);
     return `<g>
-      <rect x="${CONTENT_X}" y="${rowY}" width="${CONTENT_W}" height="70" rx="20" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.5"/>
-      <circle cx="${CONTENT_X + 36}" cy="${rowY + 35}" r="15" fill="${color}"/>
-      <text x="${CONTENT_X + 76}" y="${rowY + 31}" fill="#e5eefb" font-family="Arial, Helvetica, sans-serif" font-size="${lines.length > 1 ? 21 : 23}" font-weight="850">
-        ${lines.map((line, lineIndex) => `<tspan x="${CONTENT_X + 76}" dy="${lineIndex === 0 ? 0 : 27}">${escapeXml(line)}</tspan>`).join('')}
+      <rect x="${CONTENT_X}" y="${rowY}" width="${CONTENT_W}" height="78" rx="16" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.5"/>
+      <rect x="${CONTENT_X + 24}" y="${rowY + 22}" width="34" height="34" rx="10" fill="${color}" opacity="0.2" stroke="${color}" stroke-width="1.5"/>
+      <text x="${CONTENT_X + 41}" y="${rowY + 46}" text-anchor="middle" fill="${color}" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900">${index + 1}</text>
+      <text x="${CONTENT_X + 82}" y="${rowY + 33}" fill="#e5eefb" font-family="Arial, Helvetica, sans-serif" font-size="${lines.length > 1 ? 20 : 22}" font-weight="850">
+        ${lines.map((line, lineIndex) => `<tspan x="${CONTENT_X + 82}" dy="${lineIndex === 0 ? 0 : 26}">${escapeXml(line)}</tspan>`).join('')}
       </text>
     </g>`;
   }).join('');
@@ -420,18 +409,98 @@ function renderMiniCandles(x: number, y: number, width: number, height: number, 
   </g>`;
 }
 
-function renderSmallNode(x: number, y: number, label: string, color: string): string {
+function renderEditorialCards(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  theme: SlideTheme,
+  labels: string[],
+  captions: string[]
+): string {
+  const gap = 14;
+  const cardW = (width - gap * 3) / 4;
   return `<g>
-    <circle cx="${x}" cy="${y}" r="30" fill="${color}" opacity="0.18"/>
-    <circle cx="${x}" cy="${y}" r="13" fill="${color}"/>
-    <text x="${x + 34}" y="${y + 8}" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="900">${escapeXml(label)}</text>
+    ${labels.slice(0, 4).map((label, index) => {
+      const cardX = x + index * (cardW + gap);
+      const color = index % 2 === 0 ? theme.accent : theme.secondaryAccent;
+      return `<g>
+        <rect x="${cardX}" y="${y}" width="${cardW}" height="${height}" rx="16" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.4"/>
+        <rect x="${cardX + 14}" y="${y + 14}" width="42" height="42" rx="12" fill="${color}" opacity="0.18" stroke="${color}" stroke-width="1.3"/>
+        <text x="${cardX + 35}" y="${y + 42}" text-anchor="middle" fill="${color}" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="900">${String(index + 1).padStart(2, '0')}</text>
+        <text x="${cardX + 16}" y="${y + 84}" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900">${escapeXml(label)}</text>
+        <text x="${cardX + 16}" y="${y + 112}" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="800">${escapeXml(captions[index])}</text>
+      </g>`;
+    }).join('')}
   </g>`;
 }
 
-function renderChip(x: number, y: number, label: string, color: string): string {
+function renderLedgerFlow(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  theme: SlideTheme,
+  labels: string[]
+): string {
+  const rowH = 30;
+  const rowGap = 9;
+  const amounts = ['55%', '15%', '20%', '10%'];
   return `<g>
-    <rect x="${x}" y="${y - 30}" width="166" height="56" rx="28" fill="${color}" opacity="0.18" stroke="${color}" stroke-width="2"/>
-    <text x="${x + 83}" y="${y + 7}" text-anchor="middle" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="900">${escapeXml(label)}</text>
+    <rect x="${x}" y="${y}" width="${width}" height="${height}" rx="16" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.4"/>
+    ${labels.slice(0, 4).map((label, index) => {
+      const rowY = y + 18 + index * (rowH + rowGap);
+      const color = index === 0 ? theme.accent : index === 1 ? theme.secondaryAccent : theme.tertiaryAccent;
+      const barW = Math.round(width * (0.34 + index * 0.09));
+      return `<g>
+        <text x="${x + 22}" y="${rowY + 21}" fill="#e5eefb" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="900">${escapeXml(label)}</text>
+        <rect x="${x + 144}" y="${rowY}" width="${width - 244}" height="${rowH}" rx="9" fill="#06101d" stroke="#1f3147" stroke-width="1"/>
+        <rect x="${x + 144}" y="${rowY}" width="${barW}" height="${rowH}" rx="9" fill="${color}" opacity="0.28"/>
+        <text x="${x + width - 24}" y="${rowY + 21}" text-anchor="end" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900">${amounts[index]}</text>
+      </g>`;
+    }).join('')}
+  </g>`;
+}
+
+function renderDecisionMatrix(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  theme: SlideTheme,
+  labels: string[]
+): string {
+  const cols = labels.slice(0, 3);
+  const gap = 14;
+  const cellW = (width - gap * 2) / 3;
+  return `<g>
+    ${cols.map((label, index) => {
+      const cellX = x + index * (cellW + gap);
+      const color = index === 1 ? theme.secondaryAccent : theme.accent;
+      return `<g>
+        <rect x="${cellX}" y="${y}" width="${cellW}" height="${height}" rx="16" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.4"/>
+        <text x="${cellX + 20}" y="${y + 36}" fill="${color}" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="900">${escapeXml(label)}</text>
+        <rect x="${cellX + 20}" y="${y + 58}" width="${cellW - 40}" height="12" rx="6" fill="#1f3147"/>
+        <rect x="${cellX + 20}" y="${y + 58}" width="${Math.round((cellW - 40) * (0.48 + index * 0.16))}" height="12" rx="6" fill="${color}"/>
+        <text x="${cellX + 20}" y="${y + 104}" fill="#e5eefb" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="900">${index === 0 ? 'Define' : index === 1 ? 'Compare' : 'Act'}</text>
+      </g>`;
+    }).join('')}
+  </g>`;
+}
+
+function renderSignalFooter(
+  x: number,
+  bottomY: number,
+  width: number,
+  theme: SlideTheme,
+  leftLabel: string,
+  rightLabel: string
+): string {
+  return `<g>
+    <line x1="${x}" y1="${bottomY - 32}" x2="${x + width}" y2="${bottomY - 32}" stroke="${theme.stroke}" stroke-width="1.4"/>
+    <rect x="${x}" y="${bottomY - 18}" width="108" height="28" rx="8" fill="${theme.accent}" opacity="0.15"/>
+    <text x="${x + 14}" y="${bottomY + 2}" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900">${escapeXml(leftLabel)}</text>
+    <text x="${x + width}" y="${bottomY + 2}" text-anchor="end" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900">${escapeXml(rightLabel)}</text>
   </g>`;
 }
 

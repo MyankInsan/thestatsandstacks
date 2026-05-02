@@ -55,6 +55,7 @@ const VIDEO_HEIGHT = 1920;
 const SAFE_X = 92;
 const SAFE_W = 848;
 const TOP_SAFE_Y = 112;
+const LOWER_SAFE_Y = 1276;
 const BRAND_GREEN = '#18C58F';
 const BRAND_GOLD = '#E0B64C';
 const BRAND_CYAN = '#67E8F9';
@@ -196,10 +197,11 @@ function buildEncodeArgs(input: {
   const duration = input.durationSeconds.toFixed(2);
   const fadeOutStart = Math.max(0, input.durationSeconds - 1.15).toFixed(2);
   const audioFilter = [
-    `[1:a]volume=0.024,afade=t=in:st=0:d=0.8,afade=t=out:st=${fadeOutStart}:d=1.15[a1]`,
-    `[2:a]volume=0.012,afade=t=in:st=0:d=0.8,afade=t=out:st=${fadeOutStart}:d=1.15[a2]`,
-    `[3:a]lowpass=f=850,volume=0.006,afade=t=in:st=0:d=0.6,afade=t=out:st=${fadeOutStart}:d=1.15[a3]`,
-    '[a1][a2][a3]amix=inputs=3:duration=shortest,alimiter=limit=0.18[a]',
+    `[1:a]volume=0.082,tremolo=f=2.15:d=0.62,afade=t=in:st=0:d=0.45,afade=t=out:st=${fadeOutStart}:d=1.15[bass]`,
+    `[2:a]volume=0.045,tremolo=f=4.30:d=0.72,aecho=0.35:0.42:180:0.18,afade=t=in:st=0:d=0.6,afade=t=out:st=${fadeOutStart}:d=1.15[pulse]`,
+    `[3:a]volume=0.030,tremolo=f=6.45:d=0.55,aecho=0.25:0.32:280:0.16,afade=t=in:st=0:d=0.8,afade=t=out:st=${fadeOutStart}:d=1.15[lead]`,
+    `[4:a]highpass=f=2400,lowpass=f=9600,volume=0.014,tremolo=f=8.60:d=0.82,afade=t=in:st=0:d=0.5,afade=t=out:st=${fadeOutStart}:d=1.15[hat]`,
+    '[bass][pulse][lead][hat]amix=inputs=4:duration=shortest:normalize=0,alimiter=limit=0.72[a]',
   ].join(';');
 
   return [
@@ -207,11 +209,13 @@ function buildEncodeArgs(input: {
     '-framerate', String(input.fps),
     '-i', path.join(input.framesDir, '%05d.png'),
     '-f', 'lavfi',
-    '-i', `sine=frequency=96:duration=${duration}:sample_rate=44100`,
+    '-i', `sine=frequency=110:duration=${duration}:sample_rate=44100`,
     '-f', 'lavfi',
-    '-i', `sine=frequency=192:duration=${duration}:sample_rate=44100`,
+    '-i', `sine=frequency=220:duration=${duration}:sample_rate=44100`,
     '-f', 'lavfi',
-    '-i', `anoisesrc=color=pink:amplitude=0.018:duration=${duration}:sample_rate=44100`,
+    '-i', `sine=frequency=330:duration=${duration}:sample_rate=44100`,
+    '-f', 'lavfi',
+    '-i', `anoisesrc=color=pink:amplitude=0.030:duration=${duration}:sample_rate=44100`,
     '-filter_complex', audioFilter,
     '-map', '0:v',
     '-map', '[a]',
@@ -353,6 +357,7 @@ function renderFrame(input: {
   <rect width="${VIDEO_WIDTH}" height="${VIDEO_HEIGHT}" fill="url(#bg)"/>
   <rect width="${VIDEO_WIDTH}" height="${VIDEO_HEIGHT}" fill="url(#halo)"/>
   ${renderBackdrop(input.globalProgress, input.seed)}
+  ${renderMotionRail(input.seed, input.globalProgress, input.scene.accent)}
   ${renderTopChrome(input.scene, input.sceneIndex, input.sceneCount, input.globalProgress)}
   ${body}
 </svg>`;
@@ -380,6 +385,21 @@ function renderBackdrop(progress: number, seed: number): string {
   </g>`;
 }
 
+function renderMotionRail(seed: number, progress: number, accent: string): string {
+  const offset = (progress * 196) % 196;
+  const labels = ['EPS', 'CASH', 'RISK', 'VOLUME', 'NEWS', 'PLAN'];
+  return `<g opacity="0.42">
+    ${range(0, 8).map((index) => {
+      const x = SAFE_X - offset + index * 196;
+      const label = labels[(index + seed) % labels.length];
+      return `<g>
+        <rect x="${x.toFixed(1)}" y="1626" width="154" height="42" rx="21" fill="${PANEL_2}" stroke="${accent}" stroke-width="1" opacity="0.72"/>
+        <text x="${(x + 77).toFixed(1)}" y="1654" text-anchor="middle" fill="${TEXT}" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900">${label}</text>
+      </g>`;
+    }).join('')}
+  </g>`;
+}
+
 function renderScene(scene: ReelScene, progress: number, eased: number, seed: number): string {
   switch (scene.kind) {
     case 'hook':
@@ -398,63 +418,71 @@ function renderScene(scene: ReelScene, progress: number, eased: number, seed: nu
 function renderHookScene(scene: ReelScene, progress: number, eased: number, seed: number): string {
   const title = layoutTitle(scene.title, 64, 3);
   const titleY = 360 - 26 * (1 - eased);
-  return `<g opacity="${fadeIn(progress, 0, 0.24).toFixed(2)}">
+  return `<g opacity="${sceneOpacity(progress, 0, 0.24)}">
     ${textBlock(title.lines, SAFE_X, titleY, title.fontSize, title.lineHeight, TEXT, 900)}
     ${subtitleBlock(scene.subtitle, SAFE_X, titleY + title.lines.length * title.lineHeight + 46, 34)}
     <rect x="${SAFE_X}" y="780" width="${SAFE_W}" height="484" rx="36" fill="${PANEL}" stroke="${STROKE}" stroke-width="2" filter="url(#shadow)"/>
     ${renderCandles(SAFE_X + 54, 854, 520, 286, seed, clamp(progress * 1.18, 0, 1))}
     ${renderSignalStack(SAFE_X + 612, 864, ['Source it', 'Stress test', 'Decide later'], scene.accent, progress)}
     ${renderPills(scene.bullets.length ? scene.bullets : ['Research first', 'Risk second'], 1318, progress, scene.accent)}
+    ${renderMarketFloor(LOWER_SAFE_Y + 132, progress, seed, scene.accent)}
   </g>`;
 }
 
 function renderChartScene(scene: ReelScene, progress: number, seed: number): string {
   const title = layoutTitle(scene.title, 56, 3);
+  const isChart = scene.eyebrow === 'Read the chart';
   const chartProgress = clamp((progress - 0.12) / 0.68, 0, 1);
-  return `<g opacity="${fadeIn(progress, 0, 0.22).toFixed(2)}">
+  return `<g opacity="${sceneOpacity(progress, 0, 0.22)}">
     ${textBlock(title.lines, SAFE_X, 322, title.fontSize, title.lineHeight, TEXT, 900)}
     ${subtitleBlock(scene.subtitle, SAFE_X, 322 + title.lines.length * title.lineHeight + 34, 31)}
     <rect x="${SAFE_X}" y="636" width="${SAFE_W}" height="632" rx="34" fill="${PANEL}" stroke="${STROKE}" stroke-width="2" filter="url(#shadow)"/>
-    <text x="${SAFE_X + 42}" y="704" fill="${scene.accent}" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900">CANDLESTICK BASICS</text>
-    ${renderCandles(SAFE_X + 44, 766, SAFE_W - 88, 336, seed, chartProgress)}
-    ${renderPills(['Wick = range', 'Body = open/close', 'Context matters'], 1150, progress, scene.accent)}
+    <text x="${SAFE_X + 42}" y="704" fill="${scene.accent}" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900">${isChart ? 'CANDLESTICK BASICS' : 'MONEY FLOW MAP'}</text>
+    ${isChart
+      ? renderCandles(SAFE_X + 44, 766, SAFE_W - 88, 336, seed, chartProgress)
+      : renderMoneyFlowMap(SAFE_X + 44, 766, SAFE_W - 88, 336, progress, scene.accent)}
+    ${renderPills(isChart ? ['Wick = range', 'Body = open/close', 'Context matters'] : ['Bills first', 'Buffer next', 'Goals last'], 1150, progress, scene.accent)}
     ${renderThreeStep(scene.bullets, 1358, progress, scene.accent)}
+    ${renderVolumeDashboard(1442, progress, seed, scene.accent)}
   </g>`;
 }
 
 function renderScreenScene(scene: ReelScene, progress: number, eased: number): string {
   const title = layoutTitle(scene.title, 54, 3);
   const bullets = scene.bullets.length ? scene.bullets : ['Check the source', 'Check the numbers', 'Check the risk'];
-  return `<g opacity="${fadeIn(progress, 0, 0.22).toFixed(2)}">
+  return `<g opacity="${sceneOpacity(progress, 0, 0.22)}">
     ${textBlock(title.lines, SAFE_X, 322, title.fontSize, title.lineHeight, TEXT, 900)}
     ${subtitleBlock(scene.subtitle, SAFE_X, 322 + title.lines.length * title.lineHeight + 34, 31)}
     <rect x="${SAFE_X}" y="698" width="${SAFE_W}" height="574" rx="34" fill="${PANEL}" stroke="${STROKE}" stroke-width="2" filter="url(#shadow)"/>
     ${bullets.slice(0, 3).map((bullet, index) => renderChecklistRow(SAFE_X + 46, 784 + index * 142, index + 1, bullet, scene.accent, fadeIn(progress, 0.12 + index * 0.16, 0.18))).join('')}
     ${renderMeter(SAFE_X + 92, 1366, SAFE_W - 184, 28, eased, scene.accent)}
     <text x="${SAFE_X + SAFE_W / 2}" y="1444" text-anchor="middle" fill="${MUTED}" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="800">Slow decisions down. Improve the inputs.</text>
+    ${renderResearchCards(1502, progress, scene.accent)}
   </g>`;
 }
 
 function renderRiskScene(scene: ReelScene, progress: number): string {
   const title = layoutTitle(scene.title, 54, 3);
-  return `<g opacity="${fadeIn(progress, 0, 0.22).toFixed(2)}">
+  return `<g opacity="${sceneOpacity(progress, 0, 0.22)}">
     ${textBlock(title.lines, SAFE_X, 322, title.fontSize, title.lineHeight, TEXT, 900)}
     ${subtitleBlock(scene.subtitle, SAFE_X, 322 + title.lines.length * title.lineHeight + 34, 31)}
     <rect x="${SAFE_X}" y="698" width="${SAFE_W}" height="574" rx="34" fill="${PANEL}" stroke="#3A2432" stroke-width="2" filter="url(#shadow)"/>
     ${renderRiskGauge(SAFE_X + SAFE_W / 2, 984, 226, clamp((progress - 0.1) / 0.72, 0, 1))}
     ${renderPills(['No price targets', 'No guaranteed returns', 'No copy-my-trades'], 1328, progress, scene.accent)}
+    ${renderRiskMatrix(1428, progress)}
   </g>`;
 }
 
 function renderSaveScene(scene: ReelScene, progress: number, eased: number, seed: number): string {
   const title = layoutTitle(scene.title, 58, 3);
-  return `<g opacity="${fadeIn(progress, 0, 0.22).toFixed(2)}">
+  return `<g opacity="${sceneOpacity(progress, 0, 0.22)}">
     <rect x="${SAFE_X}" y="286" width="${SAFE_W}" height="1012" rx="40" fill="${PANEL}" stroke="${STROKE}" stroke-width="2" filter="url(#shadow)"/>
     ${textBlock(title.lines, SAFE_X + 46, 422, title.fontSize, title.lineHeight, TEXT, 900)}
     ${subtitleBlock(scene.subtitle, SAFE_X + 48, 422 + title.lines.length * title.lineHeight + 44, 30)}
     ${renderBigFormula(SAFE_X + 62, 820, progress)}
     ${renderCandles(SAFE_X + 92, 1132, SAFE_W - 184, 210, seed, eased)}
     <text x="${SAFE_X + SAFE_W / 2}" y="1484" text-anchor="middle" fill="${BRAND_GREEN}" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="900">Save the framework</text>
+    ${renderSaveFooter(1540, progress, scene.accent)}
   </g>`;
 }
 
@@ -480,6 +508,34 @@ function subtitleBlock(text: string, x: number, y: number, fontSize: number): st
   return `<text x="${x}" y="${y}" fill="${SOFT_TEXT}" font-family="Arial, Helvetica, sans-serif" font-size="${fontSize}" font-weight="800">
     ${lines.map((line, index) => `<tspan x="${x}" dy="${index === 0 ? 0 : Math.round(fontSize * 1.32)}">${escapeXml(line)}</tspan>`).join('')}
   </text>`;
+}
+
+function renderMoneyFlowMap(x: number, y: number, width: number, height: number, progress: number, accent: string): string {
+  const lanes = [
+    { label: 'Bills', detail: 'protect fixed costs', color: accent },
+    { label: 'Buffer', detail: 'keep cash ready', color: BRAND_CYAN },
+    { label: 'Goals', detail: 'fund the future', color: BRAND_GOLD },
+  ];
+  const laneW = (width - 36) / 3;
+  const flowWidth = Math.max(18, (width - 72) * clamp((progress - 0.12) / 0.62, 0, 1));
+
+  return `<g>
+    <rect x="${x}" y="${y - 26}" width="${width}" height="${height + 52}" rx="26" fill="#06101D" stroke="#263850" stroke-width="1.5"/>
+    <text x="${x + 28}" y="${y + 34}" fill="${MUTED}" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="900">PAYDAY ROUTE</text>
+    <rect x="${x + 36}" y="${y + 78}" width="${width - 72}" height="20" rx="10" fill="#132033"/>
+    <rect x="${x + 36}" y="${y + 78}" width="${flowWidth.toFixed(1)}" height="20" rx="10" fill="${accent}"/>
+    ${lanes.map((lane, index) => {
+      const laneX = x + 28 + index * (laneW + 18);
+      const opacity = fadeIn(progress, 0.16 + index * 0.16, 0.18);
+      return `<g opacity="${opacity.toFixed(2)}">
+        <rect x="${laneX}" y="${y + 130}" width="${laneW}" height="150" rx="24" fill="${PANEL_2}" stroke="${STROKE}" stroke-width="1.5"/>
+        <circle cx="${laneX + 42}" cy="${y + 180}" r="22" fill="${lane.color}" opacity="0.18"/>
+        <text x="${laneX + 42}" y="${y + 188}" text-anchor="middle" fill="${lane.color}" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="900">${index + 1}</text>
+        <text x="${laneX + 76}" y="${y + 178}" fill="${TEXT}" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">${lane.label}</text>
+        <text x="${laneX + 28}" y="${y + 242}" fill="${SOFT_TEXT}" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="800">${lane.detail}</text>
+      </g>`;
+    }).join('')}
+  </g>`;
 }
 
 function renderCandles(x: number, y: number, width: number, height: number, seed: number, progress: number): string {
@@ -616,6 +672,91 @@ function renderBigFormula(x: number, y: number, progress: number): string {
   }).join('');
 }
 
+function renderMarketFloor(y: number, progress: number, seed: number, accent: string): string {
+  const spark = buildSparkline(SAFE_X + 34, y + 34, SAFE_W - 68, 104, seed + 17, clamp(progress * 1.35, 0, 1));
+  return `<g opacity="${fadeIn(progress, 0.2, 0.22).toFixed(2)}">
+    <rect x="${SAFE_X}" y="${y}" width="${SAFE_W}" height="216" rx="32" fill="#07111F" stroke="${STROKE}" stroke-width="1.5"/>
+    <path d="${spark}" fill="none" stroke="${accent}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    ${range(0, 18).map((index) => {
+      const barH = 24 + Math.abs(Math.sin(seed * 0.1 + index * 0.73 + progress * 2.8)) * 74;
+      const x = SAFE_X + 42 + index * 43;
+      const opacity = fadeIn(progress, 0.24 + index * 0.018, 0.16);
+      return `<rect x="${x}" y="${(y + 172 - barH).toFixed(1)}" width="22" height="${barH.toFixed(1)}" rx="8" fill="${index % 3 === 0 ? BRAND_GOLD : accent}" opacity="${(0.28 + opacity * 0.5).toFixed(2)}"/>`;
+    }).join('')}
+    <text x="${SAFE_X + 42}" y="${y + 184}" fill="${MUTED}" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="850">PRICE ACTION + VOLUME + CHECKLIST</text>
+  </g>`;
+}
+
+function renderVolumeDashboard(y: number, progress: number, seed: number, accent: string): string {
+  const labels = ['Trend', 'Volume', 'Thesis'];
+  return `<g opacity="${fadeIn(progress, 0.18, 0.22).toFixed(2)}">
+    <rect x="${SAFE_X}" y="${y}" width="${SAFE_W}" height="210" rx="30" fill="#07111F" stroke="${STROKE}" stroke-width="1.5"/>
+    ${labels.map((label, index) => {
+      const x = SAFE_X + 42 + index * 264;
+      const meter = clamp((progress - 0.18 - index * 0.1) / 0.46, 0, 1);
+      const score = Math.round(42 + meter * (34 + Math.abs(Math.sin(seed + index)) * 22));
+      return `<g>
+        <text x="${x}" y="${y + 48}" fill="${SOFT_TEXT}" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="900">${label}</text>
+        <rect x="${x}" y="${y + 78}" width="204" height="20" rx="10" fill="#132033"/>
+        <rect x="${x}" y="${y + 78}" width="${Math.max(20, 204 * meter).toFixed(1)}" height="20" rx="10" fill="${index === 1 ? BRAND_GOLD : accent}"/>
+        <text x="${x}" y="${y + 146}" fill="${TEXT}" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="900">${score}</text>
+        <text x="${x + 74}" y="${y + 144}" fill="${MUTED}" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="800">signal</text>
+      </g>`;
+    }).join('')}
+  </g>`;
+}
+
+function renderResearchCards(y: number, progress: number, accent: string): string {
+  const cards = [
+    { label: 'Source', value: 'SEC / data' },
+    { label: 'Math', value: 'Margins' },
+    { label: 'Risk', value: 'Downside' },
+  ];
+  return `<g>
+    ${cards.map((card, index) => {
+      const opacity = fadeIn(progress, 0.24 + index * 0.11, 0.18);
+      const x = SAFE_X + index * 286;
+      return `<g opacity="${opacity.toFixed(2)}">
+        <rect x="${x}" y="${y}" width="244" height="126" rx="26" fill="#07111F" stroke="${index === 2 ? BRAND_ROSE : accent}" stroke-width="1.5"/>
+        <circle cx="${x + 38}" cy="${y + 42}" r="13" fill="${index === 2 ? BRAND_ROSE : accent}"/>
+        <text x="${x + 64}" y="${y + 49}" fill="${TEXT}" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="900">${card.label}</text>
+        <text x="${x + 28}" y="${y + 94}" fill="${SOFT_TEXT}" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="850">${card.value}</text>
+      </g>`;
+    }).join('')}
+  </g>`;
+}
+
+function renderRiskMatrix(y: number, progress: number): string {
+  const cells = [
+    { label: 'Low', color: BRAND_GREEN },
+    { label: 'Medium', color: BRAND_GOLD },
+    { label: 'High', color: BRAND_ROSE },
+  ];
+  return `<g opacity="${fadeIn(progress, 0.22, 0.22).toFixed(2)}">
+    <rect x="${SAFE_X}" y="${y}" width="${SAFE_W}" height="218" rx="30" fill="#07111F" stroke="#3A2432" stroke-width="1.5"/>
+    <text x="${SAFE_X + 38}" y="${y + 48}" fill="${SOFT_TEXT}" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="900">SCENARIO MAP</text>
+    ${cells.map((cell, index) => {
+      const x = SAFE_X + 40 + index * 262;
+      const height = 48 + index * 30 + Math.sin(progress * 4 + index) * 8;
+      return `<g>
+        <rect x="${x}" y="${(y + 156 - height).toFixed(1)}" width="190" height="${height.toFixed(1)}" rx="22" fill="${cell.color}" opacity="${(0.22 + index * 0.12).toFixed(2)}" stroke="${cell.color}" stroke-width="1.5"/>
+        <text x="${x + 95}" y="${y + 186}" text-anchor="middle" fill="${TEXT}" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="900">${cell.label}</text>
+      </g>`;
+    }).join('')}
+  </g>`;
+}
+
+function renderSaveFooter(y: number, progress: number, accent: string): string {
+  const opacity = fadeIn(progress, 0.18, 0.22);
+  return `<g opacity="${opacity.toFixed(2)}">
+    <rect x="${SAFE_X + 54}" y="${y}" width="${SAFE_W - 108}" height="94" rx="28" fill="#07111F" stroke="${accent}" stroke-width="1.5"/>
+    ${['1 Read', '2 Test', '3 Size'].map((label, index) => {
+      const x = SAFE_X + 112 + index * 236;
+      return `<text x="${x}" y="${y + 59}" fill="${index === 1 ? BRAND_GOLD : TEXT}" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="900">${label}</text>`;
+    }).join('')}
+  </g>`;
+}
+
 function wrapText(text: string, maxChars: number, maxLines: number): string[] {
   const words = text.replace(/\s+/g, ' ').trim().split(' ').filter(Boolean);
   const lines: string[] = [];
@@ -684,6 +825,10 @@ function hashText(text: string): number {
 
 function fadeIn(progress: number, start: number, length: number): number {
   return clamp((progress - start) / length, 0, 1);
+}
+
+function sceneOpacity(progress: number, start: number, length: number): string {
+  return (0.26 + fadeIn(progress, start, length) * 0.74).toFixed(2);
 }
 
 function easeOutCubic(value: number): number {

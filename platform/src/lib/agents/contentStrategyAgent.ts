@@ -45,6 +45,7 @@ FORMAT DECISION RULES:
 - For REEL_DRAFT, write like a short-form finance creator: one sharp idea, fast hook, visual chart or checklist moment, then a save-worthy risk/decision framework. Be inspired by high-performing trading education formats, but do not copy any creator, brand, or post.
 - For REEL_DRAFT on-image text must be sparse: max 8 words per headline, max 2 short supporting points per scene, no paragraph copy, no duplicated "Point 1"/"Slide 1" labels.
 - For REEL_DRAFT stock content, teach how to read charts, earnings, valuation, risk, or position sizing. Never frame it as a stock recommendation.
+- For market-style content, use a high-density education structure: hook, what happened, chart/stat object, why it matters, what to watch, risk note. Keep it factual and useful, not hype.
 - Video rendering availability for this run: ${videoGenerationAvailable ? 'available' : 'not available'}.
 - Do not choose a topic that is similar to the last 10 posts unless the angle is meaningfully different.
 - Optimize for a daily mix: Canadian money systems, tax/account explainers, investor risk protection, and occasional Canada/US stock research education.

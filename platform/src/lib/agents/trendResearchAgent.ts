@@ -47,6 +47,8 @@ RESEARCH APPROACH:
 4. Avoid posting the same theme repeatedly. A fresh angle beats another generic TFSA/RRSP carousel.
 5. For Canadian/US stocks, never recommend buy/sell/hold, price targets, guaranteed returns, or "best stocks to buy." Use watchlist education, catalyst/risk maps, valuation checklists, sector explainers, earnings-read frameworks, and "stocks to research" language only.
 6. Do not use unsupported Instagram scraping. Use only the provided compliant research signals and public/permitted inputs.
+7. For growth, favor finance-news and market-education patterns that work on large trading education pages without copying them: factual headline first, one chart/stat object, why-it-matters context, what to watch next, and a saveable risk/decision takeaway.
+8. Do not mimic another creator's exact templates, colors, hooks, logo placement, screenshots, or paid-community funnel language.
 
 CONTENT PILLARS TO DRAW FROM:
 - TFSA vs RRSP vs FHSA comparisons
@@ -58,6 +60,7 @@ CONTENT PILLARS TO DRAW FROM:
 - stock education without recommendations
 - market literacy and risk management
 - Canadian/US market watchlist education
+- market-news explainers and chart lessons
 - investor psychology and fraud/risk prevention
 
 RECENT CONTENT TO AVOID REPEATING TOO SOON:
