@@ -46,6 +46,7 @@ FORMAT DECISION RULES:
 - Do not choose a topic that is similar to the last 10 posts unless the angle is meaningfully different.
 - Optimize for a daily mix: Canadian money systems, tax/account explainers, investor risk protection, and occasional Canada/US stock research education.
 - Stock content should feel useful to stock-curious followers, but it must be framed as "how to research" or "what to check", not as "buy these stocks".
+- Never use "stocks to buy", "best stock to buy", "buy this stock", "sell this stock", price targets, or recommendation phrasing. If a ticker or company is discussed, treat it only as an educational research case study.
 
 Here are the top topics: ${JSON.stringify(input.trends.topics)}
 
@@ -350,6 +351,14 @@ function normalizeStrategy(
     return getRotatingFallbackStrategy(trends, contentHistory, videoGenerationAvailable);
   }
 
+  if (containsBlockedRecommendationLanguage(strategy)) {
+    const safeFallback = getRotatingFallbackStrategy(trends, contentHistory, videoGenerationAvailable);
+    return {
+      ...safeFallback,
+      reasoning: `${safeFallback.reasoning} Chosen because the model-selected topic used buy/sell recommendation language.`,
+    };
+  }
+
   if (isTooSimilarToRecent(strategy.topic, contentHistory)) {
     const freshFallback = getRotatingFallbackStrategy(trends, contentHistory, videoGenerationAvailable);
     return {
@@ -364,4 +373,20 @@ function normalizeStrategy(
       slide.toLowerCase().startsWith(`slide ${index + 1}:`) ? slide : `Slide ${index + 1}: ${slide}`
     )),
   };
+}
+
+function containsBlockedRecommendationLanguage(strategy: StrategyDecision): boolean {
+  const text = [
+    strategy.topic,
+    strategy.hook,
+    strategy.reasoning,
+    ...strategy.slideBreakdown,
+  ].join('\n');
+
+  return (
+    /(best|top)\s+\d*\s*(stocks?|etfs?)\s+to\s+buy/i.test(text)
+    || /\b(buy|sell)\s+(this|these)\s+(stock|stocks|etf|etfs)\b/i.test(text)
+    || /\b(you should|must|need to)\s+(buy|sell|hold|invest)\b/i.test(text)
+    || /price target|target price|\$\d+(?:\.\d+)?\s*(?:target|by\s+\d{4})/i.test(text)
+  );
 }
