@@ -67,7 +67,7 @@ export async function runDailyWorkflow() {
   // ═══════════════════════════════════════════════════════
   console.log('━━━ AGENT 2: CONTENT STRATEGY ━━━');
   const strategyAgent = new ContentStrategyAgent();
-  const videoGenerationAvailable = VideoGenerationAgent.isAvailable();
+  const videoGenerationAvailable = VideoGenerationAgent.isAvailable() && VideoGenerationAgent.willRenderToday();
   const strategy = await strategyAgent.execute({ trends, videoGenerationAvailable });
   console.log('');
 

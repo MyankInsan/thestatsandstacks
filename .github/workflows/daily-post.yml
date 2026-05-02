@@ -72,10 +72,11 @@ jobs:
           ZERO_COST_MODE: "true"
           FREE_IMAGE_GENERATION_ONLY: "true"
           ALLOW_PAID_IMAGE_GENERATION: "false"
-          VIDEO_GENERATION_MODE: "auto"
-          VIDEO_SECONDS_PER_SLIDE: "2.6"
+          VIDEO_GENERATION_MODE: "alternating"
+          VIDEO_SCENE_SECONDS: "2.8"
+          VIDEO_FPS: "20"
           VIDEO_FFMPEG_PRESET: veryfast
-          VIDEO_FFMPEG_CRF: "20"
+          VIDEO_FFMPEG_CRF: "24"
           ENABLE_REDDIT_RESEARCH: "true"
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}

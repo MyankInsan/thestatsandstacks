@@ -41,7 +41,7 @@ FORMAT DECISION RULES:
 - CAROUSEL slides should be 5-8 slides.
 - Use WATCHLIST_EDUCATION for stock-market content. Never recommend buy/sell/hold or price targets.
 - SINGLE_IMAGE is allowed only for one-number stats or simple reminders.
-- Use REEL_DRAFT only when video rendering is available AND the topic benefits from motion, pacing, or a sequential punch-list. REEL_DRAFT should be 4-7 short frames and will be rendered locally from branded slides into a vertical MP4; do not require voiceover, paid video APIs, or stock footage.
+- Use REEL_DRAFT only when video rendering is available AND the topic benefits from motion, pacing, charts, or a sequential teaching flow. The video renderer creates animated educational vertical MP4s with generated chart/finance graphics and synthetic background music; do not require voiceover, paid video APIs, or stock footage.
 - Video rendering availability for this run: ${videoGenerationAvailable ? 'available' : 'not available'}.
 - Do not choose a topic that is similar to the last 10 posts unless the angle is meaningfully different.
 - Optimize for a daily mix: Canadian money systems, tax/account explainers, investor risk protection, and occasional Canada/US stock research education.
@@ -174,7 +174,7 @@ const fallbackStrategies: StrategyDecision[] = [
       'Slide 5: Leak 4: Idle cash with no job | Emergency cash is good | Random cash needs a purpose',
       'Slide 6: Save this weekly leak check | Pick one fix today | Educational only, not financial advice',
     ],
-    reasoning: 'A short Reel draft works well for fast sequential fixes while still reusing the branded local slide renderer.',
+    reasoning: 'A short animated Reel works well for fast sequential fixes while keeping the output free and motion-led.',
     targetAudience: 'Canadians who want practical money fixes without a full budgeting overhaul',
     searchKeywords: ['money leaks', 'budgeting Canada', 'payday routine'],
     contentPillar: 'Money behavior and budgeting',

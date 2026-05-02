@@ -81,7 +81,7 @@ export async function emailPostToPhone(input: {
     ${videos.length ? `
       <div style="background: #1E293B; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
         <p style="color: #94A3B8; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">🎬 VIDEO — Attached as MP4:</p>
-        <p style="color: #E2E8F0; font-size: 13px; margin: 0;">${videos.map((video) => `${video.durationSeconds}s local Reel draft`).join(', ')}</p>
+        <p style="color: #E2E8F0; font-size: 13px; margin: 0;">${videos.map((video) => `${video.durationSeconds}s animated educational Reel with generated background music`).join(', ')}</p>
       </div>
     ` : ''}
 
@@ -123,7 +123,7 @@ ${copy.firstComment}
 ───────────────────────────────────────
 
 Images are attached to this email.
-${videos.length ? 'Video MP4 is attached as well.\n' : ''}
+${videos.length ? 'Animated educational Reel MP4 is attached as well.\n' : ''}
 Save them to your phone gallery, then post to Instagram.
   `;
 

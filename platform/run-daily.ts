@@ -62,7 +62,7 @@ async function main() {
   // ── AGENT 2: CONTENT STRATEGY ──
   console.log('━━━ AGENT 2: CONTENT STRATEGY ━━━');
   const strategyAgent = new ContentStrategyAgent();
-  const videoGenerationAvailable = VideoGenerationAgent.isAvailable();
+  const videoGenerationAvailable = VideoGenerationAgent.isAvailable() && VideoGenerationAgent.willRenderToday(now);
   const strategy = await strategyAgent.execute({ trends, contentHistory, videoGenerationAvailable });
   console.log('');
 

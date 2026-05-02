@@ -66,6 +66,7 @@ export class VideoQAAgent extends BaseAgent {
       metadata.audioCodec = probe.audioCodec;
 
       if (!probe.videoCodec) failures.push('No video stream was detected.');
+      if (!probe.audioCodec) failures.push('No audio stream was detected; animated Reels should include generated background music.');
       if (probe.videoCodec && probe.videoCodec !== 'h264') failures.push(`Unexpected video codec: ${probe.videoCodec}.`);
       if (probe.audioCodec && probe.audioCodec !== 'aac') failures.push(`Unexpected audio codec: ${probe.audioCodec}.`);
       if (!probe.durationSeconds || probe.durationSeconds < 3) failures.push('Video is shorter than Instagram Reel minimum expectations.');

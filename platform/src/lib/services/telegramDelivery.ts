@@ -30,7 +30,7 @@ export async function sendPostToTelegram(input: {
     `Topic: ${input.strategy.topic}`,
     `Format: ${input.strategy.format} (${input.images.length} slides)`,
     `QA Score: ${(input.qaReport.overallScore * 100).toFixed(0)}%`,
-    input.videos?.length ? `Video: ${input.videos.length} MP4 attached` : '',
+    input.videos?.length ? `Video: ${input.videos.length} animated educational MP4 attached` : '',
     '',
     input.copy.caption,
     '',
@@ -57,7 +57,7 @@ export async function sendPostToTelegram(input: {
       token,
       chatId,
       filePath: video.localPath,
-      caption: `Reel draft (${video.durationSeconds}s)`,
+      caption: `Animated educational Reel (${video.durationSeconds}s)`,
       contentType: video.mimeType,
     });
   }
