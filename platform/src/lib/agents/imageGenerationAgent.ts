@@ -62,7 +62,7 @@ const CONTENT_X = 116;
 const CONTENT_W = 848;
 const POINT_ROW_H = 76;
 const POINT_ROW_GAP = 88;
-const SAVE_CARD_H = 104;
+const SAVE_CARD_H = 78;
 
 export class ImageGenerationAgent extends BaseAgent {
   constructor() {
@@ -383,43 +383,33 @@ function renderCoverVisualSystem(
   const innerX = x + 30;
   const innerY = y + 36;
   const innerW = width - 60;
-  const leftW = Math.round(innerW * 0.44);
-  const rightX = innerX + leftW + 34;
-  const rightW = innerW - leftW - 34;
-  const badgeLabels = ['SAVE', 'SHARE', 'FOLLOW'];
-  const rowLabels = points.slice(0, 3).map((point) => clampText(point, 34, '...'));
-  const subcopyY = innerY + Math.min(212, height - 92);
-  const badgeY = innerY + Math.max(154, height - 112);
-  const rowH = 44;
-  const rowGap = Math.max(52, Math.floor((height - 112) / 3));
+  const cardY = innerY + 50;
+  const cardH = height - 108;
+  const leftW = Math.round(innerW * 0.52);
+  const rightX = innerX + leftW + 36;
+  const rightW = innerW - leftW - 36;
+  const rowLabels = points.slice(0, 2).map((point) => clampText(point, 42, '...'));
 
   return `<g>
     <rect x="${x}" y="${y}" width="${width}" height="${height}" rx="20" fill="#050B14" stroke="${theme.stroke}" stroke-width="1.8"/>
     <rect x="${x + 1}" y="${y + 1}" width="${width - 2}" height="${height - 2}" rx="19" fill="${theme.accent}" opacity="0.045"/>
-    <path d="M${x + 28} ${y + height - 42} C${x + 210} ${y + height - 154}, ${x + 394} ${y + 32}, ${x + width - 34} ${y + 72}" fill="none" stroke="${theme.secondaryAccent}" stroke-width="4" opacity="0.28"/>
     <text x="${innerX}" y="${y + 34}" fill="#9fb2c8" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900" letter-spacing="1">${escapeXml(context.label.toUpperCase())}</text>
-    <rect x="${innerX}" y="${innerY + 32}" width="${leftW}" height="${height - 104}" rx="26" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.5"/>
-    <circle cx="${innerX + 86}" cy="${innerY + 104}" r="52" fill="${theme.accent}" opacity="0.16"/>
-    <circle cx="${innerX + 86}" cy="${innerY + 104}" r="26" fill="${theme.secondaryAccent}" opacity="0.82"/>
-    <text x="${innerX + 154}" y="${innerY + 82}" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="900">FRAMEWORK</text>
-    <text x="${innerX + 154}" y="${innerY + 122}" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="900">Save this</text>
-    <text x="${innerX + 34}" y="${subcopyY}" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="800">One clean rule. No hype.</text>
-    ${badgeLabels.map((label, index) => {
-      const badgeX = innerX + 34 + index * 116;
-      const color = index === 1 ? theme.secondaryAccent : index === 2 ? theme.tertiaryAccent : theme.accent;
-      return `<g>
-        <rect x="${badgeX}" y="${badgeY}" width="96" height="38" rx="19" fill="${color}" opacity="0.16" stroke="${color}" stroke-width="1.2"/>
-        <text x="${badgeX + 48}" y="${badgeY + 25}" text-anchor="middle" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="900">${label}</text>
-      </g>`;
-    }).join('')}
-    <rect x="${rightX}" y="${innerY + 34}" width="${rightW}" height="${height - 108}" rx="26" fill="#07111f" stroke="${theme.stroke}" stroke-width="1.4"/>
+    <rect x="${innerX}" y="${cardY}" width="${leftW}" height="${cardH}" rx="24" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.4"/>
+    <path d="M${innerX + 34} ${cardY + cardH - 42} C${innerX + 130} ${cardY + 70}, ${innerX + 248} ${cardY + cardH - 110}, ${innerX + leftW - 36} ${cardY + 54}" fill="none" stroke="${theme.secondaryAccent}" stroke-width="5" opacity="0.58"/>
+    <circle cx="${innerX + 88}" cy="${cardY + 92}" r="50" fill="${theme.accent}" opacity="0.14"/>
+    <circle cx="${innerX + 88}" cy="${cardY + 92}" r="20" fill="${theme.secondaryAccent}" opacity="0.9"/>
+    <text x="${innerX + 154}" y="${cardY + 82}" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="900">FILTER</text>
+    <text x="${innerX + 154}" y="${cardY + 120}" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="900">Risk first</text>
+    <text x="${innerX + 34}" y="${cardY + cardH - 34}" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="800">One idea. Clear tradeoffs.</text>
+    <rect x="${rightX}" y="${cardY}" width="${rightW}" height="${cardH}" rx="24" fill="#07111f" stroke="${theme.stroke}" stroke-width="1.4"/>
+    <text x="${rightX + 30}" y="${cardY + 50}" fill="${theme.secondaryAccent}" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="900">WHY SWIPE</text>
     ${rowLabels.map((label, index) => {
-      const rowY = innerY + 62 + index * rowGap;
+      const rowY = cardY + 78 + index * 70;
       const color = index === 1 ? theme.secondaryAccent : theme.accent;
       return `<g>
-        <rect x="${rightX + 26}" y="${rowY}" width="${rightW - 52}" height="${rowH}" rx="14" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.2"/>
-        <text x="${rightX + 44}" y="${rowY + 20}" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="900">${escapeXml(label)}</text>
-        <rect x="${rightX + 44}" y="${rowY + 29}" width="${Math.round((rightW - 112) * (0.44 + index * 0.16))}" height="8" rx="4" fill="${color}" opacity="0.72"/>
+        <rect x="${rightX + 30}" y="${rowY}" width="${rightW - 60}" height="46" rx="15" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.1"/>
+        <rect x="${rightX + 48}" y="${rowY + 29}" width="${Math.round((rightW - 104) * (0.58 + index * 0.16))}" height="7" rx="4" fill="${color}" opacity="0.76"/>
+        <text x="${rightX + 48}" y="${rowY + 23}" fill="#e5eefb" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900">${escapeXml(label)}</text>
       </g>`;
     }).join('')}
   </g>`;
@@ -443,9 +433,9 @@ function renderPointCards(points: string[], y: number, theme: SlideTheme): strin
 
 function renderSaveCard(y: number, theme: SlideTheme): string {
   return `<g>
-    <rect x="${CONTENT_X}" y="${y}" width="${CONTENT_W}" height="${SAVE_CARD_H}" rx="24" fill="#07111f" stroke="${theme.stroke}" stroke-width="1.5"/>
-    <text x="${CONTENT_X + 36}" y="${y + 44}" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">Save the framework. Share the risk check.</text>
-    <text x="${CONTENT_X + 36}" y="${y + 78}" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Follow for Canadian finance without hype.</text>
+    <rect x="${CONTENT_X}" y="${y}" width="${CONTENT_W}" height="${SAVE_CARD_H}" rx="20" fill="#07111f" stroke="${theme.stroke}" stroke-width="1.4"/>
+    <text x="${CONTENT_X + 34}" y="${y + 47}" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900">Save this framework for later.</text>
+    <text x="${CONTENT_X + CONTENT_W - 34}" y="${y + 47}" text-anchor="end" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="800">Educational only</text>
   </g>`;
 }
 
