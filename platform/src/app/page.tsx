@@ -75,24 +75,16 @@ export default async function Dashboard() {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {latestPost.Assets.map((postAsset, i) => (
                     <div key={postAsset.id} className="relative group">
-                      {postAsset.asset.imageUrl.endsWith('.mp4') ? (
-                        <video
-                          src={postAsset.asset.imageUrl}
-                          controls
-                          className="w-full aspect-[9/16] object-cover rounded-lg border border-slate-700 group-hover:border-emerald-500 transition-colors"
-                        />
-                      ) : (
-                        <Image
-                          src={postAsset.asset.imageUrl}
-                          alt={`Slide ${i + 1}`}
-                          width={1080}
-                          height={1350}
-                          unoptimized
-                          className="w-full aspect-[4/5] object-cover rounded-lg border border-slate-700 group-hover:border-emerald-500 transition-colors"
-                        />
-                      )}
+                      <Image
+                        src={postAsset.asset.imageUrl}
+                        alt={`Slide ${i + 1}`}
+                        width={1080}
+                        height={1350}
+                        unoptimized
+                        className="w-full aspect-[4/5] object-cover rounded-lg border border-slate-700 group-hover:border-emerald-500 transition-colors"
+                      />
                       <div className="absolute top-2 left-2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded font-mono">
-                        {postAsset.asset.imageUrl.endsWith('.mp4') ? 'VIDEO' : `SLIDE ${i + 1}`}
+                        SLIDE {i + 1}
                       </div>
                       {postAsset.asset.visionScore && (
                         <div className={`absolute top-2 right-2 text-[10px] px-2 py-0.5 rounded font-mono ${
@@ -180,7 +172,6 @@ export default async function Dashboard() {
               { name: 'Image Prompts', icon: '🎨' },
               { name: 'Image Gen', icon: '🖼️' },
               { name: 'Vision QA', icon: '🔎' },
-              { name: 'Video Gen', icon: '🎬' },
               { name: 'Copywriter', icon: '✍️' },
             ].map((agent, i) => (
               <div key={i} className="bg-[#1E293B] rounded-lg p-3 text-center border border-slate-700">

@@ -1,5 +1,4 @@
 import { BaseAgent } from './interfaces';
-import { VideoGenerationAgent } from './videoGenerationAgent';
 
 export interface CostGuardReport {
   zeroCostMode: boolean;
@@ -37,18 +36,14 @@ export class CostGuardAgent extends BaseAgent {
       }
     }
 
-    const videoMode = VideoGenerationAgent.getMode();
-    notes.push(`Video mode: ${videoMode}.`);
-    notes.push(VideoGenerationAgent.isAvailable()
-      ? 'FFmpeg is available for free local video rendering.'
-      : 'FFmpeg is not available; video rendering will be skipped safely.');
-    notes.push('Gemini/Nano Banana image generation is disabled in $0 mode; local Sharp/FFmpeg generation remains the free path.');
+    notes.push('Image-only mode: the daily pipeline generates local Sharp PNG carousel slides and sends pictures only.');
+    notes.push('Gemini/Nano Banana image generation is disabled in $0 mode; local Sharp generation remains the free path.');
 
     return {
       zeroCostMode,
       isSafe: failures.length === 0,
       policy: zeroCostMode
-        ? '$0 generation policy: local Sharp PNG slides, local FFmpeg MP4 videos, no paid image/video APIs.'
+        ? '$0 image-only policy: local Sharp PNG slides, no paid image/video APIs.'
         : 'Zero-cost mode is disabled by env configuration.',
       failures,
       notes,

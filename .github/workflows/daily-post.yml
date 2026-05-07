@@ -5,7 +5,7 @@ on:
     # Runs at both possible UTC offsets; the guard below chooses the one matching 8:00 AM Vancouver.
     - cron: '0 15 * * *'
     - cron: '0 16 * * *'
-  workflow_dispatch: # Allows you to manually trigger from GitHub website
+  workflow_dispatch:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
@@ -55,12 +55,6 @@ jobs:
         working-directory: platform
         run: npm ci
 
-      - name: Install free video tooling
-        if: steps.send-window.outputs.should_run == 'true'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
-
       - name: Run Daily Pipeline
         if: steps.send-window.outputs.should_run == 'true'
         working-directory: platform
@@ -74,15 +68,11 @@ jobs:
           ALLOW_PAID_IMAGE_GENERATION: "false"
           GEMINI_IMAGE_GENERATION_ENABLED: "false"
           ALLOW_GEMINI_IMAGE_API_SPEND: "false"
-          VIDEO_GENERATION_MODE: "alternating"
-          VIDEO_SCENE_SECONDS: "2.8"
-          VIDEO_FPS: "20"
-          VIDEO_FFMPEG_PRESET: veryfast
-          VIDEO_FFMPEG_CRF: "24"
           ENABLE_REDDIT_RESEARCH: "true"
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
           REDDIT_USER_AGENT: thestatsandstacks-content-research/1.0
+          HOT_TOPIC_WATCHLIST: SNDK,WDC,MU,NVDA,AVGO,AMD,PLTR,APP,HOOD,COIN,MSTR,SMCI,TSLA,SOFI,RKLB,IONQ
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           DELIVERY_EMAIL: ${{ secrets.DELIVERY_EMAIL }}

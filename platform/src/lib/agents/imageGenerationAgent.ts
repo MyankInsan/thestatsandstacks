@@ -198,7 +198,10 @@ export class ImageGenerationAgent extends BaseAgent {
     const visualY = clamp(titleLayout.bottomY + 34, 386, 512);
     const visualH = titleLayout.lines.length >= 4 ? 252 : titleLayout.lines.length === 3 ? 286 : 320;
     const pointsY = visualY + visualH + 30;
-    const pointRows = normalizePoints(parsed.points, slideNumber);
+    const pointRows = normalizePoints(parsed.points, slideNumber, description);
+    const visualMarkup = slideNumber === 1
+      ? renderCoverVisualSystem(CONTENT_X, visualY, CONTENT_W, visualH, slideTheme, context, pointRows)
+      : renderVisualSystem(CONTENT_X, visualY, CONTENT_W, visualH, slideTheme, context);
     const pointsBottom = pointsY + (pointRows.length - 1) * POINT_ROW_GAP + POINT_ROW_H;
     const footerY = clamp(pointsBottom + 34, 1038, 1122);
     const layoutWarnings = getSlideLayoutWarnings({
@@ -246,7 +249,7 @@ export class ImageGenerationAgent extends BaseAgent {
   ${renderBrandHeader(slideTheme, slideNumber)}
   <text x="${CONTENT_X}" y="232" fill="${slideTheme.secondaryAccent}" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="900" letter-spacing="1">${escapeXml(`${slideTheme.labelPrefix} / ${eyebrow}`.toUpperCase())}</text>
   ${renderTextBlock(parsed.title, CONTENT_X, 306, titleLayout, '#f8fafc', 900)}
-  ${renderVisualSystem(CONTENT_X, visualY, CONTENT_W, visualH, slideTheme, context)}
+  ${visualMarkup}
   ${renderPointCards(pointRows, pointsY, slideTheme)}
   ${renderSaveCard(footerY, slideTheme)}
   ${renderFooter(slideNumber, slideTheme)}
@@ -368,6 +371,60 @@ function renderVisualSystem(
   ${renderSignalFooter(innerX, bottomY, innerW, theme, context.leftLabel, context.rightLabel)}`;
 }
 
+function renderCoverVisualSystem(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  theme: SlideTheme,
+  context: VisualContext,
+  points: string[]
+): string {
+  const innerX = x + 30;
+  const innerY = y + 36;
+  const innerW = width - 60;
+  const leftW = Math.round(innerW * 0.44);
+  const rightX = innerX + leftW + 34;
+  const rightW = innerW - leftW - 34;
+  const badgeLabels = ['SAVE', 'SHARE', 'FOLLOW'];
+  const rowLabels = points.slice(0, 3).map((point) => clampText(point, 34, '...'));
+  const subcopyY = innerY + Math.min(212, height - 92);
+  const badgeY = innerY + Math.max(154, height - 112);
+  const rowH = 44;
+  const rowGap = Math.max(52, Math.floor((height - 112) / 3));
+
+  return `<g>
+    <rect x="${x}" y="${y}" width="${width}" height="${height}" rx="20" fill="#050B14" stroke="${theme.stroke}" stroke-width="1.8"/>
+    <rect x="${x + 1}" y="${y + 1}" width="${width - 2}" height="${height - 2}" rx="19" fill="${theme.accent}" opacity="0.045"/>
+    <path d="M${x + 28} ${y + height - 42} C${x + 210} ${y + height - 154}, ${x + 394} ${y + 32}, ${x + width - 34} ${y + 72}" fill="none" stroke="${theme.secondaryAccent}" stroke-width="4" opacity="0.28"/>
+    <text x="${innerX}" y="${y + 34}" fill="#9fb2c8" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="900" letter-spacing="1">${escapeXml(context.label.toUpperCase())}</text>
+    <rect x="${innerX}" y="${innerY + 32}" width="${leftW}" height="${height - 104}" rx="26" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.5"/>
+    <circle cx="${innerX + 86}" cy="${innerY + 104}" r="52" fill="${theme.accent}" opacity="0.16"/>
+    <circle cx="${innerX + 86}" cy="${innerY + 104}" r="26" fill="${theme.secondaryAccent}" opacity="0.82"/>
+    <text x="${innerX + 154}" y="${innerY + 82}" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="900">FRAMEWORK</text>
+    <text x="${innerX + 154}" y="${innerY + 122}" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="900">Save this</text>
+    <text x="${innerX + 34}" y="${subcopyY}" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="800">One clean rule. No hype.</text>
+    ${badgeLabels.map((label, index) => {
+      const badgeX = innerX + 34 + index * 116;
+      const color = index === 1 ? theme.secondaryAccent : index === 2 ? theme.tertiaryAccent : theme.accent;
+      return `<g>
+        <rect x="${badgeX}" y="${badgeY}" width="96" height="38" rx="19" fill="${color}" opacity="0.16" stroke="${color}" stroke-width="1.2"/>
+        <text x="${badgeX + 48}" y="${badgeY + 25}" text-anchor="middle" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="900">${label}</text>
+      </g>`;
+    }).join('')}
+    <rect x="${rightX}" y="${innerY + 34}" width="${rightW}" height="${height - 108}" rx="26" fill="#07111f" stroke="${theme.stroke}" stroke-width="1.4"/>
+    ${rowLabels.map((label, index) => {
+      const rowY = innerY + 62 + index * rowGap;
+      const color = index === 1 ? theme.secondaryAccent : theme.accent;
+      return `<g>
+        <rect x="${rightX + 26}" y="${rowY}" width="${rightW - 52}" height="${rowH}" rx="14" fill="${theme.card}" stroke="${theme.stroke}" stroke-width="1.2"/>
+        <text x="${rightX + 44}" y="${rowY + 20}" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="900">${escapeXml(label)}</text>
+        <rect x="${rightX + 44}" y="${rowY + 29}" width="${Math.round((rightW - 112) * (0.44 + index * 0.16))}" height="8" rx="4" fill="${color}" opacity="0.72"/>
+      </g>`;
+    }).join('')}
+  </g>`;
+}
+
 function renderPointCards(points: string[], y: number, theme: SlideTheme): string {
   return points.slice(0, 3).map((point, index) => {
     const rowY = y + index * POINT_ROW_GAP;
@@ -387,8 +444,8 @@ function renderPointCards(points: string[], y: number, theme: SlideTheme): strin
 function renderSaveCard(y: number, theme: SlideTheme): string {
   return `<g>
     <rect x="${CONTENT_X}" y="${y}" width="${CONTENT_W}" height="${SAVE_CARD_H}" rx="24" fill="#07111f" stroke="${theme.stroke}" stroke-width="1.5"/>
-    <text x="${CONTENT_X + 36}" y="${y + 44}" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">Built for saves, not hype.</text>
-    <text x="${CONTENT_X + 36}" y="${y + 78}" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Clear rules. Better decisions. No guru talk.</text>
+    <text x="${CONTENT_X + 36}" y="${y + 44}" fill="${theme.accent}" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900">Save the framework. Share the risk check.</text>
+    <text x="${CONTENT_X + 36}" y="${y + 78}" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Follow for Canadian finance without hype.</text>
   </g>`;
 }
 
@@ -545,12 +602,33 @@ function renderSignalFooter(
   </g>`;
 }
 
-function normalizePoints(points: string[], slideNumber: number): string[] {
-  const defaults = slideNumber === 1
-    ? ['Start with the goal', 'Compare the tradeoffs', 'Save the framework']
-    : ['Check the rule', 'Check the risk', 'Decide without hype'];
+function normalizePoints(points: string[], slideNumber: number, description: string): string[] {
+  const defaults = getDefaultPointHints(description, slideNumber);
   const merged = [...points, ...defaults].map((point) => clampText(point, 88));
   return uniqueTexts(merged).slice(0, 3);
+}
+
+function getDefaultPointHints(description: string, slideNumber: number): string[] {
+  const lower = description.toLowerCase();
+  if (slideNumber === 1) {
+    return ['Start with the goal', 'Spot the tradeoff', 'Save the framework'];
+  }
+  if (/stock|watchlist|valuation|ticker|portfolio|earnings|market|balance sheet|catalyst/.test(lower)) {
+    return ['Source the numbers', 'Stress-test the risk', 'Decide without hype'];
+  }
+  if (/payday|bill|debt|emergency|spend|budget|money disappears|cash/.test(lower)) {
+    return ['Name the money job', 'Protect the buffer', 'Automate the next step'];
+  }
+  if (/tfsa|rrsp|fhsa|account|contribution/.test(lower)) {
+    return ['Match account to goal', 'Check contribution room', 'Verify before moving money'];
+  }
+  if (/credit|score|balance|utilization|card/.test(lower)) {
+    return ['Separate myth from fact', 'Watch utilization', 'Pay on time'];
+  }
+  if (/tax|deduction|refund|filing/.test(lower)) {
+    return ['Keep the proof', 'Check the deadline', 'Verify the claim'];
+  }
+  return ['Name the tradeoff', 'Check the downside', 'Choose the next step'];
 }
 
 function getSlideLayoutWarnings(input: {
@@ -583,7 +661,7 @@ function getSlideLayoutWarnings(input: {
 
 function getVisualKind(description: string, context: VisualContext): SlideTheme['visualKind'] {
   const lower = description.toLowerCase();
-  if (/stock|watchlist|valuation|ticker|portfolio|earnings|candle|market|balance sheet|catalyst/.test(lower)) return 'market';
+  if (/stock|watchlist|valuation|ticker|portfolio|earnings|candle|market|balance sheet|catalyst|sandisk|sndk|storage|memory|semiconductor|data center|datacenter|margin|guidance/.test(lower)) return 'market';
   if (/payday|bill|debt|emergency|spend|budget|money disappears|cash/.test(lower)) return 'cashflow';
   if (/credit|score|balance|utilization|card/.test(lower)) return 'credit';
   if (/tfsa|rrsp|fhsa|account|contribution/.test(lower) || context.label.includes('ACCOUNT')) return 'accounts';
@@ -593,6 +671,9 @@ function getVisualKind(description: string, context: VisualContext): SlideTheme[
 
 function getVisualContext(description: string): VisualContext {
   const lower = description.toLowerCase();
+  if (/sandisk|sndk|storage|memory|semiconductor|data center|datacenter|nand/.test(lower)) {
+    return { label: 'AI storage heat map', chips: ['CATALYST', 'MARGIN', 'CYCLE', 'RISK'], leftLabel: 'HEADLINE', rightLabel: 'THESIS' };
+  }
   if (/earnings|revenue|margin|cash flow|guidance/.test(lower)) {
     return { label: 'Earnings quality check', chips: ['REV', 'MARGIN', 'CASH', 'GUIDE'], leftLabel: 'REPORT', rightLabel: 'THESIS' };
   }

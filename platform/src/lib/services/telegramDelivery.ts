@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { GeneratedImage } from '../agents/imageGenerationAgent';
-import { GeneratedVideo } from '../agents/videoGenerationAgent';
 import { CopyBundle } from '../agents/copywritingAgent';
 import { StrategyDecision } from '../agents/contentStrategyAgent';
 import { QAReport } from '../agents/visionQAAgent';
@@ -11,7 +10,6 @@ const TELEGRAM_TIMEOUT_MS = 30_000;
 
 export async function sendPostToTelegram(input: {
   images: GeneratedImage[],
-  videos?: GeneratedVideo[],
   copy: CopyBundle,
   strategy: StrategyDecision,
   qaReport: QAReport,
@@ -24,14 +22,13 @@ export async function sendPostToTelegram(input: {
     console.log('[TelegramDelivery] Skipped (TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set).');
     return;
   }
-  const mediaSummary = buildMediaSummary(input.images.length, input.videos?.length || 0);
+  const mediaSummary = buildMediaSummary(input.images.length);
 
   const summary = [
     `TheStatsAndStacks daily post`,
     `Topic: ${input.strategy.topic}`,
     `Format: ${input.strategy.format} (${mediaSummary})`,
     `QA Score: ${(input.qaReport.overallScore * 100).toFixed(0)}%`,
-    input.videos?.length ? `Video: ${input.videos.length} animated educational MP4 attached` : '',
     '',
     input.copy.caption,
     '',
@@ -50,16 +47,6 @@ export async function sendPostToTelegram(input: {
       filePath: image.localPath,
       caption: `Slide ${image.slideNumber}`,
       contentType: image.mimeType,
-    });
-  }
-
-  for (const video of input.videos || []) {
-    await uploadTelegramDocument({
-      token,
-      chatId,
-      filePath: video.localPath,
-      caption: `Animated educational Reel (${video.durationSeconds}s)`,
-      contentType: video.mimeType,
     });
   }
 
@@ -83,7 +70,7 @@ export async function sendPostToTelegram(input: {
     });
   }
 
-  console.log(`[TelegramDelivery] ✅ Sent ${input.images.length} slides${input.videos?.length ? ` and ${input.videos.length} video(s)` : ''} to Telegram.`);
+  console.log(`[TelegramDelivery] ✅ Sent ${input.images.length} picture slides to Telegram.`);
 }
 
 async function callTelegram(token: string, method: string, body: Record<string, unknown>) {
@@ -168,9 +155,6 @@ function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function buildMediaSummary(imageCount: number, videoCount: number): string {
-  const parts: string[] = [];
-  if (imageCount > 0) parts.push(`${imageCount} slide${imageCount === 1 ? '' : 's'}`);
-  if (videoCount > 0) parts.push(`${videoCount} video${videoCount === 1 ? '' : 's'}`);
-  return parts.length ? parts.join(' + ') : 'no media';
+function buildMediaSummary(imageCount: number): string {
+  return imageCount > 0 ? `${imageCount} picture slide${imageCount === 1 ? '' : 's'}` : 'no media';
 }

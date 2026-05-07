@@ -13,6 +13,7 @@ export interface CopyBundle {
 const MAX_CAPTION_CHARS = 1100;
 const MAX_HASHTAGS = 5;
 const MAX_FIRST_COMMENT_CHARS = 220;
+const BRAND_FOLLOW_NAME = 'TheStatsAndStacks';
 
 export class CopywritingAgent extends BaseAgent {
   constructor() {
@@ -31,12 +32,20 @@ ${input.strategy.slideBreakdown.join('\n')}
 Rules:
 - If the topic mentions stocks, do not recommend buy/sell/hold.
 - Do not use price targets, guaranteed returns, or personalized investment advice.
+- Do not invent exact returns, dates, earnings numbers, ticker status, acquisitions, or "inactive ticker" claims.
+- Do not change a performance window. If a slide says YTD, 1Y, or from 52-week low, never call it "today" or "1 day."
+- Avoid hype verbs like explodes, moons, blasts off, skyrockets, and can't miss. Sound premium and calm.
 - Use "educational only, not financial advice" language.
-- Write for saves and shares: clear first line, useful framework, no cheap engagement bait.
+- Write for saves, shares, and follows: clear first line, useful framework, no cheap engagement bait.
+- Caption structure: one sharp first line, then 2-4 short paragraphs or tight lines. Make it skim-friendly on mobile.
+- Include a concrete follow reason once, e.g. daily Canadian money frameworks, calm investing education, or no-hype finance systems.
 - Caption must be under ${MAX_CAPTION_CHARS} characters. The first line must work before Instagram's "more" truncation.
 - Use 3-5 focused hashtags, never more than ${MAX_HASHTAGS}.
 - Naturally include search terms from: ${input.strategy.searchKeywords.join(', ')}
-- Vary the CTA. Prefer save/share/profile-follow prompts only when they fit the post.
+- Mention only the ticker/company in the topic. Do not mention unrelated tickers just because they appear in search keywords.
+- Do not wrap keywords in backticks, quotes, or SEO-looking formatting.
+- Vary the CTA. Prefer a save/share prompt plus a reason to follow only when it fits the post.
+- First comment should ask one specific useful question that invites thoughtful replies without begging for engagement.
 - Do not put hashtags inside the caption body; return them only in the hashtags field.
 
 Output ONLY valid JSON:
@@ -59,8 +68,7 @@ Output ONLY valid JSON:
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.warn(`[${this.name}] Gemini copywriting failed; using fallback copy. ${message}`);
-      const isStockEducation = input.strategy.format === 'WATCHLIST_EDUCATION'
-        || /stock|watchlist|invest|earnings|market|etf/i.test(input.strategy.topic);
+      const isStockEducation = isStockEducationTopic(input.strategy);
       return normalizeCopyBundle({
         caption: `${input.strategy.topic}\n\nUse this as a research framework, not a shortcut.\n\nThe goal is not to chase a headline. The goal is to ask better questions before money is at risk.\n\nEducational general information only, not personalized financial advice.`,
         hashtags: isStockEducation
@@ -77,12 +85,13 @@ Output ONLY valid JSON:
 }
 
 export function normalizeCopyBundle(bundle: CopyBundle, strategy: StrategyDecision): CopyBundle {
-  const cta = truncateText((bundle.cta || fallbackCta(strategy)).trim(), 160);
-  const isStockEducation = strategy.format === 'WATCHLIST_EDUCATION'
-    || /stock|watchlist|invest|earnings|market|etf/i.test(strategy.topic);
+  const cta = buildGrowthCta(bundle.cta || fallbackCta(strategy), strategy);
+  const isStockEducation = isStockEducationTopic(strategy);
 
-  let caption = stripHashtags(bundle.caption || '').trim();
+  let caption = cleanCopyArtifacts(stripHashtags(bundle.caption || '')).trim();
   if (!caption) caption = strategy.topic;
+  caption = removeUnrelatedTickerLeak(caption, strategy);
+  caption = repairIncompleteCaptionEnd(caption);
 
   if (isStockEducation && !/not (personalized )?financial advice/i.test(caption)) {
     caption = `${caption}\n\nEducational only, not financial advice.`;
@@ -90,7 +99,7 @@ export function normalizeCopyBundle(bundle: CopyBundle, strategy: StrategyDecisi
     caption = `${caption}\n\nEducational general information only.`;
   }
 
-  if (cta && !caption.toLowerCase().includes(cta.toLowerCase())) {
+  if (cta && shouldAppendCta(caption, cta)) {
     caption = `${caption}\n\n${cta}`;
   }
 
@@ -100,8 +109,8 @@ export function normalizeCopyBundle(bundle: CopyBundle, strategy: StrategyDecisi
     caption,
     hashtags: buildHashtagString(bundle.hashtags, strategy),
     cta,
-    firstComment: truncateText(stripHashtags(bundle.firstComment || fallbackFirstComment(strategy)).trim(), MAX_FIRST_COMMENT_CHARS),
-    altText: truncateText((bundle.altText || `TheStatsAndStacks post about ${strategy.topic}.`).trim(), 1000),
+    firstComment: truncateText(cleanCopyArtifacts(stripHashtags(bundle.firstComment || fallbackFirstComment(strategy))).trim(), MAX_FIRST_COMMENT_CHARS),
+    altText: truncateText(cleanCopyArtifacts(bundle.altText || `TheStatsAndStacks post about ${strategy.topic}.`).trim(), 1000),
   };
 }
 
@@ -124,7 +133,7 @@ function buildHashtagString(value: string, strategy: StrategyDecision): string {
 }
 
 function getDefaultHashtags(strategy: StrategyDecision): string[] {
-  if (strategy.format === 'WATCHLIST_EDUCATION' || /stock|watchlist|earnings|market|etf/i.test(strategy.topic)) {
+  if (isStockEducationTopic(strategy)) {
     return [
       '#CanadianFinance',
       '#InvestingCanada',
@@ -164,6 +173,42 @@ function stripHashtags(value: string): string {
     .trim();
 }
 
+function cleanCopyArtifacts(value: string): string {
+  return value
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/[ \t]{2,}/g, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+function removeUnrelatedTickerLeak(value: string, strategy: StrategyDecision): string {
+  const allowedTickers = new Set((strategy.topic.match(/\(([A-Z]{1,6})\)/g) || [])
+    .map((ticker) => ticker.replace(/[()]/g, '')));
+  if (allowedTickers.size === 0) return value;
+
+  const unrelatedTickerPattern = /\b(AMD|NVDA|AVGO|WDC|MU|SMCI|TSLA|PLTR|APP|HOOD|COIN|MSTR|RKLB|IONQ|SOFI)\b/g;
+  return value
+    .split(/(?<=[.!?])\s+/)
+    .filter((sentence) => {
+      const tickers = sentence.match(unrelatedTickerPattern) || [];
+      return tickers.every((ticker) => allowedTickers.has(ticker));
+    })
+    .join(' ')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+function shouldAppendCta(caption: string, cta: string): boolean {
+  const normalizedCaption = caption.toLowerCase();
+  const normalizedCta = cta.toLowerCase();
+  if (normalizedCaption.includes(normalizedCta)) return false;
+  const captionHasFollow = /\bfollow\s+@?thestatsandstacks\b/i.test(caption);
+  const ctaHasFollow = /\bfollow\s+@?thestatsandstacks\b/i.test(cta);
+  const captionHasSave = /\bsave\b/i.test(caption);
+  const ctaHasSave = /\bsave\b/i.test(cta);
+  return !(captionHasFollow && ctaHasFollow && captionHasSave && ctaHasSave);
+}
+
 function truncateCaption(value: string, maxChars: number, includeAdviceDisclaimer: boolean): string {
   if (value.length <= maxChars) return value;
 
@@ -184,13 +229,60 @@ function truncateText(value: string, maxChars: number): string {
 }
 
 function fallbackCta(strategy: StrategyDecision): string {
-  return strategy.format === 'REEL_DRAFT'
+  return strategy.format === 'SINGLE_IMAGE'
     ? 'Save this before your next money check.'
     : 'Save this before your next money decision.';
 }
 
 function fallbackFirstComment(strategy: StrategyDecision): string {
-  return /stock|watchlist|earnings|market|etf/i.test(strategy.topic)
+  return isStockEducationTopic(strategy)
     ? 'What do you check first: business quality, valuation, or risk?'
     : 'Which part would you fix first?';
+}
+
+function buildGrowthCta(value: string, strategy: StrategyDecision): string {
+  const cleaned = stripHashtags(value).replace(/\s+/g, ' ').trim() || fallbackCta(strategy);
+  const followReason = getFollowerReason(strategy);
+  if (/\bfollow\b/i.test(cleaned)) return truncateText(cleaned, 160);
+  const combined = `${cleaned} ${followReason}`;
+  return truncateText(combined.length <= 160 ? combined : followReason, 160);
+}
+
+function getFollowerReason(strategy: StrategyDecision): string {
+  if (isStockEducationTopic(strategy) || /portfolio/i.test(strategy.topic)) {
+    return `Follow ${BRAND_FOLLOW_NAME} for calm investing frameworks without hype.`;
+  }
+
+  return `Follow ${BRAND_FOLLOW_NAME} for one clear Canadian money framework a day.`;
+}
+
+function isStockEducationTopic(strategy: StrategyDecision): boolean {
+  const text = [
+    strategy.topic,
+    strategy.format,
+    ...(strategy.searchKeywords || []),
+  ].join(' ');
+
+  return (
+    strategy.format === 'WATCHLIST_EDUCATION'
+    || /\([A-Z]{1,6}\)/.test(strategy.topic)
+    || /stock|watchlist|invest|earnings|market|etf|ticker|valuation|portfolio|semiconductor|data storage|ai storage|sandisk|micron|western digital|super micro|amd|nvidia|broadcom/i.test(text)
+  );
+}
+
+function repairIncompleteCaptionEnd(value: string): string {
+  const trimmed = value.trim();
+  if (!trimmed || /[.!?)]$/.test(trimmed)) return trimmed;
+
+  const lastSentenceEnd = Math.max(
+    trimmed.lastIndexOf('.'),
+    trimmed.lastIndexOf('!'),
+    trimmed.lastIndexOf('?')
+  );
+
+  if (lastSentenceEnd > 120) {
+    return trimmed.slice(0, lastSentenceEnd + 1).trim();
+  }
+
+  return trimmed.replace(/\s+\S*$/, '').trim();
 }

@@ -33,7 +33,7 @@ model PostBrief {
   ideaId          String
   idea            ContentIdea @relation(fields: [ideaId], references: [id])
   
-  format          String   // Carousel, Single Image, Reel Draft
+  format          String   // Carousel or Single Image
   hook            String
   angle           String
   outline         Json     // Array of slide objects or outline text

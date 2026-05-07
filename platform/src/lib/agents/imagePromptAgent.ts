@@ -36,10 +36,11 @@ function buildPremiumImagePrompt(strategy: StrategyDecision, slide: string, slid
     'IMPORTANT: no words, no letters, no numbers, no logos, no charts with readable labels. Leave all typography to a later overlay.',
     `Brand: TheStatsAndStacks, high-trust Canadian finance, data-first, calm and sophisticated.`,
     `Topic: ${strategy.topic}. Slide intent: ${slide}.`,
-    `Composition: ${isCover ? 'strong cover-worthy focal point with generous negative space' : 'supporting visual with clear open zones for headline and bullet overlays'}.`,
+    `Composition: ${isCover ? 'strong cover-worthy focal point with structured visual density and no dead zones' : 'supporting visual with clear open zones for headline and bullet overlays, balanced density, and no empty-looking corners'}.`,
     `Visual direction: ${visualMode}.`,
-    'Palette: deep navy, charcoal, black glass, emerald accents, muted gold highlights, occasional cool cyan or violet only as secondary contrast.',
-    'Style: premium magazine infographic background, realistic paper/glass texture, subtle market-grid geometry, crisp lighting, no clutter, no meme style, no generic corporate stock-photo feel.',
+    'Reference mood: high-performing finance creator content that is simple, original, and saveable, but do not copy any creator layout, brand, screenshot, or post.',
+    'Palette: deep charcoal, graphite, emerald accents, muted gold highlights, confident off-white contrast, occasional cool cyan or violet only as secondary contrast.',
+    'Style: premium magazine infographic background, realistic paper/glass texture, subtle market-grid geometry, crisp lighting, high contrast, no clutter, no meme style, no generic corporate stock-photo feel.',
     'Mobile readability: keep the center-left and lower third visually calm so exact text can be overlaid cleanly.',
     'Compliance: no fake price candles, no fake performance claims, no specific ticker recommendation visuals, no guaranteed-return symbolism.',
   ].join(' ');
@@ -47,10 +48,10 @@ function buildPremiumImagePrompt(strategy: StrategyDecision, slide: string, slid
 
 function getVisualMode(format: StrategyDecision['format'], topic: string, slideNumber: number): string {
   const lower = topic.toLowerCase();
-  if (format === 'REEL_DRAFT') {
+  if (/sandisk|sndk|ai storage|nand|memory|semiconductor|data center|datacenter/.test(lower)) {
     return slideNumber % 2 === 0
-      ? 'vertical short-form finance reel frame with kinetic editorial pacing, bold abstract routing lines, and clean negative space'
-      : 'high-contrast mobile video cover frame with layered finance UI depth, motion-ready composition, and calm premium energy';
+      ? 'AI infrastructure research desk with abstract storage-stack modules, NAND wafer geometry, catalyst cards, and risk-meter depth'
+      : 'premium semiconductor market terminal with abstract memory blocks, watchlist tiles, glowing data-center grid, and disciplined risk-map energy';
   }
   if (format === 'WATCHLIST_EDUCATION') {
     return slideNumber % 2 === 0

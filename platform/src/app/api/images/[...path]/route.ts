@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-// Serves generated media from the output folder
+// Serves generated picture slides from the output folder
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ path: string[] }> }
@@ -27,7 +27,5 @@ export async function GET(
 
 function getContentType(filePath: string): string {
   if (filePath.endsWith('.svg')) return 'image/svg+xml';
-  if (filePath.endsWith('.mp4')) return 'video/mp4';
-  if (filePath.endsWith('.mov')) return 'video/quicktime';
   return 'image/png';
 }

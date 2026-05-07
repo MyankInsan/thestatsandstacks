@@ -17,8 +17,9 @@ A premium, faceless, data-first finance page.
 Content focus:
 - Canadian personal finance
 - occasional US stocks / market education
+- current hot-market education when there is real public attention around a ticker, sector, earnings report, or catalyst
 - data-driven visual explainers
-- carousels, static graphics, and eventually some reels
+- carousels and static graphics only
 - clear, premium, editorial, modern visual identity
 - dark navy / charcoal / black base palette with subtle emerald and muted gold accents
 - intelligent, high-trust, non-hype, non-gimmicky tone
@@ -41,7 +42,7 @@ Voice:
 
 User behavior expectation:
 I want the system to run with minimal involvement from me.
-I may manually step in about once per week to record occasional original video or approve special content.
+I may manually step in about once per week to approve special content.
 Default mode should be hands-off operation.
 
 ==================================================
@@ -54,7 +55,6 @@ Build an autonomous agentic system that:
 3. decides whether that content should be:
    - a single image
    - a carousel
-   - a draft reel concept
 4. generates all required assets
 5. quality-checks assets and text
 6. generates caption, CTA, hashtags, and post metadata
@@ -137,6 +137,7 @@ Create these agents/services:
 1. Trend Research Agent
 Purpose:
 - do deep research daily
+- run the hot-topic desk before evergreen planning so the system can catch market stories that investing and trading pages are already discussing
 - find what content patterns are currently performing in finance / personal finance / investing education on Instagram
 - identify promising formats, hooks, structures, and topics
 - identify which themes are oversaturated and should be avoided
@@ -157,6 +158,8 @@ Rules:
 - do not scrape Instagram in unsupported or risky ways
 - use permitted/public inputs only
 - prioritize durable educational demand over shallow trend chasing
+- for hot stocks such as SanDisk/SNDK, create educational case studies: what happened, why it matters, what to watch, and what risks to respect
+- never turn hot-topic research into buy/sell/hold calls, price targets, or "stocks to buy" content
 - produce structured research output with confidence scores
 
 Output:
@@ -165,13 +168,31 @@ Output:
 - notes on why each topic may work now
 - notes on how each topic aligns with my brand
 
+1A. Hot Topic Desk Agents
+Purpose:
+- create multiple independent idea streams before the main trend researcher decides
+- identify current market heat without paid APIs
+- convert fast-moving attention into premium, compliant picture-carousel ideas
+
+Agents:
+- Market Heat Agent: scans a free ticker watchlist for large moves, momentum, and 52-week heat.
+- Catalyst News Agent: checks recent public finance headlines for the hottest tickers.
+- Viral Finance Format Agent: converts attention into saveable educational formats.
+- Hot Topic Desk Agent: dedupes, ranks, and hands the best ideas to the Trend Research Agent.
+
+Rules:
+- no unsupported Instagram scraping
+- no copied creator layouts or hooks
+- no unverified exact numbers
+- no individualized financial advice
+- every hot-topic post must include risk context and a saveable research framework
+
 2. Content Strategy Agent
 Purpose:
 - choose the best content type for today
 - decide whether today should be:
   - carousel
   - single image
-  - draft reel concept
 - choose the final topic and angle
 
 Decision logic:
@@ -186,11 +207,6 @@ Decision logic:
   - the idea is strong enough in one frame
   - there is one memorable chart or idea
   - complexity is low
-- choose reel concept only when:
-  - the idea benefits from motion or face/voice content
-  - I have source footage or a reusable motion template
-  - approved audio options exist
-
 Output:
 - content type
 - topic
@@ -364,31 +380,11 @@ Bundle includes:
 - first comment
 - hashtags
 - alt text
-- music selection or no-music flag
 - publish time
 - content type
 - confidence report
 - source references used for verification
-- thumbnail / cover selection
-
-10. Music & Audio Agent
-Purpose:
-- determine whether music is required
-- if music is needed, select from an approved, legal source
-
-Rules:
-- for carousels, default to no music unless explicitly helpful
-- for reels, prefer pre-approved royalty-free or owned audio assets
-- do not make Instagram licensed music library a hard dependency
-- if no safe audio path exists, proceed without music or create a no-audio draft
-- maintain a managed catalog of approved audio assets with tags:
-  - calm
-  - premium
-  - editorial
-  - ambient
-  - modern
-  - subtle
-  - cinematic-minimal
+- cover slide selection
 
 11. Publisher Agent
 Purpose:
@@ -472,7 +468,6 @@ Design a robust schema for:
 - published posts
 - analytics
 - experiments
-- approved audio library
 - weekly reports
 - manual overrides
 - failure logs
@@ -494,7 +489,6 @@ Build a clean internal dashboard where I can:
 - maintain approved brand prompt templates
 - maintain a “do not post” topic list
 - maintain source whitelists
-- manage approved audio tracks
 - set posting windows
 - pause automation
 
@@ -556,7 +550,7 @@ Step 1: research
 - identify one primary topic and two backups
 
 Step 2: choose format
-- decide carousel vs single image vs reel draft
+- decide carousel vs single image
 - justify decision
 
 Step 3: create post brief
@@ -686,8 +680,6 @@ MVP must include:
 - weekly digest
 
 Nice-to-have after MVP:
-- reel auto-production
-- audio recommendation engine
 - A/B testing framework
 - content series memory
 - deeper trend clustering

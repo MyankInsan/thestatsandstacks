@@ -40,6 +40,15 @@ export class ComplianceQAAgent extends BaseAgent {
     if (/\b(you should|must|need to)\s+(buy|sell|hold|invest)\b/i.test(fullText)) {
       failures.push('Personalized investing instruction language is not allowed.');
     }
+    if (/\b(explodes|moons|blasts off|skyrockets|can't miss|must[-\s]?buy)\b/i.test(fullText)) {
+      failures.push('Hype-style market language is not allowed for premium finance education.');
+    }
+    if (hasExtremeOneDayPerformanceClaim(fullText)) {
+      failures.push('Extreme one-day performance claims require manual source verification and are blocked by default.');
+    }
+    if (/\binactive ticker\b|\bphantom surge\b|\bacquired by\s+(wdc|western digital)\b/i.test(fullText)) {
+      failures.push('Unverified ticker-status language is blocked by default.');
+    }
 
     if (input.copy) {
       if (input.copy.caption.length > 1100) failures.push('Caption is longer than the automation cap.');
@@ -56,4 +65,13 @@ export class ComplianceQAAgent extends BaseAgent {
       failures,
     };
   }
+}
+
+function hasExtremeOneDayPerformanceClaim(text: string): boolean {
+  const claims = [
+    ...text.matchAll(/(?:1\s*day|1d|today)[^\n.%]{0,42}([+-]?\d+(?:,\d{3})*(?:\.\d+)?)%/gi),
+    ...text.matchAll(/([+-]?\d+(?:,\d{3})*(?:\.\d+)?)%[^\n.]{0,42}(?:1\s*day|1d|today)/gi),
+  ];
+
+  return claims.some((claim) => Number(claim[1].replace(/,/g, '')) >= 250);
 }

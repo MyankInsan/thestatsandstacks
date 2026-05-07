@@ -3,22 +3,23 @@
 ## 1. System Architecture Diagram
 ```mermaid
 graph TD
-    A[Cloud Scheduler / GitHub Actions Cron] -->|Triggers Daily| Z(Zero-Cost Guard)
-    Z --> B(Trend Research Agent)
+    A[Local runner / 8 AM GitHub Schedule / Manual Dispatch] -->|Triggers Daily| Z(Zero-Cost Guard)
+    Z --> H0(Hot Topic Desk)
+    H0 --> H1(Market Heat Agent)
+    H0 --> H2(Catalyst News Agent)
+    H0 --> H3(Viral Finance Format Agent)
+    H1 --> B(Trend Research Agent)
+    H2 --> B
+    H3 --> B
     B --> C(Content Strategy Agent)
     C --> D(Editorial Planning Agent)
     D --> E(Image Prompt Agent)
     E --> F(Image Generation Agent)
     F --> G(Vision QA Critic)
-    G --> V{Video needed?}
-    V -->|Yes| W(Free Local Video Generator)
-    W --> X(Video QA Critic)
-    V -->|No| H(Finance Accuracy & Compliance)
-    X --> H
+    G --> H(Finance Accuracy & Compliance)
     H --> I(Copywriting Agent)
     I --> J(Packaging Agent)
-    J --> K(Music/Audio Agent)
-    K --> L{Publisher Agent}
+    J --> L{Publisher Agent}
     
     L -->|High Confidence| M[Instagram Graph API]
     L -->|Low Confidence / Error| N[Save as Draft & Alert]
@@ -46,9 +47,10 @@ graph TD
 - **Database**: PostgreSQL with Prisma ORM
 - **Queue/Orchestration**: Redis + BullMQ (Handles multi-step agent workflows with retries)
 - **AI Models**: OpenAI GPT-4o (Agents, Copy, Finance Checks), DALL-E 3 (Image Generation)
-- **Video Rendering**: Free local FFmpeg MP4 rendering from approved carousel frames; optional open-source text-to-video models can be explored separately if local GPU capacity exists.
-- **Zero-Cost Mode**: Paid image/video APIs are blocked by default; daily cloud runs use local Sharp images and FFmpeg video rendering only.
-- **Deployment**: Google Cloud Run (Next.js app & background worker), Cloud Scheduler (Cron), Cloud Storage (Assets)
+- **Hot Topic Desk**: Free ticker heat scan, catalyst/news mapping, and viral-format conversion before final strategy selection.
+- **Picture Rendering**: Free local Sharp PNG rendering from generated carousel briefs; the daily automation is picture-only.
+- **Zero-Cost Mode**: Paid image/video APIs are blocked by default; daily cloud runs use local Sharp images only.
+- **Deployment**: GitHub Actions for the standalone daily picture workflow; the longer-term dashboard/worker architecture can still run on Cloud Run, Cloud Scheduler, and Cloud Storage.
 - **Auth**: NextAuth / simple auth for Admin Dashboard
 
 ## 3. Implementation Plan
@@ -60,7 +62,7 @@ graph TD
 - Define internal base agent interfaces and LLM service abstractions.
 
 ### Phase 2: Core Agents Implementation
-- **Trend Research & Strategy**: Implement daily trend extraction and topic scoring.
+- **Trend Research & Strategy**: Implement daily trend extraction, hot-topic desk scoring, catalyst mapping, and topic scoring.
 - **Editorial & Copywriting**: Generating structured post briefs and captions.
 - **Image Generation Pipeline**: Implement DALL-E integration, prompts generation, vision QA, and asset storage (GCS/Local for MVP).
 - **Compliance & Accuracy**: Implement factual checks against structured sources.
@@ -83,6 +85,13 @@ graph TD
 - `DATABASE_URL`
 - `REDIS_URL`
 - `OPENAI_API_KEY`
+- `GEMINI_API_KEY`
+- `HOT_TOPIC_WATCHLIST`
+- `TELEGRAM_BOT_TOKEN`
+- `TELEGRAM_CHAT_ID`
+- `GMAIL_ADDRESS`
+- `GMAIL_APP_PASSWORD`
+- `DELIVERY_EMAIL`
 - `INSTAGRAM_ACCESS_TOKEN`
 - `INSTAGRAM_ACCOUNT_ID`
 - `GCP_PROJECT_ID`

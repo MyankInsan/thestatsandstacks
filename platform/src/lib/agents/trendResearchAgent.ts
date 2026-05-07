@@ -1,4 +1,5 @@
 import { BaseAgent, TrendResearchResult } from './interfaces';
+import { HotTopicDeskAgent } from './hotTopicAgents';
 import { getGeminiClient, getGeminiTextModelName } from '../services/gemini';
 import {
   ContentHistoryEntry,
@@ -24,9 +25,16 @@ export class TrendResearchAgent extends BaseAgent {
     const today = new Date();
     const todayLabel = getLocalDateKey(today);
     const contentHistory = input?.contentHistory || [];
-    const signalBriefs = await collectResearchSignals(today);
+    const hotTopicDesk = await new HotTopicDeskAgent().execute({ contentHistory });
+    const signalBriefs = [
+      ...(hotTopicDesk.signalBriefs || []),
+      ...await collectResearchSignals(today),
+    ];
     const researchCandidates = rankAndDedupeCandidates(
-      buildResearchBacklog(today, signalBriefs),
+      [
+        ...hotTopicDesk.topics,
+        ...buildResearchBacklog(today, signalBriefs),
+      ],
       contentHistory
     );
 
@@ -42,13 +50,15 @@ Your job is to find the BEST possible topic for today's post that will maximize:
 
 RESEARCH APPROACH:
 1. Think about what Canadian personal finance topics people are actively searching for RIGHT NOW.
-2. Consider seasonal timing, official finance calendars, tax deadlines, contribution deadlines, and market education needs.
-3. Consider formats that create saves and shares: comparisons, checklists, myth-busters, step-by-step systems, "what to check before..." frameworks, and simple visual scorecards.
-4. Avoid posting the same theme repeatedly. A fresh angle beats another generic TFSA/RRSP carousel.
-5. For Canadian/US stocks, never recommend buy/sell/hold, price targets, guaranteed returns, or "best stocks to buy." Use watchlist education, catalyst/risk maps, valuation checklists, sector explainers, earnings-read frameworks, and "stocks to research" language only.
-6. Do not use unsupported Instagram scraping. Use only the provided compliant research signals and public/permitted inputs.
-7. For growth, favor finance-news and market-education patterns that work on large trading education pages without copying them: factual headline first, one chart/stat object, why-it-matters context, what to watch next, and a saveable risk/decision takeaway.
-8. Do not mimic another creator's exact templates, colors, hooks, logo placement, screenshots, or paid-community funnel language.
+2. Give serious priority to the hot-topic desk signals when they show market heat. Trading pages win attention by reacting to names like SanDisk, but TheStatsAndStacks must turn that heat into education: catalyst, risk map, checklist, and "what to watch" context.
+3. Consider seasonal timing, official finance calendars, tax deadlines, contribution deadlines, and market education needs.
+4. Consider formats that create saves and shares: comparisons, checklists, myth-busters, step-by-step systems, "what to check before..." frameworks, and simple visual scorecards.
+5. Avoid posting the same theme repeatedly. A fresh angle beats another generic TFSA/RRSP carousel.
+6. For Canadian/US stocks, never recommend buy/sell/hold, price targets, guaranteed returns, or "best stocks to buy." Use watchlist education, catalyst/risk maps, valuation checklists, sector explainers, earnings-read frameworks, and "stocks to research" language only.
+7. Do not use unsupported Instagram scraping. Use only the provided compliant research signals and public/permitted inputs.
+8. For growth, favor finance-news and market-education patterns that work on large trading education pages without copying them: factual headline first, one chart/stat object, why-it-matters context, what to watch next, and a saveable risk/decision takeaway.
+9. Do not mimic another creator's exact templates, colors, hooks, logo placement, screenshots, or paid-community funnel language.
+10. Do not put exact percentage moves in topic titles. Use "heat check", "risk filter", or "case study" language instead. If a signal says a move is 1Y/YTD/from 52-week low, never rewrite it as 1 day/today.
 
 CONTENT PILLARS TO DRAW FROM:
 - TFSA vs RRSP vs FHSA comparisons
@@ -101,7 +111,7 @@ Output ONLY valid JSON matching this schema (no markdown, no code fences):
 
       const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
       const parsed = JSON.parse(cleaned) as TrendResearchResult;
-      const topics = rankAndDedupeCandidates(parsed.topics, contentHistory);
+      const topics = rankAndDedupeCandidates(parsed.topics.map(sanitizeTrendCandidate), contentHistory);
 
       console.log(`[${this.name}] ✅ Found ${topics.length} topic candidates`);
       return {
@@ -127,6 +137,7 @@ type ResearchCandidate = NonNullable<TrendResearchResult['topics'][number]>;
 async function collectResearchSignals(today: Date): Promise<ResearchSignalBrief[]> {
   const collectors: Array<() => Promise<ResearchSignalBrief>> = [
     () => buildInstagramGrowthSignal(),
+    () => buildCreatorReferenceSignal(),
     () => buildSeasonalFinanceSignal(today),
     () => buildMarketEducationSignal(today),
     () => collectRedditApiSignal(),
@@ -149,8 +160,11 @@ async function buildInstagramGrowthSignal(): Promise<ResearchSignalBrief> {
   return {
     source: 'instagram-growth-rules',
     status: 'fallback',
-    summary: 'Prioritize original, saveable, shareable, search-friendly carousels. Avoid reposts, generic AI visuals, engagement bait, and repeated daily formats.',
+    summary: 'Prioritize original, saveable, shareable, search-friendly posts. In 2026, originality and views matter across formats, while low-effort reposted content can lose recommendation eligibility.',
     topicSeeds: [
+      'original point of view',
+      'strong first-frame hook',
+      'one idea per post',
       'comparison carousel',
       'decision checklist',
       'myth versus fact',
@@ -160,6 +174,33 @@ async function buildInstagramGrowthSignal(): Promise<ResearchSignalBrief> {
     sourceUrls: [
       'https://www.facebook.com/help/instagram/653964212890722',
       'https://about.instagram.com/blog/announcements/instagram-ranking-explained',
+      'https://techcrunch.com/2026/04/30/instagram-restricts-reach-of-content-aggregators-in-new-crackdown/',
+    ],
+  };
+}
+
+async function buildCreatorReferenceSignal(): Promise<ResearchSignalBrief> {
+  return {
+    source: 'million-follower-finance-reference-patterns',
+    status: 'fallback',
+    summary: [
+      'Use million-follower finance accounts as pattern references, not templates to copy.',
+      'Personal-finance mega accounts lean on simple beginner language, emotionally specific money pain, and a clear reason to follow.',
+      'Market-news and investing accounts use one chart/stat/news object, then explain what matters and what to watch next.',
+      'The safest TheStatsAndStacks version is original Canadian money and market literacy: no screenshots, no reposts, no copied hooks, no buy/sell calls.',
+    ].join(' '),
+    topicSeeds: [
+      'beginner money lesson with one memorable rule',
+      'saveable checklist with a sharp cover hook',
+      'myth versus fact for a common finance belief',
+      'one chart or scorecard before a money decision',
+      'risk-first market education',
+      'follow-worthy daily Canadian money framework',
+    ],
+    sourceUrls: [
+      'https://hafi.pro/top/most-followed-instagram/finance',
+      'https://www.ratexyz.com/top/instagram/all/personal_finance',
+      'https://www.humphreytalks.com/about',
     ],
   };
 }
@@ -464,6 +505,34 @@ function buildResearchBacklog(today: Date, signalBriefs: ResearchSignalBrief[]):
         'https://www.finra.org/media-center/newsreleases/2026/finra-foundation-research-examines-characteristics-behaviors-outcomes',
       ],
     },
+    {
+      title: 'Why the First $100K Feels So Slow for Canadian Investors',
+      score: 0.83 + seasonalBoost.accountPlanning,
+      reasoning: 'Milestone-based investing education has broad creator-market appeal, but this version turns it into a Canadian tracking framework instead of motivation-only content.',
+      suggestedFormat: 'CAROUSEL',
+      suggestedSlideCount: 7,
+      searchKeywords: ['first 100k investing', 'compound growth Canada', 'beginner investing Canada'],
+      contentPillar: 'Canadian investing behavior',
+      freshnessSignal: 'Evergreen aspiration topic with high save/follow potential when framed as a checklist.',
+      sourceUrls: [
+        'https://www.getsmarteraboutmoney.ca/invest/investing-basics/compound-interest/',
+        'https://www.canada.ca/en/financial-consumer-agency/services/savings-investments.html',
+      ],
+    },
+    {
+      title: 'The 10-Minute Portfolio Check Before Adding More Money',
+      score: 0.81 + (signalText.includes('stock') || signalText.includes('market') ? 0.04 : 0),
+      reasoning: 'A quick diagnostic format gives stock-curious followers a saveable process without telling them what to buy.',
+      suggestedFormat: 'WATCHLIST_EDUCATION',
+      suggestedSlideCount: 8,
+      searchKeywords: ['portfolio check', 'investing checklist', 'risk management'],
+      contentPillar: 'Risk management',
+      freshnessSignal: 'Useful whenever market chatter increases because it slows decisions down.',
+      sourceUrls: [
+        'https://www.getsmarteraboutmoney.ca/invest/investing-basics/understanding-risk/',
+        'https://www.osc.ca/en/investors/investor-research-and-reports/social-media-and-retail-investing-rise-finfluencers',
+      ],
+    },
   ];
 
   return candidates
@@ -482,7 +551,7 @@ function rankAndDedupeCandidates(
   return candidates
     .map((candidate) => ({
       ...candidate,
-      score: clampScore(candidate.score - noveltyPenalty(candidate.title, history)),
+      score: clampScore(candidate.score + growthScoreAdjustment(candidate) - noveltyPenalty(candidate.title, history)),
     }))
     .sort((a, b) => b.score - a.score)
     .filter((candidate) => {
@@ -492,6 +561,52 @@ function rankAndDedupeCandidates(
       return true;
     })
     .slice(0, 10);
+}
+
+function sanitizeTrendCandidate(candidate: ResearchCandidate): ResearchCandidate {
+  const title = candidate.title
+    .replace(/\b(?:explodes|soars|surges|jumps|spikes|blasts off|moons)\s+[+-]?\d+(?:,\d{3})*(?:\.\d+)?%\s*(?:in|over)?\s*(?:1\s*day|today|ytd|1y|a year|a month)?\s*:?\s*/gi, '')
+    .replace(/\b[+-]?\d+(?:,\d{3})*(?:\.\d+)?%\s*(?:up|gain|move|surge|jump|spike)\s*:?\s*/gi, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+
+  return {
+    ...candidate,
+    title: title.length >= 18 ? title : candidate.title.replace(/\b(explodes|soars|surges|jumps|spikes|blasts off|moons)\b/gi, 'Heat Check'),
+    reasoning: candidate.reasoning.replace(/\b(explodes|moons|blasts off)\b/gi, 'shows market heat'),
+  };
+}
+
+function growthScoreAdjustment(candidate: ResearchCandidate): number {
+  const text = [
+    candidate.title,
+    candidate.reasoning,
+    candidate.contentPillar || '',
+    candidate.freshnessSignal || '',
+    ...(candidate.searchKeywords || []),
+  ].join(' ').toLowerCase();
+
+  let adjustment = 0;
+  if (/\b(checklist|check|screen|filter|rule|framework|scorecard|cheat sheet|order of operations)\b/.test(text)) {
+    adjustment += 0.035;
+  }
+  if (/\b(myth|mistake|red flag|risk|before|avoid|wrong)\b/.test(text)) {
+    adjustment += 0.03;
+  }
+  if (/\b(tfsa|rrsp|fhsa|canadian|canada)\b/.test(text)) {
+    adjustment += 0.02;
+  }
+  if (/\b(stock|market|earnings|portfolio|watchlist)\b/.test(text) && /\b(risk|research|check|screen|framework)\b/.test(text)) {
+    adjustment += 0.025;
+  }
+  if (/\b(save|share|follow|beginner|simple)\b/.test(text)) {
+    adjustment += 0.01;
+  }
+  if (/\b(best stocks to buy|hot picks|guaranteed|secret)\b/.test(text)) {
+    adjustment -= 0.12;
+  }
+
+  return Number(adjustment.toFixed(3));
 }
 
 function clampScore(score: number): number {
