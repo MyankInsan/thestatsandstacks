@@ -119,12 +119,14 @@ test('CostGuardAgent blocks paid image generation in zero-cost mode', async () =
   const originalPaidImages = process.env.ALLOW_PAID_IMAGE_GENERATION;
   const originalGeminiImages = process.env.GEMINI_IMAGE_GENERATION_ENABLED;
   const originalGeminiSpend = process.env.ALLOW_GEMINI_IMAGE_API_SPEND;
+  const originalCloudflareEnabled = process.env.CLOUDFLARE_WORKERS_AI_ENABLED;
 
   process.env.ZERO_COST_MODE = 'true';
   process.env.FREE_IMAGE_GENERATION_ONLY = 'false';
   process.env.ALLOW_PAID_IMAGE_GENERATION = 'true';
   process.env.GEMINI_IMAGE_GENERATION_ENABLED = 'true';
   process.env.ALLOW_GEMINI_IMAGE_API_SPEND = 'true';
+  process.env.CLOUDFLARE_WORKERS_AI_ENABLED = 'false';
 
   try {
     const report = await new CostGuardAgent().execute();
@@ -139,6 +141,73 @@ test('CostGuardAgent blocks paid image generation in zero-cost mode', async () =
     restoreEnv('ALLOW_PAID_IMAGE_GENERATION', originalPaidImages);
     restoreEnv('GEMINI_IMAGE_GENERATION_ENABLED', originalGeminiImages);
     restoreEnv('ALLOW_GEMINI_IMAGE_API_SPEND', originalGeminiSpend);
+    restoreEnv('CLOUDFLARE_WORKERS_AI_ENABLED', originalCloudflareEnabled);
+  }
+});
+
+test('CostGuardAgent allows capped Cloudflare free-allocation image backgrounds', async () => {
+  const originals = captureEnv([
+    'ZERO_COST_MODE',
+    'FREE_IMAGE_GENERATION_ONLY',
+    'ALLOW_PAID_IMAGE_GENERATION',
+    'CLOUDFLARE_WORKERS_AI_ENABLED',
+    'CLOUDFLARE_ACCOUNT_ID',
+    'CLOUDFLARE_API_TOKEN',
+    'CLOUDFLARE_IMAGE_MODEL',
+    'CLOUDFLARE_MAX_IMAGES_PER_RUN',
+    'CLOUDFLARE_ALLOW_PAID_OVERAGE',
+  ]);
+
+  process.env.ZERO_COST_MODE = 'true';
+  process.env.FREE_IMAGE_GENERATION_ONLY = 'true';
+  process.env.ALLOW_PAID_IMAGE_GENERATION = 'false';
+  process.env.CLOUDFLARE_WORKERS_AI_ENABLED = 'true';
+  process.env.CLOUDFLARE_ACCOUNT_ID = 'test-account';
+  process.env.CLOUDFLARE_API_TOKEN = 'test-token';
+  process.env.CLOUDFLARE_IMAGE_MODEL = '@cf/black-forest-labs/flux-1-schnell';
+  process.env.CLOUDFLARE_MAX_IMAGES_PER_RUN = '8';
+  process.env.CLOUDFLARE_ALLOW_PAID_OVERAGE = 'false';
+
+  try {
+    const report = await new CostGuardAgent().execute();
+    assert.equal(report.isSafe, true);
+    assert.match(report.policy, /Cloudflare free-allocation backgrounds/);
+  } finally {
+    restoreCapturedEnv(originals);
+  }
+});
+
+test('CostGuardAgent blocks risky Cloudflare image settings in zero-cost mode', async () => {
+  const originals = captureEnv([
+    'ZERO_COST_MODE',
+    'FREE_IMAGE_GENERATION_ONLY',
+    'ALLOW_PAID_IMAGE_GENERATION',
+    'CLOUDFLARE_WORKERS_AI_ENABLED',
+    'CLOUDFLARE_ACCOUNT_ID',
+    'CLOUDFLARE_API_TOKEN',
+    'CLOUDFLARE_IMAGE_MODEL',
+    'CLOUDFLARE_MAX_IMAGES_PER_RUN',
+    'CLOUDFLARE_ALLOW_PAID_OVERAGE',
+  ]);
+
+  process.env.ZERO_COST_MODE = 'true';
+  process.env.FREE_IMAGE_GENERATION_ONLY = 'true';
+  process.env.ALLOW_PAID_IMAGE_GENERATION = 'false';
+  process.env.CLOUDFLARE_WORKERS_AI_ENABLED = 'true';
+  process.env.CLOUDFLARE_ACCOUNT_ID = 'test-account';
+  process.env.CLOUDFLARE_API_TOKEN = 'test-token';
+  process.env.CLOUDFLARE_IMAGE_MODEL = '@cf/leonardo/phoenix-1.0';
+  process.env.CLOUDFLARE_MAX_IMAGES_PER_RUN = '12';
+  process.env.CLOUDFLARE_ALLOW_PAID_OVERAGE = 'true';
+
+  try {
+    const report = await new CostGuardAgent().execute();
+    assert.equal(report.isSafe, false);
+    assert.match(report.failures.join(' '), /CLOUDFLARE_IMAGE_MODEL/);
+    assert.match(report.failures.join(' '), /CLOUDFLARE_MAX_IMAGES_PER_RUN/);
+    assert.match(report.failures.join(' '), /CLOUDFLARE_ALLOW_PAID_OVERAGE/);
+  } finally {
+    restoreCapturedEnv(originals);
   }
 });
 
@@ -187,4 +256,14 @@ function restoreEnv(key: string, value: string | undefined): void {
   }
 
   process.env[key] = value;
+}
+
+function captureEnv(keys: string[]): Record<string, string | undefined> {
+  return Object.fromEntries(keys.map((key) => [key, process.env[key]]));
+}
+
+function restoreCapturedEnv(values: Record<string, string | undefined>): void {
+  for (const [key, value] of Object.entries(values)) {
+    restoreEnv(key, value);
+  }
 }

@@ -68,6 +68,13 @@ jobs:
           ALLOW_PAID_IMAGE_GENERATION: "false"
           GEMINI_IMAGE_GENERATION_ENABLED: "false"
           ALLOW_GEMINI_IMAGE_API_SPEND: "false"
+          CLOUDFLARE_WORKERS_AI_ENABLED: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' && secrets.CLOUDFLARE_API_TOKEN != '' && 'true' || 'false' }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_IMAGE_MODEL: "@cf/black-forest-labs/flux-1-schnell"
+          CLOUDFLARE_IMAGE_STEPS: "4"
+          CLOUDFLARE_MAX_IMAGES_PER_RUN: "8"
+          CLOUDFLARE_ALLOW_PAID_OVERAGE: "false"
           ENABLE_REDDIT_RESEARCH: "true"
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
@@ -79,3 +86,12 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: npm run daily
+
+      - name: Upload generated post package
+        if: steps.send-window.outputs.should_run == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: thestatsandstacks-post-package-${{ github.run_id }}
+          path: /tmp/thestatsandstacks/**
+          if-no-files-found: ignore
+          retention-days: 7

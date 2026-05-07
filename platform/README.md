@@ -16,6 +16,20 @@ By default, image generation is free and local: the pipeline creates branded PNG
 
 The local renderer uses exact SVG typography, content-aware mini visual systems, and topic/date-based visual variation so slides stay readable and do not repeat the same generic account-map look every day.
 
+For more eye-catching market-news posts, the pipeline can optionally use Cloudflare Workers AI for $0-background generation on the Free daily allocation, then overlay all text locally with Sharp/SVG. This is the preferred DayTrading-inspired pattern: photo-style background, dark lower gradient, one oversized hook, cyan/green emphasis, and no model-generated text.
+
+```bash
+CLOUDFLARE_WORKERS_AI_ENABLED=true
+CLOUDFLARE_ACCOUNT_ID=...
+CLOUDFLARE_API_TOKEN=...
+CLOUDFLARE_IMAGE_MODEL=@cf/black-forest-labs/flux-1-schnell
+CLOUDFLARE_IMAGE_STEPS=4
+CLOUDFLARE_MAX_IMAGES_PER_RUN=8
+CLOUDFLARE_ALLOW_PAID_OVERAGE=false
+```
+
+Keep the Cloudflare model and cap unchanged in zero-cost mode. The cost guard blocks other Cloudflare image models or paid-overage flags because the goal is to stay at $0.
+
 The strategy layer now includes a reference-informed growth pass: it studies patterns from high-follower finance and personal-finance accounts, then converts them into original TheStatsAndStacks formats such as sharper cover hooks, one-framework posts, save/share/follow packaging, and risk-first market education. It should not copy creator templates, screenshots, hooks, or visual identities.
 
 The hot-topic desk runs before the main strategist:

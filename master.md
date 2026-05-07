@@ -240,8 +240,10 @@ Purpose:
 - keep branding consistent
 
 Must support:
-- OpenAI image generation via official API
-- fallback adapter interface for Nano Banana Pro if later added
+- zero-cost/local prompt paths by default
+- optional Cloudflare Workers AI background generation with the capped free-allocation Flux Schnell model
+- OpenAI image generation only when zero-cost mode is intentionally disabled
+- fallback adapter interface for other providers only if explicit spend controls exist
 - deterministic prompt templates by content type
 - style locking for brand consistency
 - per-slide prompt generation for carousels
@@ -253,8 +255,10 @@ For every post generate:
 - enough images that a critic can choose the strongest set
 
 Rules:
+- for DayTrading-style market posts, use image models for background-only visuals; overlay all text locally so typography is exact
 - prompts must explicitly specify composition, typography zones, color system, layout, information density, and brand style
 - prompts must avoid generic AI slop
+- prompts must request no readable text, no numbers, no logos, no watermarks, and no fake trading UI inside generated backgrounds
 - prompts must prioritize readability on mobile
 - do not generate visually dense garbage
 - keep the overall system premium, editorial, clean, and finance-appropriate
@@ -269,6 +273,7 @@ Purpose:
 Requirements:
 - use portrait-friendly dimensions for Instagram when generating
 - support multi-image generation
+- prefer full-bleed photo/editorial backgrounds plus local Sharp/SVG typography for hot-topic market posts
 - store prompt, seed if available, model, timestamp, and file path
 - retry failed jobs safely
 - do not publish raw outputs before validation
@@ -670,7 +675,7 @@ Ship the MVP first.
 MVP must include:
 - daily research
 - topic selection
-- image generation via OpenAI API
+- zero-cost image generation with local Sharp output and optional capped Cloudflare Workers AI backgrounds
 - carousel + single image support
 - caption generation
 - compliance + visual QA

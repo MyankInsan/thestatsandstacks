@@ -46,10 +46,10 @@ graph TD
 - **Framework**: Next.js 14 (App Router) for Admin Dashboard & API Routes
 - **Database**: PostgreSQL with Prisma ORM
 - **Queue/Orchestration**: Redis + BullMQ (Handles multi-step agent workflows with retries)
-- **AI Models**: OpenAI GPT-4o (Agents, Copy, Finance Checks), DALL-E 3 (Image Generation)
+- **AI Models**: Gemini text models for agents/copy/research, with paid image APIs disabled by default.
 - **Hot Topic Desk**: Free ticker heat scan, catalyst/news mapping, and viral-format conversion before final strategy selection.
-- **Picture Rendering**: Free local Sharp PNG rendering from generated carousel briefs; the daily automation is picture-only.
-- **Zero-Cost Mode**: Paid image/video APIs are blocked by default; daily cloud runs use local Sharp images only.
+- **Picture Rendering**: Free local Sharp PNG rendering from generated carousel briefs; optional Cloudflare Workers AI backgrounds can be composited under exact local typography for full-bleed market-news posters. The daily automation is picture-only.
+- **Zero-Cost Mode**: Paid image/video APIs are blocked by default; Cloudflare Workers AI is allowed only with the capped free-allocation Flux Schnell model and local Sharp fallback.
 - **Deployment**: GitHub Actions for the standalone daily picture workflow; the longer-term dashboard/worker architecture can still run on Cloud Run, Cloud Scheduler, and Cloud Storage.
 - **Auth**: NextAuth / simple auth for Admin Dashboard
 
@@ -64,7 +64,7 @@ graph TD
 ### Phase 2: Core Agents Implementation
 - **Trend Research & Strategy**: Implement daily trend extraction, hot-topic desk scoring, catalyst mapping, and topic scoring.
 - **Editorial & Copywriting**: Generating structured post briefs and captions.
-- **Image Generation Pipeline**: Implement DALL-E integration, prompts generation, vision QA, and asset storage (GCS/Local for MVP).
+- **Image Generation Pipeline**: Implement zero-cost local Sharp rendering, optional capped Cloudflare Workers AI background generation, prompts generation, vision QA, and asset storage (GCS/Local for MVP).
 - **Compliance & Accuracy**: Implement factual checks against structured sources.
 
 ### Phase 3: Publishing & Orchestration
@@ -85,6 +85,9 @@ graph TD
 - `DATABASE_URL`
 - `REDIS_URL`
 - `OPENAI_API_KEY`
+- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_WORKERS_AI_ENABLED`
 - `GEMINI_API_KEY`
 - `HOT_TOPIC_WATCHLIST`
 - `TELEGRAM_BOT_TOKEN`

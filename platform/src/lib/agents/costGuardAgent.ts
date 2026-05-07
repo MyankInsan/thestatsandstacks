@@ -34,16 +34,33 @@ export class CostGuardAgent extends BaseAgent {
       if (process.env.ALLOW_GEMINI_IMAGE_API_SPEND === 'true') {
         failures.push('ALLOW_GEMINI_IMAGE_API_SPEND is true.');
       }
+      if (process.env.CLOUDFLARE_WORKERS_AI_ENABLED === 'true') {
+        const model = process.env.CLOUDFLARE_IMAGE_MODEL || '@cf/black-forest-labs/flux-1-schnell';
+        const maxImages = Number.parseInt(process.env.CLOUDFLARE_MAX_IMAGES_PER_RUN || '8', 10);
+        if (!process.env.CLOUDFLARE_ACCOUNT_ID || !process.env.CLOUDFLARE_API_TOKEN) {
+          failures.push('CLOUDFLARE_WORKERS_AI_ENABLED is true, but CLOUDFLARE_ACCOUNT_ID or CLOUDFLARE_API_TOKEN is missing.');
+        }
+        if (model !== '@cf/black-forest-labs/flux-1-schnell') {
+          failures.push('CLOUDFLARE_IMAGE_MODEL must stay @cf/black-forest-labs/flux-1-schnell in zero-cost mode.');
+        }
+        if (Number.isFinite(maxImages) && maxImages > 8) {
+          failures.push('CLOUDFLARE_MAX_IMAGES_PER_RUN must stay at 8 or lower in zero-cost mode.');
+        }
+        if (process.env.CLOUDFLARE_ALLOW_PAID_OVERAGE === 'true') {
+          failures.push('CLOUDFLARE_ALLOW_PAID_OVERAGE is true.');
+        }
+      }
     }
 
-    notes.push('Image-only mode: the daily pipeline generates local Sharp PNG carousel slides and sends pictures only.');
-    notes.push('Gemini/Nano Banana image generation is disabled in $0 mode; local Sharp generation remains the free path.');
+    notes.push('Image-only mode: the daily pipeline generates PNG carousel slides and sends pictures only.');
+    notes.push('Gemini/Nano Banana image generation is disabled in $0 mode; local Sharp generation remains the fallback path.');
+    notes.push('Optional Cloudflare Workers AI backgrounds are allowed only with the low-cost/free-allocation Flux Schnell model and a hard per-run cap.');
 
     return {
       zeroCostMode,
       isSafe: failures.length === 0,
       policy: zeroCostMode
-        ? '$0 image-only policy: local Sharp PNG slides, no paid image/video APIs.'
+        ? '$0 image-only policy: local Sharp PNG slides or capped Cloudflare free-allocation backgrounds, no paid image/video APIs.'
         : 'Zero-cost mode is disabled by env configuration.',
       failures,
       notes,

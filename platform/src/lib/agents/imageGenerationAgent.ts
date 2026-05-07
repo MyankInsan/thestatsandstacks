@@ -9,7 +9,7 @@ export interface GeneratedImage {
   slideNumber: number;
   localPath: string;
   mimeType: string;
-  source: 'local' | 'openai';
+  source: 'local' | 'openai' | 'cloudflare';
   layoutWarnings?: string[];
 }
 
@@ -63,6 +63,7 @@ const CONTENT_W = 848;
 const POINT_ROW_H = 76;
 const POINT_ROW_GAP = 88;
 const SAVE_CARD_H = 78;
+const CLOUDFLARE_FREE_MODEL = '@cf/black-forest-labs/flux-1-schnell';
 
 export class ImageGenerationAgent extends BaseAgent {
   constructor() {
@@ -76,6 +77,10 @@ export class ImageGenerationAgent extends BaseAgent {
     fs.mkdirSync(input.outputDir, { recursive: true });
     const runSlug = getRunSlug();
     const freeOnly = process.env.FREE_IMAGE_GENERATION_ONLY !== 'false';
+    if (freeOnly && isCloudflareWorkersAiReady()) {
+      return this.generateWithCloudflare({ ...input, runSlug });
+    }
+
     if (!freeOnly && process.env.ALLOW_PAID_IMAGE_GENERATION === 'true' && process.env.OPENAI_API_KEY) {
       return this.generateWithOpenAI({ ...input, runSlug });
     }
@@ -138,6 +143,81 @@ export class ImageGenerationAgent extends BaseAgent {
     return { images };
   }
 
+  private async generateWithCloudflare(input: {
+    prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>,
+    outputDir: string,
+    runSlug: string
+  }): Promise<{ images: GeneratedImage[] }> {
+    const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
+    const apiToken = process.env.CLOUDFLARE_API_TOKEN;
+    if (!accountId || !apiToken) {
+      throw new Error('Cloudflare Workers AI is enabled, but CLOUDFLARE_ACCOUNT_ID or CLOUDFLARE_API_TOKEN is missing.');
+    }
+
+    const model = process.env.CLOUDFLARE_IMAGE_MODEL || CLOUDFLARE_FREE_MODEL;
+    const steps = clamp(Number.parseInt(process.env.CLOUDFLARE_IMAGE_STEPS || '4', 10) || 4, 1, 8);
+    const maxImages = clamp(Number.parseInt(process.env.CLOUDFLARE_MAX_IMAGES_PER_RUN || '8', 10) || 8, 1, 8);
+    const apiUrl = `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${model}`;
+    const images: GeneratedImage[] = [];
+
+    console.log(`[${this.name}] Using Cloudflare Workers AI ${model} for zero-cost photo-style backgrounds.`);
+    for (const prompt of input.prompts) {
+      if (images.length >= maxImages) {
+        console.warn(`   Cloudflare max images per run reached (${maxImages}); using local renderer for slide ${prompt.slideNumber}.`);
+        images.push(await this.generateLocalSlide(prompt, input.outputDir, input.runSlug));
+        continue;
+      }
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${apiToken}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt: buildBackgroundOnlyPrompt(prompt.dallePrompt, prompt.slideDescription),
+            steps,
+            seed: Math.abs(hashString(`${input.runSlug}:${prompt.slideNumber}:${prompt.slideDescription}`)),
+          }),
+        });
+
+        const payload = await response.json() as {
+          success?: boolean;
+          errors?: Array<{ message?: string }>;
+          result?: { image?: string };
+          image?: string;
+        };
+
+        if (!response.ok || payload.success === false) {
+          const message = payload.errors?.map((error) => error.message).filter(Boolean).join('; ') || response.statusText;
+          throw new Error(message);
+        }
+
+        const base64Image = payload.result?.image || payload.image;
+        if (!base64Image) throw new Error('Cloudflare response did not include base64 image data.');
+
+        const filename = buildSlideFilename(input.runSlug, prompt.slideNumber);
+        const localPath = path.join(input.outputDir, filename);
+        const layoutWarnings = await this.writeViralCompositedSlide(
+          Buffer.from(base64Image, 'base64'),
+          prompt.slideNumber,
+          prompt.slideDescription,
+          localPath,
+          input.runSlug
+        );
+        images.push({ slideNumber: prompt.slideNumber, localPath, mimeType: 'image/png', source: 'cloudflare', layoutWarnings });
+        console.log(`   Slide ${prompt.slideNumber} saved with Cloudflare background.`);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.warn(`   Cloudflare background failed for slide ${prompt.slideNumber}; using local renderer. ${message}`);
+        images.push(await this.generateLocalSlide(prompt, input.outputDir, input.runSlug));
+      }
+    }
+
+    return { images };
+  }
+
   private async generateLocalSlides(input: {
     prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>,
     outputDir: string,
@@ -160,7 +240,9 @@ export class ImageGenerationAgent extends BaseAgent {
   ): Promise<GeneratedImage> {
     const filename = buildSlideFilename(runSlug, prompt.slideNumber);
     const localPath = path.join(outputDir, filename);
-    const rendered = this.createSlideSvg(prompt.slideNumber, prompt.slideDescription, runSlug);
+    const rendered = shouldUseViralPoster(prompt.slideDescription)
+      ? this.createViralPosterSvg(prompt.slideNumber, prompt.slideDescription, runSlug, true)
+      : this.createSlideSvg(prompt.slideNumber, prompt.slideDescription, runSlug);
     await sharp(Buffer.from(rendered.svg)).png().toFile(localPath);
     return {
       slideNumber: prompt.slideNumber,
@@ -185,6 +267,74 @@ export class ImageGenerationAgent extends BaseAgent {
       .png()
       .toFile(localPath);
     return overlay.layoutWarnings;
+  }
+
+  private async writeViralCompositedSlide(
+    background: Buffer,
+    slideNumber: number,
+    description: string,
+    localPath: string,
+    runSlug: string
+  ): Promise<string[]> {
+    const overlay = this.createViralPosterSvg(slideNumber, description, `${runSlug}:viral`);
+    await sharp(background)
+      .resize(SLIDE_WIDTH, SLIDE_HEIGHT, { fit: 'cover' })
+      .modulate({ brightness: 0.84, saturation: 1.12 })
+      .composite([{ input: Buffer.from(overlay.svg), top: 0, left: 0 }])
+      .png()
+      .toFile(localPath);
+    return overlay.layoutWarnings;
+  }
+
+  private createViralPosterSvg(slideNumber: number, description: string, runSlug: string, includeSyntheticBackground = false): SlideRender {
+    const parsed = parseSlideDescription(description);
+    const theme = getDailyTheme(`${runSlug}:${description}`);
+    const context = getVisualContext(description);
+    const headline = buildPosterHeadline(parsed, slideNumber);
+    const layout = layoutPosterHeadline(headline);
+    const textBottom = layout.startY + (layout.lines.length - 1) * layout.lineHeight + layout.fontSize;
+    const layoutWarnings = getPosterLayoutWarnings(layout, textBottom);
+    const accent = context.label.includes('storage') ? '#51d6e8' : theme.accent;
+
+    return {
+      layoutWarnings,
+      svg: `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${SLIDE_WIDTH}" height="${SLIDE_HEIGHT}" viewBox="0 0 ${SLIDE_WIDTH} ${SLIDE_HEIGHT}">
+  <defs>
+    <linearGradient id="localPosterBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07111f"/>
+      <stop offset="42%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <radialGradient id="localPosterGlow" cx="70%" cy="16%" r="68%">
+      <stop offset="0%" stop-color="${accent}" stop-opacity="0.5"/>
+      <stop offset="46%" stop-color="${theme.accent}" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#020617" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="topShade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#020617" stop-opacity="0.78"/>
+      <stop offset="28%" stop-color="#020617" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#020617" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="bottomShade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#020617" stop-opacity="0"/>
+      <stop offset="24%" stop-color="#020617" stop-opacity="0.76"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.98"/>
+    </linearGradient>
+    <filter id="posterShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="7" stdDeviation="5" flood-color="#000000" flood-opacity="0.86"/>
+    </filter>
+  </defs>
+  ${includeSyntheticBackground ? renderSyntheticPosterBackground(theme, accent, context) : ''}
+  <rect width="${SLIDE_WIDTH}" height="360" fill="url(#topShade)"/>
+  <rect y="530" width="${SLIDE_WIDTH}" height="820" fill="url(#bottomShade)"/>
+  ${renderPosterMarketTrace(theme)}
+  ${renderPosterBrand(slideNumber, theme, context)}
+  ${renderPosterBadge(context.label, accent)}
+  ${renderPosterHeadline(layout, accent)}
+  ${renderPosterFooter(theme)}
+</svg>`,
+    };
   }
 
   private createSlideSvg(slideNumber: number, description: string, runSlug: string): SlideRender {
@@ -265,6 +415,198 @@ function parseSlideDescription(description: string): ParsedSlide {
     title: headlinePart || cleanDescription || 'Finance framework',
     points: supportingPoints,
   };
+}
+
+interface PosterHeadlineLayout {
+  lines: string[];
+  fontSize: number;
+  lineHeight: number;
+  startY: number;
+}
+
+function isCloudflareWorkersAiReady(): boolean {
+  return process.env.CLOUDFLARE_WORKERS_AI_ENABLED === 'true'
+    && Boolean(process.env.CLOUDFLARE_ACCOUNT_ID)
+    && Boolean(process.env.CLOUDFLARE_API_TOKEN);
+}
+
+function buildBackgroundOnlyPrompt(basePrompt: string, description: string): string {
+  const lower = description.toLowerCase();
+  const topicDirection = /sandisk|sndk|storage|memory|semiconductor|data center|datacenter|nand/.test(lower)
+    ? 'high-end semiconductor and AI data-center scene, abstract storage hardware, glowing server aisles, premium editorial market-news energy'
+    : /stock|watchlist|valuation|ticker|earnings|market|catalyst/.test(lower)
+      ? 'premium financial-news scene with market screens, analyst desk, dramatic but credible lighting, chart energy without readable numbers'
+      : 'premium personal-finance editorial scene, realistic desk materials, financial planning objects, cinematic light and depth';
+
+  return [
+    topicDirection,
+    basePrompt,
+    'Full-bleed vertical Instagram background, 4:5 portrait composition, strong subject in the upper half, visually rich but not cluttered.',
+    'Leave the lower 45 percent darker and calmer for large text overlay.',
+    'No readable text, no numbers, no logos, no watermarks, no fake UI, no fake brokerage screenshots.',
+    'Use realistic photographic lighting, sharp details, high contrast, premium finance magazine style.',
+  ].join(' ');
+}
+
+function shouldUseViralPoster(description: string): boolean {
+  return /sandisk|sndk|storage|memory|semiconductor|data center|datacenter|nand|stock|watchlist|valuation|ticker|earnings|market|catalyst|portfolio|margin|guidance/i.test(description);
+}
+
+function buildPosterHeadline(parsed: ParsedSlide, slideNumber: number): string {
+  const coverSource = parsed.title.length < 56 && parsed.points[0]
+    ? `${parsed.title}: ${parsed.points[0]}`
+    : parsed.title;
+  const source = slideNumber === 1
+    ? coverSource
+    : [parsed.title, parsed.points[0]].filter(Boolean).join(' ');
+  return clampText(
+    source
+      .replace(/\bframework\b/gi, 'filter')
+      .replace(/\beducational only\b/gi, '')
+      .replace(/\s+/g, ' ')
+      .trim(),
+    108,
+    '...'
+  );
+}
+
+function layoutPosterHeadline(headline: string): PosterHeadlineLayout {
+  const cleaned = headline.toUpperCase();
+  const length = cleaned.length;
+  const fontSize = length > 92 ? 58 : length > 74 ? 66 : length > 56 ? 78 : 96;
+  const maxChars = length > 92 ? 20 : length > 74 ? 19 : length > 56 ? 18 : 15;
+  const lines = wrapText(cleaned, maxChars, 6);
+  const lineHeight = Math.round(fontSize * 0.95);
+  const blockHeight = (lines.length - 1) * lineHeight + fontSize;
+  const startY = clamp(1212 - blockHeight, 812, 900);
+
+  return { lines, fontSize, lineHeight, startY };
+}
+
+function getPosterLayoutWarnings(layout: PosterHeadlineLayout, textBottom: number): string[] {
+  const warnings: string[] = [];
+  if (layout.startY < 716) warnings.push('Poster headline starts too high for safe focal-image space.');
+  if (textBottom > 1230) warnings.push('Poster headline is too low for footer safe area.');
+  if (layout.lines.length > 6) warnings.push('Poster headline has too many lines.');
+  return warnings;
+}
+
+function renderPosterMarketTrace(theme: SlideTheme): string {
+  const path = 'M54 560 C168 520 214 426 300 462 C390 498 438 354 526 300 C620 242 662 346 736 292 C836 220 906 234 1024 172';
+  return `<g opacity="0.74">
+    <path d="${path}" fill="none" stroke="#06120b" stroke-width="16" stroke-linecap="round" opacity="0.42"/>
+    <path d="${path}" fill="none" stroke="${theme.accent}" stroke-width="8" stroke-linecap="round" opacity="0.74"/>
+    <path d="${path}" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.2"/>
+  </g>`;
+}
+
+function renderSyntheticPosterBackground(theme: SlideTheme, accent: string, context: VisualContext): string {
+  const lowerLabel = context.label.toLowerCase();
+  const isStorage = lowerLabel.includes('storage');
+  return `<g>
+    <rect width="${SLIDE_WIDTH}" height="${SLIDE_HEIGHT}" fill="url(#localPosterBg)"/>
+    <rect width="${SLIDE_WIDTH}" height="${SLIDE_HEIGHT}" fill="url(#localPosterGlow)"/>
+    <rect x="0" y="0" width="${SLIDE_WIDTH}" height="${SLIDE_HEIGHT}" fill="#020617" opacity="0.12"/>
+    ${renderSyntheticServerRoom(accent)}
+    ${isStorage ? renderSyntheticChipHero(accent, theme) : renderSyntheticTerminalHero(accent, theme)}
+    <rect x="-120" y="575" width="1320" height="300" fill="#020617" opacity="0.22"/>
+  </g>`;
+}
+
+function renderSyntheticServerRoom(accent: string): string {
+  const racks = Array.from({ length: 9 }, (_, index) => {
+    const x = 36 + index * 118;
+    const height = 250 + (index % 3) * 34;
+    const y = 272 - (index % 2) * 24;
+    return `<g opacity="${0.38 + (index % 2) * 0.12}">
+      <rect x="${x}" y="${y}" width="74" height="${height}" rx="10" fill="#111827" stroke="#334155" stroke-width="2"/>
+      ${Array.from({ length: 8 }, (__, row) => {
+        const rowY = y + 24 + row * 26;
+        return `<rect x="${x + 12}" y="${rowY}" width="50" height="5" rx="3" fill="${row % 3 === 0 ? accent : '#64748b'}" opacity="${row % 3 === 0 ? 0.72 : 0.28}"/>`;
+      }).join('')}
+    </g>`;
+  }).join('');
+
+  return `<g>
+    <path d="M0 506 L1080 390 L1080 590 L0 710 Z" fill="#020617" opacity="0.42"/>
+    ${racks}
+    <path d="M120 560 C290 412 420 498 560 365 C698 234 808 328 1030 184" fill="none" stroke="${accent}" stroke-width="12" stroke-linecap="round" opacity="0.22"/>
+    <path d="M120 560 C290 412 420 498 560 365 C698 234 808 328 1030 184" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.18"/>
+  </g>`;
+}
+
+function renderSyntheticChipHero(accent: string, theme: SlideTheme): string {
+  return `<g filter="url(#posterShadow)" transform="translate(384 232) rotate(-9)">
+    <rect x="0" y="0" width="322" height="244" rx="32" fill="#0f172a" stroke="#94a3b8" stroke-width="5"/>
+    <rect x="42" y="38" width="238" height="168" rx="22" fill="#111827" stroke="${accent}" stroke-width="4"/>
+    <text x="161" y="123" text-anchor="middle" fill="#f8fafc" font-family="Arial Black, Impact, Arial, sans-serif" font-size="54" font-weight="900">AI</text>
+    <text x="161" y="164" text-anchor="middle" fill="${accent}" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900" letter-spacing="2">STORAGE</text>
+    ${Array.from({ length: 10 }, (_, index) => `<line x1="${-28}" y1="${28 + index * 20}" x2="0" y2="${28 + index * 20}" stroke="${theme.accent}" stroke-width="5" opacity="0.62"/>`).join('')}
+    ${Array.from({ length: 10 }, (_, index) => `<line x1="322" y1="${28 + index * 20}" x2="350" y2="${28 + index * 20}" stroke="${theme.accent}" stroke-width="5" opacity="0.62"/>`).join('')}
+  </g>`;
+}
+
+function renderSyntheticTerminalHero(accent: string, theme: SlideTheme): string {
+  return `<g filter="url(#posterShadow)" transform="translate(170 245)">
+    <rect x="0" y="0" width="742" height="314" rx="34" fill="#050b14" stroke="#334155" stroke-width="4"/>
+    <rect x="32" y="34" width="202" height="236" rx="24" fill="#0f172a" stroke="${theme.stroke}" stroke-width="3"/>
+    <text x="74" y="96" fill="${accent}" font-family="Arial Black, Impact, Arial, sans-serif" font-size="38" font-weight="900">HOT</text>
+    <text x="74" y="142" fill="#f8fafc" font-family="Arial Black, Impact, Arial, sans-serif" font-size="38" font-weight="900">TOPIC</text>
+    <rect x="74" y="176" width="108" height="13" rx="7" fill="${accent}" opacity="0.82"/>
+    <rect x="74" y="206" width="74" height="13" rx="7" fill="#f8fafc" opacity="0.52"/>
+    <path d="M294 242 C366 218 390 144 458 158 C522 172 540 76 618 62 C660 54 684 40 710 20" fill="none" stroke="${accent}" stroke-width="9" stroke-linecap="round"/>
+    <path d="M294 242 C366 218 390 144 458 158 C522 172 540 76 618 62 C660 54 684 40 710 20" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.32"/>
+    ${Array.from({ length: 5 }, (_, index) => `<line x1="294" y1="${82 + index * 36}" x2="700" y2="${82 + index * 36}" stroke="#334155" stroke-width="2" opacity="0.62"/>`).join('')}
+  </g>`;
+}
+
+function renderPosterBrand(slideNumber: number, theme: SlideTheme, context: VisualContext): string {
+  return `<g filter="url(#posterShadow)">
+    <g transform="translate(54 58)">
+      <path d="M0 58 L0 0 L58 0" fill="${theme.accent}" opacity="0.92"/>
+      <path d="M15 41 L27 29 L38 35 L52 17" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M16 52 H52" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+      <path d="M18 52 V43 M30 52 V34 M42 52 V27" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <text x="138" y="100" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900" letter-spacing="1">THESTATSANDSTACKS</text>
+    <text x="138" y="134" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800" letter-spacing="1">${escapeXml(context.label.toUpperCase())}</text>
+    <rect x="880" y="58" width="122" height="70" rx="35" fill="#111827" opacity="0.78"/>
+    <text x="941" y="104" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="900">FRAME ${String(slideNumber).padStart(2, '0')}</text>
+  </g>`;
+}
+
+function renderPosterBadge(label: string, accent: string): string {
+  const lowerLabel = label.toLowerCase();
+  const badge = lowerLabel.includes('storage') ? 'MARKET HEAT' : lowerLabel.includes('research') ? 'WATCHLIST' : 'TRENDING';
+  return `<g filter="url(#posterShadow)">
+    <line x1="72" y1="738" x2="394" y2="738" stroke="#ffffff" stroke-width="5" opacity="0.86"/>
+    <line x1="686" y1="738" x2="1008" y2="738" stroke="#ffffff" stroke-width="5" opacity="0.86"/>
+    <path d="M434 700 H646 L620 778 H408 Z" fill="${accent}" opacity="0.96"/>
+    <text x="527" y="751" text-anchor="middle" fill="#ffffff" font-family="Arial Black, Impact, Arial, sans-serif" font-size="31" font-weight="900" font-style="italic">${badge}</text>
+  </g>`;
+}
+
+function renderPosterHeadline(layout: PosterHeadlineLayout, accent: string): string {
+  return `<text x="540" y="${layout.startY}" text-anchor="middle" fill="#f8fafc" filter="url(#posterShadow)" font-family="Impact, Arial Black, Arial, sans-serif" font-size="${layout.fontSize}" font-weight="900" letter-spacing="0">
+    ${layout.lines.map((line, index) => {
+      const fill = isAccentPosterLine(line, index) ? accent : '#f8fafc';
+      return `<tspan x="540" dy="${index === 0 ? 0 : layout.lineHeight}" fill="${fill}">${escapeXml(line)}</tspan>`;
+    }).join('')}
+  </text>`;
+}
+
+function renderPosterFooter(theme: SlideTheme): string {
+  return `<g>
+    <line x1="72" y1="1280" x2="318" y2="1280" stroke="#ffffff" stroke-width="4" opacity="0.88"/>
+    <line x1="762" y1="1280" x2="1008" y2="1280" stroke="#ffffff" stroke-width="4" opacity="0.88"/>
+    <text x="540" y="1293" text-anchor="middle" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="900" letter-spacing="1">EDUCATIONAL ONLY</text>
+    <circle cx="986" cy="1212" r="36" fill="${theme.accent}" opacity="0.18"/>
+    <text x="986" y="1221" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900">TS</text>
+  </g>`;
+}
+
+function isAccentPosterLine(line: string, index: number): boolean {
+  return /[$%0-9]|SANDISK|SNDK|AI|STORAGE|STOCK|MARKET|RISK|WATCH|TAX|TFSA|RRSP|FHSA/.test(line) || index % 3 === 1;
 }
 
 function layoutTitle(title: string): TextBlockLayout {
