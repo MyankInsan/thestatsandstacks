@@ -453,9 +453,11 @@ function shouldUseViralPoster(description: string): boolean {
 }
 
 function buildPosterHeadline(parsed: ParsedSlide, slideNumber: number): string {
+  const title = parsed.title.trim();
+  const joiner = /[.!?]$/.test(title) ? ' ' : ': ';
   const coverSource = parsed.title.length < 56 && parsed.points[0]
-    ? `${parsed.title}: ${parsed.points[0]}`
-    : parsed.title;
+    ? `${title}${joiner}${parsed.points[0]}`
+    : title;
   const source = slideNumber === 1
     ? coverSource
     : [parsed.title, parsed.points[0]].filter(Boolean).join(' ');
