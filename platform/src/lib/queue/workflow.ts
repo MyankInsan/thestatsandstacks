@@ -3,12 +3,15 @@ import fs from 'fs';
 import { PrismaClient } from '@prisma/client';
 import { CostGuardAgent } from '../agents/costGuardAgent';
 import { TrendResearchAgent } from '../agents/trendResearchAgent';
+import { CarouselPlanningAgent, MediaFormatDecisionAgent } from '../agents/mediaPlanningAgent';
 import { ContentStrategyAgent } from '../agents/contentStrategyAgent';
 import { ComplianceQAAgent } from '../agents/complianceQAAgent';
 import { ImagePromptAgent } from '../agents/imagePromptAgent';
+import { VisualAssetSourcingAgent } from '../agents/visualAssetSourcingAgent';
 import { ImageGenerationAgent } from '../agents/imageGenerationAgent';
 import { VisionQAAgent } from '../agents/visionQAAgent';
 import { CopywritingAgent } from '../agents/copywritingAgent';
+import { getImageCount } from '../services/imageCount';
 
 const prisma = new PrismaClient();
 
@@ -61,17 +64,33 @@ export async function runDailyWorkflow() {
   console.log('');
 
   // ═══════════════════════════════════════════════════════
-  // AGENT 2: CONTENT STRATEGY (Decides format + slide count)
+  // AGENT 2: MEDIA FORMAT
   // ═══════════════════════════════════════════════════════
-  console.log('━━━ AGENT 2: CONTENT STRATEGY ━━━');
-  const strategyAgent = new ContentStrategyAgent();
-  const strategy = await strategyAgent.execute({ trends });
+  console.log('━━━ AGENT 2: MEDIA FORMAT ━━━');
+  const formatDecision = await new MediaFormatDecisionAgent().execute({ trends });
+  console.log(`   ${formatDecision.mediaFormat}: ${formatDecision.reasoning}`);
   console.log('');
 
   // ═══════════════════════════════════════════════════════
-  // AGENT 3: COMPLIANCE QA
+  // AGENT 3: CAROUSEL PLANNING
   // ═══════════════════════════════════════════════════════
-  console.log('━━━ AGENT 3: COMPLIANCE QA ━━━');
+  console.log('━━━ AGENT 3: CAROUSEL PLANNING ━━━');
+  const carouselPlan = await new CarouselPlanningAgent().execute({ trends, formatDecision });
+  console.log(`   ${carouselPlan.slideCount} picture slide${carouselPlan.slideCount === 1 ? '' : 's'} planned.`);
+  console.log('');
+
+  // ═══════════════════════════════════════════════════════
+  // AGENT 4: CONTENT STRATEGY
+  // ═══════════════════════════════════════════════════════
+  console.log('━━━ AGENT 4: CONTENT STRATEGY ━━━');
+  const strategyAgent = new ContentStrategyAgent();
+  const strategy = await strategyAgent.execute({ trends, formatDecision, carouselPlan });
+  console.log('');
+
+  // ═══════════════════════════════════════════════════════
+  // AGENT 5: COMPLIANCE QA
+  // ═══════════════════════════════════════════════════════
+  console.log('━━━ AGENT 5: COMPLIANCE QA ━━━');
   const complianceAgent = new ComplianceQAAgent();
   const strategyCompliance = await complianceAgent.execute({ strategy });
   if (!strategyCompliance.isValid) {
@@ -99,28 +118,43 @@ export async function runDailyWorkflow() {
   });
 
   // ═══════════════════════════════════════════════════════
-  // AGENT 4: IMAGE PROMPT GENERATION
+  // AGENT 6: IMAGE PROMPT GENERATION
   // ═══════════════════════════════════════════════════════
-  console.log('━━━ AGENT 4: IMAGE PROMPTS ━━━');
+  console.log('━━━ AGENT 6: IMAGE PROMPTS ━━━');
   const imagePromptAgent = new ImagePromptAgent();
   const promptSet = await imagePromptAgent.execute({ strategy });
+  const plannedPrompts = promptSet.prompts.slice(0, getImageCount(strategy));
   console.log('');
 
   // ═══════════════════════════════════════════════════════
-  // AGENT 5: IMAGE GENERATION
+  // AGENT 7: VISUAL ASSET SOURCING
   // ═══════════════════════════════════════════════════════
-  console.log('━━━ AGENT 5: IMAGE GENERATION ━━━');
+  console.log('━━━ AGENT 7: VISUAL ASSET SOURCING ━━━');
+  const visualAssetPlan = await new VisualAssetSourcingAgent().execute({
+    strategy,
+    prompts: plannedPrompts,
+    formatDecision,
+    carouselPlan,
+  });
+  console.log(`   ${visualAssetPlan.summary}`);
+  console.log('');
+
+  // ═══════════════════════════════════════════════════════
+  // AGENT 8: IMAGE GENERATION
+  // ═══════════════════════════════════════════════════════
+  console.log('━━━ AGENT 8: IMAGE GENERATION ━━━');
   const imageGenAgent = new ImageGenerationAgent();
   const generatedImages = await imageGenAgent.execute({
-    prompts: promptSet.prompts,
+    prompts: plannedPrompts,
     outputDir,
+    visualPlan: visualAssetPlan,
   });
   console.log('');
 
   // ═══════════════════════════════════════════════════════
-  // AGENT 6: VISION QA (Check every image, regenerate failures)
+  // AGENT 9: VISION QA (Check every image, regenerate failures)
   // ═══════════════════════════════════════════════════════
-  console.log('━━━ AGENT 6: VISION QA INSPECTION ━━━');
+  console.log('━━━ AGENT 9: VISION QA INSPECTION ━━━');
   const qaAgent = new VisionQAAgent();
   let qaReport = await qaAgent.execute({ images: generatedImages.images });
 
@@ -135,7 +169,7 @@ export async function runDailyWorkflow() {
     console.log(`   Failed slides: ${qaReport.failedSlides.join(', ')}`);
 
     // Get the prompts for failed slides only
-    const failedPrompts = promptSet.prompts.filter(p => 
+    const failedPrompts = plannedPrompts.filter(p =>
       qaReport.failedSlides.includes(p.slideNumber)
     );
 
@@ -143,6 +177,7 @@ export async function runDailyWorkflow() {
     const regenResult = await imageGenAgent.execute({
       prompts: failedPrompts,
       outputDir,
+      visualPlan: visualAssetPlan,
     });
 
     // Replace the failed images with new ones
@@ -168,17 +203,17 @@ export async function runDailyWorkflow() {
   console.log('');
 
   // ═══════════════════════════════════════════════════════
-  // AGENT 7: COPYWRITING (Caption, Hashtags, Comments)
+  // AGENT 10: COPYWRITING (Caption, Hashtags, Comments)
   // ═══════════════════════════════════════════════════════
-  console.log('━━━ AGENT 7: COPYWRITING ━━━');
+  console.log('━━━ AGENT 10: COPYWRITING ━━━');
   const copyAgent = new CopywritingAgent();
   const copy = await copyAgent.execute({ strategy });
   console.log('');
 
   // ═══════════════════════════════════════════════════════
-  // AGENT 8: FINAL COMPLIANCE QA
+  // AGENT 11: FINAL COMPLIANCE QA
   // ═══════════════════════════════════════════════════════
-  console.log('━━━ AGENT 8: FINAL COMPLIANCE QA ━━━');
+  console.log('━━━ AGENT 11: FINAL COMPLIANCE QA ━━━');
   const copyCompliance = await complianceAgent.execute({ strategy, copy });
   if (!copyCompliance.isValid) {
     throw new Error(`Final compliance failed: ${copyCompliance.failures.join(' ')}`);
@@ -231,7 +266,7 @@ ${copy.altText}
 🖼️  IMAGES (Located in this folder):
 ═══════════════════════════════════════════════════════
 
-${generatedImages.images.map(img => `Slide ${img.slideNumber}: ${img.localPath}`).join('\n')}
+${generatedImages.images.map(img => `Slide ${img.slideNumber}: ${img.localPath} (${img.source}${img.attribution ? ` — ${img.attribution}` : ''})`).join('\n')}
 
 ═══════════════════════════════════════════════════════
 📋 SLIDE BREAKDOWN:
@@ -268,7 +303,7 @@ ${qaReport.slideReports.map(r => `Slide ${r.slideNumber}: ${r.isValid ? '✅ PAS
     const prompt = await prisma.prompt.create({
       data: {
         briefId: savedBrief.id,
-        text: promptSet.prompts.find(p => p.slideNumber === img.slideNumber)?.dallePrompt || '',
+        text: plannedPrompts.find(p => p.slideNumber === img.slideNumber)?.dallePrompt || '',
         direction: `Slide ${img.slideNumber}`,
       }
     });

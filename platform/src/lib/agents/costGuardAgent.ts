@@ -34,6 +34,9 @@ export class CostGuardAgent extends BaseAgent {
       if (process.env.ALLOW_GEMINI_IMAGE_API_SPEND === 'true') {
         failures.push('ALLOW_GEMINI_IMAGE_API_SPEND is true.');
       }
+      if (process.env.GOOGLE_IMAGE_SCRAPING_ENABLED === 'true' || process.env.GOOGLE_PHOTOS_SOURCING_ENABLED === 'true') {
+        failures.push('Google Images/Photos sourcing is enabled; this pipeline only permits original generation or reusable/licensed asset APIs.');
+      }
       if (process.env.CLOUDFLARE_WORKERS_AI_ENABLED === 'true') {
         const model = process.env.CLOUDFLARE_IMAGE_MODEL || '@cf/black-forest-labs/flux-1-schnell';
         const maxImages = Number.parseInt(process.env.CLOUDFLARE_MAX_IMAGES_PER_RUN || '8', 10);
@@ -55,6 +58,7 @@ export class CostGuardAgent extends BaseAgent {
     notes.push('Image-only mode: the daily pipeline generates PNG carousel slides and sends pictures only.');
     notes.push('Gemini/Nano Banana image generation is disabled in $0 mode; local Sharp generation remains the fallback path.');
     notes.push('Optional Cloudflare Workers AI backgrounds are allowed only with the low-cost/free-allocation Flux Schnell model and a hard per-run cap.');
+    notes.push('Optional Pexels/Wikimedia sourcing is allowed only as free licensed asset sourcing with source/attribution notes.');
 
     return {
       zeroCostMode,

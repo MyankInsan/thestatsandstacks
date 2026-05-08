@@ -5,6 +5,7 @@ import {
   isTooSimilarToRecent,
   noveltyPenalty,
 } from '../services/contentHistory';
+import { CarouselPlan, MediaFormatDecision } from './mediaPlanningAgent';
 
 export interface StrategyDecision {
   topic: string;
@@ -26,6 +27,8 @@ export class ContentStrategyAgent extends BaseAgent {
   async execute(input: {
     trends: TrendResearchResult,
     contentHistory?: ContentHistoryEntry[],
+    formatDecision?: MediaFormatDecision,
+    carouselPlan?: CarouselPlan,
   }): Promise<StrategyDecision> {
     console.log(`[${this.name}] 🧠 Deciding content strategy...`);
     const contentHistory = input.contentHistory || [];
@@ -68,6 +71,9 @@ Recent posts to avoid repeating: ${JSON.stringify(contentHistory.slice(-14))}
 
 Research signal briefs: ${JSON.stringify(input.trends.signalBriefs || [])}
 
+MEDIA FORMAT DECISION FROM SPECIALIST AGENTS:
+${buildMediaPlanningLock(input.formatDecision, input.carouselPlan)}
+
 Pick the best one. Output ONLY valid JSON (no markdown, no code fences):
 {
   "topic": "exact topic title",
@@ -89,11 +95,21 @@ Pick the best one. Output ONLY valid JSON (no markdown, no code fences):
       const text = response.text().trim();
 
       const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      return normalizeStrategy(JSON.parse(cleaned) as StrategyDecision, input.trends, contentHistory);
+      return normalizeStrategy(
+        JSON.parse(cleaned) as StrategyDecision,
+        input.trends,
+        contentHistory,
+        input.formatDecision,
+        input.carouselPlan
+      );
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.warn(`[${this.name}] Gemini strategy failed; using cost-safe fallback strategy. ${message}`);
-      return getRotatingFallbackStrategy(input.trends, contentHistory);
+      return applyMediaPlan(
+        getRotatingFallbackStrategy(input.trends, contentHistory),
+        input.formatDecision,
+        input.carouselPlan
+      );
     }
   }
 }
@@ -399,35 +415,38 @@ function getRotatingFallbackStrategy(
 function normalizeStrategy(
   strategy: StrategyDecision,
   trends: TrendResearchResult,
-  contentHistory: ContentHistoryEntry[]
+  contentHistory: ContentHistoryEntry[],
+  formatDecision?: MediaFormatDecision,
+  carouselPlan?: CarouselPlan
 ): StrategyDecision {
+  const plannedStrategy = applyMediaPlan(strategy, formatDecision, carouselPlan);
   const validFormats: StrategyDecision['format'][] = ['CAROUSEL', 'SINGLE_IMAGE', 'WATCHLIST_EDUCATION'];
-  if (!validFormats.includes(strategy.format)) {
-    return getRotatingFallbackStrategy(trends, contentHistory);
+  if (!validFormats.includes(plannedStrategy.format)) {
+    return applyMediaPlan(getRotatingFallbackStrategy(trends, contentHistory), formatDecision, carouselPlan);
   }
 
-  if (strategy.slideCount < 1 || strategy.slideCount > 9 || strategy.slideBreakdown.length !== strategy.slideCount) {
-    return getRotatingFallbackStrategy(trends, contentHistory);
+  if (plannedStrategy.slideCount < 1 || plannedStrategy.slideCount > 9 || plannedStrategy.slideBreakdown.length !== plannedStrategy.slideCount) {
+    return applyMediaPlan(getRotatingFallbackStrategy(trends, contentHistory), formatDecision, carouselPlan);
   }
 
-  if (containsBlockedRecommendationLanguage(strategy)) {
-    const safeFallback = getRotatingFallbackStrategy(trends, contentHistory);
+  if (containsBlockedRecommendationLanguage(plannedStrategy)) {
+    const safeFallback = applyMediaPlan(getRotatingFallbackStrategy(trends, contentHistory), formatDecision, carouselPlan);
     return {
       ...safeFallback,
       reasoning: `${safeFallback.reasoning} Chosen because the model-selected topic used buy/sell recommendation language.`,
     };
   }
 
-  if (containsBlockedMarketHypeLanguage(strategy)) {
-    const safeFallback = getRotatingFallbackStrategy(trends, contentHistory);
+  if (containsBlockedMarketHypeLanguage(plannedStrategy)) {
+    const safeFallback = applyMediaPlan(getRotatingFallbackStrategy(trends, contentHistory), formatDecision, carouselPlan);
     return {
       ...safeFallback,
       reasoning: `${safeFallback.reasoning} Chosen because the model-selected topic used hype language or an unsafe exact-performance claim.`,
     };
   }
 
-  if (isTooSimilarToRecent(strategy.topic, contentHistory)) {
-    const freshFallback = getRotatingFallbackStrategy(trends, contentHistory);
+  if (isTooSimilarToRecent(plannedStrategy.topic, contentHistory)) {
+    const freshFallback = applyMediaPlan(getRotatingFallbackStrategy(trends, contentHistory), formatDecision, carouselPlan);
     return {
       ...freshFallback,
       reasoning: `${freshFallback.reasoning} Chosen because the model-selected topic was too similar to recent content.`,
@@ -435,11 +454,96 @@ function normalizeStrategy(
   }
 
   return {
-    ...strategy,
-    slideBreakdown: strategy.slideBreakdown.map((slide, index) => (
+    ...plannedStrategy,
+    slideBreakdown: plannedStrategy.slideBreakdown.map((slide, index) => (
       slide.toLowerCase().startsWith(`slide ${index + 1}:`) ? slide : `Slide ${index + 1}: ${slide}`
     )),
   };
+}
+
+function buildMediaPlanningLock(
+  formatDecision?: MediaFormatDecision,
+  carouselPlan?: CarouselPlan
+): string {
+  if (!formatDecision) {
+    return 'No separate media decision was provided; follow the format rules above.';
+  }
+
+  return [
+    `- Media format: ${formatDecision.mediaFormat}`,
+    `- Format reasoning: ${formatDecision.reasoning}`,
+    `- Reference pattern: ${formatDecision.referencePattern}`,
+    carouselPlan
+      ? `- Required slide count: ${carouselPlan.slideCount}. Slide roles in order: ${carouselPlan.slideRoles.join(' / ')}.`
+      : '- Required slide count: use format rules.',
+    '- Obey this specialist decision unless it would create a compliance issue.',
+  ].join('\n');
+}
+
+function applyMediaPlan(
+  strategy: StrategyDecision,
+  formatDecision?: MediaFormatDecision,
+  carouselPlan?: CarouselPlan
+): StrategyDecision {
+  if (formatDecision?.mediaFormat === 'SINGLE_IMAGE') {
+    const firstSlide = strategy.slideBreakdown[0] || `Slide 1: ${strategy.hook} | One clear idea | Educational only`;
+    return {
+      ...strategy,
+      format: 'SINGLE_IMAGE',
+      slideCount: 1,
+      slideBreakdown: [ensureSlidePrefix(firstSlide, 1)],
+      reasoning: `${strategy.reasoning} Media planning agent selected a single premium poster.`,
+    };
+  }
+
+  if (formatDecision?.mediaFormat === 'CAROUSEL') {
+    const targetCount = clampSlideCount(carouselPlan?.slideCount || strategy.slideCount || 7, 5, 8);
+    const slideBreakdown = strategy.slideBreakdown.slice(0, targetCount);
+    while (slideBreakdown.length < targetCount) {
+      slideBreakdown.push(buildPlannedSlide(strategy, slideBreakdown.length + 1, carouselPlan));
+    }
+
+    return {
+      ...strategy,
+      format: strategy.format === 'WATCHLIST_EDUCATION' ? 'WATCHLIST_EDUCATION' : 'CAROUSEL',
+      slideCount: targetCount,
+      slideBreakdown: slideBreakdown.map((slide, index) => ensureSlidePrefix(slide, index + 1)),
+      reasoning: `${strategy.reasoning} Media planning agent selected ${targetCount} carousel slides.`,
+    };
+  }
+
+  return strategy;
+}
+
+function buildPlannedSlide(
+  strategy: StrategyDecision,
+  slideNumber: number,
+  carouselPlan?: CarouselPlan
+): string {
+  const role = carouselPlan?.slideRoles[slideNumber - 1] || 'saveable takeaway';
+  if (slideNumber === 1) {
+    return `Slide 1: ${strategy.hook} | Start with the real question | Educational only`;
+  }
+  if (/risk|watch|research|catalyst|market|stock/i.test(`${strategy.topic} ${role}`)) {
+    return `Slide ${slideNumber}: ${titleCaseRole(role)} | Source the claim | Respect the risk | Decide without hype`;
+  }
+  return `Slide ${slideNumber}: ${titleCaseRole(role)} | One practical rule | One common mistake | Save for later`;
+}
+
+function ensureSlidePrefix(slide: string, slideNumber: number): string {
+  return slide.toLowerCase().startsWith(`slide ${slideNumber}:`) ? slide : `Slide ${slideNumber}: ${slide}`;
+}
+
+function titleCaseRole(role: string): string {
+  return role
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function clampSlideCount(value: number, min: number, max: number): number {
+  const rounded = Math.round(Number.isFinite(value) ? value : min);
+  return Math.max(min, Math.min(max, rounded));
 }
 
 function containsBlockedMarketHypeLanguage(strategy: StrategyDecision): boolean {

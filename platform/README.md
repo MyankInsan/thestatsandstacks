@@ -38,8 +38,26 @@ The hot-topic desk runs before the main strategist:
 - `CatalystNewsAgent` maps hot tickers to recent public finance headlines.
 - `ViralFinanceFormatAgent` converts that attention into compliant carousel ideas.
 - `HotTopicDeskAgent` ranks the ideas and passes them to `TrendResearchAgent`.
+- `MediaFormatDecisionAgent` decides whether the day should be one picture or a carousel.
+- `CarouselPlanningAgent` decides the exact slide count and role of each frame.
+- `VisualAssetSourcingAgent` chooses the legal visual source per slide before rendering.
 
 This lets the account react to advanced investing-page topics such as SanDisk/SNDK or AI-storage momentum while staying educational: what happened, why it matters, what to watch, and what risks to respect. It never creates buy/sell/hold calls, price targets, or "stocks to buy" content.
+
+The visual sourcing order is free-first and rights-safe. Google Images scraping and Google Photos sourcing are intentionally not used. Google Images does not grant reuse rights, and Google Photos requires user OAuth for a private library, so neither is a good unattended GitHub Actions source. The pipeline uses:
+
+- Cloudflare Workers AI when configured, for original photo-style backgrounds.
+- Pexels when `PEXELS_API_KEY` is configured, for free licensed stock images with attribution notes.
+- Wikimedia Commons only when explicitly enabled, for reusable public-license educational assets with attribution notes.
+- Local Sharp/SVG rendering as the guaranteed fallback.
+
+```bash
+ENABLE_LICENSED_ASSET_SOURCING=true
+PREFER_STOCK_ASSET_SOURCING=false
+PEXELS_API_KEY=...
+ENABLE_WIKIMEDIA_SOURCING=false
+WIKIMEDIA_USER_AGENT=thestatsandstacks-content-bot/1.0
+```
 
 The daily automation is picture-only. It does not create Reels, MP4s, audio tracks, or FFmpeg-rendered videos; delivery sends the generated PNG slides and copy package.
 

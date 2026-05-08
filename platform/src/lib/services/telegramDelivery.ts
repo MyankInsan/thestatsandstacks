@@ -15,6 +15,7 @@ export async function sendPostToTelegram(input: {
   qaReport: QAReport,
   manualPromptPath?: string,
   researchBriefPath?: string,
+  visualAssetPlanPath?: string,
 }) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -66,6 +67,16 @@ export async function sendPostToTelegram(input: {
       chatId,
       filePath: input.researchBriefPath,
       caption: 'Research brief and content rationale',
+      contentType: 'text/markdown',
+    });
+  }
+
+  if (input.visualAssetPlanPath && fs.existsSync(input.visualAssetPlanPath)) {
+    await uploadTelegramDocument({
+      token,
+      chatId,
+      filePath: input.visualAssetPlanPath,
+      caption: 'Visual source plan and attribution notes',
       contentType: 'text/markdown',
     });
   }

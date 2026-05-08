@@ -75,6 +75,11 @@ jobs:
           CLOUDFLARE_IMAGE_STEPS: "4"
           CLOUDFLARE_MAX_IMAGES_PER_RUN: "8"
           CLOUDFLARE_ALLOW_PAID_OVERAGE: "false"
+          ENABLE_LICENSED_ASSET_SOURCING: ${{ secrets.PEXELS_API_KEY != '' && 'true' || 'false' }}
+          PREFER_STOCK_ASSET_SOURCING: "false"
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          ENABLE_WIKIMEDIA_SOURCING: "false"
+          WIKIMEDIA_USER_AGENT: thestatsandstacks-content-bot/1.0
           ENABLE_REDDIT_RESEARCH: "true"
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}

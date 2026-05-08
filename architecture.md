@@ -11,10 +11,13 @@ graph TD
     H1 --> B(Trend Research Agent)
     H2 --> B
     H3 --> B
-    B --> C(Content Strategy Agent)
+    B --> MF(Media Format Decision Agent)
+    MF --> CP(Carousel Planning Agent)
+    CP --> C(Content Strategy Agent)
     C --> D(Editorial Planning Agent)
     D --> E(Image Prompt Agent)
-    E --> F(Image Generation Agent)
+    E --> VS(Visual Asset Sourcing Agent)
+    VS --> F(Image Generation Agent)
     F --> G(Vision QA Critic)
     G --> H(Finance Accuracy & Compliance)
     H --> I(Copywriting Agent)
@@ -48,7 +51,9 @@ graph TD
 - **Queue/Orchestration**: Redis + BullMQ (Handles multi-step agent workflows with retries)
 - **AI Models**: Gemini text models for agents/copy/research, with paid image APIs disabled by default.
 - **Hot Topic Desk**: Free ticker heat scan, catalyst/news mapping, and viral-format conversion before final strategy selection.
-- **Picture Rendering**: Free local Sharp PNG rendering from generated carousel briefs; optional Cloudflare Workers AI backgrounds can be composited under exact local typography for full-bleed market-news posters. The daily automation is picture-only.
+- **Media Planning**: Separate agents decide single picture vs carousel, then slide count and frame roles before the strategist writes the final brief.
+- **Visual Sourcing**: A free/legal sourcing layer chooses Cloudflare original backgrounds, optional Pexels assets, optional Wikimedia Commons assets, or local fallback. Google Images scraping and Google Photos sourcing are not used.
+- **Picture Rendering**: Free local Sharp PNG rendering from generated carousel briefs; optional Cloudflare Workers AI or licensed-source backgrounds can be composited under exact local typography for full-bleed market-news posters. The daily automation is picture-only.
 - **Zero-Cost Mode**: Paid image/video APIs are blocked by default; Cloudflare Workers AI is allowed only with the capped free-allocation Flux Schnell model and local Sharp fallback.
 - **Deployment**: GitHub Actions for the standalone daily picture workflow; the longer-term dashboard/worker architecture can still run on Cloud Run, Cloud Scheduler, and Cloud Storage.
 - **Auth**: NextAuth / simple auth for Admin Dashboard
@@ -88,6 +93,10 @@ graph TD
 - `CLOUDFLARE_ACCOUNT_ID`
 - `CLOUDFLARE_API_TOKEN`
 - `CLOUDFLARE_WORKERS_AI_ENABLED`
+- `ENABLE_LICENSED_ASSET_SOURCING`
+- `PEXELS_API_KEY`
+- `ENABLE_WIKIMEDIA_SOURCING`
+- `WIKIMEDIA_USER_AGENT`
 - `GEMINI_API_KEY`
 - `HOT_TOPIC_WATCHLIST`
 - `TELEGRAM_BOT_TOKEN`

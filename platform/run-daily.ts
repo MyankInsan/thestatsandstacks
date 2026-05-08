@@ -4,16 +4,19 @@ import 'dotenv/config';
 
 import { CostGuardAgent } from './src/lib/agents/costGuardAgent';
 import { TrendResearchAgent } from './src/lib/agents/trendResearchAgent';
+import { CarouselPlanningAgent, MediaFormatDecisionAgent } from './src/lib/agents/mediaPlanningAgent';
 import { ContentStrategyAgent } from './src/lib/agents/contentStrategyAgent';
 import { ComplianceQAAgent } from './src/lib/agents/complianceQAAgent';
 import { ImagePromptAgent } from './src/lib/agents/imagePromptAgent';
-import { ImageGenerationAgent } from './src/lib/agents/imageGenerationAgent';
+import { VisualAssetSourcingAgent, type VisualAssetSourcingPlan } from './src/lib/agents/visualAssetSourcingAgent';
+import { ImageGenerationAgent, type GeneratedImage } from './src/lib/agents/imageGenerationAgent';
 import { VisionQAAgent, type QAReport } from './src/lib/agents/visionQAAgent';
 import { CopywritingAgent } from './src/lib/agents/copywritingAgent';
 import { emailPostToPhone } from './src/lib/services/emailDelivery';
 import { sendPostToTelegram } from './src/lib/services/telegramDelivery';
 import { appendContentHistory, loadContentHistory } from './src/lib/services/contentHistory';
 import { getLocalDateKey, getLocalTimestamp, getRunSlug } from './src/lib/services/dateUtils';
+import { getImageCount } from './src/lib/services/imageCount';
 import path from 'path';
 import fs from 'fs';
 
@@ -57,14 +60,26 @@ async function main() {
   console.log(`   Research brief saved: ${researchBriefPath}`);
   console.log('');
 
-  // ── AGENT 2: CONTENT STRATEGY ──
-  console.log('━━━ AGENT 2: CONTENT STRATEGY ━━━');
-  const strategyAgent = new ContentStrategyAgent();
-  const strategy = await strategyAgent.execute({ trends, contentHistory });
+  // ── AGENT 2: MEDIA FORMAT ──
+  console.log('━━━ AGENT 2: MEDIA FORMAT ━━━');
+  const formatDecision = await new MediaFormatDecisionAgent().execute({ trends, contentHistory });
+  console.log(`   ${formatDecision.mediaFormat}: ${formatDecision.reasoning}`);
   console.log('');
 
-  // ── AGENT 3: COMPLIANCE QA ──
-  console.log('━━━ AGENT 3: COMPLIANCE QA ━━━');
+  // ── AGENT 3: CAROUSEL PLANNING ──
+  console.log('━━━ AGENT 3: CAROUSEL PLANNING ━━━');
+  const carouselPlan = await new CarouselPlanningAgent().execute({ trends, formatDecision });
+  console.log(`   ${carouselPlan.slideCount} picture slide${carouselPlan.slideCount === 1 ? '' : 's'} planned.`);
+  console.log('');
+
+  // ── AGENT 4: CONTENT STRATEGY ──
+  console.log('━━━ AGENT 4: CONTENT STRATEGY ━━━');
+  const strategyAgent = new ContentStrategyAgent();
+  const strategy = await strategyAgent.execute({ trends, contentHistory, formatDecision, carouselPlan });
+  console.log('');
+
+  // ── AGENT 5: COMPLIANCE QA ──
+  console.log('━━━ AGENT 5: COMPLIANCE QA ━━━');
   const complianceAgent = new ComplianceQAAgent();
   const strategyCompliance = await complianceAgent.execute({ strategy });
   if (!strategyCompliance.isValid) {
@@ -73,8 +88,8 @@ async function main() {
   console.log(`   Compliance score: ${(strategyCompliance.confidenceScore * 100).toFixed(0)}%`);
   console.log('');
 
-  // ── AGENT 4: IMAGE PROMPTS ──
-  console.log('━━━ AGENT 4: IMAGE PROMPTS ━━━');
+  // ── AGENT 6: IMAGE PROMPTS ──
+  console.log('━━━ AGENT 6: IMAGE PROMPTS ━━━');
   const imagePromptAgent = new ImagePromptAgent();
   const promptSet = await imagePromptAgent.execute({ strategy });
   const plannedPrompts = promptSet.prompts.slice(0, getImageCount(strategy));
@@ -90,17 +105,32 @@ async function main() {
   console.log(`   Image prompt packet saved: ${manualPromptPath}`);
   console.log('');
 
-  // ── AGENT 5: IMAGE GENERATION ──
-  console.log('━━━ AGENT 5: IMAGE GENERATION ━━━');
+  // ── AGENT 7: VISUAL ASSET SOURCING ──
+  console.log('━━━ AGENT 7: VISUAL ASSET SOURCING ━━━');
+  const visualAssetPlan = await new VisualAssetSourcingAgent().execute({
+    strategy,
+    prompts: plannedPrompts,
+    formatDecision,
+    carouselPlan,
+  });
+  const visualAssetPlanPath = path.join(outputDir, 'VISUAL_ASSET_PLAN.md');
+  fs.writeFileSync(visualAssetPlanPath, buildVisualAssetPlanPacket(visualAssetPlan), 'utf-8');
+  console.log(`   ${visualAssetPlan.summary}`);
+  console.log(`   Visual asset plan saved: ${visualAssetPlanPath}`);
+  console.log('');
+
+  // ── AGENT 8: IMAGE GENERATION ──
+  console.log('━━━ AGENT 8: IMAGE GENERATION ━━━');
   const imageGenAgent = new ImageGenerationAgent();
   const generatedImages = await imageGenAgent.execute({
     prompts: plannedPrompts,
     outputDir,
+    visualPlan: visualAssetPlan,
   });
   console.log('');
 
-  // ── AGENT 6: VISION QA (check + regenerate) ──
-  console.log('━━━ AGENT 6: VISION QA ━━━');
+  // ── AGENT 9: VISION QA (check + regenerate) ──
+  console.log('━━━ AGENT 9: VISION QA ━━━');
   const qaAgent = new VisionQAAgent();
   let qaReport: QAReport = await qaAgent.execute({ images: generatedImages.images });
 
@@ -109,7 +139,7 @@ async function main() {
     regen++;
     console.log(`   🔄 Regenerating ${qaReport.failedSlides.length} failed slides (attempt ${regen})...`);
     const failedPrompts = plannedPrompts.filter(p => qaReport.failedSlides.includes(p.slideNumber));
-    const regenResult = await imageGenAgent.execute({ prompts: failedPrompts, outputDir });
+    const regenResult = await imageGenAgent.execute({ prompts: failedPrompts, outputDir, visualPlan: visualAssetPlan });
     for (const img of regenResult.images) {
       const idx = generatedImages.images.findIndex(i => i.slideNumber === img.slideNumber);
       if (idx >= 0) generatedImages.images[idx] = img;
@@ -126,14 +156,14 @@ async function main() {
     throw new Error('Pipeline produced no postable media. Delivery was stopped.');
   }
 
-  // ── AGENT 7: COPYWRITING ──
-  console.log('━━━ AGENT 7: COPYWRITING ━━━');
+  // ── AGENT 10: COPYWRITING ──
+  console.log('━━━ AGENT 10: COPYWRITING ━━━');
   const copyAgent = new CopywritingAgent();
   const copy = await copyAgent.execute({ strategy });
   console.log('');
 
-  // ── AGENT 8: FINAL COMPLIANCE QA ──
-  console.log('━━━ AGENT 8: FINAL COMPLIANCE QA ━━━');
+  // ── AGENT 11: FINAL COMPLIANCE QA ──
+  console.log('━━━ AGENT 11: FINAL COMPLIANCE QA ━━━');
   const copyCompliance = await complianceAgent.execute({ strategy, copy });
   if (!copyCompliance.isValid) {
     throw new Error(`Final compliance failed: ${copyCompliance.failures.join(' ')}`);
@@ -148,7 +178,8 @@ async function main() {
       strategy,
       copy,
       qaReport,
-      imagePaths: generatedImages.images.map((image) => image.localPath),
+      images: generatedImages.images,
+      visualAssetPlan,
     }),
     'utf-8'
   );
@@ -177,6 +208,7 @@ async function main() {
       qaReport,
       manualPromptPath,
       researchBriefPath,
+      visualAssetPlanPath,
     });
   } else {
     console.log('━━━ TELEGRAM SKIPPED ━━━');
@@ -204,7 +236,8 @@ function buildPostReadyFile(input: {
   strategy: Awaited<ReturnType<ContentStrategyAgent['execute']>>,
   copy: Awaited<ReturnType<CopywritingAgent['execute']>>,
   qaReport: Awaited<ReturnType<VisionQAAgent['execute']>>,
-  imagePaths: string[],
+  images: GeneratedImage[],
+  visualAssetPlan: VisualAssetSourcingPlan,
 }): string {
   return `THESTATSANDSTACKS DAILY POST
 Generated: ${getLocalTimestamp()}
@@ -213,10 +246,13 @@ TOPIC
 ${input.strategy.topic}
 
 FORMAT
-${input.strategy.format} (${input.imagePaths.length} picture slide${input.imagePaths.length === 1 ? '' : 's'})
+${input.strategy.format} (${input.images.length} picture slide${input.images.length === 1 ? '' : 's'})
 
 GROWTH NOTES
 ${buildGrowthPublishingChecklist(input)}
+
+VISUAL SOURCES
+${buildVisualSourceSummary(input)}
 
 QA SCORE
 ${(input.qaReport.overallScore * 100).toFixed(0)}%
@@ -234,13 +270,13 @@ ALT TEXT
 ${input.copy.altText}
 
 SLIDES
-${input.imagePaths.map((imagePath, index) => `Slide ${index + 1}: ${imagePath}`).join('\n')}
+${input.images.map((image, index) => `Slide ${index + 1}: ${image.localPath}`).join('\n')}
 `;
 }
 
 function buildGrowthPublishingChecklist(input: {
   strategy: Awaited<ReturnType<ContentStrategyAgent['execute']>>,
-  imagePaths: string[],
+  images: GeneratedImage[],
 }): string {
   const mediaAdvice = 'Publish as a picture carousel. The first slide is the cover, so judge it by whether it creates a save-worthy reason to swipe in under two seconds.';
   const stockSafety = /stock|watchlist|earnings|market|portfolio|etf/i.test(`${input.strategy.topic} ${input.strategy.searchKeywords.join(' ')}`)
@@ -254,11 +290,6 @@ function buildGrowthPublishingChecklist(input: {
     'Reference pattern: simple million-follower finance creator clarity, but original TheStatsAndStacks design and Canadian positioning.',
     stockSafety,
   ].join('\n');
-}
-
-function getImageCount(strategy: Awaited<ReturnType<ContentStrategyAgent['execute']>>): number {
-  if (strategy.format === 'SINGLE_IMAGE') return 1;
-  return Math.max(5, Math.min(8, strategy.slideCount || 7));
 }
 
 function buildResearchBrief(
@@ -296,6 +327,49 @@ ${trends.topics.map((topic, index) => `${index + 1}. ${topic.title}
    - Keywords: ${(topic.searchKeywords || []).join(', ') || 'none'}
    - Sources: ${(topic.sourceUrls || []).join(' | ') || 'none'}`).join('\n\n')}
 `;
+}
+
+function buildVisualAssetPlanPacket(plan: VisualAssetSourcingPlan): string {
+  return `# TheStatsAndStacks Visual Asset Plan
+
+Generated: ${getLocalTimestamp()}
+
+${plan.summary}
+
+Provider order: ${plan.providerOrder.join(' -> ')}
+
+${plan.warnings.length ? `Warnings:\n${plan.warnings.map((warning) => `- ${warning}`).join('\n')}\n` : ''}
+## Slide Sources
+
+${plan.slides.map((slide) => `### Slide ${slide.slideNumber}
+
+- Provider: ${slide.provider}
+- Query: ${slide.query}
+- Reason: ${slide.reason}
+- Source: ${slide.sourcePage || slide.assetUrl || 'generated/local'}
+- License: ${slide.license || 'n/a'}
+- Attribution: ${slide.attribution || 'n/a'}
+
+Background prompt:
+${slide.backgroundPrompt}
+`).join('\n')}`;
+}
+
+function buildVisualSourceSummary(input: {
+  images: GeneratedImage[],
+  visualAssetPlan: VisualAssetSourcingPlan,
+}): string {
+  const lines = input.images.map((image) => {
+    const plan = input.visualAssetPlan.slides.find((slide) => slide.slideNumber === image.slideNumber);
+    const source = image.source === 'local'
+      ? 'local generated design'
+      : image.source === 'cloudflare'
+        ? 'Cloudflare Workers AI original background'
+        : `${image.source} licensed source`;
+    const attribution = image.attribution || plan?.attribution;
+    return `Slide ${image.slideNumber}: ${source}${attribution ? ` — ${attribution}` : ''}`;
+  });
+  return lines.join('\n');
 }
 
 main().catch((err) => {

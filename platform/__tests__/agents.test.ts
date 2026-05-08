@@ -4,6 +4,8 @@ import { CostGuardAgent } from '../src/lib/agents/costGuardAgent';
 import { ComplianceQAAgent } from '../src/lib/agents/complianceQAAgent';
 import { PublisherAgent } from '../src/lib/agents/publisherAgent';
 import { normalizeCopyBundle } from '../src/lib/agents/copywritingAgent';
+import { CarouselPlanningAgent, MediaFormatDecisionAgent } from '../src/lib/agents/mediaPlanningAgent';
+import { VisualAssetSourcingAgent } from '../src/lib/agents/visualAssetSourcingAgent';
 
 test('PublisherAgent rejects publish if confidence score is below 0.85', async () => {
     const agent = new PublisherAgent();
@@ -145,6 +147,70 @@ test('CostGuardAgent blocks paid image generation in zero-cost mode', async () =
   }
 });
 
+test('Media planning agents choose an 8-slide carousel for hot market education', async () => {
+  const trends = {
+    topics: [{
+      title: 'SanDisk AI Storage Heat Check',
+      score: 0.94,
+      reasoning: 'Market heat topic with catalyst, valuation, risk, and what-to-watch context.',
+      suggestedFormat: 'WATCHLIST_EDUCATION',
+      suggestedSlideCount: 8,
+      searchKeywords: ['SNDK stock', 'AI storage'],
+      contentPillar: 'market education',
+    }],
+  };
+
+  const formatDecision = await new MediaFormatDecisionAgent().execute({ trends });
+  const carouselPlan = await new CarouselPlanningAgent().execute({ trends, formatDecision });
+
+  assert.equal(formatDecision.mediaFormat, 'CAROUSEL');
+  assert.equal(carouselPlan.slideCount, 8);
+  assert.match(carouselPlan.slideRoles.join(' '), /risk/i);
+});
+
+test('VisualAssetSourcingAgent falls back to local when no free provider secrets are configured', async () => {
+  const originals = captureEnv([
+    'ENABLE_LICENSED_ASSET_SOURCING',
+    'PEXELS_API_KEY',
+    'CLOUDFLARE_WORKERS_AI_ENABLED',
+    'CLOUDFLARE_ACCOUNT_ID',
+    'CLOUDFLARE_API_TOKEN',
+    'ENABLE_WIKIMEDIA_SOURCING',
+  ]);
+
+  delete process.env.ENABLE_LICENSED_ASSET_SOURCING;
+  delete process.env.PEXELS_API_KEY;
+  process.env.CLOUDFLARE_WORKERS_AI_ENABLED = 'false';
+  delete process.env.CLOUDFLARE_ACCOUNT_ID;
+  delete process.env.CLOUDFLARE_API_TOKEN;
+  process.env.ENABLE_WIKIMEDIA_SOURCING = 'false';
+
+  try {
+    const plan = await new VisualAssetSourcingAgent().execute({
+      strategy: {
+        topic: 'A stock is not a plan.',
+        hook: 'A stock is not a plan.',
+        format: 'WATCHLIST_EDUCATION',
+        slideCount: 1,
+        slideBreakdown: ['Slide 1: A stock is not a plan | Research first | Educational only'],
+        reasoning: 'test',
+        targetAudience: 'Canadians',
+        searchKeywords: ['stock watchlist'],
+      },
+      prompts: [{
+        slideNumber: 1,
+        slideDescription: 'Slide 1: A stock is not a plan | Research first | Educational only',
+        dallePrompt: 'premium market background',
+      }],
+    });
+
+    assert.equal(plan.slides[0].provider, 'local');
+    assert.match(plan.summary, /Google Images\/Photos are intentionally excluded/);
+  } finally {
+    restoreCapturedEnv(originals);
+  }
+});
+
 test('CostGuardAgent allows capped Cloudflare free-allocation image backgrounds', async () => {
   const originals = captureEnv([
     'ZERO_COST_MODE',
@@ -156,6 +222,8 @@ test('CostGuardAgent allows capped Cloudflare free-allocation image backgrounds'
     'CLOUDFLARE_IMAGE_MODEL',
     'CLOUDFLARE_MAX_IMAGES_PER_RUN',
     'CLOUDFLARE_ALLOW_PAID_OVERAGE',
+    'GOOGLE_IMAGE_SCRAPING_ENABLED',
+    'GOOGLE_PHOTOS_SOURCING_ENABLED',
   ]);
 
   process.env.ZERO_COST_MODE = 'true';
@@ -167,6 +235,8 @@ test('CostGuardAgent allows capped Cloudflare free-allocation image backgrounds'
   process.env.CLOUDFLARE_IMAGE_MODEL = '@cf/black-forest-labs/flux-1-schnell';
   process.env.CLOUDFLARE_MAX_IMAGES_PER_RUN = '8';
   process.env.CLOUDFLARE_ALLOW_PAID_OVERAGE = 'false';
+  process.env.GOOGLE_IMAGE_SCRAPING_ENABLED = 'false';
+  process.env.GOOGLE_PHOTOS_SOURCING_ENABLED = 'false';
 
   try {
     const report = await new CostGuardAgent().execute();
@@ -188,6 +258,8 @@ test('CostGuardAgent blocks risky Cloudflare image settings in zero-cost mode', 
     'CLOUDFLARE_IMAGE_MODEL',
     'CLOUDFLARE_MAX_IMAGES_PER_RUN',
     'CLOUDFLARE_ALLOW_PAID_OVERAGE',
+    'GOOGLE_IMAGE_SCRAPING_ENABLED',
+    'GOOGLE_PHOTOS_SOURCING_ENABLED',
   ]);
 
   process.env.ZERO_COST_MODE = 'true';
@@ -199,6 +271,8 @@ test('CostGuardAgent blocks risky Cloudflare image settings in zero-cost mode', 
   process.env.CLOUDFLARE_IMAGE_MODEL = '@cf/leonardo/phoenix-1.0';
   process.env.CLOUDFLARE_MAX_IMAGES_PER_RUN = '12';
   process.env.CLOUDFLARE_ALLOW_PAID_OVERAGE = 'true';
+  process.env.GOOGLE_IMAGE_SCRAPING_ENABLED = 'false';
+  process.env.GOOGLE_PHOTOS_SOURCING_ENABLED = 'false';
 
   try {
     const report = await new CostGuardAgent().execute();

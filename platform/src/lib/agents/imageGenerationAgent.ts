@@ -4,12 +4,16 @@ import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
 import { getRunSlug, sanitizeFilePart } from '../services/dateUtils';
+import type { VisualAssetSlidePlan, VisualAssetSourcingPlan } from './visualAssetSourcingAgent';
 
 export interface GeneratedImage {
   slideNumber: number;
   localPath: string;
   mimeType: string;
-  source: 'local' | 'openai' | 'cloudflare';
+  source: 'local' | 'openai' | 'cloudflare' | 'pexels' | 'wikimedia';
+  attribution?: string;
+  sourcePage?: string;
+  license?: string;
   layoutWarnings?: string[];
 }
 
@@ -72,11 +76,22 @@ export class ImageGenerationAgent extends BaseAgent {
 
   async execute(input: {
     prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>,
-    outputDir: string
+    outputDir: string,
+    visualPlan?: VisualAssetSourcingPlan,
   }): Promise<{ images: GeneratedImage[] }> {
     fs.mkdirSync(input.outputDir, { recursive: true });
     const runSlug = getRunSlug();
     const freeOnly = process.env.FREE_IMAGE_GENERATION_ONLY !== 'false';
+    if (input.visualPlan?.slides.some((slide) => Boolean(slide.assetUrl))) {
+      return this.generateFromVisualPlan({
+        prompts: input.prompts,
+        outputDir: input.outputDir,
+        visualPlan: input.visualPlan,
+        runSlug,
+        freeOnly,
+      });
+    }
+
     if (freeOnly && isCloudflareWorkersAiReady()) {
       return this.generateWithCloudflare({ ...input, runSlug });
     }
@@ -87,6 +102,70 @@ export class ImageGenerationAgent extends BaseAgent {
 
     console.log(`[${this.name}] Using premium zero-cost local PNG slide generation.`);
     return this.generateLocalSlides({ ...input, runSlug });
+  }
+
+  private async generateFromVisualPlan(input: {
+    prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>,
+    outputDir: string,
+    visualPlan: VisualAssetSourcingPlan,
+    runSlug: string,
+    freeOnly: boolean,
+  }): Promise<{ images: GeneratedImage[] }> {
+    console.log(`[${this.name}] Using visual asset sourcing plan with legal/free provider fallbacks.`);
+    const planBySlide = new Map(input.visualPlan.slides.map((slide) => [slide.slideNumber, slide]));
+    const images: GeneratedImage[] = [];
+    let cloudflareCount = 0;
+    const maxCloudflareImages = clamp(Number.parseInt(process.env.CLOUDFLARE_MAX_IMAGES_PER_RUN || '8', 10) || 8, 1, 8);
+
+    for (const prompt of input.prompts) {
+      const plan = planBySlide.get(prompt.slideNumber);
+      if (plan?.assetUrl && (plan.provider === 'pexels' || plan.provider === 'wikimedia')) {
+        try {
+          const background = await downloadVisualAsset(plan);
+          const filename = buildSlideFilename(input.runSlug, prompt.slideNumber);
+          const localPath = path.join(input.outputDir, filename);
+          const layoutWarnings = await this.writeSourcedCompositedSlide(
+            background,
+            prompt.slideNumber,
+            prompt.slideDescription,
+            localPath,
+            input.runSlug
+          );
+          images.push({
+            slideNumber: prompt.slideNumber,
+            localPath,
+            mimeType: 'image/png',
+            source: plan.provider,
+            attribution: plan.attribution,
+            sourcePage: plan.sourcePage,
+            license: plan.license,
+            layoutWarnings,
+          });
+          console.log(`   Slide ${prompt.slideNumber} saved with ${plan.provider} source image.`);
+          continue;
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          console.warn(`   ${plan.provider} asset failed for slide ${prompt.slideNumber}; falling back. ${message}`);
+        }
+      }
+
+      if (
+        input.freeOnly
+        && isCloudflareWorkersAiReady()
+        && (!plan || plan.provider === 'cloudflare')
+        && cloudflareCount < maxCloudflareImages
+      ) {
+        const cloudflareImage = await this.generateCloudflareSlide(prompt, input.outputDir, input.runSlug);
+        images.push(cloudflareImage);
+        cloudflareCount++;
+        continue;
+      }
+
+      images.push(await this.generateLocalSlide(prompt, input.outputDir, input.runSlug));
+      console.log(`   Slide ${prompt.slideNumber} saved locally.`);
+    }
+
+    return { images };
   }
 
   private async generateWithOpenAI(input: {
@@ -169,45 +248,7 @@ export class ImageGenerationAgent extends BaseAgent {
       }
 
       try {
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${apiToken}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            prompt: buildBackgroundOnlyPrompt(prompt.dallePrompt, prompt.slideDescription),
-            steps,
-            seed: Math.abs(hashString(`${input.runSlug}:${prompt.slideNumber}:${prompt.slideDescription}`)),
-          }),
-        });
-
-        const payload = await response.json() as {
-          success?: boolean;
-          errors?: Array<{ message?: string }>;
-          result?: { image?: string };
-          image?: string;
-        };
-
-        if (!response.ok || payload.success === false) {
-          const message = payload.errors?.map((error) => error.message).filter(Boolean).join('; ') || response.statusText;
-          throw new Error(message);
-        }
-
-        const base64Image = payload.result?.image || payload.image;
-        if (!base64Image) throw new Error('Cloudflare response did not include base64 image data.');
-
-        const filename = buildSlideFilename(input.runSlug, prompt.slideNumber);
-        const localPath = path.join(input.outputDir, filename);
-        const layoutWarnings = await this.writeViralCompositedSlide(
-          Buffer.from(base64Image, 'base64'),
-          prompt.slideNumber,
-          prompt.slideDescription,
-          localPath,
-          input.runSlug
-        );
-        images.push({ slideNumber: prompt.slideNumber, localPath, mimeType: 'image/png', source: 'cloudflare', layoutWarnings });
-        console.log(`   Slide ${prompt.slideNumber} saved with Cloudflare background.`);
+        images.push(await this.generateCloudflareSlide(prompt, input.outputDir, input.runSlug, { accountId, apiToken, model, steps, apiUrl }));
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
         console.warn(`   Cloudflare background failed for slide ${prompt.slideNumber}; using local renderer. ${message}`);
@@ -216,6 +257,68 @@ export class ImageGenerationAgent extends BaseAgent {
     }
 
     return { images };
+  }
+
+  private async generateCloudflareSlide(
+    prompt: { slideNumber: number; slideDescription: string; dallePrompt: string },
+    outputDir: string,
+    runSlug: string,
+    config?: {
+      accountId: string;
+      apiToken: string;
+      model: string;
+      steps: number;
+      apiUrl: string;
+    }
+  ): Promise<GeneratedImage> {
+    const accountId = config?.accountId || process.env.CLOUDFLARE_ACCOUNT_ID;
+    const apiToken = config?.apiToken || process.env.CLOUDFLARE_API_TOKEN;
+    if (!accountId || !apiToken) {
+      throw new Error('Cloudflare Workers AI is enabled, but CLOUDFLARE_ACCOUNT_ID or CLOUDFLARE_API_TOKEN is missing.');
+    }
+
+    const model = config?.model || process.env.CLOUDFLARE_IMAGE_MODEL || CLOUDFLARE_FREE_MODEL;
+    const steps = config?.steps || clamp(Number.parseInt(process.env.CLOUDFLARE_IMAGE_STEPS || '4', 10) || 4, 1, 8);
+    const apiUrl = config?.apiUrl || `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/${model}`;
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        prompt: buildBackgroundOnlyPrompt(prompt.dallePrompt, prompt.slideDescription),
+        steps,
+        seed: Math.abs(hashString(`${runSlug}:${prompt.slideNumber}:${prompt.slideDescription}`)),
+      }),
+    });
+
+    const payload = await response.json() as {
+      success?: boolean;
+      errors?: Array<{ message?: string }>;
+      result?: { image?: string };
+      image?: string;
+    };
+
+    if (!response.ok || payload.success === false) {
+      const message = payload.errors?.map((error) => error.message).filter(Boolean).join('; ') || response.statusText;
+      throw new Error(message);
+    }
+
+    const base64Image = payload.result?.image || payload.image;
+    if (!base64Image) throw new Error('Cloudflare response did not include base64 image data.');
+
+    const filename = buildSlideFilename(runSlug, prompt.slideNumber);
+    const localPath = path.join(outputDir, filename);
+    const layoutWarnings = await this.writeViralCompositedSlide(
+      Buffer.from(base64Image, 'base64'),
+      prompt.slideNumber,
+      prompt.slideDescription,
+      localPath,
+      runSlug
+    );
+    console.log(`   Slide ${prompt.slideNumber} saved with Cloudflare background.`);
+    return { slideNumber: prompt.slideNumber, localPath, mimeType: 'image/png', source: 'cloudflare', layoutWarnings };
   }
 
   private async generateLocalSlides(input: {
@@ -284,6 +387,18 @@ export class ImageGenerationAgent extends BaseAgent {
       .png()
       .toFile(localPath);
     return overlay.layoutWarnings;
+  }
+
+  private async writeSourcedCompositedSlide(
+    background: Buffer,
+    slideNumber: number,
+    description: string,
+    localPath: string,
+    runSlug: string
+  ): Promise<string[]> {
+    return shouldUseViralPoster(description)
+      ? this.writeViralCompositedSlide(background, slideNumber, description, localPath, runSlug)
+      : this.writePremiumCompositedSlide(background, slideNumber, description, localPath, runSlug);
   }
 
   private createViralPosterSvg(slideNumber: number, description: string, runSlug: string, includeSyntheticBackground = false): SlideRender {
@@ -428,6 +543,30 @@ function isCloudflareWorkersAiReady(): boolean {
   return process.env.CLOUDFLARE_WORKERS_AI_ENABLED === 'true'
     && Boolean(process.env.CLOUDFLARE_ACCOUNT_ID)
     && Boolean(process.env.CLOUDFLARE_API_TOKEN);
+}
+
+async function downloadVisualAsset(plan: VisualAssetSlidePlan): Promise<Buffer> {
+  if (!plan.assetUrl) throw new Error('Visual asset plan did not include an asset URL.');
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 12_000);
+  try {
+    const response = await fetch(plan.assetUrl, {
+      signal: controller.signal,
+      headers: {
+        'User-Agent': process.env.WIKIMEDIA_USER_AGENT || 'thestatsandstacks-content-bot/1.0',
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const contentType = response.headers.get('content-type') || '';
+    if (contentType && !contentType.startsWith('image/')) {
+      throw new Error(`Expected an image, got ${contentType}`);
+    }
+    return Buffer.from(await response.arrayBuffer());
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function buildBackgroundOnlyPrompt(basePrompt: string, description: string): string {

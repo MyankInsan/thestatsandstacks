@@ -187,6 +187,22 @@ Rules:
 - no individualized financial advice
 - every hot-topic post must include risk context and a saveable research framework
 
+1B. Media Planning Agents
+Purpose:
+- make the post-format decisions explicit before the strategist writes the final brief
+- decide whether today is one image or a carousel
+- decide the exact number of carousel frames
+- define the role of each frame so the carousel has no filler or empty-looking slides
+
+Agents:
+- Media Format Decision Agent: decides SINGLE_IMAGE versus CAROUSEL from the ranked research signals.
+- Carousel Planning Agent: chooses slide count and roles such as cover, what happened, catalyst, risk, what to watch, and saveable takeaway.
+
+Rules:
+- default to carousel for hot market education, frameworks, comparisons, checklists, and risk maps
+- choose single image only when one frame can carry the whole idea cleanly
+- hot stock education should usually use 8 frames so context and risk are not compressed into hype
+
 2. Content Strategy Agent
 Purpose:
 - choose the best content type for today
@@ -277,6 +293,23 @@ Requirements:
 - store prompt, seed if available, model, timestamp, and file path
 - retry failed jobs safely
 - do not publish raw outputs before validation
+
+5A. Visual Asset Sourcing Agent
+Purpose:
+- choose the safest free visual source for each slide before rendering
+- source photo-style backgrounds without violating copyright or privacy rules
+- preserve attribution and license notes in the delivered post package
+
+Allowed sources:
+- Cloudflare Workers AI for original generated backgrounds under the free allocation and hard cap
+- Pexels API when a free key is configured
+- Wikimedia Commons when explicitly enabled and license metadata is reusable
+- local Sharp/SVG synthetic rendering as the guaranteed fallback
+
+Blocked sources:
+- Google Images scraping
+- Google Photos as a public image source
+- copied Instagram screenshots or creator templates
 
 6. Vision QA / Design Critic Agent
 Purpose:
