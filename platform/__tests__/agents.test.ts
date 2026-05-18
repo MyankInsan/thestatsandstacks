@@ -325,6 +325,23 @@ test('ComplianceQAAgent blocks unsafe hot-stock performance claims', async () =>
   assert.match(report.failures.join(' '), /ticker-status/);
 });
 
+test('HistoryGuardAgent blocks a topic that matches a recent entry', async () => {
+  const { HistoryGuardAgent } = await import('../src/lib/agents/historyGuardAgent');
+  const agent = new HistoryGuardAgent();
+  const history = [{ date: '2026-05-15', topic: 'TFSA vs RRSP comparison guide', hook: '', format: 'CAROUSEL', slideCount: 6, keywords: ['tfsa', 'rrsp', 'comparison'] }];
+  const result = await agent.execute({ topic: 'TFSA vs RRSP: which is better?', contentHistory: history });
+  assert.equal(result.block, true);
+  assert.ok(typeof result.suggestedPivot === 'string');
+});
+
+test('HistoryGuardAgent passes a clearly different topic', async () => {
+  const { HistoryGuardAgent } = await import('../src/lib/agents/historyGuardAgent');
+  const agent = new HistoryGuardAgent();
+  const history = [{ date: '2026-05-15', topic: 'TFSA vs RRSP comparison guide', hook: '', format: 'CAROUSEL', slideCount: 6, keywords: ['tfsa', 'rrsp'] }];
+  const result = await agent.execute({ topic: 'How to build an emergency fund', contentHistory: history });
+  assert.equal(result.block, false);
+});
+
 test('TickersInNewsAgent returns tickers array with required fields', async () => {
   const { TickersInNewsAgent } = await import('../src/lib/agents/tickersInNewsAgent');
   const agent = new TickersInNewsAgent();
