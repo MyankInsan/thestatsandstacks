@@ -98,6 +98,8 @@ model Post {
 
   Assets          PostAsset[]
   Analytics       Analytics?
+  agentRuns       AgentRun[]
+  regenAttempts   RegenAttempt[]
 }
 
 model PostAsset {
@@ -125,4 +127,27 @@ model Analytics {
   engagementRate  Float    @default(0)
   
   collectedAt     DateTime @default(now())
+}
+
+model AgentRun {
+  id        String    @id @default(cuid())
+  postId    String
+  post      Post      @relation(fields: [postId], references: [id])
+  agent     String
+  status    String
+  startedAt DateTime?
+  endedAt   DateTime?
+  output    Json?
+}
+
+model RegenAttempt {
+  id          String  @id @default(cuid())
+  postId      String
+  post        Post    @relation(fields: [postId], references: [id])
+  slideNumber Int
+  attempt     Int
+  scoreBefore Float
+  scoreAfter  Float
+  critique    Json
+  resolved    Boolean
 }
