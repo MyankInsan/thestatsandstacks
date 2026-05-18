@@ -355,6 +355,55 @@ test('TickersInNewsAgent returns tickers array with required fields', async () =
   }
 });
 
+const baseCopy = {
+  caption: 'SanDisk is up year-to-date. Here is the research filter. Educational only, not financial advice.',
+  hashtags: '#CanadianFinance #InvestingCanada',
+  cta: 'Save this.',
+  firstComment: 'What would you check first?',
+  altText: 'Carousel about SNDK.',
+};
+
+test('FinalGateAgent passes clean copy', async () => {
+  const { FinalGateAgent } = await import('../src/lib/agents/finalGateAgent');
+  const agent = new FinalGateAgent();
+  const result = await agent.execute({ copy: baseCopy });
+  assert.equal(result.passed, true);
+  assert.equal(result.failedChecks.length, 0);
+});
+
+test('FinalGateAgent fails on banned hype word', async () => {
+  const { FinalGateAgent } = await import('../src/lib/agents/finalGateAgent');
+  const agent = new FinalGateAgent();
+  const result = await agent.execute({ copy: { ...baseCopy, caption: 'This stock explodes to new highs. Educational only.' } });
+  assert.equal(result.passed, false);
+  assert.ok(result.failedChecks.some((c) => c.includes('banned')));
+});
+
+test('FinalGateAgent fails when disclosure is missing', async () => {
+  const { FinalGateAgent } = await import('../src/lib/agents/finalGateAgent');
+  const agent = new FinalGateAgent();
+  const result = await agent.execute({ copy: { ...baseCopy, caption: 'Great returns await. Save this.' } });
+  assert.equal(result.passed, false);
+  assert.ok(result.failedChecks.some((c) => c.includes('disclosure')));
+});
+
+test('FinalGateAgent fails when caption exceeds 1100 chars', async () => {
+  const { FinalGateAgent } = await import('../src/lib/agents/finalGateAgent');
+  const agent = new FinalGateAgent();
+  const longCaption = 'A'.repeat(1101) + ' Educational only, not financial advice.';
+  const result = await agent.execute({ copy: { ...baseCopy, caption: longCaption } });
+  assert.equal(result.passed, false);
+  assert.ok(result.failedChecks.some((c) => c.includes('caption')));
+});
+
+test('FinalGateAgent fails when hashtag count exceeds 5', async () => {
+  const { FinalGateAgent } = await import('../src/lib/agents/finalGateAgent');
+  const agent = new FinalGateAgent();
+  const result = await agent.execute({ copy: { ...baseCopy, hashtags: '#a #b #c #d #e #f' } });
+  assert.equal(result.passed, false);
+  assert.ok(result.failedChecks.some((c) => c.includes('hashtag')));
+});
+
 function restoreEnv(key: string, value: string | undefined): void {
   if (value === undefined) {
     delete process.env[key];
