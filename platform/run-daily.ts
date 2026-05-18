@@ -13,6 +13,10 @@ import { VisualAssetSourcingAgent, type VisualAssetSourcingPlan } from './src/li
 import { ImageGenerationAgent, type GeneratedImage } from './src/lib/agents/imageGenerationAgent';
 import { VisionQAAgent, type QAReport } from './src/lib/agents/visionQAAgent';
 import { CopywritingAgent } from './src/lib/agents/copywritingAgent';
+import { TickersInNewsAgent } from './src/lib/agents/tickersInNewsAgent';
+import { HistoryGuardAgent } from './src/lib/agents/historyGuardAgent';
+import { FinalGateAgent } from './src/lib/agents/finalGateAgent';
+import { RegenLoopAgent } from './src/lib/agents/regenLoopAgent';
 import { emailPostToPhone } from './src/lib/services/emailDelivery';
 import { sendPostToTelegram } from './src/lib/services/telegramDelivery';
 import { appendContentHistory, loadContentHistory } from './src/lib/services/contentHistory';
@@ -52,6 +56,13 @@ async function main() {
   }
   console.log('');
 
+  // ── AGENT 1A: TICKERS IN NEWS (parallel with Trend Research) ──
+  console.log('━━━ AGENT 1A: TICKERS IN NEWS ━━━');
+  const tickersInNewsPromise = new TickersInNewsAgent().execute({}).catch((err) => {
+    console.warn(`   [TickersInNews] Non-fatal failure: ${err instanceof Error ? err.message : err}`);
+    return { tickers: [] };
+  });
+
   // ── AGENT 1: TREND RESEARCH ──
   console.log('━━━ AGENT 1: TREND RESEARCH ━━━');
   const researchAgent = new TrendResearchAgent();
@@ -59,6 +70,23 @@ async function main() {
   const researchBriefPath = path.join(outputDir, 'RESEARCH_BRIEF.md');
   fs.writeFileSync(researchBriefPath, buildResearchBrief(trends, contentHistory), 'utf-8');
   console.log(`   Research brief saved: ${researchBriefPath}`);
+  console.log('');
+
+  const tickersInNews = await tickersInNewsPromise;
+  console.log(`   Tickers in news: ${tickersInNews.tickers.map((t) => t.symbol).join(', ') || 'none'}`);
+
+  // ── AGENT 1B: HISTORY GUARD ──
+  console.log('━━━ AGENT 1B: HISTORY GUARD ━━━');
+  const topTopic = trends.topics[0]?.title ?? '';
+  const historyGuard = await new HistoryGuardAgent().execute({ topic: topTopic, contentHistory });
+  if (historyGuard.block) {
+    console.warn(`   ⛔ History Guard blocked "${topTopic}". Pivot: ${historyGuard.suggestedPivot}`);
+    if (trends.topics.length > 1) {
+      const [blocked, ...rest] = trends.topics;
+      trends.topics = [...rest, { ...blocked, score: (blocked.score ?? 0) * 0.3 }];
+      console.log(`   Using next topic: "${trends.topics[0]?.title}"`);
+    }
+  }
   console.log('');
 
   // ── AGENT 2: MEDIA FORMAT ──
@@ -130,27 +158,43 @@ async function main() {
   });
   console.log('');
 
-  // ── AGENT 9: VISION QA (check + regenerate) ──
-  console.log('━━━ AGENT 9: VISION QA ━━━');
+  // ── AGENT 9: VISION QA + REGEN LOOP ──
+  console.log('━━━ AGENT 9: VISION QA + REGEN LOOP ━━━');
   const qaAgent = new VisionQAAgent();
-  let qaReport: QAReport = await qaAgent.execute({ images: generatedImages.images });
+  const regenAgent = new RegenLoopAgent();
+  const finalImages: GeneratedImage[] = [];
 
-  let regen = 0;
-  while (!qaReport.allPassed && regen < 2) {
-    regen++;
-    console.log(`   🔄 Regenerating ${qaReport.failedSlides.length} failed slides (attempt ${regen})...`);
-    const failedPrompts = plannedPrompts.filter(p => qaReport.failedSlides.includes(p.slideNumber));
-    const regenResult = await imageGenAgent.execute({ prompts: failedPrompts, outputDir, visualPlan: visualAssetPlan });
-    for (const img of regenResult.images) {
-      const idx = generatedImages.images.findIndex(i => i.slideNumber === img.slideNumber);
-      if (idx >= 0) generatedImages.images[idx] = img;
-    }
-    qaReport = await qaAgent.execute({ images: generatedImages.images });
+  for (const img of generatedImages.images) {
+    const prompt = plannedPrompts.find((p) => p.slideNumber === img.slideNumber);
+    if (!prompt) { finalImages.push(img); continue; }
+
+    const result = await regenAgent.execute({
+      slideNumber: img.slideNumber,
+      prompt,
+      generate: async (p, _correctionNotes) => {
+        const res = await imageGenAgent.execute({ prompts: [p], outputDir, visualPlan: visualAssetPlan });
+        return res.images[0] ?? img;
+      },
+      critique: async (image) => {
+        const report = await qaAgent.execute({ images: [image] });
+        const sr = report.slideReports[0];
+        return {
+          score: sr?.confidenceScore ?? 0,
+          pass: (sr?.confidenceScore ?? 0) >= 0.80,
+          issues: (sr?.failures ?? []).map((b) => ({ severity: 'high' as const, body: b })),
+        };
+      },
+    });
+    finalImages.push(result.image);
   }
+
+  const qaReport: QAReport = await qaAgent.execute({ images: finalImages });
   console.log(`   📊 Overall QA Score: ${(qaReport.overallScore * 100).toFixed(1)}%`);
   if (!qaReport.allPassed) {
-    throw new Error(`Image QA failed after regeneration: ${qaReport.slideReports.flatMap((report) => report.failures).join(' ')}`);
+    throw new Error(`Image QA failed after regen loop: ${qaReport.slideReports.flatMap((r) => r.failures).join(' ')}`);
   }
+  generatedImages.images.length = 0;
+  generatedImages.images.push(...finalImages);
   console.log('');
 
   if (!generatedImages.images.length) {
@@ -185,6 +229,14 @@ async function main() {
     'utf-8'
   );
   console.log(`   Post package saved: ${postReadyPath}`);
+
+  // ── AGENT 11B: FINAL GATE ──
+  console.log('━━━ AGENT 11B: FINAL GATE ━━━');
+  const finalGate = await new FinalGateAgent().execute({ copy });
+  if (!finalGate.passed) {
+    throw new Error(`Final Gate blocked delivery: ${finalGate.failedChecks.join('; ')}`);
+  }
+  console.log('');
 
   // ── EMAIL TO PHONE ──
   if (process.env.GMAIL_ADDRESS && process.env.GMAIL_APP_PASSWORD && process.env.DELIVERY_EMAIL) {
