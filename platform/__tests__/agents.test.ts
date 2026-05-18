@@ -325,6 +325,19 @@ test('ComplianceQAAgent blocks unsafe hot-stock performance claims', async () =>
   assert.match(report.failures.join(' '), /ticker-status/);
 });
 
+test('TickersInNewsAgent returns tickers array with required fields', async () => {
+  const { TickersInNewsAgent } = await import('../src/lib/agents/tickersInNewsAgent');
+  const agent = new TickersInNewsAgent();
+  const result = await agent.execute({});
+  assert.ok(Array.isArray(result.tickers));
+  for (const t of result.tickers) {
+    assert.ok(typeof t.symbol === 'string');
+    assert.ok(typeof t.headline === 'string');
+    assert.ok(typeof t.source === 'string');
+    assert.ok([-1, 0, 1].includes(t.sentiment), `sentiment must be -1, 0, or 1, got ${t.sentiment}`);
+  }
+});
+
 function restoreEnv(key: string, value: string | undefined): void {
   if (value === undefined) {
     delete process.env[key];
