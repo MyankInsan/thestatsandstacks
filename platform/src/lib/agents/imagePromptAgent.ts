@@ -20,7 +20,6 @@ export class ImagePromptAgent extends BaseAgent {
 
   async execute(input: { strategy: StrategyDecision }): Promise<ImagePromptSet> {
     console.log(`[${this.name}] 🎨 Generating image prompts...`);
-
     return {
       prompts: input.strategy.slideBreakdown.map((slide, index) => {
         const slideNumber = index + 1;
@@ -39,25 +38,35 @@ export class ImagePromptAgent extends BaseAgent {
 
 // ---------------------------------------------------------------------------
 // Slide description parser
-// Raw AI descriptions look like:
-//   "Slide 3: What To Track: 5 Key Signals. | Revenue vs. Net Income. | (Visual: chart)"
-// We strip the prefix, split on " | ", drop visual-direction notes, and return
-// a clean title + array of content bullets.
+// Raw AI descriptions: "Slide 3: What To Track: 5 Key Signals. | Revenue vs. Net Income. | (Visual: chart)"
+// → strips prefix + visual notes → clean title + bullet array
 // ---------------------------------------------------------------------------
-function parseSlide(raw: string): { title: string; bullets: string[] } {
-  const stripped = raw.replace(/^slide\s*\d+[:.]\s*/i, '');
+function parseSlide(raw: string): { title: string; bullets: string[]; signalNum?: string } {
+  const stripped = raw.replace(/^slide\s*\d+[:.]\s*/i, '').trim();
   const parts = stripped.split(/\s*\|\s*/);
   const content = parts
     .map(p => p.replace(/\.$/, '').trim())
     .filter(p => p.length > 0 && !/^\(visual:/i.test(p));
   const title = content[0] ?? stripped;
   const bullets = content.slice(1);
-  return { title, bullets };
+
+  // Detect "Key Signal N:" prefix in title
+  const sigMatch = title.match(/key\s+signal\s+(\d+(?:\s*[&,]\s*\d+)?)[:.]/i);
+  const signalNum = sigMatch?.[1];
+
+  return { title, bullets, signalNum };
+}
+
+// Clean title: strip "Key Signal N:" prefix so it becomes just the topic
+function cleanTitle(raw: string): string {
+  return raw
+    .replace(/^key\s+signal\s+\d+(?:\s*[&,]\s*\d+)?[:.]\s*/i, '')
+    .replace(/^slide\s*\d+[:.]\s*/i, '')
+    .trim();
 }
 
 // ---------------------------------------------------------------------------
-// Template routing — checks parsed title only, not the full raw description,
-// so a bullet mentioning "vs." doesn't hijack the whole slide template.
+// Template routing — checks parsed title only, never raw description text
 // ---------------------------------------------------------------------------
 function resolveTemplate(strategy: StrategyDecision, slide: string, slideNumber: number): string {
   if (slideNumber === 1) return 'CoverSlide';
@@ -66,35 +75,32 @@ function resolveTemplate(strategy: StrategyDecision, slide: string, slideNumber:
   const t = title.toLowerCase();
   const allText = (title + ' ' + bullets.join(' ')).toLowerCase();
 
-  // Market/ticker poster: only when the title is about a specific ticker or market event
-  const tickerInTopic = /\b[A-Z]{2,5}\b/.test(strategy.topic);
-  if (tickerInTopic && slideNumber === 2) return 'MarketPosterSlide';
+  // Outro / CTA slides
+  if (/\bfollow\b|save this|cta\b|outro\b|takeaway\b|subscribe\b/.test(t)) return 'OutroSlide';
 
-  // Outro: follow / save / cta in title
-  if (/follow|save this|cta|outro|takeaway|subscribe/.test(t)) return 'OutroSlide';
+  // Myth vs fact (title must contain myth/fact language)
+  if (/\bmyth\b|misconception|the truth|the fact\b/.test(t)) return 'MythVsFactSlide';
 
-  // Myth vs fact: must be in title
-  if (/myth|misconception|truth|fact/.test(t)) return 'MythVsFactSlide';
+  // True comparison: " vs " in the title (not just buried in bullets)
+  if (/ vs\.? /.test(t) || /\bversus\b/.test(t)) return 'ComparisonSlide';
 
-  // Comparison: " vs " must appear in the title, not just in a bullet
-  if (/ vs\.? /.test(t) || /compare.*vs|versus/.test(t)) return 'ComparisonSlide';
+  // Risk slides
+  if (/\brisk\b|red flag|warning|caution|watch out/.test(t)) return 'RiskMapSlide';
 
-  // Risk: risk/warning in title
-  if (/\brisk\b|warning|caution|watch out/.test(t)) return 'RiskMapSlide';
+  // Big number: only when an actual numeric stat is in the title
+  if (/\$\d|\d+%|\d+x\b|\d+\s*b(?:illion)?|\d+\s*t(?:rillion)?/.test(t)) return 'BigNumberSlide';
 
-  // Big number: only when an actual numeric stat appears in the title
-  if (/\$\d|\d+%|\d+x\b|\d+\s*billion|\d+\s*trillion/.test(t)) return 'BigNumberSlide';
+  // Market/ticker poster: only slide 2 for ticker-based topics
+  if (slideNumber === 2 && /\b[A-Z]{2,5}\b/.test(strategy.topic)) return 'MarketPosterSlide';
 
-  // Framework / checklist: structured step-by-step content
-  // (This is the best default for educational slides with bullet content)
-  if (/framework|checklist|filter|step|how to|key signal|what to|guide|signal \d/.test(allText)) return 'FrameworkSlide';
-
+  // Everything else — framework/checklist is the richest general template
+  void allText;
   void strategy;
   return 'FrameworkSlide';
 }
 
 // ---------------------------------------------------------------------------
-// Template prop builder — always uses parsed title/bullets, never the raw string
+// Template prop builder — always uses parsed content, never raw strings
 // ---------------------------------------------------------------------------
 function buildTemplateProps(
   strategy: StrategyDecision,
@@ -102,23 +108,29 @@ function buildTemplateProps(
   slideNumber: number,
   template: string,
 ): Record<string, unknown> {
-  const { title, bullets } = parseSlide(slide);
+  const { title, bullets, signalNum } = parseSlide(slide);
+  const topic = cleanTitle(title);
   const base = {
     frameNo: slideNumber,
     totalFrames: strategy.slideCount,
     tone: toneForSlide(slideNumber, strategy.slideCount),
   };
 
+  // ── CoverSlide ────────────────────────────────────────────────────────────
   if (template === 'CoverSlide') {
+    const hook = strategy.hook ?? topic;
+    // Shorten kicker to first sentence or first bullet
+    const kicker = (bullets[0] ?? '').replace(/\. .+$/, '') || 'Swipe for the breakdown.';
     return {
       ...base,
       tone: 'emerald',
       eyebrow: ((strategy as unknown as Record<string, unknown>).contentPillar?.toString().toUpperCase()) ?? 'MARKET EDUCATION',
-      headline: strategy.hook.toUpperCase(),
-      kicker: bullets[0] ?? title,
+      headline: hook.toUpperCase(),
+      kicker,
     };
   }
 
+  // ── MarketPosterSlide ─────────────────────────────────────────────────────
   if (template === 'MarketPosterSlide') {
     const tickerMatch = strategy.topic.match(/\b([A-Z]{2,5})\b/);
     return {
@@ -127,143 +139,223 @@ function buildTemplateProps(
       ticker: tickerMatch?.[1] ?? '—',
       name: strategy.topic,
       delta: '',
-      headline: title,
+      headline: topic,
     };
   }
 
+  // ── FrameworkSlide ────────────────────────────────────────────────────────
   if (template === 'FrameworkSlide') {
-    const steps = bulletsToSteps(bullets, title, strategy.topic);
+    const eyebrow = signalNum
+      ? `KEY SIGNAL ${signalNum.replace(/\s/g, '')}`
+      : eyebrowForTitle(title);
+    const steps = buildSteps(bullets, topic, strategy.topic, signalNum);
     return {
       ...base,
-      eyebrow: eyebrowForTitle(title),
-      headline: title,
+      eyebrow,
+      headline: topic,
       steps,
     };
   }
 
+  // ── ComparisonSlide ───────────────────────────────────────────────────────
   if (template === 'ComparisonSlide') {
-    const vsMatch = title.match(/^(.+?)\s+vs\.?\s+(.+)$/i);
-    const leftLabel = vsMatch?.[1]?.trim().toUpperCase() ?? 'OPTION A';
-    const rightLabel = vsMatch?.[2]?.trim().toUpperCase() ?? 'OPTION B';
-    // Split bullets evenly between columns, or use topic-specific fallback
+    const vsMatch = topic.match(/^(.+?)\s+vs\.?\s+(.+)$/i);
+    const leftLabel = (vsMatch?.[1]?.trim() ?? 'OPTION A').toUpperCase();
+    const rightLabel = (vsMatch?.[2]?.trim() ?? 'OPTION B').toUpperCase();
     const half = Math.ceil(bullets.length / 2);
-    const leftBullets = bullets.slice(0, half).length > 0
-      ? bullets.slice(0, half)
-      : topicBullets(leftLabel, strategy.topic);
-    const rightBullets = bullets.slice(half).length > 0
-      ? bullets.slice(half)
-      : topicBullets(rightLabel, strategy.topic);
     return {
       ...base,
       tone: 'amber',
       eyebrow: 'COMPARISON',
-      headline: title,
-      left: { label: leftLabel, bullets: leftBullets },
-      right: { label: rightLabel, bullets: rightBullets },
+      headline: topic,
+      left: {
+        label: leftLabel,
+        bullets: bullets.slice(0, half).length
+          ? bullets.slice(0, half)
+          : comparisonBullets(leftLabel, strategy.topic, 'left'),
+      },
+      right: {
+        label: rightLabel,
+        bullets: bullets.slice(half).length
+          ? bullets.slice(half)
+          : comparisonBullets(rightLabel, strategy.topic, 'right'),
+      },
     };
   }
 
+  // ── MythVsFactSlide ───────────────────────────────────────────────────────
   if (template === 'MythVsFactSlide') {
     return {
       ...base,
-      headline: title,
-      myth: bullets[0] ?? 'Common misconception about ' + strategy.topic,
-      fact: bullets[1] ?? 'The evidence-based reality for Canadian investors',
+      headline: topic,
+      myth: bullets[0] ?? `Most people think ${topic.toLowerCase()} works differently`,
+      fact: bullets[1] ?? `Here's what the data actually shows about ${strategy.topic}`,
     };
   }
 
+  // ── BigNumberSlide ────────────────────────────────────────────────────────
   if (template === 'BigNumberSlide') {
-    const statMatch = title.match(/(\$[\d.]+[BMT]?|\d+[\d.]*%|\d+x)/i);
+    const statMatch = topic.match(/(\$[\d.]+[BMT]?|\d+[\d.]*%|\d+x)/i);
     return {
       ...base,
       eyebrow: 'THE NUMBER',
       value: statMatch?.[1] ?? '',
-      context: title,
+      context: topic.replace(statMatch?.[1] ?? '', '').trim() || strategy.topic,
       footnote: bullets[0],
     };
   }
 
+  // ── RiskMapSlide ──────────────────────────────────────────────────────────
   if (template === 'RiskMapSlide') {
-    const risks = bullets.slice(0, 3).map((b, i) => ({
-      tag: `RISK ${i + 1}`,
-      title: b.split(':')[0]?.trim() ?? b,
-      body: b.split(':').slice(1).join(':').trim() || b,
-    }));
-    const fallbackRisks = [
-      { tag: 'RISK 1', title: 'Market volatility', body: 'Prices can move sharply in either direction.' },
-      { tag: 'RISK 2', title: 'Liquidity risk', body: 'Some assets are harder to exit quickly.' },
-      { tag: 'RISK 3', title: 'Emotional decisions', body: 'Panic-selling locks in losses unnecessarily.' },
-    ];
+    const risks = bullets.slice(0, 3).map((b, i) => {
+      const colonIdx = b.indexOf(':');
+      return {
+        tag: `RISK ${i + 1}`,
+        title: colonIdx > 0 ? b.slice(0, colonIdx).trim() : b.split(' ').slice(0, 4).join(' '),
+        body: colonIdx > 0 ? b.slice(colonIdx + 1).trim() : b,
+      };
+    });
     return {
       ...base,
-      headline: title,
-      risks: risks.length >= 2 ? risks : fallbackRisks,
+      headline: topic,
+      risks: risks.length >= 2 ? risks : defaultRisks(strategy.topic),
     };
   }
 
+  // ── OutroSlide ────────────────────────────────────────────────────────────
   if (template === 'OutroSlide') {
     return {
       ...base,
       tone: 'cyan',
-      headline: title,
+      headline: topic,
       cta: bullets[0] ?? 'Follow @TheStatsAndStacks for daily finance breakdowns',
     };
   }
 
-  // Fallback — should never be reached, but safe to have
-  return { ...base, headline: title };
+  return { ...base, headline: topic };
 }
 
 // ---------------------------------------------------------------------------
-// Helpers
+// Step builder — generates 3 premium-feeling steps from bullets
+// Labels are category tags ("KEY FACT", "WHY IT MATTERS", "YOUR MOVE")
+// rather than redundant numbers
 // ---------------------------------------------------------------------------
+const STEP_LABELS: [string, string, string] = ['KEY FACT', 'WHY IT MATTERS', 'YOUR MOVE'];
+
+const SIGNAL_LABELS: Record<string, [string, string, string]> = {
+  default:  ['WHAT IT IS',     'WHY IT MATTERS',  'WHAT TO WATCH'],
+  revenue:  ['THE METRIC',     'BEAT OR MISS',     'WHAT TO WATCH'],
+  margin:   ['WHAT IT MEASURES','EFFICIENCY SIGNAL','WATCH FOR COMPRESSION'],
+  guidance: ['WHAT IT COVERS', 'FORWARD SIGNAL',   'RED FLAGS'],
+  inventory:['DEMAND SIGNAL',  'SUPPLY HEALTH',    'WATCH FOR EXCESS'],
+  eps:      ['THE BOTTOM LINE','PROFITABILITY',    'COMPARE TO CONSENSUS'],
+};
+
+function buildSteps(
+  bullets: string[],
+  title: string,
+  topic: string,
+  signalNum?: string,
+): Array<{ label: string; body: string }> {
+  // Pick label set based on signal type or title keywords
+  const t = title.toLowerCase();
+  let labelSet: [string, string, string] = STEP_LABELS;
+  if (signalNum) {
+    if (/revenue|income|sales/.test(t))  labelSet = SIGNAL_LABELS.revenue;
+    else if (/margin|gross/.test(t))     labelSet = SIGNAL_LABELS.margin;
+    else if (/guidance|outlook/.test(t)) labelSet = SIGNAL_LABELS.guidance;
+    else if (/inventory|supply/.test(t)) labelSet = SIGNAL_LABELS.inventory;
+    else if (/eps|earnings per/.test(t)) labelSet = SIGNAL_LABELS.eps;
+    else                                  labelSet = SIGNAL_LABELS.default;
+  }
+
+  const cleanBullet = (b: string) => b.replace(/\.$/, '').trim();
+
+  // Build 3 steps — use real bullets where available, generate relevant fallbacks otherwise
+  const step1: { label: string; body: string } = {
+    label: labelSet[0],
+    body: bullets[0] ? cleanBullet(bullets[0]) : genericBody(0, title, topic),
+  };
+  const step2: { label: string; body: string } = {
+    label: labelSet[1],
+    body: bullets[1] ? cleanBullet(bullets[1]) : genericBody(1, title, topic),
+  };
+  const step3: { label: string; body: string } = {
+    label: labelSet[2],
+    body: bullets[2] ? cleanBullet(bullets[2]) : genericBody(2, title, topic),
+  };
+
+  return [step1, step2, step3];
+}
+
+function genericBody(idx: number, title: string, topic: string): string {
+  const t = title.toLowerCase();
+  const tp = topic.split(' ').slice(0, 3).join(' ');
+  if (idx === 0) return `One of the most important metrics for ${tp} investors to track`;
+  if (idx === 1) return `Signals whether ${t} is trending in the right direction`;
+  return `Compare quarter-over-quarter and against analyst consensus before acting`;
+}
+
+// ---------------------------------------------------------------------------
+// Comparison column bullet fallbacks — topic-aware
+// ---------------------------------------------------------------------------
+function comparisonBullets(label: string, topic: string, side: 'left' | 'right'): string[] {
+  const tp = topic.toLowerCase();
+  if (/tfsa/.test(label.toLowerCase())) {
+    return side === 'left'
+      ? ['Tax-free growth on all gains', 'Flexible withdrawals anytime', 'No impact on income-tested benefits']
+      : ['Tax deduction in contribution year', 'Grows fully tax-sheltered', 'Taxed as income on withdrawal'];
+  }
+  if (/rrsp/.test(label.toLowerCase())) {
+    return side === 'left'
+      ? ['Tax deduction reduces taxable income', 'Grows fully tax-sheltered', 'Best for higher income earners']
+      : ['No deduction but tax-free withdrawals', 'Contribution room carries forward', 'Best for first-home or retirement goal'];
+  }
+  void tp;
+  return [
+    `Stronger when ${label.toLowerCase()} conditions apply`,
+    'Assess your situation before choosing',
+    'Consult a fee-only advisor for personal advice',
+  ];
+}
+
+// ---------------------------------------------------------------------------
+// Risk fallbacks
+// ---------------------------------------------------------------------------
+function defaultRisks(topic: string): Array<{ tag: string; title: string; body: string }> {
+  return [
+    { tag: 'RISK 1', title: 'Market volatility', body: `${topic.split(' ')[0]} can move sharply on earnings or macro data` },
+    { tag: 'RISK 2', title: 'Overconcentration', body: 'Putting too much into one position amplifies downside' },
+    { tag: 'RISK 3', title: 'Emotional decisions', body: 'Panic-selling during pullbacks locks in losses permanently' },
+  ];
+}
+
+// ---------------------------------------------------------------------------
+// Visual helpers
+// ---------------------------------------------------------------------------
+const TONES = ['emerald', 'emerald', 'amber', 'rose', 'emerald', 'amber', 'cyan', 'cyan'] as const;
 
 function toneForSlide(slideNumber: number, total: number): string {
   if (slideNumber === total) return 'cyan';
-  const cycle = ['emerald', 'amber', 'emerald', 'rose', 'emerald', 'amber', 'emerald', 'cyan'];
-  return cycle[(slideNumber - 1) % cycle.length];
+  return TONES[(slideNumber - 1) % TONES.length];
 }
 
 function eyebrowForTitle(title: string): string {
   const t = title.toLowerCase();
   if (/checklist|step|how to/.test(t)) return 'CHECKLIST';
-  if (/signal|key|indicator/.test(t)) return 'KEY SIGNALS';
-  if (/guide|what to|track/.test(t)) return 'YOUR GUIDE';
-  if (/why|what|how/.test(t)) return 'EXPLAINER';
-  return 'DECISION FILTER';
-}
-
-function bulletsToSteps(bullets: string[], title: string, topic: string): Array<{ label: string; body: string }> {
-  if (bullets.length > 0) {
-    return bullets.slice(0, 3).map((b, i) => ({
-      label: `0${i + 1}`,
-      body: b,
-    }));
-  }
-  // Generic fallback steps derived from topic when no bullets available
-  return [
-    { label: '01', body: `Understand the fundamentals of ${topic}` },
-    { label: '02', body: title },
-    { label: '03', body: 'Apply this framework before your next move' },
-  ];
-}
-
-function topicBullets(side: string, topic: string): string[] {
-  void side;
-  return [
-    `Key factor in ${topic}`,
-    'Assess before deciding',
-    'Understand the trade-offs',
-  ];
+  if (/signal|indicator/.test(t))      return 'KEY SIGNALS';
+  if (/what to|guide|track/.test(t))   return 'YOUR GUIDE';
+  if (/why |what |how /.test(t))       return 'EXPLAINER';
+  if (/framework|filter/.test(t))      return 'FRAMEWORK';
+  return 'BREAKDOWN';
 }
 
 // ---------------------------------------------------------------------------
-// DALL-E / image prompt (unchanged from original)
+// DALL-E / image prompt
 // ---------------------------------------------------------------------------
 function buildPremiumImagePrompt(strategy: StrategyDecision, slide: string, slideNumber: number): string {
   const isCover = slideNumber === 1;
   const visualMode = getVisualMode(strategy.format, strategy.topic, slideNumber);
-
   return [
     'Create a premium editorial finance background for an Instagram portrait carousel slide.',
     'IMPORTANT: no words, no letters, no numbers, no logos, no charts with readable labels. Leave all typography to a later overlay.',
@@ -273,7 +365,7 @@ function buildPremiumImagePrompt(strategy: StrategyDecision, slide: string, slid
     `Visual direction: ${visualMode}.`,
     'Reference mood: high-performing finance creator content that is simple, original, and saveable, but do not copy any creator layout, brand, screenshot, or post.',
     'Palette: deep charcoal, graphite, emerald accents, muted gold highlights, confident off-white contrast, occasional cool cyan or violet only as secondary contrast.',
-    'Style: premium magazine infographic background, realistic paper/glass texture, subtle market-grid geometry, crisp lighting, high contrast, no clutter, no meme style, no generic corporate stock-photo feel.',
+    'Style: premium magazine infographic background, realistic paper/glass texture, subtle market-grid geometry, crisp lighting, high contrast, no clutter.',
     'Mobile readability: keep the center-left and lower third visually calm so exact text can be overlaid cleanly.',
     'Compliance: no fake price candles, no fake performance claims, no specific ticker recommendation visuals, no guaranteed-return symbolism.',
   ].join(' ');
@@ -281,27 +373,22 @@ function buildPremiumImagePrompt(strategy: StrategyDecision, slide: string, slid
 
 function getVisualMode(format: StrategyDecision['format'], topic: string, slideNumber: number): string {
   const lower = topic.toLowerCase();
-  if (/sandisk|sndk|ai storage|nand|memory|semiconductor|data center|datacenter/.test(lower)) {
+  if (/sandisk|sndk|nand|memory|semiconductor|data center/.test(lower)) {
     return slideNumber % 2 === 0
-      ? 'AI infrastructure research desk with abstract storage-stack modules, NAND wafer geometry, catalyst cards, and risk-meter depth'
-      : 'premium semiconductor market terminal with abstract memory blocks, watchlist tiles, glowing data-center grid, and disciplined risk-map energy';
+      ? 'AI infrastructure research desk with abstract storage-stack modules, NAND wafer geometry, catalyst cards'
+      : 'premium semiconductor market terminal with abstract memory blocks, watchlist tiles, glowing data-center grid';
   }
   if (format === 'WATCHLIST_EDUCATION') {
     return slideNumber % 2 === 0
       ? 'analyst desk with abstract watchlist cards, risk gauge shapes, and layered market-screen depth'
       : 'premium research terminal mood with abstract company tiles, checklist geometry, and calm risk-map energy';
   }
-  if (lower.includes('credit')) {
-    return 'credit-report lab aesthetic with clean verification marks, document texture, and myth/fact contrast';
+  if (/nvda|nvidia|earnings|report/.test(lower)) {
+    return 'premium financial research terminal, abstract candlestick chart shapes, dark data-panel depth, confident editorial mood';
   }
-  if (lower.includes('payday') || lower.includes('money leak')) {
-    return 'cash-flow operating system aesthetic with envelope layers, routing paths, and subtle automation cues';
-  }
-  if (lower.includes('tfsa') || lower.includes('rrsp') || lower.includes('fhsa')) {
-    return 'Canadian account map aesthetic with three abstract account vaults and decision-tree structure';
-  }
-  if (lower.includes('tax')) {
-    return 'tax checklist desk aesthetic with organized document layers and understated calendar cues';
-  }
+  if (lower.includes('credit')) return 'credit-report lab aesthetic with clean verification marks, document texture, myth/fact contrast';
+  if (lower.includes('payday') || lower.includes('money')) return 'cash-flow operating system aesthetic with envelope layers, routing paths, automation cues';
+  if (/tfsa|rrsp|fhsa/.test(lower)) return 'Canadian account map aesthetic with three abstract account vaults and decision-tree structure';
+  if (lower.includes('tax')) return 'tax checklist desk aesthetic with organized document layers and understated calendar cues';
   return 'clean financial decision framework with layered data panels, soft depth, and modern editorial polish';
 }

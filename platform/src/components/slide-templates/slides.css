@@ -22,11 +22,13 @@ body { font-family: var(--font-sans, "Inter", system-ui, sans-serif); }
 .slide-frame {
   width: 1080px; height: 1350px;
   position: relative;
-  background: linear-gradient(135deg, #06101D 0%, #0d1b2a 52%, #111111 100%);
+  background: linear-gradient(160deg, #050e1c 0%, #0a1628 38%, #0d1a30 65%, #060d18 100%);
   color: #F8FAFC;
   overflow: hidden;
   font-family: var(--font-sans, "Inter", system-ui, sans-serif);
   font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 /* Tone-bound accents — tone-emerald / tone-cyan / tone-amber / tone-rose
@@ -53,10 +55,16 @@ body { font-family: var(--font-sans, "Inter", system-ui, sans-serif); }
 .brand-bar__wm   { font-weight: 700; font-size: 24px; letter-spacing: -0.01em; color: #F8FAFC; line-height: 1; }
 .brand-bar__frame { font-family: var(--font-mono, "JetBrains Mono", monospace); font-weight: 500; font-size: 14px; padding: 6px 14px; border-radius: 999px; background: rgba(15,23,42,0.86); color: #94A3B8; letter-spacing: 0.10em; white-space: nowrap; }
 
-/* Single thin emerald rule under the brand bar */
+/* Single rule under the brand bar — tone-aware */
 .brand-bar__rule {
   position: absolute; left: 72px; right: 72px; top: 138px; height: 1px;
-  background: color-mix(in oklab, var(--tone-acc, #34D399) 30%, transparent);
+  background: linear-gradient(
+    90deg,
+    var(--tone-acc, #34D399) 0%,
+    rgba(255,255,255,0.06) 60%,
+    transparent 100%
+  );
+  opacity: 0.55;
 }
 
 /* ---------- Footer metadata bar ------------------------------ */
@@ -107,18 +115,37 @@ body { font-family: var(--font-sans, "Inter", system-ui, sans-serif); }
 .grid-bg {
   position: absolute; inset: 0;
   background-image:
-    linear-gradient(rgba(41, 64, 90, 0.34) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(41, 64, 90, 0.34) 1px, transparent 1px);
+    linear-gradient(rgba(41, 64, 90, 0.45) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(41, 64, 90, 0.45) 1px, transparent 1px);
   background-size: 72px 72px;
-  opacity: 0.34;
+  opacity: 0.55;
   pointer-events: none;
 }
 
-/* ---------- Halo (top-right radial accent) ----------------- */
+/* ---------- Halo (top-right + bottom-left tone accents) ---- */
+/* Rendered as JSX elements in SlideFrame so they pick up
+   var(--tone-acc) from the parent .slide-frame tone class.  */
 .halo {
   position: absolute; inset: 0;
-  background: radial-gradient(circle at 74% 12%, rgba(52,211,153,0.18) 0%, transparent 52%);
   pointer-events: none;
+}
+/* Top-right primary glow — uses tone accent */
+.halo::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 0%,
+    var(--tone-acc-soft, #6EE7B7) 0%,
+    transparent 48%);
+  opacity: 0.22;
+}
+/* Bottom-left secondary glow — softer */
+.halo::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 10% 100%,
+    var(--tone-acc, #34D399) 0%,
+    transparent 42%);
+  opacity: 0.10;
 }
 
 /* ---------- Watermark "0X" big number behind content ------- */
