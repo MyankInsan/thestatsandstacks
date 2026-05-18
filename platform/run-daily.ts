@@ -18,7 +18,9 @@ import { HistoryGuardAgent } from './src/lib/agents/historyGuardAgent';
 import { FinalGateAgent } from './src/lib/agents/finalGateAgent';
 import { RegenLoopAgent } from './src/lib/agents/regenLoopAgent';
 import { emailPostToPhone } from './src/lib/services/emailDelivery';
-import { sendPostToTelegram } from './src/lib/services/telegramDelivery';
+import { sendPostToTelegram, sendVideoToTelegram } from './src/lib/services/telegramDelivery';
+import { decideDayType } from './src/lib/agents/dayTypeAgent';
+import { VideoCompilationAgent } from './src/lib/agents/videoCompilationAgent';
 import { appendContentHistory, loadContentHistory } from './src/lib/services/contentHistory';
 import { getLocalDateKey, getLocalTimestamp, getRunSlug } from './src/lib/services/dateUtils';
 import { getImageCount } from './src/lib/services/imageCount';
@@ -38,10 +40,13 @@ async function main() {
   fs.mkdirSync(outputDir, { recursive: true });
 
   console.log('');
+  const dayType = decideDayType(now);
+
   console.log('═══════════════════════════════════════════════════════');
   console.log('  🚀 THESTATSANDSTACKS — DAILY PIPELINE');
   console.log(`  📅 ${today}`);
   console.log(`  🧠 History entries loaded: ${contentHistory.length}`);
+  console.log(`  🎬 Day type: ${dayType.toUpperCase()}`);
   console.log('  🌐 Running on GitHub Actions');
   console.log('═══════════════════════════════════════════════════════');
   console.log('');
@@ -238,34 +243,61 @@ async function main() {
   }
   console.log('');
 
-  // ── EMAIL TO PHONE ──
-  if (process.env.GMAIL_ADDRESS && process.env.GMAIL_APP_PASSWORD && process.env.DELIVERY_EMAIL) {
-    console.log('━━━ SENDING EMAIL ━━━');
-    await emailPostToPhone({
-      images: generatedImages.images,
-      copy,
-      strategy,
-      qaReport,
+  // ── DELIVERY (photo vs video fork) ──────────────────────────────────────
+  if (dayType === 'video') {
+    console.log('━━━ AGENT VIDEO: COMPILATION ━━━');
+    const videoAgent = new VideoCompilationAgent();
+    const videoResult = videoAgent.execute({
+      imagePaths: generatedImages.images.map((img) => img.localPath),
+      outputDir,
+      runSlug,
     });
-  } else {
-    console.log('━━━ EMAIL SKIPPED ━━━');
-    console.log('   Email delivery skipped because Gmail delivery secrets are not set.');
-  }
+    console.log(`   Reel compiled: ${videoResult.videoPath} (${videoResult.durationSeconds.toFixed(1)}s)`);
+    console.log('');
 
-  if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
-    console.log('━━━ SENDING TELEGRAM ━━━');
-    await sendPostToTelegram({
-      images: generatedImages.images,
-      copy,
-      strategy,
-      qaReport,
-      manualPromptPath,
-      researchBriefPath,
-      visualAssetPlanPath,
-    });
+    if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
+      console.log('━━━ SENDING TELEGRAM VIDEO ━━━');
+      await sendVideoToTelegram({
+        videoPath: videoResult.videoPath,
+        copy,
+        strategy,
+        qaReport,
+        durationSeconds: videoResult.durationSeconds,
+      });
+    } else {
+      console.log('━━━ TELEGRAM VIDEO SKIPPED ━━━');
+      console.log('   Telegram delivery skipped (TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set).');
+    }
   } else {
-    console.log('━━━ TELEGRAM SKIPPED ━━━');
-    console.log('   Telegram delivery skipped because TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID are not set.');
+    // ── PHOTO DAY ────────────────────────────────────────────────────────
+    if (process.env.GMAIL_ADDRESS && process.env.GMAIL_APP_PASSWORD && process.env.DELIVERY_EMAIL) {
+      console.log('━━━ SENDING EMAIL ━━━');
+      await emailPostToPhone({
+        images: generatedImages.images,
+        copy,
+        strategy,
+        qaReport,
+      });
+    } else {
+      console.log('━━━ EMAIL SKIPPED ━━━');
+      console.log('   Email delivery skipped because Gmail delivery secrets are not set.');
+    }
+
+    if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
+      console.log('━━━ SENDING TELEGRAM PHOTOS ━━━');
+      await sendPostToTelegram({
+        images: generatedImages.images,
+        copy,
+        strategy,
+        qaReport,
+        manualPromptPath,
+        researchBriefPath,
+        visualAssetPlanPath,
+      });
+    } else {
+      console.log('━━━ TELEGRAM SKIPPED ━━━');
+      console.log('   Telegram delivery skipped because TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID are not set.');
+    }
   }
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);

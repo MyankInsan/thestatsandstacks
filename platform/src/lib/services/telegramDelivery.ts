@@ -91,6 +91,61 @@ export async function sendPostToTelegram(input: {
   console.log(`[TelegramDelivery] ✅ Sent ${input.images.length} slides as inline photos + 3 copy-ready messages.`);
 }
 
+export async function sendVideoToTelegram(input: {
+  videoPath: string;
+  copy: CopyBundle;
+  strategy: StrategyDecision;
+  qaReport: QAReport;
+  durationSeconds: number;
+}): Promise<void> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) {
+    console.log('[TelegramDelivery] Video skipped (TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set).');
+    return;
+  }
+
+  // 1: Send the video file inline (displays in chat, not as a download)
+  await withTelegramRetry('sendVideo', async () => {
+    const form = new FormData();
+    form.append('chat_id', chatId);
+    form.append('caption', buildAlbumCaption(input.strategy, input.qaReport).slice(0, 1024));
+    form.append('supports_streaming', 'true');
+    form.append('width', '1080');
+    form.append('height', '1350');
+    form.append('duration', String(Math.round(input.durationSeconds)));
+    const buf = fs.readFileSync(input.videoPath);
+    form.append(
+      'video',
+      new Blob([new Uint8Array(buf)], { type: 'video/mp4' }),
+      'reel.mp4',
+    );
+    const response = await fetchWithTimeout(
+      `https://api.telegram.org/bot${token}/sendVideo`,
+      { method: 'POST', body: form },
+    );
+    if (!response.ok) {
+      throw new Error(`Telegram sendVideo failed: ${response.status} ${await response.text()}`);
+    }
+  });
+
+  // 2-4: Same copy-ready messages as photo delivery
+  await callTelegram(token, 'sendMessage', {
+    chat_id: chatId,
+    text: buildCaptionMessage(input.copy.caption).slice(0, 4096),
+  });
+  await callTelegram(token, 'sendMessage', {
+    chat_id: chatId,
+    text: buildHashtagsMessage(input.copy.hashtags).slice(0, 4096),
+  });
+  await callTelegram(token, 'sendMessage', {
+    chat_id: chatId,
+    text: buildPinnedCommentMessage(input.copy.firstComment).slice(0, 4096),
+  });
+
+  console.log(`[TelegramDelivery] ✅ Sent Reels video + 3 copy-ready messages.`);
+}
+
 async function sendPhotoAlbum(
   token: string,
   chatId: string,

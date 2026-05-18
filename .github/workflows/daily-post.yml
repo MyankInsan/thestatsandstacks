@@ -6,6 +6,16 @@ on:
     - cron: '0 15 * * *'
     - cron: '0 16 * * *'
   workflow_dispatch:
+    inputs:
+      day_type:
+        description: 'Override day type (auto = use schedule)'
+        required: false
+        default: 'auto'
+        type: choice
+        options:
+          - auto
+          - photo
+          - video
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
@@ -55,9 +65,9 @@ jobs:
         working-directory: platform
         run: npm ci
 
-      - name: Install Chromium
+      - name: Install Chromium and FFmpeg
         if: steps.send-window.outputs.should_run == 'true'
-        run: sudo apt-get update -qq && sudo apt-get install -y chromium-browser
+        run: sudo apt-get update -qq && sudo apt-get install -y chromium-browser ffmpeg
 
       - name: Run Daily Pipeline
         if: steps.send-window.outputs.should_run == 'true'
@@ -96,6 +106,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
+          DAY_TYPE_OVERRIDE: ${{ github.event.inputs.day_type == 'auto' && '' || github.event.inputs.day_type }}
         run: npm run daily
 
       - name: Upload generated post package
