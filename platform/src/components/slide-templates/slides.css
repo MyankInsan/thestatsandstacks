@@ -1,0 +1,130 @@
+/* Slides UI kit — shared canvas styles
+   Each slide renders inside .slide-frame which is exactly 1080×1350 px.
+   The slide page scales-to-fit via JS, like the deck_stage component. */
+
+html, body { margin: 0; background: #02060f; }
+body { font-family: var(--font-sans, "Inter", system-ui, sans-serif); }
+
+/* Stage that holds the scaled frame */
+.slide-stage {
+  position: relative;
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  background: #02060f;
+  overflow: hidden;
+}
+.slide-stage--inline {
+  position: relative; inset: auto;
+  width: 100%; height: 100%;
+}
+
+/* Fixed 4:5 canvas */
+.slide-frame {
+  width: 1080px; height: 1350px;
+  position: relative;
+  background: linear-gradient(135deg, #06101D 0%, #0d1b2a 52%, #111111 100%);
+  color: #F8FAFC;
+  overflow: hidden;
+  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  font-optical-sizing: auto;
+}
+
+/* Tone-bound accents — tone-emerald / tone-cyan / tone-amber / tone-rose
+   classes set --tone-acc; slide-frame defaults to emerald.            */
+.slide-frame.tone-emerald { --tone-acc: #34D399; --tone-acc-soft: #6EE7B7; --tone-acc-tint: rgba(16,185,129,0.10); }
+.slide-frame.tone-cyan    { --tone-acc: #51D6E8; --tone-acc-soft: #38BDF8; --tone-acc-tint: rgba(81,214,232,0.10); }
+.slide-frame.tone-amber   { --tone-acc: #FBBF24; --tone-acc-soft: #FCD34D; --tone-acc-tint: rgba(245,158,11,0.10); }
+.slide-frame.tone-rose    { --tone-acc: #FB7185; --tone-acc-soft: #FECDD3; --tone-acc-tint: rgba(251,113,133,0.10); }
+
+/* Theme accents — passed via inline style --acc on the frame */
+.slide-frame {
+  --acc: #34D399;          /* primary accent */
+  --acc-2: #F6C453;        /* secondary */
+  --acc-3: #51D6E8;        /* tertiary */
+}
+
+/* ---------- Brand bar (top) ---------------------------------- */
+.brand-bar {
+  position: absolute; left: 72px; right: 72px; top: 70px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.brand-bar__left { display: flex; align-items: center; gap: 18px; }
+.brand-bar__mark { width: 48px; height: 48px; }
+.brand-bar__wm   { font-weight: 700; font-size: 24px; letter-spacing: -0.01em; color: #F8FAFC; line-height: 1; }
+.brand-bar__frame { font-family: var(--font-mono, "JetBrains Mono", monospace); font-weight: 500; font-size: 14px; padding: 6px 14px; border-radius: 999px; background: rgba(15,23,42,0.86); color: #94A3B8; letter-spacing: 0.10em; white-space: nowrap; }
+
+/* Single thin emerald rule under the brand bar */
+.brand-bar__rule {
+  position: absolute; left: 72px; right: 72px; top: 138px; height: 1px;
+  background: color-mix(in oklab, var(--tone-acc, #34D399) 30%, transparent);
+}
+
+/* ---------- Footer metadata bar ------------------------------ */
+.foot-bar {
+  position: absolute; left: 72px; right: 72px; bottom: 64px;
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.foot-bar__l, .foot-bar__r {
+  font-family: var(--font-mono, "Geist Mono", monospace);
+  font-size: 15px; color: #64748B;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ---------- Body region ------------------------------------- */
+.frame-body {
+  position: absolute; left: 72px; right: 72px;
+  top: 180px; bottom: 154px;
+  display: flex; flex-direction: column;
+}
+
+/* ---------- Eyebrow (display) ------------------------------- */
+.eyebrow {
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 18px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--tone-acc, var(--acc, #34D399));
+}
+
+/* ---------- Display headlines ------------------------------- */
+.display {
+  font-family: var(--font-display, "Inter", sans-serif);
+  font-weight: 800; line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: #F8FAFC;
+  text-wrap: pretty;
+  font-optical-sizing: auto;
+}
+.display em {
+  font-style: italic;
+  color: var(--tone-acc, var(--acc, #34D399));
+  font-weight: 800;
+}
+
+/* ---------- Hairline grid backdrop (used selectively) ------ */
+.grid-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(41, 64, 90, 0.34) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(41, 64, 90, 0.34) 1px, transparent 1px);
+  background-size: 72px 72px;
+  opacity: 0.34;
+  pointer-events: none;
+}
+
+/* ---------- Halo (top-right radial accent) ----------------- */
+.halo {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 74% 12%, rgba(52,211,153,0.18) 0%, transparent 52%);
+  pointer-events: none;
+}
+
+/* ---------- Watermark "0X" big number behind content ------- */
+.bignum-wm {
+  position: absolute; right: 80px; top: 200px;
+  font-weight: 900; font-size: 280px;
+  color: #fff; opacity: 0.025;
+  letter-spacing: -0.05em; line-height: 1;
+}
