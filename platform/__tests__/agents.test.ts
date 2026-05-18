@@ -404,6 +404,34 @@ test('FinalGateAgent fails when hashtag count exceeds 5', async () => {
   assert.ok(result.failedChecks.some((c) => c.includes('hashtag')));
 });
 
+test('RegenLoopAgent returns on first attempt when score >= 0.80', async () => {
+  const { RegenLoopAgent } = await import('../src/lib/agents/regenLoopAgent');
+  const agent = new RegenLoopAgent();
+
+  let generateCalls = 0;
+  const mockGenerate = async () => { generateCalls++; return { slideNumber: 1, localPath: '/tmp/s1.png', mimeType: 'image/png', source: 'local' as const }; };
+  const mockCritique = async () => ({ score: 0.92, pass: true, issues: [] });
+
+  const result = await agent.execute({ slideNumber: 1, prompt: { slideNumber: 1, slideDescription: 'Cover', dallePrompt: '', template: 'CoverSlide', templateProps: {} }, generate: mockGenerate, critique: mockCritique });
+  assert.equal(result.resolved, true);
+  assert.equal(result.attempts, 1);
+  assert.equal(generateCalls, 1);
+});
+
+test('RegenLoopAgent retries up to MAX_ATTEMPTS then resolves with best available', async () => {
+  const { RegenLoopAgent } = await import('../src/lib/agents/regenLoopAgent');
+  const agent = new RegenLoopAgent();
+
+  let calls = 0;
+  const mockGenerate = async () => { calls++; return { slideNumber: 1, localPath: `/tmp/s1-${calls}.png`, mimeType: 'image/png', source: 'local' as const }; };
+  const mockCritique = async () => ({ score: 0.55, pass: false, issues: [{ severity: 'high' as const, body: 'misaligned text' }] });
+
+  const result = await agent.execute({ slideNumber: 1, prompt: { slideNumber: 1, slideDescription: 'Cover', dallePrompt: '', template: 'CoverSlide', templateProps: {} }, generate: mockGenerate, critique: mockCritique });
+  assert.equal(calls, 5);
+  assert.equal(result.resolved, false);
+  assert.equal(result.attempts, 5);
+});
+
 function restoreEnv(key: string, value: string | undefined): void {
   if (value === undefined) {
     delete process.env[key];
