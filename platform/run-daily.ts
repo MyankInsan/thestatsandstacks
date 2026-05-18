@@ -20,7 +20,7 @@ import { RegenLoopAgent } from './src/lib/agents/regenLoopAgent';
 import { emailPostToPhone } from './src/lib/services/emailDelivery';
 import { sendPostToTelegram, sendVideoToTelegram } from './src/lib/services/telegramDelivery';
 import { decideDayType } from './src/lib/agents/dayTypeAgent';
-import { VideoCompilationAgent } from './src/lib/agents/videoCompilationAgent';
+import { RemotionAgent } from './src/lib/agents/remotionAgent';
 import { appendContentHistory, loadContentHistory } from './src/lib/services/contentHistory';
 import { getLocalDateKey, getLocalTimestamp, getRunSlug } from './src/lib/services/dateUtils';
 import { getImageCount } from './src/lib/services/imageCount';
@@ -246,8 +246,8 @@ async function main() {
   // ── DELIVERY (photo vs video fork) ──────────────────────────────────────
   if (dayType === 'video') {
     console.log('━━━ AGENT VIDEO: COMPILATION ━━━');
-    const videoAgent = new VideoCompilationAgent();
-    const videoResult = videoAgent.execute({
+    const videoAgent = new RemotionAgent();
+    const videoResult = await videoAgent.execute({
       imagePaths: generatedImages.images.map((img) => img.localPath),
       outputDir,
       runSlug,
