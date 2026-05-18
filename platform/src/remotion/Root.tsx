@@ -1,5 +1,5 @@
 // platform/src/remotion/Root.tsx
-import { Composition, type CalculateMetadataFunction } from 'remotion';
+import { Composition, registerRoot, type CalculateMetadataFunction } from 'remotion';
 import { SlideShow, type SlideShowProps } from './SlideShow';
 
 const FPS = 25;
@@ -16,7 +16,7 @@ const calculateMetadata: CalculateMetadataFunction<SlideShowProps> = async ({ pr
   height: 1350,
 });
 
-export function RemotionRoot() {
+function RemotionRoot() {
   return (
     <Composition
       id="SlideShow"
@@ -36,3 +36,5 @@ export function RemotionRoot() {
     />
   );
 }
+
+registerRoot(RemotionRoot);
