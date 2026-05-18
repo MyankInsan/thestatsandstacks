@@ -58,7 +58,7 @@ export async function emailPostToPhone(input: {
     </div>
 
     <div style="background: #1E293B; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
-      <p style="color: #94A3B8; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">💬 FIRST COMMENT — Post this right after publishing:</p>
+      <p style="color: #94A3B8; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">📌 PIN THIS COMMENT — Post this immediately after publishing, then pin it to the top of your comments:</p>
       <p style="color: #E2E8F0; font-size: 13px; margin: 0;">${copy.firstComment}</p>
     </div>
 
@@ -102,7 +102,7 @@ ${copy.caption}
 ${copy.hashtags}
 
 ───────────────────────────────────────
-💬 FIRST COMMENT (Post after publishing):
+📌 PIN THIS COMMENT (Post immediately after publishing — then pin it to the top of your comments):
 ───────────────────────────────────────
 
 ${copy.firstComment}
