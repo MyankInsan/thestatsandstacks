@@ -42,7 +42,7 @@ test('buildCaptionMessage has the correct prefix', () => {
 
 test('buildHashtagsMessage has the correct prefix', () => {
   const result = buildHashtagsMessage('#CanadianFinance');
-  assert.ok(result.startsWith('# HASHTAGS'));
+  assert.ok(result.startsWith('#️⃣ HASHTAGS'));
   assert.ok(result.includes('#CanadianFinance'));
 });
 
@@ -65,4 +65,9 @@ test('chunkIntoAlbums returns single chunk when items <= max', () => {
   const chunks = chunkIntoAlbums(items, 10);
   assert.equal(chunks.length, 1);
   assert.deepEqual(chunks[0], [1, 2, 3]);
+});
+
+test('chunkIntoAlbums returns empty array for empty input', () => {
+  const chunks = chunkIntoAlbums([], 10);
+  assert.deepEqual(chunks, []);
 });

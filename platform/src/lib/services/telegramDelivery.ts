@@ -16,7 +16,7 @@ export function buildCaptionMessage(caption: string): string {
 }
 
 export function buildHashtagsMessage(hashtags: string): string {
-  return `# HASHTAGS — copy these:\n\n${hashtags}`;
+  return `#️⃣ HASHTAGS — copy these:\n\n${hashtags}`;
 }
 
 export function buildPinnedCommentMessage(firstComment: string): string {
