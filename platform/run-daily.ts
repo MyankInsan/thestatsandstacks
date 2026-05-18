@@ -8,6 +8,7 @@ import { CarouselPlanningAgent, MediaFormatDecisionAgent } from './src/lib/agent
 import { ContentStrategyAgent } from './src/lib/agents/contentStrategyAgent';
 import { ComplianceQAAgent } from './src/lib/agents/complianceQAAgent';
 import { ImagePromptAgent } from './src/lib/agents/imagePromptAgent';
+import type { SlidePrompt } from './src/lib/agents/imagePromptAgent';
 import { VisualAssetSourcingAgent, type VisualAssetSourcingPlan } from './src/lib/agents/visualAssetSourcingAgent';
 import { ImageGenerationAgent, type GeneratedImage } from './src/lib/agents/imageGenerationAgent';
 import { VisionQAAgent, type QAReport } from './src/lib/agents/visionQAAgent';
@@ -92,7 +93,7 @@ async function main() {
   console.log('━━━ AGENT 6: IMAGE PROMPTS ━━━');
   const imagePromptAgent = new ImagePromptAgent();
   const promptSet = await imagePromptAgent.execute({ strategy });
-  const plannedPrompts = promptSet.prompts.slice(0, getImageCount(strategy));
+  const plannedPrompts: SlidePrompt[] = promptSet.prompts.slice(0, getImageCount(strategy));
   if (plannedPrompts.length === 0) {
     throw new Error('Strategy requested images, but no image prompts were generated.');
   }
@@ -379,7 +380,7 @@ main().catch((err) => {
 
 function buildManualImagePromptPacket(
   strategy: Awaited<ReturnType<ContentStrategyAgent['execute']>>,
-  prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>
+  prompts: SlidePrompt[]
 ): string {
   return `# TheStatsAndStacks Manual Image Prompts
 

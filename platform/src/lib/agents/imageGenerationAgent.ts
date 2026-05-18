@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { getRunSlug, sanitizeFilePart } from '../services/dateUtils';
 import type { VisualAssetSlidePlan, VisualAssetSourcingPlan } from './visualAssetSourcingAgent';
+import type { SlidePrompt } from './imagePromptAgent';
 
 export interface GeneratedImage {
   slideNumber: number;
@@ -75,7 +76,7 @@ export class ImageGenerationAgent extends BaseAgent {
   }
 
   async execute(input: {
-    prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>,
+    prompts: SlidePrompt[],
     outputDir: string,
     visualPlan?: VisualAssetSourcingPlan,
   }): Promise<{ images: GeneratedImage[] }> {
@@ -105,7 +106,7 @@ export class ImageGenerationAgent extends BaseAgent {
   }
 
   private async generateFromVisualPlan(input: {
-    prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>,
+    prompts: SlidePrompt[],
     outputDir: string,
     visualPlan: VisualAssetSourcingPlan,
     runSlug: string,
@@ -169,7 +170,7 @@ export class ImageGenerationAgent extends BaseAgent {
   }
 
   private async generateWithOpenAI(input: {
-    prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>,
+    prompts: SlidePrompt[],
     outputDir: string,
     runSlug: string
   }): Promise<{ images: GeneratedImage[] }> {
@@ -223,7 +224,7 @@ export class ImageGenerationAgent extends BaseAgent {
   }
 
   private async generateWithCloudflare(input: {
-    prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>,
+    prompts: SlidePrompt[],
     outputDir: string,
     runSlug: string
   }): Promise<{ images: GeneratedImage[] }> {
@@ -260,7 +261,7 @@ export class ImageGenerationAgent extends BaseAgent {
   }
 
   private async generateCloudflareSlide(
-    prompt: { slideNumber: number; slideDescription: string; dallePrompt: string },
+    prompt: SlidePrompt,
     outputDir: string,
     runSlug: string,
     config?: {
@@ -322,10 +323,15 @@ export class ImageGenerationAgent extends BaseAgent {
   }
 
   private async generateLocalSlides(input: {
-    prompts: Array<{ slideNumber: number; slideDescription: string; dallePrompt: string }>,
+    prompts: SlidePrompt[],
     outputDir: string,
     runSlug: string
   }): Promise<{ images: GeneratedImage[] }> {
+    const usePuppeteer = Boolean(process.env.PUPPETEER_EXECUTABLE_PATH);
+    if (usePuppeteer) {
+      return this.generateWithPuppeteer(input);
+    }
+
     const images: GeneratedImage[] = [];
 
     for (const prompt of input.prompts) {
@@ -336,8 +342,35 @@ export class ImageGenerationAgent extends BaseAgent {
     return { images };
   }
 
+  private async generateWithPuppeteer(input: {
+    prompts: SlidePrompt[];
+    outputDir: string;
+    runSlug: string;
+  }): Promise<{ images: GeneratedImage[] }> {
+    const { renderSlideToBuffer, closeBrowser } = await import('../render/puppeteerRenderer');
+    const images: GeneratedImage[] = [];
+    try {
+      for (const prompt of input.prompts) {
+        const filename = buildSlideFilename(input.runSlug, prompt.slideNumber);
+        const localPath = path.join(input.outputDir, filename);
+        const buf = await renderSlideToBuffer(prompt.template, prompt.templateProps);
+        fs.writeFileSync(localPath, buf);
+        images.push({
+          slideNumber: prompt.slideNumber,
+          localPath,
+          mimeType: 'image/png',
+          source: 'local',
+        });
+        console.log(`   [Puppeteer] Slide ${prompt.slideNumber} rendered: ${filename}`);
+      }
+    } finally {
+      await closeBrowser();
+    }
+    return { images };
+  }
+
   private async generateLocalSlide(
-    prompt: { slideNumber: number; slideDescription: string; dallePrompt: string },
+    prompt: SlidePrompt,
     outputDir: string,
     runSlug: string
   ): Promise<GeneratedImage> {

@@ -201,6 +201,8 @@ test('VisualAssetSourcingAgent falls back to local when no free provider secrets
         slideNumber: 1,
         slideDescription: 'Slide 1: A stock is not a plan | Research first | Educational only',
         dallePrompt: 'premium market background',
+        template: 'CoverSlide',
+        templateProps: { frameNo: 1, totalFrames: 1, tone: 'emerald', headline: 'TEST' },
       }],
     });
 

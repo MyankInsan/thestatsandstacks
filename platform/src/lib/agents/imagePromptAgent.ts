@@ -1,12 +1,16 @@
 import { BaseAgent } from './interfaces';
 import { StrategyDecision } from './contentStrategyAgent';
 
+export interface SlidePrompt {
+  slideNumber: number;
+  slideDescription: string;
+  dallePrompt: string;
+  template: string;
+  templateProps: Record<string, unknown>;
+}
+
 export interface ImagePromptSet {
-  prompts: Array<{
-    slideNumber: number;
-    slideDescription: string;
-    dallePrompt: string;
-  }>;
+  prompts: SlidePrompt[];
 }
 
 export class ImagePromptAgent extends BaseAgent {
@@ -18,11 +22,17 @@ export class ImagePromptAgent extends BaseAgent {
     console.log(`[${this.name}] 🎨 Generating image prompts...`);
 
     return {
-      prompts: input.strategy.slideBreakdown.map((slide, index) => ({
-        slideNumber: index + 1,
-        slideDescription: slide,
-        dallePrompt: buildPremiumImagePrompt(input.strategy, slide, index + 1),
-      })),
+      prompts: input.strategy.slideBreakdown.map((slide, index) => {
+        const slideNumber = index + 1;
+        const template = resolveTemplate(input.strategy, slide, slideNumber);
+        return {
+          slideNumber,
+          slideDescription: slide,
+          dallePrompt: buildPremiumImagePrompt(input.strategy, slide, slideNumber),
+          template,
+          templateProps: buildTemplateProps(input.strategy, slide, slideNumber, template),
+        };
+      }),
     };
   }
 }
@@ -44,6 +54,46 @@ function buildPremiumImagePrompt(strategy: StrategyDecision, slide: string, slid
     'Mobile readability: keep the center-left and lower third visually calm so exact text can be overlaid cleanly.',
     'Compliance: no fake price candles, no fake performance claims, no specific ticker recommendation visuals, no guaranteed-return symbolism.',
   ].join(' ');
+}
+
+function resolveTemplate(strategy: StrategyDecision, slide: string, slideNumber: number): string {
+  const lower = slide.toLowerCase();
+  if (slideNumber === 1) return 'CoverSlide';
+  if (/market|ticker|stock|catalyst|case study|heat/.test(lower)) return 'MarketPosterSlide';
+  if (/framework|filter|checklist|step|how to/.test(lower)) return 'FrameworkSlide';
+  if (/vs|versus|compare|tfsa.*rrsp|rrsp.*tfsa/.test(lower)) return 'ComparisonSlide';
+  if (/myth|fact|misconception|truth/.test(lower)) return 'MythVsFactSlide';
+  if (/\$|number|stat|data point|figure/.test(lower)) return 'BigNumberSlide';
+  if (/risk|watch|warning|caution/.test(lower)) return 'RiskMapSlide';
+  if (/save|follow|cta|outro|takeaway/.test(lower)) return 'OutroSlide';
+  void strategy;
+  return 'FrameworkSlide';
+}
+
+function buildTemplateProps(
+  strategy: StrategyDecision,
+  slide: string,
+  slideNumber: number,
+  template: string,
+): Record<string, unknown> {
+  const base = {
+    frameNo: slideNumber,
+    totalFrames: strategy.slideCount,
+    tone: 'emerald' as const,
+  };
+  if (template === 'CoverSlide') {
+    return {
+      ...base,
+      eyebrow: (strategy as unknown as Record<string, unknown>).contentPillar?.toString().toUpperCase() ?? 'MARKET EDUCATION',
+      headline: strategy.hook.toUpperCase(),
+      kicker: slide,
+    };
+  }
+  if (template === 'MarketPosterSlide') {
+    const tickerMatch = strategy.topic.match(/\b([A-Z]{2,5})\b/);
+    return { ...base, ticker: tickerMatch?.[1] ?? '—', name: strategy.topic, delta: '', headline: slide };
+  }
+  return { ...base, headline: slide };
 }
 
 function getVisualMode(format: StrategyDecision['format'], topic: string, slideNumber: number): string {
