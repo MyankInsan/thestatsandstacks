@@ -30,3 +30,27 @@ test('CoverSlide renders headline and eyebrow', async () => {
   assert.ok(html.includes('MARKET EDUCATION'));
   assert.ok(html.includes('SAVE THIS FRAMEWORK'));
 });
+
+const templateTests: Array<[string, Record<string, unknown>]> = [
+  ['PureCoverSlide',   { headline: 'TEST HEADLINE' }],
+  ['MarketPosterSlide', { ticker: 'SNDK', name: 'SanDisk Corp.', delta: '+18%', headline: 'What happened' }],
+  ['FrameworkSlide',   { headline: 'THREE CHECKS', steps: [{ label: 'Step 1', body: 'Body 1' }] }],
+  ['ComparisonSlide',  { headline: 'TFSA VS RRSP', left: { label: 'TFSA', points: ['Tax-free growth'] }, right: { label: 'RRSP', points: ['Tax deduction'] } }],
+  ['MythVsFactSlide',  { headline: 'COMMON MYTH', myth: 'You need $10K to invest.', fact: 'You can start with any amount.' }],
+  ['BigNumberSlide',   { number: '$7,000', label: 'TFSA LIMIT 2024', context: 'Per calendar year' }],
+  ['PureStatSlide',    { stat: '72%', label: 'of Canadians have no financial plan' }],
+  ['QuoteSlide',       { quote: 'Compound interest is the eighth wonder of the world.', attribution: 'Albert Einstein' }],
+  ['CashflowSlide',    { headline: 'WHERE YOUR MONEY GOES', items: [{ label: 'Housing', pct: 35 }] }],
+  ['RiskMapSlide',     { headline: 'RISK MAP', risks: [{ label: 'Market risk', severity: 'high' }] }],
+  ['OutroSlide',       { cta: 'Save this framework.' }],
+];
+
+for (const [name, props] of templateTests) {
+  test(`${name} renders without throwing`, async () => {
+    const mod = await import(`../src/components/slide-templates/${name}`);
+    const Component = mod[name] as React.ComponentType<Record<string, unknown>>;
+    assert.ok(typeof Component === 'function');
+    const html = renderToStaticMarkup(React.createElement(Component, props));
+    assert.ok(html.length > 100, `${name} rendered empty HTML`);
+  });
+}
