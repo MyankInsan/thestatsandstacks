@@ -3,7 +3,7 @@ import { AbsoluteFill, interpolate, useCurrentFrame } from 'remotion';
 
 export function ProgressBar({ totalFrames }: { totalFrames: number }) {
   const frame = useCurrentFrame();
-  const width = interpolate(frame, [0, totalFrames], [0, 100], { extrapolateRight: 'clamp' });
+  const width = interpolate(frame, [0, totalFrames - 1], [0, 100], { extrapolateRight: 'clamp' });
 
   return (
     <AbsoluteFill style={{ pointerEvents: 'none' }}>

@@ -28,14 +28,14 @@ export function SlideScene({ filename, durationFrames, crossfadeFrames }: SlideS
       : 1;
 
   return (
-    <AbsoluteFill style={{ opacity: entryOpacity * exitOpacity, overflow: 'hidden' }}>
+    <AbsoluteFill style={{ opacity: entryOpacity * exitOpacity, overflow: 'hidden', transform: `translateY(${translateY}px)` }}>
       <Img
         src={staticFile(filename)}
         style={{
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          transform: `translateY(${translateY}px) scale(${scale})`,
+          transform: `scale(${scale})`,
           transformOrigin: 'center center',
         }}
       />

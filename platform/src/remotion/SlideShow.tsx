@@ -18,7 +18,7 @@ export function SlideShow({ filenames, framesPerSlide, crossfadeFrames }: SlideS
       {filenames.map((filename, i) => {
         const from = i * (framesPerSlide - crossfadeFrames);
         return (
-          <Sequence key={filename} from={from} durationInFrames={framesPerSlide}>
+          <Sequence key={`${i}-${filename}`} from={from} durationInFrames={framesPerSlide}>
             <SlideScene
               filename={filename}
               durationFrames={framesPerSlide}
