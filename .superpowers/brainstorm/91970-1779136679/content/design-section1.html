@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Section 1 — Visual System</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0a0f1a; color: #f8fafc; font-family: "Inter", system-ui, sans-serif; padding: 32px; }
+  h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .subtitle { color: #64748b; font-size: 14px; margin-bottom: 32px; }
+  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #34d399; margin-bottom: 14px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 32px; }
+  .card { background: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 20px; }
+  .card h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; color: #f8fafc; }
+  .card p { font-size: 13px; color: #94a3b8; line-height: 1.55; }
+
+  /* ---- SLIDE MOCKUPS ---- */
+  .slide-mock {
+    width: 100%; aspect-ratio: 4/5;
+    background: linear-gradient(160deg, #050e1c 0%, #0a1628 38%, #0d1a30 65%, #060d18 100%);
+    border-radius: 12px; border: 1px solid #1f2937;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .dot-grid {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(52,211,153,0.18) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.5;
+  }
+  .halo-tr {
+    position: absolute; top: 0; right: 0;
+    width: 60%; height: 50%;
+    background: radial-gradient(ellipse at top right, rgba(52,211,153,0.18) 0%, transparent 70%);
+  }
+  .halo-bl {
+    position: absolute; bottom: 0; left: 0;
+    width: 40%; height: 35%;
+    background: radial-gradient(ellipse at bottom left, rgba(16,185,129,0.10) 0%, transparent 70%);
+  }
+
+  /* Slide number big */
+  .slide-num {
+    position: absolute; top: 16px; left: 20px;
+    font-size: 11px; font-weight: 800; letter-spacing: 0.10em;
+    color: #34d399; opacity: 0.9;
+    font-family: "JetBrains Mono", monospace;
+  }
+  .slide-num-label {
+    font-size: 7px; display: block; letter-spacing: 0.14em; color: #475569; margin-top: 1px; text-transform: uppercase;
+  }
+  .slide-accent-line {
+    position: absolute; top: 44px; left: 20px;
+    width: 24px; height: 1.5px; background: #34d399;
+  }
+
+  /* brand bottom */
+  .brand-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: rgba(6,16,29,0.95);
+    border-top: 1px solid rgba(52,211,153,0.15);
+    padding: 8px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand-left { display: flex; align-items: center; gap: 8px; }
+  .brand-icon {
+    width: 22px; height: 22px;
+    background: #0b1120; border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .brand-name { font-size: 7px; font-weight: 700; letter-spacing: 0.05em; line-height: 1.2; }
+  .brand-name span { color: #34d399; }
+  .brand-name span.gold { color: #fbbf24; }
+  .brand-cta { font-size: 6px; font-weight: 500; letter-spacing: 0.12em; color: #475569; text-transform: uppercase; text-align: right; }
+  .brand-arrow { color: #34d399; font-size: 10px; margin-left: 4px; }
+
+  /* SLIDE A — Cover with dashboard panels */
+  .cover-headline {
+    position: absolute; top: 58px; left: 20px; right: 20px;
+  }
+  .cover-eyebrow { font-size: 6px; font-weight: 600; letter-spacing: 0.20em; color: #34d399; text-transform: uppercase; margin-bottom: 8px; }
+  .cover-h1 { font-size: 32px; font-weight: 900; line-height: 0.95; letter-spacing: -0.03em; color: #f8fafc; }
+  .cover-h1 em { font-style: normal; color: #fbbf24; }
+  .cover-sub { font-size: 8px; color: #94a3b8; margin-top: 8px; line-height: 1.4; }
+  .mini-panels {
+    position: absolute; bottom: 44px; left: 14px; right: 14px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;
+  }
+  .mini-panel {
+    background: rgba(7,17,31,0.9); border: 1px solid #1f2937; border-radius: 6px; padding: 7px 8px;
+  }
+  .mp-label { font-size: 5px; letter-spacing: 0.14em; text-transform: uppercase; color: #475569; margin-bottom: 4px; }
+  .mp-value { font-size: 11px; font-weight: 800; color: #34d399; font-variant-numeric: tabular-nums; }
+  .mp-sub { font-size: 5px; color: #64748b; margin-top: 2px; }
+  /* mini line */
+  .mp-line { margin-top: 5px; }
+
+  /* chart background element */
+  .chart-bg {
+    position: absolute; right: 0; top: 50px; bottom: 44px;
+    width: 55%; opacity: 0.55;
+    display: flex; align-items: flex-end; gap: 3px; padding: 0 10px 0 0;
+  }
+  .bar-bg {
+    flex: 1; border-radius: 3px 3px 0 0;
+    background: linear-gradient(180deg, rgba(52,211,153,0.5) 0%, rgba(16,185,129,0.2) 100%);
+  }
+
+  /* SLIDE B — CashflowSlide */
+  .cf-header {
+    position: absolute; top: 58px; left: 20px; right: 20px;
+  }
+  .cf-eyebrow { font-size: 6px; font-weight: 600; letter-spacing: 0.20em; color: #34d399; text-transform: uppercase; margin-bottom: 5px; }
+  .cf-h1 { font-size: 26px; font-weight: 900; line-height: 0.95; letter-spacing: -0.025em; }
+  .cf-h1 em { font-style: normal; color: #34d399; }
+  .cf-kicker { font-size: 7px; color: #64748b; margin-top: 6px; }
+
+  /* mini trend top-right */
+  .trend-box {
+    position: absolute; top: 58px; right: 20px;
+    background: rgba(7,17,31,0.9); border: 1px solid #1f2937; border-radius: 6px;
+    padding: 7px 10px; text-align: right;
+  }
+  .trend-label { font-size: 5px; letter-spacing: 0.12em; color: #475569; text-transform: uppercase; }
+  .trend-value { font-size: 14px; font-weight: 800; color: #34d399; margin: 2px 0; }
+  .trend-sub { font-size: 5px; color: #34d399; }
+
+  /* dual bars */
+  .dual-bars {
+    position: absolute; left: 14px; right: 14px; top: 155px; bottom: 90px;
+    display: grid; grid-template-columns: 1fr 8px 1fr; gap: 0; align-items: end;
+  }
+  .bars-col { display: flex; flex-direction: column; }
+  .bars-col-label { font-size: 6px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 4px; }
+  .bars-col-total { font-size: 15px; font-weight: 900; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+  .bars-group { display: flex; align-items: flex-end; gap: 4px; height: 90px; }
+  .bar-item { flex: 1; border-radius: 3px 3px 0 0; }
+  .bar-legend { margin-top: 6px; display: flex; flex-direction: column; gap: 3px; }
+  .bar-row { display: flex; align-items: center; justify-content: space-between; font-size: 5.5px; color: #94a3b8; }
+  .bar-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-right: 3px; }
+  .vs-divider { display: flex; align-items: center; justify-content: center; font-size: 7px; font-weight: 700; color: #475569; padding-bottom: 120px; }
+
+  /* summary strip */
+  .cf-summary {
+    position: absolute; bottom: 44px; left: 14px; right: 14px;
+    background: rgba(7,17,31,0.9); border: 1px solid #1f2937; border-radius: 6px;
+    padding: 7px 12px; display: flex; align-items: center; gap: 6px;
+  }
+  .cf-sum-label { font-size: 5px; letter-spacing: 0.12em; text-transform: uppercase; color: #475569; }
+  .cf-sum-val { font-size: 10px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .cf-sum-op { font-size: 8px; color: #475569; }
+  .cf-sum-eq { font-size: 8px; color: #475569; }
+  .cf-sum-net { font-size: 10px; font-weight: 800; color: #34d399; }
+
+  /* SLIDE C — Optionality */
+  .opt-header {
+    position: absolute; top: 58px; left: 20px; right: 20px;
+  }
+  .opt-icon-col {
+    position: absolute; right: 18px; top: 100px; bottom: 80px;
+    display: flex; flex-direction: column; justify-content: space-around;
+  }
+  .opt-icon {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1.5px solid rgba(52,211,153,0.35);
+    background: rgba(7,17,31,0.8);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+  }
+  .opt-items {
+    position: absolute; left: 20px; bottom: 90px; right: 20px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5px;
+  }
+  .opt-item {
+    background: rgba(7,17,31,0.8); border: 1px solid #1f2937; border-radius: 6px;
+    padding: 6px 8px; display: flex; align-items: flex-start; gap: 6px;
+  }
+  .opt-item-icon {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 1px solid rgba(251,191,36,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 7px; flex-shrink: 0; background: rgba(251,191,36,0.06);
+  }
+  .opt-item-label { font-size: 6px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; color: #fbbf24; }
+  .opt-item-body { font-size: 5.5px; color: #94a3b8; margin-top: 2px; line-height: 1.4; }
+</style>
+</head>
+<body>
+<h1>Design Section 1 — Visual System Upgrade</h1>
+<p class="subtitle">Three upgraded templates showing the new design language. This applies across all 12 + 1 new template.</p>
+
+<div class="section-label" style="margin-top:24px">Global changes applied to every template</div>
+<div class="grid">
+  <div class="card">
+    <h3>Slide number as design element</h3>
+    <p>The "01", "05" etc. move from a small counter pill to a prominent top-left accent — emerald monospaced number + category label + accent line. Sets editorial tone immediately.</p>
+  </div>
+  <div class="card">
+    <h3>Footer redesigned</h3>
+    <p>Bottom strip becomes the brand footer from the reference: TheStatsAndStacks logo + wordmark on left, "FOLLOW @THESTATSANDSTACKS / FOR VISUAL BREAKDOWNS ON MONEY, MARKETS & STRATEGY →" on right.</p>
+  </div>
+  <div class="card">
+    <h3>Background texture</h3>
+    <p>Hairline grid swapped for a subtle dot-grid (radial-gradient dots). Richer depth, less rigid, matches the reference images exactly.</p>
+  </div>
+  <div class="card">
+    <h3>Prop interface breaks (intentional)</h3>
+    <p>CashflowSlide gets real dollar values + per-category arrays. AI agent prompts updated alongside every template change so the AI always sends the right payload.</p>
+  </div>
+</div>
+
+<div class="section-label">Three template mockups — before/after direction</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+
+  <!-- SLIDE A: Cover -->
+  <div>
+    <div class="section-label" style="margin-bottom:8px">CoverSlide — with mini dashboard</div>
+    <div class="slide-mock">
+      <div class="dot-grid"></div>
+      <div class="halo-tr"></div>
+      <div class="halo-bl"></div>
+
+      <!-- chart bars in bg -->
+      <div class="chart-bg">
+        <div class="bar-bg" style="height:30%"></div>
+        <div class="bar-bg" style="height:45%"></div>
+        <div class="bar-bg" style="height:38%"></div>
+        <div class="bar-bg" style="height:65%"></div>
+        <div class="bar-bg" style="height:55%"></div>
+        <div class="bar-bg" style="height:78%"></div>
+        <div class="bar-bg" style="height:62%"></div>
+        <div class="bar-bg" style="height:88%;background:linear-gradient(180deg,rgba(52,211,153,0.85) 0%,rgba(16,185,129,0.4) 100%)"></div>
+      </div>
+
+      <div class="slide-num">01<span class="slide-num-label">DECISION FILTER</span></div>
+      <div class="slide-accent-line"></div>
+
+      <div class="cover-headline" style="top:62px">
+        <div class="cover-eyebrow">THESTATSANDSTACKS</div>
+        <div class="cover-h1" style="font-size:28px;margin-top:32px">4 FILTERS<br>EVERY MONEY<br>DECISION<br>SHOULD PASS<br>THROUGH</div>
+        <div class="cover-sub" style="margin-top:10px">MONEY. <span style="color:#34d399">MARKETS.</span> DATA.</div>
+      </div>
+
+      <div class="mini-panels">
+        <div class="mini-panel">
+          <div class="mp-label">Market Overview</div>
+          <svg width="100%" height="28" viewBox="0 0 80 28">
+            <polyline points="0,24 13,18 26,20 39,12 52,14 65,6 80,2" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <div class="mp-value" style="font-size:9px;margin-top:2px">7.68%</div>
+          <div class="mp-sub">YTD RETURN</div>
+        </div>
+        <div class="mini-panel">
+          <div class="mp-label">Portfolio Alloc</div>
+          <svg width="32" height="32" viewBox="0 0 32 32" style="margin:2px auto;display:block">
+            <circle cx="16" cy="16" r="12" fill="none" stroke="#1f2937" stroke-width="6"/>
+            <circle cx="16" cy="16" r="12" fill="none" stroke="#34d399" stroke-width="6" stroke-dasharray="47 28" stroke-dashoffset="25"/>
+            <circle cx="16" cy="16" r="12" fill="none" stroke="#475569" stroke-width="6" stroke-dasharray="15 60" stroke-dashoffset="-22"/>
+            <circle cx="16" cy="16" r="12" fill="none" stroke="#fbbf24" stroke-width="6" stroke-dasharray="5 70" stroke-dashoffset="-37"/>
+          </svg>
+        </div>
+        <div class="mini-panel">
+          <div class="mp-label">Key Metrics</div>
+          <div style="display:flex;flex-direction:column;gap:3px;margin-top:4px">
+            <div style="display:flex;justify-content:space-between;font-size:5px;color:#94a3b8"><span>RETURN (YTD)</span><span style="color:#34d399">7.68%</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:5px;color:#94a3b8"><span>SHARPE</span><span style="color:#f8fafc">0.67</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:5px;color:#94a3b8"><span>MAX DD</span><span style="color:#fb7185">-8.21%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="brand-bottom">
+        <div class="brand-left">
+          <div class="brand-icon">
+            <svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 12 L2 2 L12 2" fill="#34d399" opacity="0.9"/><path d="M3 9 L5.5 6 L8 7.5 L11 4" fill="none" stroke="#fff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12 H11" stroke="#fff" stroke-width="0.8" stroke-linecap="round"/><path d="M3.5 12 V10 M7 12 V8 M10.5 12 V6" stroke="#fff" stroke-width="0.8" stroke-linecap="round"/></svg>
+          </div>
+          <div class="brand-name">THE<span>STATS</span><br>AND<span class="gold">STACKS</span></div>
+        </div>
+        <div class="brand-cta">FOLLOW @THESTATSANDSTACKS<br>FOR VISUAL BREAKDOWNS ON MONEY, MARKETS & STRATEGY.<span class="brand-arrow">→</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE B: Cashflow -->
+  <div>
+    <div class="section-label" style="margin-bottom:8px">CashflowSlide — dual bar chart</div>
+    <div class="slide-mock">
+      <div class="dot-grid"></div>
+      <div class="halo-tr" style="background:radial-gradient(ellipse at top right,rgba(52,211,153,0.12) 0%,transparent 70%)"></div>
+
+      <div class="slide-num">01<span class="slide-num-label">CASH FLOW</span></div>
+      <div class="slide-accent-line"></div>
+
+      <div class="cf-header" style="top:60px;right:110px">
+        <div class="cf-eyebrow">CASH FLOW</div>
+        <div class="cf-h1" style="margin-top:28px"><em>CASH</em><br>FLOW</div>
+        <div class="cf-kicker" style="margin-top:6px">DOES THIS IMPROVE MONTHLY<br>CASH FLOW OR QUIETLY DRAIN IT?</div>
+      </div>
+
+      <div class="trend-box" style="top:62px;right:16px;width:84px">
+        <div class="trend-label">NET CASH FLOW<br>THIS MONTH</div>
+        <div class="trend-value">+$1,245</div>
+        <svg width="64" height="22" viewBox="0 0 64 22" style="margin:4px 0">
+          <polyline points="0,18 10,14 22,16 34,10 44,12 54,5 64,2" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        <div class="trend-sub" style="color:#34d399">+18.6% vs LAST MONTH</div>
+      </div>
+
+      <div class="dual-bars">
+        <!-- Inflow -->
+        <div class="bars-col">
+          <div class="bars-col-label" style="color:#34d399">↑ CASH INFLOW</div>
+          <div class="bars-col-total" style="color:#34d399">$6,250</div>
+          <div class="bars-group">
+            <div class="bar-item" style="height:72%;background:rgba(52,211,153,0.7)"></div>
+            <div class="bar-item" style="height:100%;background:rgba(52,211,153,0.85)"></div>
+            <div class="bar-item" style="height:60%;background:rgba(52,211,153,0.65)"></div>
+            <div class="bar-item" style="height:28%;background:rgba(52,211,153,0.5)"></div>
+          </div>
+          <div class="bar-legend">
+            <div class="bar-row"><span style="display:flex;align-items:center"><span class="bar-dot" style="background:#34d399"></span>Salary</span><span style="color:#34d399">$4,500</span></div>
+            <div class="bar-row"><span style="display:flex;align-items:center"><span class="bar-dot" style="background:#6ee7b7"></span>Investments</span><span style="color:#6ee7b7">$1,200</span></div>
+            <div class="bar-row"><span style="display:flex;align-items:center"><span class="bar-dot" style="background:#10b981"></span>Side Income</span><span style="color:#10b981">$450</span></div>
+            <div class="bar-row"><span style="display:flex;align-items:center"><span class="bar-dot" style="background:#047857"></span>Other</span><span style="color:#047857">$100</span></div>
+          </div>
+        </div>
+        <div class="vs-divider">VS</div>
+        <!-- Outflow -->
+        <div class="bars-col">
+          <div class="bars-col-label" style="color:#fbbf24">↓ CASH OUTFLOW</div>
+          <div class="bars-col-total" style="color:#fbbf24">$5,005</div>
+          <div class="bars-group">
+            <div class="bar-item" style="height:100%;background:rgba(251,191,36,0.8)"></div>
+            <div class="bar-item" style="height:78%;background:rgba(251,191,36,0.72)"></div>
+            <div class="bar-item" style="height:55%;background:rgba(251,191,36,0.65)"></div>
+            <div class="bar-item" style="height:82%;background:rgba(251,191,36,0.68)"></div>
+            <div class="bar-item" style="height:50%;background:rgba(251,191,36,0.55)"></div>
+          </div>
+          <div class="bar-legend">
+            <div class="bar-row"><span style="display:flex;align-items:center"><span class="bar-dot" style="background:#fbbf24"></span>Housing</span><span style="color:#fbbf24">$2,100</span></div>
+            <div class="bar-row"><span style="display:flex;align-items:center"><span class="bar-dot" style="background:#f59e0b"></span>Transport</span><span style="color:#f59e0b">$850</span></div>
+            <div class="bar-row"><span style="display:flex;align-items:center"><span class="bar-dot" style="background:#d97706"></span>Food</span><span style="color:#d97706">$600</span></div>
+            <div class="bar-row"><span style="display:flex;align-items:center"><span class="bar-dot" style="background:#b45309"></span>Lifestyle</span><span style="color:#b45309">$900</span></div>
+            <div class="bar-row"><span style="display:flex;align-items:center"><span class="bar-dot" style="background:#92400e"></span>Other</span><span style="color:#92400e">$555</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cf-summary">
+        <div style="display:flex;align-items:center;gap:5px">
+          <div style="width:16px;height:16px;border:1.5px solid #34d399;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;color:#34d399">↑</div>
+          <div><div class="cf-sum-label">INFLOW</div><div class="cf-sum-val" style="color:#34d399">$6,250</div></div>
+        </div>
+        <div class="cf-sum-op">−</div>
+        <div style="display:flex;align-items:center;gap:5px">
+          <div style="width:16px;height:16px;border:1.5px solid #fbbf24;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fbbf24">↓</div>
+          <div><div class="cf-sum-label">OUTFLOW</div><div class="cf-sum-val" style="color:#fbbf24">$5,005</div></div>
+        </div>
+        <div class="cf-sum-eq">=</div>
+        <div style="display:flex;align-items:center;gap:5px">
+          <div style="width:16px;height:16px;border:1.5px solid #34d399;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;color:#34d399">↗</div>
+          <div><div class="cf-sum-label">NET FLOW</div><div class="cf-sum-net">+$1,245</div></div>
+        </div>
+      </div>
+
+      <div class="brand-bottom">
+        <div class="brand-left">
+          <div class="brand-icon">
+            <svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 12 L2 2 L12 2" fill="#34d399" opacity="0.9"/><path d="M3 9 L5.5 6 L8 7.5 L11 4" fill="none" stroke="#fff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12 H11" stroke="#fff" stroke-width="0.8" stroke-linecap="round"/><path d="M3.5 12 V10 M7 12 V8 M10.5 12 V6" stroke="#fff" stroke-width="0.8" stroke-linecap="round"/></svg>
+          </div>
+          <div class="brand-name">THE<span>STATS</span><br>AND<span class="gold">STACKS</span></div>
+        </div>
+        <div class="brand-cta">FOLLOW @THESTATSANDSTACKS<br>FOR VISUAL BREAKDOWNS ON MONEY, MARKETS & STRATEGY.<span class="brand-arrow">→</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE C: Optionality -->
+  <div>
+    <div class="section-label" style="margin-bottom:8px">OptionelitySlide (NEW) — branching path</div>
+    <div class="slide-mock">
+      <div class="dot-grid"></div>
+      <div class="halo-tr"></div>
+
+      <div class="slide-num">05<span class="slide-num-label">OPTIONALITY FILTER</span></div>
+      <div class="slide-accent-line"></div>
+
+      <div class="opt-header" style="top:60px">
+        <div style="font-size:6px;font-weight:600;letter-spacing:0.18em;color:#34d399;text-transform:uppercase;margin-top:28px">OPTIONALITY</div>
+        <div style="font-size:22px;font-weight:900;line-height:0.95;letter-spacing:-0.025em;margin-top:4px">OPTIONALITY<br><span style="color:#34d399">CREATES</span><br>FUTURE CHOICES.</div>
+        <div style="font-size:6px;color:#64748b;margin-top:8px;line-height:1.4">WILL THIS DECISION OPEN<br>MORE DOORS LATER?</div>
+        <div style="width:20px;height:1.5px;background:#34d399;margin-top:8px"></div>
+      </div>
+
+      <!-- SVG branching paths -->
+      <svg style="position:absolute;left:0;right:0;top:0;bottom:0;width:100%;height:100%" viewBox="0 0 320 480" preserveAspectRatio="none">
+        <!-- origin point -->
+        <circle cx="120" cy="240" r="5" fill="#34d399"/>
+        <!-- paths -->
+        <path d="M120,240 C160,240 200,100 290,80" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linecap="round" opacity="0.9"/>
+        <path d="M120,240 C160,240 200,155 290,150" fill="none" stroke="#34d399" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+        <path d="M120,240 C160,240 200,205 290,210" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round" opacity="0.9"/>
+        <path d="M120,240 C160,240 200,250 290,260" fill="none" stroke="#fbbf24" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+        <path d="M120,240 C160,240 200,310 290,330" fill="none" stroke="#475569" stroke-width="1" stroke-linecap="round" stroke-dasharray="4,3" opacity="0.6"/>
+        <path d="M120,240 C160,240 200,370 290,395" fill="none" stroke="#475569" stroke-width="1" stroke-linecap="round" stroke-dasharray="4,3" opacity="0.5"/>
+        <!-- endpoint dots -->
+        <circle cx="290" cy="80" r="3.5" fill="#34d399"/>
+        <circle cx="290" cy="150" r="3" fill="#34d399" opacity="0.8"/>
+        <circle cx="290" cy="210" r="3.5" fill="#fbbf24"/>
+        <circle cx="290" cy="260" r="3" fill="#fbbf24" opacity="0.8"/>
+        <circle cx="290" cy="330" r="2.5" fill="#475569"/>
+        <circle cx="290" cy="395" r="2.5" fill="#475569"/>
+      </svg>
+
+      <!-- icon circles -->
+      <div class="opt-icon-col">
+        <div class="opt-icon" style="border-color:rgba(52,211,153,0.5);color:#34d399">📊</div>
+        <div class="opt-icon" style="border-color:rgba(52,211,153,0.35);color:#34d399">🌐</div>
+        <div class="opt-icon" style="border-color:rgba(251,191,36,0.5);color:#fbbf24">📈</div>
+        <div class="opt-icon" style="border-color:rgba(251,191,36,0.35);color:#fbbf24">🥧</div>
+        <div class="opt-icon" style="border-color:rgba(71,85,105,0.5);color:#475569">🛡</div>
+        <div class="opt-icon" style="border-color:rgba(71,85,105,0.35);color:#475569">⚡</div>
+      </div>
+
+      <div class="opt-items">
+        <div class="opt-item">
+          <div class="opt-item-icon">↕</div>
+          <div><div class="opt-item-label">Flexibility Today</div><div class="opt-item-body">Stay adaptable to change.</div></div>
+        </div>
+        <div class="opt-item">
+          <div class="opt-item-icon" style="border-color:rgba(251,191,36,0.4);background:rgba(251,191,36,0.06)">📊</div>
+          <div><div class="opt-item-label">Upside Tomorrow</div><div class="opt-item-body">Position for compounding.</div></div>
+        </div>
+        <div class="opt-item">
+          <div class="opt-item-icon">🛡</div>
+          <div><div class="opt-item-label">Downside Protection</div><div class="opt-item-body">Keep risk controlled.</div></div>
+        </div>
+        <div class="opt-item">
+          <div class="opt-item-icon" style="border-color:rgba(251,191,36,0.4);background:rgba(251,191,36,0.06)">⚡</div>
+          <div><div class="opt-item-label">Strategic Leverage</div><div class="opt-item-body">Build optionality in.</div></div>
+        </div>
+      </div>
+
+      <div class="brand-bottom">
+        <div class="brand-left">
+          <div class="brand-icon">
+            <svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 12 L2 2 L12 2" fill="#34d399" opacity="0.9"/><path d="M3 9 L5.5 6 L8 7.5 L11 4" fill="none" stroke="#fff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12 H11" stroke="#fff" stroke-width="0.8" stroke-linecap="round"/><path d="M3.5 12 V10 M7 12 V8 M10.5 12 V6" stroke="#fff" stroke-width="0.8" stroke-linecap="round"/></svg>
+          </div>
+          <div class="brand-name">THE<span>STATS</span><br>AND<span class="gold">STACKS</span></div>
+        </div>
+        <div class="brand-cta">FOLLOW @THESTATSANDSTACKS<br>FOR VISUAL BREAKDOWNS ON MONEY, MARKETS & STRATEGY.<span class="brand-arrow">→</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:28px;padding:16px;background:#111827;border:1px solid #1f2937;border-radius:10px;font-size:13px;color:#94a3b8;line-height:1.6">
+  <strong style="color:#f8fafc">Does this visual direction match what you want?</strong><br>
+  All 12 existing templates + 1 new OptionelitySlide will get this treatment. The three above show the new brand footer, dot-grid background, slide number as design element, and data-driven SVG charts. Reply in the terminal.
+</div>
+</body>
+</html>

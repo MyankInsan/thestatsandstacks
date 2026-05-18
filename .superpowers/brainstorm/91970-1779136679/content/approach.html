@@ -1,0 +1,40 @@
+<h2>Which approach should we take?</h2>
+<p class="subtitle">All three land at the same premium visual quality — the question is sequencing and risk.</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Chart Primitives First</h3>
+      <p>Build shared SVG chart components (BarChart, LineChart, DonutChart, BranchingPath) as a reusable library, then wire each slide template to them. Every future template automatically gets data visualization capability.</p>
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>Pros</h4><ul><li>Most extensible foundation</li><li>Each primitive is testable in isolation</li><li>AI payload drives the chart data cleanly</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Longer before first visible result</li><li>More upfront design decisions</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Template-by-Template Upgrade <span style="color:#22c55e;font-size:12px;margin-left:8px;font-weight:700">RECOMMENDED</span></h3>
+      <p>Upgrade each slide template individually — starting with CashflowSlide and CoverSlide since they appear in the reference images. Extract shared patterns into primitives as they emerge naturally.</p>
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>Pros</h4><ul><li>Fast visible progress (first template ships quickly)</li><li>Primitives emerge from real usage, not speculation</li><li>Lower risk — each template is independently deployable</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Some duplication across early templates before patterns solidify</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Full Visual Overhaul at Once</h3>
+      <p>Redesign all 10 existing templates simultaneously, enforcing the new design language across the entire system in a single coordinated pass.</p>
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>Pros</h4><ul><li>Maximum consistency from day one</li><li>No visual debt between templates</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>High blast radius — one bad template breaks the whole set</li><li>Long before anything is shippable</li><li>Hard to iterate on design decisions mid-flight</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>

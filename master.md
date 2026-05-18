@@ -15,6 +15,7 @@ Brand positioning:
 A premium, faceless, data-first finance page.
 
 Content focus:
+
 - Canadian personal finance
 - occasional US stocks / market education
 - current hot-market education when there is real public attention around a ticker, sector, earnings report, or catalyst
@@ -25,6 +26,7 @@ Content focus:
 - intelligent, high-trust, non-hype, non-gimmicky tone
 
 Voice:
+
 - direct
 - clear
 - credible
@@ -50,6 +52,7 @@ PRIMARY BUSINESS GOAL
 ==================================================
 
 Build an autonomous agentic system that:
+
 1. researches what is currently working on Instagram for this niche
 2. decides what content should be posted each day
 3. decides whether that content should be:
@@ -64,6 +67,7 @@ Build an autonomous agentic system that:
 10. improves future content choices
 
 The system must optimize for:
+
 - saves
 - shares
 - follows
@@ -108,6 +112,7 @@ TECHNICAL MISSION
 Build a deployable system on Google Cloud that runs 24/7.
 
 Preferred stack:
+
 - TypeScript-first
 - Node.js backend
 - Next.js admin dashboard
@@ -136,6 +141,7 @@ Create these agents/services:
 
 1. Trend Research Agent
 Purpose:
+
 - do deep research daily
 - run the hot-topic desk before evergreen planning so the system can catch market stories that investing and trading pages are already discussing
 - find what content patterns are currently performing in finance / personal finance / investing education on Instagram
@@ -146,6 +152,7 @@ Purpose:
 - maintain a ranked topic backlog
 
 Inputs:
+
 - public web research
 - official economic and tax calendars
 - official finance / tax / government websites when relevant
@@ -155,6 +162,7 @@ Inputs:
 - Google Trends or other legitimate trend sources if available
 
 Rules:
+
 - do not scrape Instagram in unsupported or risky ways
 - use permitted/public inputs only
 - prioritize durable educational demand over shallow trend chasing
@@ -163,6 +171,7 @@ Rules:
 - produce structured research output with confidence scores
 
 Output:
+
 - daily trend brief
 - ranked topic candidates
 - notes on why each topic may work now
@@ -170,17 +179,20 @@ Output:
 
 1A. Hot Topic Desk Agents
 Purpose:
+
 - create multiple independent idea streams before the main trend researcher decides
 - identify current market heat without paid APIs
 - convert fast-moving attention into premium, compliant picture-carousel ideas
 
 Agents:
+
 - Market Heat Agent: scans a free ticker watchlist for large moves, momentum, and 52-week heat.
 - Catalyst News Agent: checks recent public finance headlines for the hottest tickers.
 - Viral Finance Format Agent: converts attention into saveable educational formats.
 - Hot Topic Desk Agent: dedupes, ranks, and hands the best ideas to the Trend Research Agent.
 
 Rules:
+
 - no unsupported Instagram scraping
 - no copied creator layouts or hooks
 - no unverified exact numbers
@@ -189,22 +201,26 @@ Rules:
 
 1B. Media Planning Agents
 Purpose:
+
 - make the post-format decisions explicit before the strategist writes the final brief
 - decide whether today is one image or a carousel
 - decide the exact number of carousel frames
 - define the role of each frame so the carousel has no filler or empty-looking slides
 
 Agents:
+
 - Media Format Decision Agent: decides SINGLE_IMAGE versus CAROUSEL from the ranked research signals.
 - Carousel Planning Agent: chooses slide count and roles such as cover, what happened, catalyst, risk, what to watch, and saveable takeaway.
 
 Rules:
+
 - default to carousel for hot market education, frameworks, comparisons, checklists, and risk maps
 - choose single image only when one frame can carry the whole idea cleanly
 - hot stock education should usually use 8 frames so context and risk are not compressed into hype
 
-2. Content Strategy Agent
+1. Content Strategy Agent
 Purpose:
+
 - choose the best content type for today
 - decide whether today should be:
   - carousel
@@ -212,6 +228,7 @@ Purpose:
 - choose the final topic and angle
 
 Decision logic:
+
 - default to carousel for:
   - comparisons
   - step-by-step breakdowns
@@ -232,11 +249,13 @@ Output:
 - estimated performance rationale
 - recommended post time
 
-3. Editorial Planning Agent
+1. Editorial Planning Agent
 Purpose:
+
 - generate a complete post brief
 
 Output must include:
+
 - post title
 - hook variants
 - slide-by-slide outline if carousel
@@ -249,13 +268,15 @@ Output must include:
 - asset checklist
 - search keywords to target in caption and on-image text
 
-4. Image Prompt Agent
+1. Image Prompt Agent
 Purpose:
+
 - convert the editorial brief into high-quality image-generation prompts
 - create multiple visual directions per post
 - keep branding consistent
 
 Must support:
+
 - zero-cost/local prompt paths by default
 - optional Cloudflare Workers AI background generation with the capped free-allocation Flux Schnell model
 - OpenAI image generation only when zero-cost mode is intentionally disabled
@@ -266,11 +287,13 @@ Must support:
 - variant generation
 
 For every post generate:
+
 - at least 2 distinct concept directions
 - at least 2 variants per concept
 - enough images that a critic can choose the strongest set
 
 Rules:
+
 - for DayTrading-style market posts, use image models for background-only visuals; overlay all text locally so typography is exact
 - prompts must explicitly specify composition, typography zones, color system, layout, information density, and brand style
 - prompts must avoid generic AI slop
@@ -279,14 +302,16 @@ Rules:
 - do not generate visually dense garbage
 - keep the overall system premium, editorial, clean, and finance-appropriate
 
-5. Image Generation Agent
+1. Image Generation Agent
 Purpose:
+
 - call the selected image model API
 - generate candidate images
 - store assets and metadata
 - version prompts and outputs
 
 Requirements:
+
 - use portrait-friendly dimensions for Instagram when generating
 - support multi-image generation
 - prefer full-bleed photo/editorial backgrounds plus local Sharp/SVG typography for hot-topic market posts
@@ -296,27 +321,32 @@ Requirements:
 
 5A. Visual Asset Sourcing Agent
 Purpose:
+
 - choose the safest free visual source for each slide before rendering
 - source photo-style backgrounds without violating copyright or privacy rules
 - preserve attribution and license notes in the delivered post package
 
 Allowed sources:
+
 - Cloudflare Workers AI for original generated backgrounds under the free allocation and hard cap
 - Pexels API when a free key is configured
 - Wikimedia Commons when explicitly enabled and license metadata is reusable
 - local Sharp/SVG synthetic rendering as the guaranteed fallback
 
 Blocked sources:
+
 - Google Images scraping
 - Google Photos as a public image source
 - copied Instagram screenshots or creator templates
 
-6. Vision QA / Design Critic Agent
+1. Vision QA / Design Critic Agent
 Purpose:
+
 - inspect every generated image using vision
 - reject weak, broken, or risky outputs
 
 Checks:
+
 - text rendering quality
 - spelling errors
 - malformed letters
@@ -333,22 +363,26 @@ Checks:
 - whether the slide set is visually coherent as a series
 
 For carousel sets:
+
 - score each slide individually
 - score the set holistically
 - reject any set with even one broken slide if publishing confidence falls below threshold
 
 The critic must prefer:
+
 - clarity
 - premium feel
 - consistency
 - legibility
 - credibility
 
-7. Finance Accuracy & Compliance Agent
+1. Finance Accuracy & Compliance Agent
 Purpose:
+
 - verify every factual claim before publishing
 
 Requirements:
+
 - detect all factual claims in captions and slides
 - verify against approved source list
 - flag unsupported claims
@@ -359,6 +393,7 @@ Requirements:
 - force rewrites when confidence is low
 
 Approved-source priority:
+
 - official government sites
 - official regulator sites
 - official tax authority sites
@@ -367,6 +402,7 @@ Approved-source priority:
 - avoid random blogs for finance facts
 
 Rules:
+
 - if a fact cannot be verified, remove it or draft the post instead of publishing
 - educational framing only
 - no personalized recommendations
@@ -374,11 +410,13 @@ Rules:
 - no guarantee claims
 - no fake urgency
 
-8. Copywriting Agent
+1. Copywriting Agent
 Purpose:
+
 - write final post copy assets
 
 Generate:
+
 - final on-image text
 - final caption
 - 3 caption variants
@@ -391,6 +429,7 @@ Generate:
 - internal SEO/search keyword tags
 
 Tone:
+
 - premium
 - concise
 - credible
@@ -402,17 +441,20 @@ Tone:
 - never too many hashtags
 
 Rules:
+
 - keep captions optimized for clarity and saves
 - use search-relevant terms naturally
 - vary CTAs
 - do not overuse emojis
 - finance tone should feel intelligent, not loud
 
-9. Packaging Agent
+1. Packaging Agent
 Purpose:
+
 - assemble the final publish-ready asset bundle
 
 Bundle includes:
+
 - selected image(s)
 - final caption
 - first comment
@@ -424,11 +466,13 @@ Bundle includes:
 - source references used for verification
 - cover slide selection
 
-11. Publisher Agent
+1. Publisher Agent
 Purpose:
+
 - publish content automatically every morning
 
 Requirements:
+
 - support scheduled publishing
 - use secure authentication and token refresh
 - handle single-image posts and carousel publishing flows
@@ -439,15 +483,18 @@ Requirements:
 - protect against accidental double-posting
 
 Publishing logic:
+
 - local timezone must default to America/Vancouver unless configured otherwise
 - default publish window: morning local time
 - allow smart scheduling based on account analytics later
 
-12. Analytics Agent
+1. Analytics Agent
 Purpose:
+
 - collect post-performance metrics and feed learning back into the system
 
 Track:
+
 - impressions
 - reach
 - likes
@@ -465,6 +512,7 @@ Track:
 - content format performance
 
 Output:
+
 - per-post performance report
 - weekly summary
 - rolling insights
@@ -472,11 +520,13 @@ Output:
 - topic retirement suggestions
 - next-best topics
 
-13. Weekly Digest Agent
+1. Weekly Digest Agent
 Purpose:
+
 - give me one concise operator-level report once per week
 
 Include:
+
 - what posted
 - what worked
 - what failed
@@ -492,6 +542,7 @@ DATA MODEL
 ==================================================
 
 Design a robust schema for:
+
 - brand settings
 - accounts
 - content ideas
@@ -515,6 +566,7 @@ ADMIN DASHBOARD
 ==================================================
 
 Build a clean internal dashboard where I can:
+
 - see today’s proposed post
 - approve / reject / edit if I want
 - view generated images
@@ -543,12 +595,14 @@ Brand promise:
 “Clear, premium, data-first breakdowns on money, markets, and strategy.”
 
 Target audience:
+
 - Canadians interested in personal finance
 - beginner to intermediate investors
 - people comparing account types, tax strategies, money frameworks
 - occasional broader North American market learners
 
 Core content pillars:
+
 1. Canadian money systems explained
 2. investing frameworks and account selection
 3. tax-aware money decisions
@@ -557,6 +611,7 @@ Core content pillars:
 6. occasional US market education
 
 Content rules:
+
 - no celebrity finance gossip
 - no clickbait fearmongering
 - no meme spam
@@ -567,6 +622,7 @@ Content rules:
 - no fake portfolio claims
 
 Visual rules:
+
 - premium dark editorial style
 - clean composition
 - high contrast
@@ -583,15 +639,18 @@ DAILY AUTONOMOUS WORKFLOW
 Every day, run this workflow:
 
 Step 1: research
+
 - gather topic signals
 - update topic scores
 - identify one primary topic and two backups
 
 Step 2: choose format
+
 - decide carousel vs single image
 - justify decision
 
 Step 3: create post brief
+
 - hook
 - audience
 - angle
@@ -599,22 +658,27 @@ Step 3: create post brief
 - factual claim list
 
 Step 4: verify facts
+
 - source all factual claims
 - revise weak claims
 
 Step 5: generate image prompts
+
 - at least 2 directions
 - at least 2 variants per direction
 
 Step 6: generate images
+
 - produce candidate assets
 - store everything
 
 Step 7: critique images
+
 - reject weak outputs
 - score remaining sets
 
 Step 8: write copy
+
 - caption
 - CTA
 - hashtags
@@ -622,19 +686,23 @@ Step 8: write copy
 - alt text
 
 Step 9: final packaging
+
 - pick best asset set
 - attach copy
 - attach metadata
 - assign confidence score
 
 Step 10: publish or draft
+
 - if confidence >= threshold and all checks pass, publish
 - otherwise create draft + alert
 
 Step 11: post-publish logging
+
 - save post identifiers and preview
 
 Step 12: delayed analytics collection
+
 - collect and compare results later
 
 ==================================================
@@ -644,6 +712,7 @@ CONFIDENCE AND FAIL-SAFE LOGIC
 Define explicit confidence scoring.
 
 Suggested categories:
+
 - topic confidence
 - factual confidence
 - visual quality confidence
@@ -652,6 +721,7 @@ Suggested categories:
 - publishability confidence
 
 Hard fail conditions:
+
 - broken text in images
 - unverifiable factual claim
 - compliance red flag
@@ -664,6 +734,7 @@ Hard fail conditions:
 - uncertainty above threshold
 
 If hard fail:
+
 - do not publish
 - save draft
 - notify
@@ -677,6 +748,7 @@ SEARCH AND GROWTH LOGIC
 The system must not chase shallow virality.
 
 It must optimize for:
+
 - searchable topic phrasing
 - clear promise in first line / cover
 - save-worthy utility
@@ -688,6 +760,7 @@ It must optimize for:
 - compounding learning from past wins
 
 Growth heuristics:
+
 - prefer educational content with one clear takeaway
 - use comparison formats often
 - build recurring series
@@ -706,6 +779,7 @@ MVP SCOPE
 Ship the MVP first.
 
 MVP must include:
+
 - daily research
 - topic selection
 - zero-cost image generation with local Sharp output and optional capped Cloudflare Workers AI backgrounds
@@ -718,6 +792,7 @@ MVP must include:
 - weekly digest
 
 Nice-to-have after MVP:
+
 - A/B testing framework
 - content series memory
 - deeper trend clustering
@@ -757,6 +832,7 @@ TESTING REQUIREMENTS
 ==================================================
 
 Write tests for:
+
 - scheduling
 - topic selection
 - content-type decisioning
@@ -772,6 +848,7 @@ Write tests for:
 Add integration tests and dry-run mode.
 
 Implement:
+
 - dry-run publish mode
 - sandbox mode
 - test content mode
@@ -796,6 +873,7 @@ SUCCESS CRITERIA
 ==================================================
 
 This project is successful only if:
+
 - it can run daily with minimal intervention
 - it can generate premium finance content automatically
 - it avoids obvious factual and visual mistakes

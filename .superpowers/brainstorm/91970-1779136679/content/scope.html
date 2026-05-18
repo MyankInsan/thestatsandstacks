@@ -1,0 +1,31 @@
+<h2>Which templates are in scope for this pass?</h2>
+<p class="subtitle">The system has 12 existing templates. The reference images show 3 specific layouts. How far should this upgrade go?</p>
+
+<div class="options">
+  <div class="option" data-choice="priority3" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Just the 3 reference templates</h3>
+      <p>Upgrade <strong>CashflowSlide</strong>, <strong>CoverSlide</strong>, and add a new <strong>OptonalitySlide</strong> (branching path diagram) — the three visible in your reference images. Everything else stays as-is for now.</p>
+      <p style="margin-top:8px;color:#94a3b8;font-size:13px">Fastest to ship. Good for testing the new design language before committing to a full overhaul.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="highimpact" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>High-impact templates (6–7) <span style="color:#22c55e;font-size:12px;margin-left:8px;font-weight:700">RECOMMENDED</span></h3>
+      <p>Upgrade the templates that appear most frequently in generated posts: <strong>CoverSlide, CashflowSlide, FrameworkSlide, BigNumberSlide, ComparisonSlide, OutroSlide</strong> — plus add the new <strong>OptionelitySlide</strong>.</p>
+      <p style="margin-top:8px;color:#94a3b8;font-size:13px">Covers ~90% of posts. Remaining templates (QuoteSlide, RiskMapSlide, MythVsFactSlide) can follow in a second pass.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="all" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>All 12 templates + new ones</h3>
+      <p>Full visual overhaul of every existing template plus add new ones (OptionelitySlide, and anything else that emerges from the new design language).</p>
+      <p style="margin-top:8px;color:#94a3b8;font-size:13px">Complete consistency. Larger scope — probably 2–3x the work of Option B.</p>
+    </div>
+  </div>
+</div>

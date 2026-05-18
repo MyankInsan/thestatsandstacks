@@ -374,9 +374,31 @@ Build in this sequence to keep each step independently shippable:
 
 ---
 
+---
+
+## Section 5 — Remotion Video Pipeline
+
+The Remotion pipeline renders videos by animating the **already-rendered PNG slides** from the template system. The visual upgrade to all templates therefore flows through to videos automatically — no Remotion-specific template work is needed.
+
+One Remotion-specific visual element requires an upgrade:
+
+### `ProgressBar.tsx`
+
+Current: 4px solid emerald→cyan gradient line at the bottom of every video frame.
+
+Upgraded design:
+
+- Height: stays 4px
+- Background: `linear-gradient(90deg, var(--tone-acc, #34D399) 0%, #06B6D4 100%)` (keep emerald→cyan but ensure it uses the tone accent variable for consistency)
+- Add a very subtle white glow: `boxShadow: '0 0 8px rgba(52,211,153,0.5)'`
+- Opacity: increase from 0.75 → 0.85 for better visibility on dark slides
+
+No changes needed to `SlideScene.tsx` (Ken Burns + crossfade) or `SlideShow.tsx` (sequencing).
+
+---
+
 ## Out of Scope
 
-- Animation / Remotion changes (separate concern)
 - Dashboard UI changes
 - Caption / hashtag generation
 - Instagram publishing pipeline
