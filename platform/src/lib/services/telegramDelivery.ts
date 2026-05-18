@@ -116,7 +116,7 @@ async function sendPhotoAlbum(
         return {
           type: 'photo',
           media: `attach://${fieldName}`,
-          ...(globalIdx === 0 ? { caption: firstCaption } : {}),
+          ...(globalIdx === 0 ? { caption: firstCaption.slice(0, 1024) } : {}),
         };
       });
 
@@ -215,6 +215,3 @@ function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function buildMediaSummary(imageCount: number): string {
-  return imageCount > 0 ? `${imageCount} picture slide${imageCount === 1 ? '' : 's'}` : 'no media';
-}
