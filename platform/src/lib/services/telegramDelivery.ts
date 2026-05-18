@@ -6,6 +6,30 @@ import { StrategyDecision } from '../agents/contentStrategyAgent';
 import { QAReport } from '../agents/visionQAAgent';
 
 const TELEGRAM_RETRY_ATTEMPTS = 4;
+
+export function buildAlbumCaption(strategy: StrategyDecision, qaReport: QAReport): string {
+  return `TheStatsAndStacks\n${strategy.topic}\n${strategy.format} · QA ${(qaReport.overallScore * 100).toFixed(0)}%`;
+}
+
+export function buildCaptionMessage(caption: string): string {
+  return `📝 CAPTION — copy this into Instagram:\n\n${caption}`;
+}
+
+export function buildHashtagsMessage(hashtags: string): string {
+  return `# HASHTAGS — copy these:\n\n${hashtags}`;
+}
+
+export function buildPinnedCommentMessage(firstComment: string): string {
+  return `📌 PIN THIS COMMENT — post after publishing:\n\n${firstComment}`;
+}
+
+export function chunkIntoAlbums<T>(items: T[], maxPerAlbum: number): T[][] {
+  const chunks: T[][] = [];
+  for (let i = 0; i < items.length; i += maxPerAlbum) {
+    chunks.push(items.slice(i, i + maxPerAlbum));
+  }
+  return chunks;
+}
 const TELEGRAM_TIMEOUT_MS = 30_000;
 
 export async function sendPostToTelegram(input: {
