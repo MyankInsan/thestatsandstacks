@@ -27,17 +27,19 @@ import { RiskMapSlide } from './RiskMapSlide';
 import { OutroSlide } from './OutroSlide';
 import React from 'react';
 
-export const SLIDE_TEMPLATES: Record<string, React.ComponentType<Record<string, unknown>>> = {
-  CoverSlide,
-  PureCoverSlide,
-  MarketPosterSlide,
-  FrameworkSlide,
-  ComparisonSlide,
-  MythVsFactSlide,
-  BigNumberSlide,
-  PureStatSlide,
-  QuoteSlide,
-  CashflowSlide,
-  RiskMapSlide,
-  OutroSlide,
+type AnySlide = React.ComponentType<Record<string, unknown>>;
+
+export const SLIDE_TEMPLATES: Record<string, AnySlide> = {
+  CoverSlide: CoverSlide as unknown as AnySlide,
+  PureCoverSlide: PureCoverSlide as unknown as AnySlide,
+  MarketPosterSlide: MarketPosterSlide as unknown as AnySlide,
+  FrameworkSlide: FrameworkSlide as unknown as AnySlide,
+  ComparisonSlide: ComparisonSlide as unknown as AnySlide,
+  MythVsFactSlide: MythVsFactSlide as unknown as AnySlide,
+  BigNumberSlide: BigNumberSlide as unknown as AnySlide,
+  PureStatSlide: PureStatSlide as unknown as AnySlide,
+  QuoteSlide: QuoteSlide as unknown as AnySlide,
+  CashflowSlide: CashflowSlide as unknown as AnySlide,
+  RiskMapSlide: RiskMapSlide as unknown as AnySlide,
+  OutroSlide: OutroSlide as unknown as AnySlide,
 };

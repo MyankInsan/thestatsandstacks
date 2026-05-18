@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 let browser: Browser | null = null;
 
 export async function getOrCreateBrowser(): Promise<Browser> {
-  if (browser?.isConnected()) return browser;
+  if (browser?.connected) return browser;
   const execPath = process.env.PUPPETEER_EXECUTABLE_PATH;
   if (!execPath) {
     throw new Error(
@@ -51,7 +51,7 @@ export async function renderSlideToBuffer(
   const page = await b.newPage();
   try {
     const html = buildSlideHtml(template, props);
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+    await page.setContent(html, { waitUntil: 'load' });
     const buf = await page.screenshot({
       type: 'png',
       clip: { x: 0, y: 0, width: 1080, height: 1350 },
