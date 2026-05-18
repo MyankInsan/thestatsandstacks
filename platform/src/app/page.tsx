@@ -1,190 +1,185 @@
-import { PrismaClient } from "@prisma/client";
-import { RunWorkflowButton } from "@/components/RunWorkflowButton";
-import Image from "next/image";
-
-const prisma = new PrismaClient();
+import { PrismaClient } from '@prisma/client';
+import './render/tokens.css';
+import '../components/dashboard/dashboard.css';
+import { Header } from '../components/dashboard/Header';
+import { StatBar } from '../components/dashboard/StatBar';
+import { BriefModule } from '../components/dashboard/BriefModule';
+import { SlideGrid } from '../components/dashboard/SlideGrid';
+import { PostMeta } from '../components/dashboard/PostMeta';
+import { RegenLoopCard } from '../components/dashboard/RegenLoopCard';
+import { PipelineStrip } from '../components/dashboard/PipelineStrip';
+import type { AgentConfig } from '../components/dashboard/PipelineStrip';
 
 export const dynamic = 'force-dynamic';
+const prisma = new PrismaClient();
 
 export default async function Dashboard() {
-  const latestPost = await prisma.post.findFirst({
-    orderBy: { createdAt: "desc" },
-    include: { 
-      brief: true,
-      Assets: { 
-        include: { asset: true },
-        orderBy: { orderIndex: 'asc' }
-      }
-    },
-  });
+  const [postsCount, ideasCount, latestPost] = await Promise.all([
+    prisma.post.count(),
+    prisma.contentIdea.count(),
+    prisma.post.findFirst({
+      orderBy: { createdAt: 'desc' },
+      include: {
+        brief: true,
+        Assets: { include: { asset: true }, orderBy: { orderIndex: 'asc' } },
+      },
+    }),
+  ]);
 
-  const postsCount = await prisma.post.count();
-  const ideasCount = await prisma.contentIdea.count();
+  const [agentRuns, regenAttempts] = latestPost
+    ? await Promise.all([
+        prisma.agentRun.findMany({
+          where: { postId: latestPost.id },
+          orderBy: { startedAt: 'asc' },
+        }),
+        prisma.regenAttempt.findMany({ where: { postId: latestPost.id } }),
+      ])
+    : [[], []];
+
+  const qaScore = latestPost
+    ? `${(latestPost.confidenceScore * 100).toFixed(0)}%`
+    : '—';
+
+  const brief = latestPost?.brief
+    ? {
+        hotTopic: latestPost.brief.hook,
+        research: `${latestPost.Assets?.length ?? 0} slides generated`,
+        format: latestPost.brief.format,
+        layout: Array.isArray(latestPost.brief.outline)
+          ? (latestPost.brief.outline as string[]).slice(0, 3).join(' · ')
+          : String(latestPost.brief.outline ?? ''),
+        compliance: 'Educational frame only · no buy/sell language',
+      }
+    : null;
+
+  const slides = (latestPost?.Assets ?? []).map((pa, i) => ({
+    bg: 'linear-gradient(135deg,#06101D,#0d1b2a 55%,#111111)',
+    eyebrow: `SLIDE ${String(i + 1).padStart(2, '0')}`,
+    headline: latestPost?.brief?.hook ?? '—',
+    viz: 'quote' as const,
+    qa: pa.asset.visionScore ?? 0,
+  }));
+
+  const postMeta = latestPost
+    ? {
+        topic: latestPost.brief?.hook ?? '—',
+        format: latestPost.brief?.format ?? '—',
+        pillar: 'MARKET EDUCATION',
+        confidence: latestPost.confidenceScore,
+        caption: latestPost.caption,
+        hashtags: latestPost.hashtags,
+        firstComment: latestPost.firstComment ?? '',
+        scheduledFor: latestPost.publishDate
+          ? latestPost.publishDate.toLocaleString('en-CA', {
+              timeZone: 'America/Vancouver',
+            })
+          : '—',
+        timezone: 'PT',
+        status: latestPost.status,
+        statusTone: (latestPost.status === 'PUBLISHED'
+          ? 'emerald'
+          : latestPost.status === 'FAILED'
+          ? 'rose'
+          : 'amber') as 'emerald' | 'rose' | 'amber',
+      }
+    : null;
+
+  const regenEntries = regenAttempts.map((r) => ({
+    slide: r.slideNumber,
+    status: (r.resolved ? 'resolved' : 'retrying') as
+      | 'resolved'
+      | 'retrying'
+      | 'fallback',
+    attempts: r.attempt,
+    cap: 5,
+    before: {
+      score: r.scoreBefore,
+      bg: 'linear-gradient(135deg,#06101D,#0d1b2a 55%,#111111)',
+    },
+    after: {
+      score: r.scoreAfter,
+      bg: 'linear-gradient(135deg,#06101D,#0d1b2a 55%,#111111)',
+    },
+    notes: (r.critique as Array<{ severity: string; body: string }>).map(
+      (c) => ({ severity: c.severity, text: c.body })
+    ),
+  }));
+
+  const agents: AgentConfig[] | undefined = agentRuns.length
+    ? agentRuns.map((r) => ({
+        name: agentDisplayName(r.agent),
+        icon: agentIcon(r.agent),
+        status: agentStatus(r.status),
+      }))
+    : undefined;
 
   return (
-    <div className="min-h-screen bg-[#0B1120]">
-      {/* Header */}
-      <header className="bg-[#0F172A] border-b border-slate-800 p-5">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
-            <h1 className="text-xl font-bold tracking-tight text-white">
-              The<span className="text-emerald-400">Stats</span>And<span className="text-amber-400">Stacks</span>
-            </h1>
-          </div>
-          <div className="flex gap-3 items-center">
-            <span className="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1.5 rounded-full font-mono">
-              SYSTEM ONLINE
-            </span>
-            <RunWorkflowButton />
-          </div>
+    <div className="tss">
+      <Header />
+      <main className="dash-main">
+        <StatBar posts={postsCount} ideas={ideasCount} qa={qaScore} />
+        {brief && <BriefModule brief={brief} />}
+        <div className="main-row">
+          <SlideGrid slides={slides} />
+          {postMeta && <PostMeta post={postMeta} />}
         </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto p-6">
-        {/* Stats Bar */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
-          <div className="bg-[#0F172A] border border-slate-800 rounded-xl p-4 text-center">
-            <p className="text-3xl font-bold text-white">{postsCount}</p>
-            <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider">Posts Created</p>
-          </div>
-          <div className="bg-[#0F172A] border border-slate-800 rounded-xl p-4 text-center">
-            <p className="text-3xl font-bold text-white">{ideasCount}</p>
-            <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider">Ideas Researched</p>
-          </div>
-          <div className="bg-[#0F172A] border border-slate-800 rounded-xl p-4 text-center">
-            <p className="text-3xl font-bold text-emerald-400">
-              {latestPost ? `${(latestPost.confidenceScore * 100).toFixed(0)}%` : '—'}
-            </p>
-            <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider">QA Score</p>
-          </div>
-        </div>
-
-        {latestPost ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left: Images */}
-            <div className="lg:col-span-2 bg-[#0F172A] border border-slate-800 rounded-xl p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold text-white">Generated Slides</h2>
-                <span className="text-xs bg-slate-800 text-slate-400 px-2 py-1 rounded font-mono">
-                  {latestPost.Assets?.length || 0} slides
-                </span>
-              </div>
-
-              {latestPost.Assets && latestPost.Assets.length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {latestPost.Assets.map((postAsset, i) => (
-                    <div key={postAsset.id} className="relative group">
-                      <Image
-                        src={postAsset.asset.imageUrl}
-                        alt={`Slide ${i + 1}`}
-                        width={1080}
-                        height={1350}
-                        unoptimized
-                        className="w-full aspect-[4/5] object-cover rounded-lg border border-slate-700 group-hover:border-emerald-500 transition-colors"
-                      />
-                      <div className="absolute top-2 left-2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded font-mono">
-                        SLIDE {i + 1}
-                      </div>
-                      {postAsset.asset.visionScore && (
-                        <div className={`absolute top-2 right-2 text-[10px] px-2 py-0.5 rounded font-mono ${
-                          postAsset.asset.visionScore >= 0.8 
-                            ? 'bg-emerald-500/20 text-emerald-400' 
-                            : 'bg-red-500/20 text-red-400'
-                        }`}>
-                          QA: {(postAsset.asset.visionScore * 100).toFixed(0)}%
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-slate-500 text-sm">No images generated yet.</p>
-              )}
-            </div>
-
-            {/* Right: Post Details */}
-            <div className="space-y-4">
-              {/* Topic Card */}
-              <div className="bg-[#0F172A] border border-slate-800 rounded-xl p-5">
-                <h3 className="text-xs text-slate-500 uppercase tracking-wider mb-2">Topic</h3>
-                <p className="text-white font-medium text-sm">{latestPost.brief?.hook}</p>
-                <div className="flex gap-2 mt-3">
-                  <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full">
-                    {latestPost.brief?.format}
-                  </span>
-                  <span className="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-full">
-                    {(latestPost.confidenceScore * 100).toFixed(0)}% confidence
-                  </span>
-                </div>
-              </div>
-
-              {/* Caption Card */}
-              <div className="bg-[#0F172A] border border-slate-800 rounded-xl p-5">
-                <h3 className="text-xs text-slate-500 uppercase tracking-wider mb-2">Caption</h3>
-                <p className="text-slate-300 text-xs whitespace-pre-wrap leading-relaxed max-h-40 overflow-y-auto">
-                  {latestPost.caption}
-                </p>
-              </div>
-
-              {/* Hashtags Card */}
-              <div className="bg-[#0F172A] border border-slate-800 rounded-xl p-5">
-                <h3 className="text-xs text-slate-500 uppercase tracking-wider mb-2">Hashtags</h3>
-                <p className="text-emerald-400/80 text-xs break-words">
-                  {latestPost.hashtags}
-                </p>
-              </div>
-
-              {/* First Comment Card */}
-              {latestPost.firstComment && (
-                <div className="bg-[#0F172A] border border-slate-800 rounded-xl p-5">
-                  <h3 className="text-xs text-slate-500 uppercase tracking-wider mb-2">First Comment</h3>
-                  <p className="text-slate-300 text-xs">{latestPost.firstComment}</p>
-                </div>
-              )}
-
-              {/* Status */}
-              <div className="bg-[#0F172A] border border-slate-800 rounded-xl p-5">
-                <h3 className="text-xs text-slate-500 uppercase tracking-wider mb-2">Status</h3>
-                <p className="text-amber-400 text-sm font-mono">{latestPost.status}</p>
-                <p className="text-slate-600 text-[10px] mt-1">
-                  Created {latestPost.createdAt.toLocaleString()}
-                </p>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="bg-[#0F172A] border border-slate-800 rounded-xl p-12 text-center">
-            <p className="text-slate-500 text-sm">No posts generated yet.</p>
-            <p className="text-slate-600 text-xs mt-2">Click &quot;Run Full Pipeline&quot; to generate your first post.</p>
-          </div>
-        )}
-
-        {/* Agent Pipeline Status */}
-        <div className="mt-8 bg-[#0F172A] border border-slate-800 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">Agent Pipeline</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-9 gap-3">
-            {[
-              { name: 'Cost Guard', icon: '◎' },
-              { name: 'Trend Research', icon: '🔍' },
-              { name: 'Strategy', icon: '🧠' },
-              { name: 'Compliance', icon: '✓' },
-              { name: 'Image Prompts', icon: '🎨' },
-              { name: 'Image Gen', icon: '🖼️' },
-              { name: 'Vision QA', icon: '🔎' },
-              { name: 'Copywriter', icon: '✍️' },
-            ].map((agent, i) => (
-              <div key={i} className="bg-[#1E293B] rounded-lg p-3 text-center border border-slate-700">
-                <p className="text-lg">{agent.icon}</p>
-                <p className="text-[10px] text-slate-400 mt-1 font-mono">{agent.name}</p>
-                <div className="w-full h-0.5 bg-emerald-500/30 rounded mt-2">
-                  <div className="h-full bg-emerald-400 rounded" style={{ width: '100%' }}></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        {regenEntries.length > 0 && <RegenLoopCard entries={regenEntries} />}
+        <PipelineStrip agents={agents} />
       </main>
     </div>
   );
+}
+
+function agentDisplayName(name: string): string {
+  const map: Record<string, string> = {
+    CostGuardAgent: 'Cost Guard',
+    HotTopicDeskAgent: 'Hot Topic Desk',
+    TickersInNewsAgent: 'Tickers in News',
+    TrendResearchAgent: 'Trend Research',
+    HistoryGuardAgent: 'History Guard',
+    ContentStrategyAgent: 'Strategy',
+    MediaFormatDecisionAgent: 'Format Decider',
+    ReelPlannerAgent: 'Reel Planner',
+    EditorialAgent: 'Editorial',
+    ComplianceQAAgent: 'Compliance',
+    ImagePromptAgent: 'Image Prompts',
+    ImageGenerationAgent: 'Image / Video',
+    SoundDesignAgent: 'Sound Design',
+    VisionQAAgent: 'Vision Critic',
+    RegenLoopAgent: 'Regen Loop',
+    CopywritingAgent: 'Copywriter',
+    FinalGateAgent: 'Final Gate',
+    PublisherAgent: 'Publisher',
+  };
+  return map[name] ?? name;
+}
+
+function agentIcon(name: string): string {
+  const map: Record<string, string> = {
+    CostGuardAgent: '◎',
+    HotTopicDeskAgent: '🔥',
+    TickersInNewsAgent: '📰',
+    TrendResearchAgent: '🔍',
+    HistoryGuardAgent: '🧬',
+    ContentStrategyAgent: '🧠',
+    MediaFormatDecisionAgent: '🧭',
+    ReelPlannerAgent: '🎬',
+    EditorialAgent: '🗞️',
+    ComplianceQAAgent: '✓',
+    ImagePromptAgent: '🎨',
+    ImageGenerationAgent: '🖼️',
+    SoundDesignAgent: '🎚️',
+    VisionQAAgent: '🔎',
+    RegenLoopAgent: '↻',
+    CopywritingAgent: '✍️',
+    FinalGateAgent: '🛡️',
+    PublisherAgent: '🚀',
+  };
+  return map[name] ?? '◉';
+}
+
+function agentStatus(status: string): 'done' | 'running' | 'idle' {
+  if (status === 'DONE' || status === 'done' || status === 'COMPLETE' || status === 'SUCCESS') return 'done';
+  if (status === 'RUNNING' || status === 'running' || status === 'IN_PROGRESS') return 'running';
+  return 'idle';
 }
