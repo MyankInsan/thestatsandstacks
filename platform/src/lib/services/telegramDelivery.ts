@@ -31,81 +31,106 @@ export function chunkIntoAlbums<T>(items: T[], maxPerAlbum: number): T[][] {
   return chunks;
 }
 const TELEGRAM_TIMEOUT_MS = 30_000;
+const MAX_PHOTOS_PER_ALBUM = 10;
 
 export async function sendPostToTelegram(input: {
-  images: GeneratedImage[],
-  copy: CopyBundle,
-  strategy: StrategyDecision,
-  qaReport: QAReport,
-  manualPromptPath?: string,
-  researchBriefPath?: string,
-  visualAssetPlanPath?: string,
-}) {
+  images: GeneratedImage[];
+  copy: CopyBundle;
+  strategy: StrategyDecision;
+  qaReport: QAReport;
+  manualPromptPath?: string;
+  researchBriefPath?: string;
+  visualAssetPlanPath?: string;
+}): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) {
     console.log('[TelegramDelivery] Skipped (TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set).');
     return;
   }
-  const mediaSummary = buildMediaSummary(input.images.length);
 
-  const summary = [
-    `TheStatsAndStacks daily post`,
-    `Topic: ${input.strategy.topic}`,
-    `Format: ${input.strategy.format} (${mediaSummary})`,
-    `QA Score: ${(input.qaReport.overallScore * 100).toFixed(0)}%`,
-    '',
-    input.copy.caption,
-    '',
-    input.copy.hashtags,
-  ].join('\n');
+  // 1: Photo album — images display inline, not as file downloads
+  await sendPhotoAlbum(token, chatId, input.images, buildAlbumCaption(input.strategy, input.qaReport));
 
+  // 2: Caption — copy-ready labeled message
   await callTelegram(token, 'sendMessage', {
     chat_id: chatId,
-    text: summary.slice(0, 3900),
+    text: buildCaptionMessage(input.copy.caption).slice(0, 4096),
   });
 
-  for (const image of input.images) {
-    await uploadTelegramDocument({
-      token,
-      chatId,
-      filePath: image.localPath,
-      caption: `Slide ${image.slideNumber}`,
-      contentType: image.mimeType,
-    });
+  // 3: Hashtags — copy-ready labeled message
+  await callTelegram(token, 'sendMessage', {
+    chat_id: chatId,
+    text: buildHashtagsMessage(input.copy.hashtags).slice(0, 4096),
+  });
+
+  // 4: Pinned comment — copy-ready labeled message
+  await callTelegram(token, 'sendMessage', {
+    chat_id: chatId,
+    text: buildPinnedCommentMessage(input.copy.firstComment).slice(0, 4096),
+  });
+
+  // Reference documents (research brief, visual plan, manual prompts)
+  const docs: Array<{ path: string | undefined; caption: string }> = [
+    { path: input.manualPromptPath,    caption: 'Manual image prompts & style lock' },
+    { path: input.researchBriefPath,   caption: 'Research brief & content rationale' },
+    { path: input.visualAssetPlanPath, caption: 'Visual source plan & attribution' },
+  ];
+  for (const doc of docs) {
+    if (doc.path && fs.existsSync(doc.path)) {
+      await uploadTelegramDocument({
+        token,
+        chatId,
+        filePath: doc.path,
+        caption: doc.caption,
+        contentType: 'text/markdown',
+      });
+    }
   }
 
-  if (input.manualPromptPath && fs.existsSync(input.manualPromptPath)) {
-    await uploadTelegramDocument({
-      token,
-      chatId,
-      filePath: input.manualPromptPath,
-      caption: 'Manual prompts and style lock',
-      contentType: 'text/markdown',
+  console.log(`[TelegramDelivery] ✅ Sent ${input.images.length} slides as inline photos + 3 copy-ready messages.`);
+}
+
+async function sendPhotoAlbum(
+  token: string,
+  chatId: string,
+  images: GeneratedImage[],
+  firstCaption: string,
+): Promise<void> {
+  const chunks = chunkIntoAlbums(images, MAX_PHOTOS_PER_ALBUM);
+
+  for (const [chunkIdx, chunk] of chunks.entries()) {
+    await withTelegramRetry(`sendMediaGroup:chunk${chunkIdx}`, async () => {
+      const form = new FormData();
+      form.append('chat_id', chatId);
+
+      const mediaArr = chunk.map((img, localIdx) => {
+        const globalIdx = chunkIdx * MAX_PHOTOS_PER_ALBUM + localIdx;
+        const fieldName = `photo${globalIdx}`;
+        const buf = fs.readFileSync(img.localPath);
+        form.append(
+          fieldName,
+          new Blob([new Uint8Array(buf)], { type: 'image/png' }),
+          path.basename(img.localPath),
+        );
+        return {
+          type: 'photo',
+          media: `attach://${fieldName}`,
+          ...(globalIdx === 0 ? { caption: firstCaption } : {}),
+        };
+      });
+
+      form.append('media', JSON.stringify(mediaArr));
+
+      const response = await fetchWithTimeout(
+        `https://api.telegram.org/bot${token}/sendMediaGroup`,
+        { method: 'POST', body: form },
+      );
+      if (!response.ok) {
+        throw new Error(`Telegram sendMediaGroup chunk ${chunkIdx} failed: ${response.status} ${await response.text()}`);
+      }
     });
   }
-
-  if (input.researchBriefPath && fs.existsSync(input.researchBriefPath)) {
-    await uploadTelegramDocument({
-      token,
-      chatId,
-      filePath: input.researchBriefPath,
-      caption: 'Research brief and content rationale',
-      contentType: 'text/markdown',
-    });
-  }
-
-  if (input.visualAssetPlanPath && fs.existsSync(input.visualAssetPlanPath)) {
-    await uploadTelegramDocument({
-      token,
-      chatId,
-      filePath: input.visualAssetPlanPath,
-      caption: 'Visual source plan and attribution notes',
-      contentType: 'text/markdown',
-    });
-  }
-
-  console.log(`[TelegramDelivery] ✅ Sent ${input.images.length} picture slides to Telegram.`);
 }
 
 async function callTelegram(token: string, method: string, body: Record<string, unknown>) {
