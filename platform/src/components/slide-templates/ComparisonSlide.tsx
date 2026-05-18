@@ -51,11 +51,13 @@ function Col({ label, name, bullets, primary }: { label: string; name?: string; 
   );
 }
 
+const DEFAULT_COL: ColData = { label: '—', bullets: [] };
+
 export function ComparisonSlide({
   eyebrow = 'COMPARISON',
   headline = 'TFSA vs RRSP',
-  left,
-  right,
+  left = DEFAULT_COL,
+  right = DEFAULT_COL,
   tone = 'amber',
   frameNo,
   totalFrames,

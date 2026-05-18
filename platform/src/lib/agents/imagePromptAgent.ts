@@ -93,6 +93,45 @@ function buildTemplateProps(
     const tickerMatch = strategy.topic.match(/\b([A-Z]{2,5})\b/);
     return { ...base, ticker: tickerMatch?.[1] ?? '—', name: strategy.topic, delta: '', headline: slide };
   }
+  if (template === 'ComparisonSlide') {
+    // Parse "X vs Y" from slide description or topic, fall back to generic labels
+    const vsMatch = (slide + ' ' + strategy.topic).match(/([^:,vs]+)\s+vs\.?\s+([^:,]+)/i);
+    const leftLabel = vsMatch?.[1]?.trim().toUpperCase() ?? 'OPTION A';
+    const rightLabel = vsMatch?.[2]?.trim().toUpperCase() ?? 'OPTION B';
+    return {
+      ...base,
+      tone: 'amber',
+      eyebrow: 'COMPARISON',
+      headline: slide,
+      left: { label: leftLabel, bullets: ['Tax-free growth', 'Flexible withdrawals', 'No income deduction'] },
+      right: { label: rightLabel, bullets: ['Tax deduction now', 'Grows tax-sheltered', 'Taxed on withdrawal'] },
+    };
+  }
+  if (template === 'MythVsFactSlide') {
+    return {
+      ...base,
+      headline: slide,
+      myth: 'Common misconception about ' + strategy.topic,
+      fact: 'The evidence-based reality for Canadian investors',
+    };
+  }
+  if (template === 'BigNumberSlide') {
+    return { ...base, headline: slide, stat: '—', context: strategy.topic };
+  }
+  if (template === 'RiskMapSlide') {
+    return {
+      ...base,
+      headline: slide,
+      risks: [
+        { tag: 'RISK 1', title: 'Market volatility', body: 'Prices can move sharply in either direction.' },
+        { tag: 'RISK 2', title: 'Liquidity risk', body: 'Some assets are harder to exit quickly.' },
+        { tag: 'RISK 3', title: 'Emotional decisions', body: 'Panic-selling locks in losses unnecessarily.' },
+      ],
+    };
+  }
+  if (template === 'OutroSlide') {
+    return { ...base, headline: slide, cta: 'Follow for more daily finance breakdowns' };
+  }
   return { ...base, headline: slide };
 }
 
