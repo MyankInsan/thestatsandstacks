@@ -54,3 +54,24 @@ for (const [name, props] of templateTests) {
     assert.ok(html.length > 100, `${name} rendered empty HTML`);
   });
 }
+
+test('buildSlideHtml returns complete HTML with font link and slide-frame', async () => {
+  const { buildSlideHtml } = await import('../src/lib/render/puppeteerRenderer');
+  const html = buildSlideHtml('CoverSlide', {
+    headline: 'TFSA vs RRSP',
+    eyebrow: 'MARKET EDUCATION',
+    frameNo: 1,
+    totalFrames: 6,
+  });
+  assert.ok(html.includes('<!DOCTYPE html>'));
+  assert.ok(html.includes('fonts.googleapis.com'));
+  assert.ok(html.includes('JetBrains+Mono'));
+  assert.ok(html.includes('slide-frame'));
+  assert.ok(html.includes('TFSA vs RRSP'));
+});
+
+test('buildSlideHtml falls back to CoverSlide for unknown template names', async () => {
+  const { buildSlideHtml } = await import('../src/lib/render/puppeteerRenderer');
+  const html = buildSlideHtml('UnknownTemplate', { headline: 'Fallback test' });
+  assert.ok(html.includes('slide-frame'));
+});
