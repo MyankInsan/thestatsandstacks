@@ -31,6 +31,14 @@ export function PureCoverSlide({
       scale={false}
       theme={{ bg: 'linear-gradient(180deg,#06101D 0%,#0a1424 100%)' }}
     >
+      <div className="halo" />
+      {/* decorative horizontal rule pair */}
+      <div style={{
+        position: 'absolute', left: 72, right: 72, top: 170, height: 1,
+        background: 'linear-gradient(90deg, var(--tone-acc) 0%, transparent 55%)',
+        opacity: 0.35,
+      }} />
+
       <div className="frame-body" style={{ justifyContent: 'center', paddingBottom: 0 }}>
         <div className="eyebrow" style={{ marginBottom: 56 }}>{eyebrow}</div>
         <h1 className="display" style={{ fontSize: 140, marginBottom: 0, lineHeight: 0.96, fontWeight: 700, maxWidth: 940 }}>

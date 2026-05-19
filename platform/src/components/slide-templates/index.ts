@@ -12,6 +12,7 @@ export { QuoteSlide } from './QuoteSlide';
 export { CashflowSlide } from './CashflowSlide';
 export { RiskMapSlide } from './RiskMapSlide';
 export { OutroSlide } from './OutroSlide';
+export { OptionelitySlide } from './OptionelitySlide';
 
 import { CoverSlide } from './CoverSlide';
 import { PureCoverSlide } from './PureCoverSlide';
@@ -25,6 +26,7 @@ import { QuoteSlide } from './QuoteSlide';
 import { CashflowSlide } from './CashflowSlide';
 import { RiskMapSlide } from './RiskMapSlide';
 import { OutroSlide } from './OutroSlide';
+import { OptionelitySlide } from './OptionelitySlide';
 import React from 'react';
 
 type AnySlide = React.ComponentType<Record<string, unknown>>;
@@ -42,4 +44,5 @@ export const SLIDE_TEMPLATES: Record<string, AnySlide> = {
   CashflowSlide: CashflowSlide as unknown as AnySlide,
   RiskMapSlide: RiskMapSlide as unknown as AnySlide,
   OutroSlide: OutroSlide as unknown as AnySlide,
+  OptionelitySlide: OptionelitySlide as unknown as AnySlide,
 };

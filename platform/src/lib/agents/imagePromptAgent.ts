@@ -84,6 +84,12 @@ function resolveTemplate(strategy: StrategyDecision, slide: string, slideNumber:
   // True comparison: " vs " in the title (not just buried in bullets)
   if (/ vs\.? /.test(t) || /\bversus\b/.test(t)) return 'ComparisonSlide';
 
+  // Optionality / flexibility / future-choice slides
+  if (/optionality|flexibility|future choice|open.*door|keeping.*option|more.*option/.test(t)) return 'OptionelitySlide';
+
+  // Cash flow / budget slides — must mention money movement
+  if (/cash flow|budget|inflow|outflow|income.*expense|spending.*income|monthly.*money/.test(t)) return 'CashflowSlide';
+
   // Risk slides
   if (/\brisk\b|red flag|warning|caution|watch out/.test(t)) return 'RiskMapSlide';
 
@@ -119,14 +125,24 @@ function buildTemplateProps(
   // ── CoverSlide ────────────────────────────────────────────────────────────
   if (template === 'CoverSlide') {
     const hook = strategy.hook ?? topic;
-    // Shorten kicker to first sentence or first bullet
     const kicker = (bullets[0] ?? '').replace(/\. .+$/, '') || 'Swipe for the breakdown.';
+    const offset = topic.length % 5;
     return {
       ...base,
       tone: 'emerald',
       eyebrow: ((strategy as unknown as Record<string, unknown>).contentPillar?.toString().toUpperCase()) ?? 'MARKET EDUCATION',
       headline: hook.toUpperCase(),
       kicker,
+      dashboardPanels: {
+        marketReturn: 7.68 + offset * 0.3,
+        allocation: { equities: 65, bonds: 20, cash: 10, alternatives: 5 },
+        metrics: {
+          returnYtd: 7.68 + offset * 0.3,
+          volatility: 11.42 - offset * 0.2,
+          sharpe: 0.67 + offset * 0.02,
+          maxDrawdown: -8.21 - offset * 0.1,
+        },
+      },
     };
   }
 
@@ -229,6 +245,36 @@ function buildTemplateProps(
       tone: 'cyan',
       headline: topic,
       cta: bullets[0] ?? 'Follow @TheStatsAndStacks for daily finance breakdowns',
+    };
+  }
+
+  // ── CashflowSlide ─────────────────────────────────────────────────────────
+  if (template === 'CashflowSlide') {
+    return {
+      ...base,
+      tone: 'amber',
+      eyebrow: 'MONEY FLOW',
+      headline: topic || 'Where Your Money Goes',
+      // Fallback to defaults in the component; AI-provided data would be passed here
+    };
+  }
+
+  // ── OptionelitySlide ──────────────────────────────────────────────────────
+  if (template === 'OptionelitySlide') {
+    const items = bullets.slice(0, 4).map((b, i) => {
+      const colonIdx = b.indexOf(':');
+      return {
+        icon: String(i + 1).padStart(2, '0'),
+        label: colonIdx > 0 ? b.slice(0, colonIdx).trim() : b.split(' ').slice(0, 4).join(' '),
+        body: colonIdx > 0 ? b.slice(colonIdx + 1).trim() : b,
+      };
+    });
+    return {
+      ...base,
+      tone: 'emerald',
+      eyebrow: 'FRAMEWORK',
+      headline: topic,
+      items: items.length >= 2 ? items : undefined,
     };
   }
 

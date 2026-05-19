@@ -10,11 +10,8 @@ interface Pair {
 interface MythVsFactSlideProps {
   eyebrow?: string;
   headline?: string;
-  /** Single myth string — treated as first pair when myth+fact are provided */
   myth?: string;
-  /** Single fact string — treated as first pair when myth+fact are provided */
   fact?: string;
-  /** Multiple myth/fact pairs */
   pairs?: Pair[];
   tone?: 'emerald' | 'cyan' | 'amber' | 'rose';
   frameNo?: number;
@@ -33,7 +30,6 @@ export function MythVsFactSlide({
   totalFrames,
   footer,
 }: MythVsFactSlideProps) {
-  // support both single myth/fact and pairs array
   const rows: Pair[] = pairs ?? (myth != null && fact != null ? [{ myth: myth!, fact: fact! }] : []);
 
   return (
@@ -42,26 +38,37 @@ export function MythVsFactSlide({
       <div className="frame-body" style={{ gap: 36, paddingTop: 16 }}>
         <div>
           <div className="eyebrow">{eyebrow}</div>
-          <h2 className="display" style={{ fontSize: 72, marginTop: 18, marginBottom: 0, maxWidth: 920, lineHeight: 1.02 }}>{headline}</h2>
+          <h2 className="display" style={{ fontSize: 72, marginTop: 18, marginBottom: 0, maxWidth: 920, lineHeight: 1.02 }}>
+            {headline}
+          </h2>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 22, flex: 1, justifyContent: 'center' }}>
+
+        {/* column header labels */}
+        <div style={{ display: 'flex', gap: 22 }}>
+          <div style={{ flex: 1, fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 700, letterSpacing: '0.20em', color: '#FB7185', textTransform: 'uppercase', paddingLeft: 4 }}>
+            ✕  MYTH
+          </div>
+          <div style={{ flex: 1, fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 700, letterSpacing: '0.20em', color: '#34D399', textTransform: 'uppercase', paddingLeft: 4 }}>
+            ✓  FACT
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, flex: 1, justifyContent: 'center', marginTop: -16 }}>
           {rows.slice(0, 3).map((p, i) => (
             <div key={i} style={{ display: 'flex', gap: 22 }}>
               <div style={{
-                flex: 1, padding: '28px 32px', borderRadius: 18,
-                background: 'rgba(251,113,133,0.08)',
-                border: '1.5px solid rgba(251,113,133,0.30)',
+                flex: 1, padding: '24px 28px', borderRadius: 16,
+                background: 'rgba(251,113,133,0.07)',
+                border: '1.5px solid rgba(251,113,133,0.25)',
               }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 16, fontWeight: 500, color: '#FB7185', letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12 }}>Myth</div>
-                <div style={{ fontSize: 26, fontWeight: 500, color: '#FECDD3', lineHeight: 1.35 }}>{p.myth}</div>
+                <div style={{ fontSize: 25, fontWeight: 500, color: '#FECDD3', lineHeight: 1.38 }}>{p.myth}</div>
               </div>
               <div style={{
-                flex: 1, padding: '28px 32px', borderRadius: 18,
-                background: 'rgba(52,211,153,0.08)',
-                border: '1.5px solid rgba(52,211,153,0.40)',
+                flex: 1, padding: '24px 28px', borderRadius: 16,
+                background: 'rgba(52,211,153,0.07)',
+                border: '1.5px solid rgba(52,211,153,0.30)',
               }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 16, fontWeight: 500, color: '#34D399', letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: 12 }}>Fact</div>
-                <div style={{ fontSize: 26, fontWeight: 500, color: '#BBF7D0', lineHeight: 1.35 }}>{p.fact}</div>
+                <div style={{ fontSize: 25, fontWeight: 500, color: '#BBF7D0', lineHeight: 1.38 }}>{p.fact}</div>
               </div>
             </div>
           ))}

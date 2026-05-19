@@ -7,6 +7,7 @@ interface SlideFrameProps {
   label?: string;
   frameNo?: number;
   totalFrames?: number;
+  category?: string;
   theme?: { acc?: string; acc2?: string; acc3?: string; bg?: string };
   tone?: 'emerald' | 'cyan' | 'amber' | 'rose';
   hideBrand?: boolean;
@@ -17,7 +18,7 @@ interface SlideFrameProps {
 
 function BrandMark() {
   return (
-    <svg className="brand-bar__mark" viewBox="0 0 64 64" aria-hidden="true">
+    <svg width="44" height="44" viewBox="0 0 64 64" aria-hidden="true" className="brand-footer__mark">
       <rect width="64" height="64" rx="14" fill="#0B1120" />
       <g transform="translate(8 6)">
         <path d="M0 50 L0 0 L50 0" fill="#34D399" opacity="0.95" />
@@ -33,6 +34,7 @@ export function SlideFrame({
   children,
   frameNo,
   totalFrames,
+  category,
   theme = {},
   tone = 'emerald',
   hideBrand = false,
@@ -65,30 +67,38 @@ export function SlideFrame({
     background: theme.bg ?? 'linear-gradient(135deg,#06101D 0%,#0d1b2a 52%,#111111 100%)',
   };
 
+  const frameLabel = frameNo != null
+    ? String(frameNo).padStart(2, '0') + (totalFrames ? ` / ${String(totalFrames).padStart(2, '0')}` : '')
+    : null;
+
   return (
     <div className={scale ? 'slide-stage' : 'slide-stage slide-stage--inline'} ref={stageRef}>
       <div className={`slide-frame tone-${tone}`} ref={frameRef} style={style}>
-        <div className="halo" />
-        {!hideBrand && (
-          <div className="brand-bar">
-            <div className="brand-bar__left">
-              <BrandMark />
-              <div className="brand-bar__wm">TheStatsAndStacks</div>
-            </div>
-            {frameNo && (
-              <div className="brand-bar__frame">
-                {String(frameNo).padStart(2, '0')}
-                {totalFrames ? ` / ${String(totalFrames).padStart(2, '0')}` : ''}
-              </div>
-            )}
+        {/* slide number block — top-left */}
+        {!hideBrand && frameNo != null && (
+          <div className="slide-num-block">
+            <div className="slide-num-value">{frameLabel}</div>
+            {category && <div className="slide-num-label">{category}</div>}
+            <div className="slide-num-rule" />
           </div>
         )}
-        {!hideBrand && <div className="brand-bar__rule" />}
+
         {children}
+
+        {/* brand footer — bottom */}
         {!hideFooter && (
-          <div className="foot-bar">
-            <div className="foot-bar__l"><span>EDUCATIONAL ONLY</span></div>
-            <div className="foot-bar__r"><span>@THESTATSANDSTACKS</span></div>
+          <div className="brand-footer">
+            <div className="brand-footer__left">
+              <BrandMark />
+              <div className="brand-footer__wordmark">
+                <span className="brand-footer__stats">THESTATS</span>
+                <span className="brand-footer__stacks">ANDSTACKS</span>
+              </div>
+            </div>
+            <div className="brand-footer__cta">
+              FOLLOW @THESTATSANDSTACKS / FOR VISUAL BREAKDOWNS ON MONEY, MARKETS &amp; STRATEGY.
+              <span className="brand-footer__arrow"> →</span>
+            </div>
           </div>
         )}
       </div>

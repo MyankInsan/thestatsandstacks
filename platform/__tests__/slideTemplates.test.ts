@@ -11,7 +11,7 @@ test('SlideFrame renders without throwing', async () => {
       React.createElement('div', null, 'content')
     )
   );
-  assert.ok(html.includes('EDUCATIONAL ONLY'));
+  assert.ok(html.includes('FOLLOW @THESTATSANDSTACKS'));
   assert.ok(html.includes('@THESTATSANDSTACKS'));
   assert.ok(html.includes('slide-frame'));
 });
@@ -40,9 +40,10 @@ const templateTests: Array<[string, Record<string, unknown>]> = [
   ['BigNumberSlide',   { number: '$7,000', label: 'TFSA LIMIT 2024', context: 'Per calendar year' }],
   ['PureStatSlide',    { stat: '72%', label: 'of Canadians have no financial plan' }],
   ['QuoteSlide',       { quote: 'Compound interest is the eighth wonder of the world.', attribution: 'Albert Einstein' }],
-  ['CashflowSlide',    { headline: 'WHERE YOUR MONEY GOES', items: [{ label: 'Housing', pct: 35 }] }],
+  ['CashflowSlide',    { headline: 'WHERE YOUR MONEY GOES' }],
   ['RiskMapSlide',     { headline: 'RISK MAP', risks: [{ label: 'Market risk', severity: 'high' }] }],
   ['OutroSlide',       { cta: 'Save this framework.' }],
+  ['OptionelitySlide', { headline: 'Optionality Creates Future Choices' }],
 ];
 
 for (const [name, props] of templateTests) {
