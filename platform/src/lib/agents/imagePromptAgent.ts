@@ -1,5 +1,6 @@
 import { BaseAgent } from './interfaces';
 import { StrategyDecision } from './contentStrategyAgent';
+import { getGeminiClient, getGeminiTextModelName } from '../services/gemini';
 
 export interface SlidePrompt {
   slideNumber: number;
@@ -9,8 +10,21 @@ export interface SlidePrompt {
   templateProps: Record<string, unknown>;
 }
 
-export interface ImagePromptSet {
+export type AestheticVariant = 'Quiet Luxury' | 'Dark Terminal' | 'Atmospheric Lifestyle';
+
+export interface PhotoVariant {
+  aestheticName: AestheticVariant;
   prompts: SlidePrompt[];
+}
+
+export interface VideoVariant {
+  aestheticName: AestheticVariant;
+  videoPrompt: string;
+}
+
+export interface ImagePromptSet {
+  photoVariants: PhotoVariant[];
+  videoVariants: VideoVariant[];
 }
 
 export class ImagePromptAgent extends BaseAgent {
@@ -19,20 +33,113 @@ export class ImagePromptAgent extends BaseAgent {
   }
 
   async execute(input: { strategy: StrategyDecision }): Promise<ImagePromptSet> {
-    console.log(`[${this.name}] 🎨 Generating image prompts...`);
-    return {
-      prompts: input.strategy.slideBreakdown.map((slide, index) => {
+    console.log(`[${this.name}] 🎬 🎨 LLM Creative Director generating cinematic prompts...`);
+
+    const promptText = `You are a Master Cinematographer and High-End Art Director.
+You are tasked with writing extremely detailed, technical AI generation prompts for Midjourney v6 and Google Omni/Veo.
+
+Topic: ${input.strategy.topic}
+Hook: ${input.strategy.hook}
+Target Audience: ${input.strategy.targetAudience}
+Slide Breakdown: 
+${input.strategy.slideBreakdown.map((s, i) => `Slide ${i + 1}: ${s}`).join('\n')}
+
+We need 3 completely distinct aesthetic variants:
+1. "Quiet Luxury": Minimalist elegance, muted palettes (cream, charcoal, slate), abstract architecture, soft diffused lighting, f/1.8, 35mm lens.
+2. "Dark Terminal": Ultra-premium high-tech data, deep blacks, glowing emerald nodes, abstract chart geometry, volumetric lighting, OctaneRender.
+3. "Atmospheric Lifestyle": Immersive storytelling, out-of-focus city skylines at dawn, clean desk with an espresso, macro shots of premium textures, cinematic color grading.
+
+For EACH variant, you must provide:
+1. A video prompt (for Google Omni / Sora) describing a 5-10 second cinematic tracking shot. Include specific camera movement (e.g. slow dolly-in), lighting anchors, and subject actions. Absolutely no faces, text, or letters.
+2. An array of slide prompts (for DALL-E / Gemini Advanced), one for each slide in the breakdown. Use technical camera vocabulary (e.g., 35mm lens, rim light). Maintain the exact aesthetic. NEVER ask the AI to generate words, numbers, charts, logos, or UI. Describe a pure photographic background/composition that leaves room for text overlay later.
+
+Return ONLY valid JSON matching this schema exactly (no markdown formatting, no code fences):
+{
+  "variants": [
+    {
+      "aestheticName": "Quiet Luxury",
+      "videoPrompt": "...",
+      "slidePrompts": ["prompt for slide 1", "prompt for slide 2", ...]
+    },
+    ... (do the same for Dark Terminal and Atmospheric Lifestyle)
+  ]
+}`;
+
+    let parsed: any;
+    try {
+      const genAI = getGeminiClient();
+      const model = genAI.getGenerativeModel({ model: getGeminiTextModelName() });
+      const result = await model.generateContent(promptText);
+      const response = await result.response;
+      const text = response.text().replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      parsed = JSON.parse(text);
+    } catch (error) {
+      console.warn(`[ImagePromptAgent] LLM failed to generate cinematic prompts. Falling back to static builder.`, error);
+      // Fallback if LLM fails
+      return this.fallbackExecute(input.strategy);
+    }
+
+    if (!parsed || !parsed.variants || !Array.isArray(parsed.variants)) {
+      return this.fallbackExecute(input.strategy);
+    }
+
+    const photoVariants: PhotoVariant[] = [];
+    const videoVariants: VideoVariant[] = [];
+
+    for (const v of parsed.variants) {
+      const aesthetic = v.aestheticName as AestheticVariant;
+      const slidePromptsArray = Array.isArray(v.slidePrompts) ? v.slidePrompts : [];
+      
+      const prompts: SlidePrompt[] = input.strategy.slideBreakdown.map((slide, index) => {
         const slideNumber = index + 1;
         const template = resolveTemplate(input.strategy, slide, slideNumber);
         return {
           slideNumber,
           slideDescription: slide,
-          dallePrompt: buildPremiumImagePrompt(input.strategy, slide, slideNumber),
+          dallePrompt: slidePromptsArray[index] || buildPremiumImagePrompt(input.strategy, slide, slideNumber, aesthetic),
           template,
           templateProps: buildTemplateProps(input.strategy, slide, slideNumber, template),
         };
-      }),
-    };
+      });
+
+      photoVariants.push({
+        aestheticName: aesthetic,
+        prompts,
+      });
+
+      videoVariants.push({
+        aestheticName: aesthetic,
+        videoPrompt: v.videoPrompt || buildVideoPrompt(input.strategy, aesthetic),
+      });
+    }
+
+    return { photoVariants, videoVariants };
+  }
+
+  private fallbackExecute(strategy: StrategyDecision): ImagePromptSet {
+    const aesthetics: AestheticVariant[] = ['Quiet Luxury', 'Dark Terminal', 'Atmospheric Lifestyle'];
+    
+    const photoVariants = aesthetics.map(aesthetic => ({
+      aestheticName: aesthetic,
+      prompts: strategy.slideBreakdown.map((slide, index) => {
+        const slideNumber = index + 1;
+        const template = resolveTemplate(strategy, slide, slideNumber);
+        return {
+          slideNumber,
+          slideDescription: slide,
+          dallePrompt: buildPremiumImagePrompt(strategy, slide, slideNumber, aesthetic),
+          template,
+          templateProps: buildTemplateProps(strategy, slide, slideNumber, template),
+        };
+      })
+    }));
+
+    const videoVariants = aesthetics.map(aesthetic => ({
+      aestheticName: aesthetic,
+      videoPrompt: buildVideoPrompt(strategy, aesthetic),
+    }));
+
+    return { photoVariants, videoVariants };
   }
 }
 
@@ -399,21 +506,53 @@ function eyebrowForTitle(title: string): string {
 // ---------------------------------------------------------------------------
 // DALL-E / image prompt
 // ---------------------------------------------------------------------------
-function buildPremiumImagePrompt(strategy: StrategyDecision, slide: string, slideNumber: number): string {
+function buildPremiumImagePrompt(strategy: StrategyDecision, slide: string, slideNumber: number, aesthetic: AestheticVariant): string {
   const isCover = slideNumber === 1;
   const visualMode = getVisualMode(strategy.format, strategy.topic, slideNumber);
+  
+  let aestheticSpecifics = '';
+  if (aesthetic === 'Quiet Luxury') {
+    aestheticSpecifics = 'Aesthetic: "Quiet Luxury" - minimalist elegance, muted palettes (cream, charcoal, slate), abstract architecture, clean workspaces, soft lighting, no flashy elements.';
+  } else if (aesthetic === 'Dark Terminal') {
+    aestheticSpecifics = 'Aesthetic: "Dark Terminal" - ultra-premium high-tech data, deep blacks, glowing emerald nodes, abstract chart geometry, futuristic Bloomberg terminal elegance.';
+  } else {
+    aestheticSpecifics = 'Aesthetic: "Atmospheric Lifestyle" - immersive storytelling, out-of-focus city skylines at dawn, clean desk with a single espresso, macro shots of premium textures, relatable but aspirational mood.';
+  }
+
   return [
-    'Create a premium editorial finance background for an Instagram portrait carousel slide.',
-    'IMPORTANT: no words, no letters, no numbers, no logos, no charts with readable labels. Leave all typography to a later overlay.',
+    'Create a highly detailed, premium editorial finance background for an Instagram portrait carousel slide.',
+    'Use this prompt in Google Gemini Advanced to generate the highest quality asset.',
+    'IMPORTANT: no words, no letters, no numbers, no logos, no neon lamborghinis, no stacks of cash, no generic 3D rendered men in suits, no cluttered HUDs.',
     `Brand: TheStatsAndStacks, high-trust Canadian finance, data-first, calm and sophisticated.`,
     `Topic: ${strategy.topic}. Slide intent: ${slide}.`,
     `Composition: ${isCover ? 'strong cover-worthy focal point with structured visual density and no dead zones' : 'supporting visual with clear open zones for headline and bullet overlays, balanced density, and no empty-looking corners'}.`,
     `Visual direction: ${visualMode}.`,
-    'Reference mood: high-performing finance creator content that is simple, original, and saveable, but do not copy any creator layout, brand, screenshot, or post.',
-    'Palette: deep charcoal, graphite, emerald accents, muted gold highlights, confident off-white contrast, occasional cool cyan or violet only as secondary contrast.',
-    'Style: premium magazine infographic background, realistic paper/glass texture, subtle market-grid geometry, crisp lighting, high contrast, no clutter.',
-    'Mobile readability: keep the center-left and lower third visually calm so exact text can be overlaid cleanly.',
-    'Compliance: no fake price candles, no fake performance claims, no specific ticker recommendation visuals, no guaranteed-return symbolism.',
+    aestheticSpecifics,
+    'Reference mood: high-performing finance creator content that is simple, original, and saveable.',
+    'Consistency: Match the aesthetic of the uploaded brand logo. The image should feel like part of a unified premium brand system.',
+  ].join(' ');
+}
+
+function buildVideoPrompt(strategy: StrategyDecision, aesthetic: AestheticVariant): string {
+  let aestheticSpecifics = '';
+  if (aesthetic === 'Quiet Luxury') {
+    aestheticSpecifics = 'Aesthetic: "Quiet Luxury" - minimalist elegance, muted palettes (cream, charcoal, slate), clean workspaces, soft cinematic lighting, no flashy elements.';
+  } else if (aesthetic === 'Dark Terminal') {
+    aestheticSpecifics = 'Aesthetic: "Dark Terminal" - ultra-premium high-tech data, deep blacks, glowing emerald nodes, abstract chart geometry, futuristic Bloomberg terminal elegance.';
+  } else {
+    aestheticSpecifics = 'Aesthetic: "Atmospheric Lifestyle" - immersive storytelling, out-of-focus city skylines at dawn, macro shots of premium textures, relatable but aspirational mood.';
+  }
+
+  return [
+    'Create a premium 10-second cinematic video for an Instagram Reel about finance.',
+    'Use this prompt in a premium video generator like Google Omni / Sora / Veo.',
+    `Brand: TheStatsAndStacks, high-trust Canadian finance, data-first, calm and sophisticated.`,
+    `Topic: ${strategy.topic}. Format: ${strategy.format}. Hook: ${strategy.hook}.`,
+    'Visual direction: Smooth, continuous camera movement (like a slow cinematic pan or tracking shot).',
+    aestheticSpecifics,
+    'IMPORTANT: DO NOT generate any text, letters, or numbers in the video. No neon lamborghinis, no stacks of cash, no generic 3D rendered men in suits.',
+    'Consistency: Maintain strict visual consistency with the uploaded brand logo aesthetic.',
+    'Action: Subtle background motion, abstract elements forming or flowing gracefully. No humans, no faces.',
   ].join(' ');
 }
 

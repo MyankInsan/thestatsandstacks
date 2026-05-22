@@ -9,18 +9,11 @@ import { ContentStrategyAgent } from './src/lib/agents/contentStrategyAgent';
 import { ComplianceQAAgent } from './src/lib/agents/complianceQAAgent';
 import { ImagePromptAgent } from './src/lib/agents/imagePromptAgent';
 import type { SlidePrompt } from './src/lib/agents/imagePromptAgent';
-import { VisualAssetSourcingAgent, type VisualAssetSourcingPlan } from './src/lib/agents/visualAssetSourcingAgent';
-import { ImageGenerationAgent, type GeneratedImage } from './src/lib/agents/imageGenerationAgent';
-import { VisionQAAgent, type QAReport } from './src/lib/agents/visionQAAgent';
 import { CopywritingAgent } from './src/lib/agents/copywritingAgent';
 import { TickersInNewsAgent } from './src/lib/agents/tickersInNewsAgent';
 import { HistoryGuardAgent } from './src/lib/agents/historyGuardAgent';
-import { FinalGateAgent } from './src/lib/agents/finalGateAgent';
-import { RegenLoopAgent } from './src/lib/agents/regenLoopAgent';
-import { emailPostToPhone } from './src/lib/services/emailDelivery';
-import { sendPostToTelegram, sendVideoToTelegram } from './src/lib/services/telegramDelivery';
+import { sendPromptsToTelegram } from './src/lib/services/telegramDelivery';
 import { decideDayType } from './src/lib/agents/dayTypeAgent';
-import { RemotionAgent } from './src/lib/agents/remotionAgent';
 import { appendContentHistory, loadContentHistory } from './src/lib/services/contentHistory';
 import { getLocalDateKey, getLocalTimestamp, getRunSlug } from './src/lib/services/dateUtils';
 import { getImageCount } from './src/lib/services/imageCount';
@@ -126,94 +119,16 @@ async function main() {
   console.log('━━━ AGENT 6: IMAGE PROMPTS ━━━');
   const imagePromptAgent = new ImagePromptAgent();
   const promptSet = await imagePromptAgent.execute({ strategy });
-  const plannedPrompts: SlidePrompt[] = promptSet.prompts.slice(0, getImageCount(strategy));
-  if (plannedPrompts.length === 0) {
-    throw new Error('Strategy requested images, but no image prompts were generated.');
-  }
-  const manualPromptPath = path.join(outputDir, 'MANUAL_IMAGE_PROMPTS.md');
-  fs.writeFileSync(
-    manualPromptPath,
-    buildManualImagePromptPacket(strategy, plannedPrompts),
-    'utf-8'
-  );
-  console.log(`   Image prompt packet saved: ${manualPromptPath}`);
   console.log('');
 
-  // ── AGENT 7: VISUAL ASSET SOURCING ──
-  console.log('━━━ AGENT 7: VISUAL ASSET SOURCING ━━━');
-  const visualAssetPlan = await new VisualAssetSourcingAgent().execute({
-    strategy,
-    prompts: plannedPrompts,
-    formatDecision,
-    carouselPlan,
-  });
-  const visualAssetPlanPath = path.join(outputDir, 'VISUAL_ASSET_PLAN.md');
-  fs.writeFileSync(visualAssetPlanPath, buildVisualAssetPlanPacket(visualAssetPlan), 'utf-8');
-  console.log(`   ${visualAssetPlan.summary}`);
-  console.log(`   Visual asset plan saved: ${visualAssetPlanPath}`);
-  console.log('');
-
-  // ── AGENT 8: IMAGE GENERATION ──
-  console.log('━━━ AGENT 8: IMAGE GENERATION ━━━');
-  const imageGenAgent = new ImageGenerationAgent();
-  const generatedImages = await imageGenAgent.execute({
-    prompts: plannedPrompts,
-    outputDir,
-    visualPlan: visualAssetPlan,
-  });
-  console.log('');
-
-  // ── AGENT 9: VISION QA + REGEN LOOP ──
-  console.log('━━━ AGENT 9: VISION QA + REGEN LOOP ━━━');
-  const qaAgent = new VisionQAAgent();
-  const regenAgent = new RegenLoopAgent();
-  const finalImages: GeneratedImage[] = [];
-
-  for (const img of generatedImages.images) {
-    const prompt = plannedPrompts.find((p) => p.slideNumber === img.slideNumber);
-    if (!prompt) { finalImages.push(img); continue; }
-
-    const result = await regenAgent.execute({
-      slideNumber: img.slideNumber,
-      prompt,
-      generate: async (p, _correctionNotes) => {
-        const res = await imageGenAgent.execute({ prompts: [p], outputDir, visualPlan: visualAssetPlan });
-        return res.images[0] ?? img;
-      },
-      critique: async (image) => {
-        const report = await qaAgent.execute({ images: [image] });
-        const sr = report.slideReports[0];
-        return {
-          score: sr?.confidenceScore ?? 0,
-          pass: (sr?.confidenceScore ?? 0) >= 0.80,
-          issues: (sr?.failures ?? []).map((b) => ({ severity: 'high' as const, body: b })),
-        };
-      },
-    });
-    finalImages.push(result.image);
-  }
-
-  const qaReport: QAReport = await qaAgent.execute({ images: finalImages });
-  console.log(`   📊 Overall QA Score: ${(qaReport.overallScore * 100).toFixed(1)}%`);
-  if (!qaReport.allPassed) {
-    throw new Error(`Image QA failed after regen loop: ${qaReport.slideReports.flatMap((r) => r.failures).join(' ')}`);
-  }
-  generatedImages.images.length = 0;
-  generatedImages.images.push(...finalImages);
-  console.log('');
-
-  if (!generatedImages.images.length) {
-    throw new Error('Pipeline produced no postable media. Delivery was stopped.');
-  }
-
-  // ── AGENT 10: COPYWRITING ──
-  console.log('━━━ AGENT 10: COPYWRITING ━━━');
+  // ── AGENT 7: COPYWRITING ──
+  console.log('━━━ AGENT 7: COPYWRITING ━━━');
   const copyAgent = new CopywritingAgent();
   const copy = await copyAgent.execute({ strategy });
   console.log('');
 
-  // ── AGENT 11: FINAL COMPLIANCE QA ──
-  console.log('━━━ AGENT 11: FINAL COMPLIANCE QA ━━━');
+  // ── AGENT 8: FINAL COMPLIANCE QA ──
+  console.log('━━━ AGENT 8: FINAL COMPLIANCE QA ━━━');
   const copyCompliance = await complianceAgent.execute({ strategy, copy });
   if (!copyCompliance.isValid) {
     throw new Error(`Final compliance failed: ${copyCompliance.failures.join(' ')}`);
@@ -221,84 +136,14 @@ async function main() {
   console.log(`   Compliance score: ${(copyCompliance.confidenceScore * 100).toFixed(0)}%`);
   console.log('');
 
-  const postReadyPath = path.join(outputDir, 'POST_READY.txt');
-  fs.writeFileSync(
-    postReadyPath,
-    buildPostReadyFile({
-      strategy,
-      copy,
-      qaReport,
-      images: generatedImages.images,
-      visualAssetPlan,
-    }),
-    'utf-8'
-  );
-  console.log(`   Post package saved: ${postReadyPath}`);
-
-  // ── AGENT 11B: FINAL GATE ──
-  console.log('━━━ AGENT 11B: FINAL GATE ━━━');
-  const finalGate = await new FinalGateAgent().execute({ copy });
-  if (!finalGate.passed) {
-    throw new Error(`Final Gate blocked delivery: ${finalGate.failedChecks.join('; ')}`);
-  }
-  console.log('');
-
-  // ── DELIVERY (photo vs video fork) ──────────────────────────────────────
-  if (dayType === 'video') {
-    console.log('━━━ AGENT VIDEO: COMPILATION ━━━');
-    const videoAgent = new RemotionAgent();
-    const videoResult = await videoAgent.execute({
-      imagePaths: generatedImages.images.map((img) => img.localPath),
-      outputDir,
-      runSlug,
-    });
-    console.log(`   Reel compiled: ${videoResult.videoPath} (${videoResult.durationSeconds.toFixed(1)}s)`);
-    console.log('');
-
-    if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
-      console.log('━━━ SENDING TELEGRAM VIDEO ━━━');
-      await sendVideoToTelegram({
-        videoPath: videoResult.videoPath,
-        copy,
-        strategy,
-        qaReport,
-        durationSeconds: videoResult.durationSeconds,
-      });
-    } else {
-      console.log('━━━ TELEGRAM VIDEO SKIPPED ━━━');
-      console.log('   Telegram delivery skipped (TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set).');
-    }
-  } else {
-    // ── PHOTO DAY ────────────────────────────────────────────────────────
-    if (process.env.GMAIL_ADDRESS && process.env.GMAIL_APP_PASSWORD && process.env.DELIVERY_EMAIL) {
-      console.log('━━━ SENDING EMAIL ━━━');
-      await emailPostToPhone({
-        images: generatedImages.images,
-        copy,
-        strategy,
-        qaReport,
-      });
-    } else {
-      console.log('━━━ EMAIL SKIPPED ━━━');
-      console.log('   Email delivery skipped because Gmail delivery secrets are not set.');
-    }
-
-    if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
-      console.log('━━━ SENDING TELEGRAM PHOTOS ━━━');
-      await sendPostToTelegram({
-        images: generatedImages.images,
-        copy,
-        strategy,
-        qaReport,
-        manualPromptPath,
-        researchBriefPath,
-        visualAssetPlanPath,
-      });
-    } else {
-      console.log('━━━ TELEGRAM SKIPPED ━━━');
-      console.log('   Telegram delivery skipped because TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID are not set.');
-    }
-  }
+  // ── DELIVERY (Telegram Prompts) ──────────────────────────────────────
+  console.log('━━━ SENDING TELEGRAM PROMPTS ━━━');
+  await sendPromptsToTelegram({
+    copy,
+    strategy,
+    promptSet,
+    dayType,
+  });
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
   appendContentHistory(historyPath, {
@@ -306,76 +151,18 @@ async function main() {
     topic: strategy.topic,
     hook: strategy.hook,
     format: strategy.format,
-    slideCount: generatedImages.images.length,
+    slideCount: dayType === 'video' ? 1 : promptSet.photoVariants[0]?.prompts.length || 0,
     keywords: strategy.searchKeywords || [],
     visualSignature: runSlug,
   });
 
   console.log('');
   console.log('═══════════════════════════════════════════════════════');
-  console.log(`  ✅ DONE — ${elapsed}s — ${generatedImages.images.length} picture slides generated`);
+  console.log(`  ✅ DONE — ${elapsed}s — Manual generation packet sent`);
   console.log('═══════════════════════════════════════════════════════');
 }
 
-function buildPostReadyFile(input: {
-  strategy: Awaited<ReturnType<ContentStrategyAgent['execute']>>,
-  copy: Awaited<ReturnType<CopywritingAgent['execute']>>,
-  qaReport: Awaited<ReturnType<VisionQAAgent['execute']>>,
-  images: GeneratedImage[],
-  visualAssetPlan: VisualAssetSourcingPlan,
-}): string {
-  return `THESTATSANDSTACKS DAILY POST
-Generated: ${getLocalTimestamp()}
 
-TOPIC
-${input.strategy.topic}
-
-FORMAT
-${input.strategy.format} (${input.images.length} picture slide${input.images.length === 1 ? '' : 's'})
-
-GROWTH NOTES
-${buildGrowthPublishingChecklist(input)}
-
-VISUAL SOURCES
-${buildVisualSourceSummary(input)}
-
-QA SCORE
-${(input.qaReport.overallScore * 100).toFixed(0)}%
-
-CAPTION
-${input.copy.caption}
-
-HASHTAGS
-${input.copy.hashtags}
-
-FIRST COMMENT
-${input.copy.firstComment}
-
-ALT TEXT
-${input.copy.altText}
-
-SLIDES
-${input.images.map((image, index) => `Slide ${index + 1}: ${image.localPath}`).join('\n')}
-`;
-}
-
-function buildGrowthPublishingChecklist(input: {
-  strategy: Awaited<ReturnType<ContentStrategyAgent['execute']>>,
-  images: GeneratedImage[],
-}): string {
-  const mediaAdvice = 'Publish as a picture carousel. The first slide is the cover, so judge it by whether it creates a save-worthy reason to swipe in under two seconds.';
-  const stockSafety = /stock|watchlist|earnings|market|portfolio|etf/i.test(`${input.strategy.topic} ${input.strategy.searchKeywords.join(' ')}`)
-    ? 'Keep comments educational: no ticker requests, no buy/sell language, no price targets.'
-    : 'Keep comments practical: answer with frameworks and Canadian context, not personal financial advice.';
-
-  return [
-    `Cover hook: ${input.strategy.hook}`,
-    'Primary growth job: saves, shares, profile visits, and follows.',
-    mediaAdvice,
-    'Reference pattern: simple million-follower finance creator clarity, but original TheStatsAndStacks design and Canadian positioning.',
-    stockSafety,
-  ].join('\n');
-}
 
 function buildResearchBrief(
   trends: Awaited<ReturnType<TrendResearchAgent['execute']>>,
@@ -414,76 +201,11 @@ ${trends.topics.map((topic, index) => `${index + 1}. ${topic.title}
 `;
 }
 
-function buildVisualAssetPlanPacket(plan: VisualAssetSourcingPlan): string {
-  return `# TheStatsAndStacks Visual Asset Plan
 
-Generated: ${getLocalTimestamp()}
-
-${plan.summary}
-
-Provider order: ${plan.providerOrder.join(' -> ')}
-
-${plan.warnings.length ? `Warnings:\n${plan.warnings.map((warning) => `- ${warning}`).join('\n')}\n` : ''}
-## Slide Sources
-
-${plan.slides.map((slide) => `### Slide ${slide.slideNumber}
-
-- Provider: ${slide.provider}
-- Query: ${slide.query}
-- Reason: ${slide.reason}
-- Source: ${slide.sourcePage || slide.assetUrl || 'generated/local'}
-- License: ${slide.license || 'n/a'}
-- Attribution: ${slide.attribution || 'n/a'}
-
-Background prompt:
-${slide.backgroundPrompt}
-`).join('\n')}`;
-}
-
-function buildVisualSourceSummary(input: {
-  images: GeneratedImage[],
-  visualAssetPlan: VisualAssetSourcingPlan,
-}): string {
-  const lines = input.images.map((image) => {
-    const plan = input.visualAssetPlan.slides.find((slide) => slide.slideNumber === image.slideNumber);
-    const source = image.source === 'local'
-      ? 'local generated design'
-      : image.source === 'cloudflare'
-        ? 'Cloudflare Workers AI original background'
-        : `${image.source} licensed source`;
-    const attribution = image.attribution || plan?.attribution;
-    return `Slide ${image.slideNumber}: ${source}${attribution ? ` — ${attribution}` : ''}`;
-  });
-  return lines.join('\n');
-}
 
 main().catch((err) => {
   console.error('Pipeline failed:', err);
   process.exit(1);
 });
 
-function buildManualImagePromptPacket(
-  strategy: Awaited<ReturnType<ContentStrategyAgent['execute']>>,
-  prompts: SlidePrompt[]
-): string {
-  return `# TheStatsAndStacks Manual Image Prompts
 
-Topic: ${strategy.topic}
-Format: ${strategy.format}
-Hook: ${strategy.hook}
-
-Use this file if you want to manually generate images in ChatGPT or Gemini using your existing subscriptions. Generate one slide at a time, download each image, and keep the slide numbers in order.
-
-## Style Lock
-
-Premium faceless Canadian personal finance carousel. Dark navy and charcoal base, emerald green and muted gold accents, editorial layout, high-trust finance tone, crisp readable typography, no fake statistics, no personalized financial advice, no hype.
-
-${prompts.map((prompt) => `## Slide ${prompt.slideNumber}
-
-${prompt.slideDescription}
-
-\`\`\`text
-${prompt.dallePrompt}
-\`\`\`
-`).join('\n')}`;
-}

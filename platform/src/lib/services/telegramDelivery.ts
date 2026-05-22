@@ -4,6 +4,7 @@ import { GeneratedImage } from '../agents/imageGenerationAgent';
 import { CopyBundle } from '../agents/copywritingAgent';
 import { StrategyDecision } from '../agents/contentStrategyAgent';
 import { QAReport } from '../agents/visionQAAgent';
+import { ImagePromptSet } from '../agents/imagePromptAgent';
 
 const TELEGRAM_RETRY_ATTEMPTS = 4;
 
@@ -144,6 +145,49 @@ export async function sendVideoToTelegram(input: {
   });
 
   console.log(`[TelegramDelivery] ✅ Sent Reels video + 3 copy-ready messages.`);
+}
+
+export async function sendPromptsToTelegram(input: {
+  copy: CopyBundle;
+  strategy: StrategyDecision;
+  promptSet: ImagePromptSet;
+  dayType: 'photo' | 'video';
+}): Promise<void> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) {
+    console.log('[TelegramDelivery] Prompt delivery skipped (TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set).');
+    return;
+  }
+
+  // 1: Strategy intro
+  const header = `🚀 TheStatsAndStacks — Ready for Manual Generation\n\nTopic: ${input.strategy.topic}\nFormat: ${input.strategy.format}\nHook: ${input.strategy.hook}\nType: ${input.dayType.toUpperCase()}`;
+  await callTelegram(token, 'sendMessage', { chat_id: chatId, text: header.slice(0, 4096) });
+
+  // 2: Prompts
+  if (input.dayType === 'video' && input.promptSet.videoVariants?.length) {
+    for (const [index, variant] of input.promptSet.videoVariants.entries()) {
+      const vidMsg = `🎥 OPTION ${index + 1}: ${variant.aestheticName.toUpperCase()} (Google Omni):\n\n${variant.videoPrompt}`;
+      await callTelegram(token, 'sendMessage', { chat_id: chatId, text: vidMsg.slice(0, 4096) });
+    }
+  } else if (input.dayType === 'photo' && input.promptSet.photoVariants?.length) {
+    for (const [index, variant] of input.promptSet.photoVariants.entries()) {
+      await callTelegram(token, 'sendMessage', { chat_id: chatId, text: `✨ OPTION ${index + 1}: ${variant.aestheticName.toUpperCase()} ✨` });
+      for (const p of variant.prompts) {
+        const msg = `🖼️ Slide ${p.slideNumber} (Gemini Advanced):\n\n${p.dallePrompt}`;
+        await callTelegram(token, 'sendMessage', { chat_id: chatId, text: msg.slice(0, 4096) });
+      }
+    }
+  } else {
+     await callTelegram(token, 'sendMessage', { chat_id: chatId, text: `No prompts generated.` });
+  }
+
+  // 3: Copy
+  await callTelegram(token, 'sendMessage', { chat_id: chatId, text: buildCaptionMessage(input.copy.caption).slice(0, 4096) });
+  await callTelegram(token, 'sendMessage', { chat_id: chatId, text: buildHashtagsMessage(input.copy.hashtags).slice(0, 4096) });
+  await callTelegram(token, 'sendMessage', { chat_id: chatId, text: buildPinnedCommentMessage(input.copy.firstComment).slice(0, 4096) });
+
+  console.log(`[TelegramDelivery] ✅ Sent text-only multi-variant prompt bundle to Telegram.`);
 }
 
 async function sendPhotoAlbum(

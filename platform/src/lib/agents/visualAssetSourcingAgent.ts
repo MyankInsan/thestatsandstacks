@@ -1,6 +1,6 @@
 import { BaseAgent } from './interfaces';
 import { StrategyDecision } from './contentStrategyAgent';
-import { ImagePromptSet } from './imagePromptAgent';
+import { SlidePrompt } from './imagePromptAgent';
 import { CarouselPlan, MediaFormatDecision } from './mediaPlanningAgent';
 
 export type VisualAssetProvider = 'cloudflare' | 'pexels' | 'wikimedia' | 'local';
@@ -55,7 +55,7 @@ export class VisualAssetSourcingAgent extends BaseAgent {
 
   async execute(input: {
     strategy: StrategyDecision,
-    prompts: ImagePromptSet['prompts'],
+    prompts: SlidePrompt[],
     formatDecision?: MediaFormatDecision,
     carouselPlan?: CarouselPlan,
   }): Promise<VisualAssetSourcingPlan> {

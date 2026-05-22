@@ -123,7 +123,7 @@ export async function runDailyWorkflow() {
   console.log('━━━ AGENT 6: IMAGE PROMPTS ━━━');
   const imagePromptAgent = new ImagePromptAgent();
   const promptSet = await imagePromptAgent.execute({ strategy });
-  const plannedPrompts = promptSet.prompts.slice(0, getImageCount(strategy));
+  const plannedPrompts = (promptSet.photoVariants[0]?.prompts || []).slice(0, getImageCount(strategy));
   console.log('');
 
   // ═══════════════════════════════════════════════════════
