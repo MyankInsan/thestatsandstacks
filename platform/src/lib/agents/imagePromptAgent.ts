@@ -17,9 +17,15 @@ export interface PhotoVariant {
   prompts: SlidePrompt[];
 }
 
+export interface VideoClipPrompt {
+  clipNumber: number;
+  durationSeconds: number;
+  prompt: string;
+}
+
 export interface VideoVariant {
   aestheticName: AestheticVariant;
-  videoPrompt: string;
+  videoPrompts: VideoClipPrompt[];
 }
 
 export interface ImagePromptSet {
@@ -50,7 +56,7 @@ We need 3 completely distinct aesthetic variants:
 3. "Atmospheric Lifestyle": Immersive storytelling, out-of-focus city skylines at dawn, clean desk with an espresso, macro shots of premium textures, cinematic color grading.
 
 For EACH variant, you must provide:
-1. A video prompt (for Google Omni / Sora) describing a 5-10 second cinematic tracking shot. Include specific camera movement (e.g. slow dolly-in), lighting anchors, and subject actions. Absolutely no faces, text, or letters.
+1. An array of video prompts (for Google Omni / Sora), representing 3 to 6 sequential short clips (each 5-10 seconds) that form a complete premium video. Include specific camera movement (e.g. slow dolly-in), lighting anchors, and subject actions for each clip. Absolutely no faces, text, or letters.
 2. An array of slide prompts (for DALL-E / Gemini Advanced), one for each slide in the breakdown. Use technical camera vocabulary (e.g., 35mm lens, rim light). Maintain the exact aesthetic. NEVER ask the AI to generate words, numbers, charts, logos, or UI. Describe a pure photographic background/composition that leaves room for text overlay later.
 
 Return ONLY valid JSON matching this schema exactly (no markdown formatting, no code fences):
@@ -58,7 +64,10 @@ Return ONLY valid JSON matching this schema exactly (no markdown formatting, no 
   "variants": [
     {
       "aestheticName": "Quiet Luxury",
-      "videoPrompt": "...",
+      "videoPrompts": [
+        { "clipNumber": 1, "durationSeconds": 5, "prompt": "..." },
+        { "clipNumber": 2, "durationSeconds": 10, "prompt": "..." }
+      ],
       "slidePrompts": ["prompt for slide 1", "prompt for slide 2", ...]
     },
     ... (do the same for Dark Terminal and Atmospheric Lifestyle)
@@ -107,9 +116,13 @@ Return ONLY valid JSON matching this schema exactly (no markdown formatting, no 
         prompts,
       });
 
+      const videoPromptsArray = Array.isArray(v.videoPrompts) ? v.videoPrompts : [
+        { clipNumber: 1, durationSeconds: 5, prompt: v.videoPrompt || buildVideoPrompt(input.strategy, aesthetic) }
+      ];
+
       videoVariants.push({
         aestheticName: aesthetic,
-        videoPrompt: v.videoPrompt || buildVideoPrompt(input.strategy, aesthetic),
+        videoPrompts: videoPromptsArray,
       });
     }
 
@@ -136,7 +149,10 @@ Return ONLY valid JSON matching this schema exactly (no markdown formatting, no 
 
     const videoVariants = aesthetics.map(aesthetic => ({
       aestheticName: aesthetic,
-      videoPrompt: buildVideoPrompt(strategy, aesthetic),
+      videoPrompts: [
+        { clipNumber: 1, durationSeconds: 5, prompt: buildVideoPrompt(strategy, aesthetic) },
+        { clipNumber: 2, durationSeconds: 10, prompt: buildVideoPrompt(strategy, aesthetic) + " (Second angle)" }
+      ],
     }));
 
     return { photoVariants, videoVariants };

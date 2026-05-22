@@ -167,7 +167,10 @@ export async function sendPromptsToTelegram(input: {
   // 2: Prompts
   if (input.dayType === 'video' && input.promptSet.videoVariants?.length) {
     for (const [index, variant] of input.promptSet.videoVariants.entries()) {
-      const vidMsg = `🎥 OPTION ${index + 1}: ${variant.aestheticName.toUpperCase()} (Google Omni):\n\n${variant.videoPrompt}`;
+      let vidMsg = `🎥 OPTION ${index + 1}: ${variant.aestheticName.toUpperCase()} (Google Omni / Veo)\n\n`;
+      for (const clip of variant.videoPrompts) {
+        vidMsg += `🎬 Clip ${clip.clipNumber} (${clip.durationSeconds}s): ${clip.prompt}\n\n`;
+      }
       await callTelegram(token, 'sendMessage', { chat_id: chatId, text: vidMsg.slice(0, 4096) });
     }
   } else if (input.dayType === 'photo' && input.promptSet.photoVariants?.length) {
