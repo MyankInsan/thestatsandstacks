@@ -6,6 +6,7 @@ export interface ContentHistoryEntry {
   topic: string;
   hook: string;
   format: string;
+  formatType?: string;   // e.g. 'BREAKING_NEWS' | 'HUMOR_MEME' etc.
   slideCount: number;
   keywords: string[];
   visualSignature?: string;
