@@ -19,16 +19,14 @@ export class ImagePromptAgent {
     format: FormatDecision;
     strategy: StrategyDecision;
   }): ImagePromptSet {
-    const total = input.slides.length;
     return {
-      slides: input.slides.map(slide => buildPrompt(slide, input.format, total)),
+      slides: input.slides.map(slide => buildPrompt(slide, input.format)),
     };
   }
 }
 
-function buildPrompt(slide: SlideSpec, format: FormatDecision, total: number): SlideImagePrompt {
+function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt {
   const { colorScheme, formatType } = format;
-  const counter = `${slide.slideNumber}/${total}`;
   const textZonePercent = slide.visualPosition === 'background' ? 65 : 50;
   const visualZoneLabel = slide.visualPosition === 'top'
     ? `upper ${100 - textZonePercent}% of canvas`
@@ -78,7 +76,7 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision, total: number): S
   const bgDetail = BACKGROUND_DETAILS[formatType] ?? 'minimal texture, clean and dark';
 
   const prompt = [
-    `Create a 1080x1350 portrait Instagram image. This is slide ${counter} of a ${formatType} finance carousel.`,
+    `Create a 1080x1350 portrait Instagram image. This is a ${formatType} finance carousel slide.`,
     ``,
     `BACKGROUND: Fill entire canvas with ${colorScheme.bg}. ${bgDetail}.`,
     ``,
@@ -93,15 +91,13 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision, total: number): S
     `GRADIENT OVERLAY: Apply a dark gradient from ${100 - textZonePercent - 10}% canvas height to the bottom edge, `,
     `color ${colorScheme.bg}, opacity 80-88%, ensuring all text above is fully legible against the visual element.`,
     ``,
-    `BRAND ELEMENTS:`,
-    `- Bottom-left corner: small upward bar-chart icon (30x30px) + text "@thestatsandstacks" in white (#FFFFFF), 26px, 28px margin from edges`,
-    `- Top-right corner: slide counter "${counter}" in white (#FFFFFF), 22px, 28px margin from edges`,
-    `- Top-left corner: small filled square in ${colorScheme.accent1}, 36x36px, 28px margin, acts as brand color mark`,
+    `BRAND ELEMENT:`,
+    `- Bottom-left corner: a small upward-trending bar-chart icon followed by the text "@thestatsandstacks" — rendered in white, small and subtle, placed near the bottom-left edge`,
     ``,
     `STRICT RULES:`,
     `- Render ALL text exactly as specified above — every word, every color. Numbers must be pixel-perfect.`,
     `- Use ONLY these hex colors: bg=${colorScheme.bg}, text=${colorScheme.primaryText}, accent1=${colorScheme.accent1}, accent2=${colorScheme.accent2}, white=#FFFFFF.`,
-    `- Do not add any other text, borders, watermarks, UI elements, or decorations beyond what is listed.`,
+    `- Do not add any other text, numbers, labels, counters, borders, watermarks, UI elements, or decorations beyond what is listed above.`,
     `- Overall mood: ${slide.mood}.`,
   ].join('\n');
 

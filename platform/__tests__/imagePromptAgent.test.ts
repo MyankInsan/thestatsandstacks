@@ -55,14 +55,14 @@ test('ImagePromptAgent returns one prompt per slide', () => {
   assert.equal(result.slides.length, 2);
 });
 
-test('Each prompt contains canvas size, brand, and counter', () => {
+test('Each prompt contains canvas size and brand handle', () => {
   const agent = new ImagePromptAgent();
   const result = agent.execute({ slides: mockSlides, format: mockFormat, strategy: mockStrategy });
 
   for (const slide of result.slides) {
     assert.ok(slide.geminiPrompt.includes('1080x1350'), 'must specify canvas size');
     assert.ok(slide.geminiPrompt.includes('@thestatsandstacks'), 'must include brand handle');
-    assert.ok(slide.geminiPrompt.includes(`${slide.slideNumber}/${mockSlides.length}`), 'must include slide counter');
+    assert.ok(!slide.geminiPrompt.includes(`${slide.slideNumber}/${mockSlides.length}`), 'must not include slide counter');
   }
 });
 
