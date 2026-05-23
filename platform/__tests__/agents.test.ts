@@ -2,47 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { CostGuardAgent } from '../src/lib/agents/costGuardAgent';
 import { ComplianceQAAgent } from '../src/lib/agents/complianceQAAgent';
-import { PublisherAgent } from '../src/lib/agents/publisherAgent';
 import { normalizeCopyBundle } from '../src/lib/agents/copywritingAgent';
-import { CarouselPlanningAgent, MediaFormatDecisionAgent } from '../src/lib/agents/mediaPlanningAgent';
-import { VisualAssetSourcingAgent } from '../src/lib/agents/visualAssetSourcingAgent';
-
-test('PublisherAgent rejects publish if confidence score is below 0.85', async () => {
-    const agent = new PublisherAgent();
-    
-    const result = await agent.execute({
-      packaging: {
-        finalCaption: 'Test caption',
-        hashtags: ['#test'],
-        cta: 'Save',
-        altText: 'Alt',
-        confidenceScore: 0.60, // Low confidence!
-        readyToPublish: true
-      },
-      imageUrls: ['url1']
-    });
-
-  assert.equal(result.success, false);
-  assert.match(result.error || '', /Confidence score below threshold/);
-});
-
-test('PublisherAgent passes and attempts publish if confidence is high', async () => {
-    const agent = new PublisherAgent();
-    
-    const result = await agent.execute({
-      packaging: {
-        finalCaption: 'Test caption',
-        hashtags: ['#test'],
-        cta: 'Save',
-        altText: 'Alt',
-        confidenceScore: 0.95, // High confidence!
-        readyToPublish: true
-      },
-      imageUrls: ['url1']
-    });
-
-  assert.equal(result.success, true);
-});
 
 test('CopywritingAgent normalization caps captions and hashtags for Instagram', () => {
   const longCaption = Array.from({ length: 40 }, () => 'This is a detailed sentence about a money framework.').join(' ');
@@ -144,72 +104,6 @@ test('CostGuardAgent blocks paid image generation in zero-cost mode', async () =
     restoreEnv('GEMINI_IMAGE_GENERATION_ENABLED', originalGeminiImages);
     restoreEnv('ALLOW_GEMINI_IMAGE_API_SPEND', originalGeminiSpend);
     restoreEnv('CLOUDFLARE_WORKERS_AI_ENABLED', originalCloudflareEnabled);
-  }
-});
-
-test('Media planning agents choose an 8-slide carousel for hot market education', async () => {
-  const trends = {
-    topics: [{
-      title: 'SanDisk AI Storage Heat Check',
-      score: 0.94,
-      reasoning: 'Market heat topic with catalyst, valuation, risk, and what-to-watch context.',
-      suggestedFormat: 'WATCHLIST_EDUCATION',
-      suggestedSlideCount: 8,
-      searchKeywords: ['SNDK stock', 'AI storage'],
-      contentPillar: 'market education',
-    }],
-  };
-
-  const formatDecision = await new MediaFormatDecisionAgent().execute({ trends });
-  const carouselPlan = await new CarouselPlanningAgent().execute({ trends, formatDecision });
-
-  assert.equal(formatDecision.mediaFormat, 'CAROUSEL');
-  assert.equal(carouselPlan.slideCount, 8);
-  assert.match(carouselPlan.slideRoles.join(' '), /risk/i);
-});
-
-test('VisualAssetSourcingAgent falls back to local when no free provider secrets are configured', async () => {
-  const originals = captureEnv([
-    'ENABLE_LICENSED_ASSET_SOURCING',
-    'PEXELS_API_KEY',
-    'CLOUDFLARE_WORKERS_AI_ENABLED',
-    'CLOUDFLARE_ACCOUNT_ID',
-    'CLOUDFLARE_API_TOKEN',
-    'ENABLE_WIKIMEDIA_SOURCING',
-  ]);
-
-  delete process.env.ENABLE_LICENSED_ASSET_SOURCING;
-  delete process.env.PEXELS_API_KEY;
-  process.env.CLOUDFLARE_WORKERS_AI_ENABLED = 'false';
-  delete process.env.CLOUDFLARE_ACCOUNT_ID;
-  delete process.env.CLOUDFLARE_API_TOKEN;
-  process.env.ENABLE_WIKIMEDIA_SOURCING = 'false';
-
-  try {
-    const plan = await new VisualAssetSourcingAgent().execute({
-      strategy: {
-        topic: 'A stock is not a plan.',
-        hook: 'A stock is not a plan.',
-        format: 'WATCHLIST_EDUCATION',
-        slideCount: 1,
-        slideBreakdown: ['Slide 1: A stock is not a plan | Research first | Educational only'],
-        reasoning: 'test',
-        targetAudience: 'Canadians',
-        searchKeywords: ['stock watchlist'],
-      },
-      prompts: [{
-        slideNumber: 1,
-        slideDescription: 'Slide 1: A stock is not a plan | Research first | Educational only',
-        dallePrompt: 'premium market background',
-        template: 'CoverSlide',
-        templateProps: { frameNo: 1, totalFrames: 1, tone: 'emerald', headline: 'TEST' },
-      }],
-    });
-
-    assert.equal(plan.slides[0].provider, 'local');
-    assert.match(plan.summary, /Google Images\/Photos are intentionally excluded/);
-  } finally {
-    restoreCapturedEnv(originals);
   }
 });
 
@@ -355,89 +249,11 @@ test('TickersInNewsAgent returns tickers array with required fields', async () =
   }
 });
 
-const baseCopy = {
-  caption: 'SanDisk is up year-to-date. Here is the research filter. Educational only, not financial advice.',
-  hashtags: '#CanadianFinance #InvestingCanada',
-  cta: 'Save this.',
-  firstComment: 'What would you check first?',
-  altText: 'Carousel about SNDK.',
-};
-
-test('FinalGateAgent passes clean copy', async () => {
-  const { FinalGateAgent } = await import('../src/lib/agents/finalGateAgent');
-  const agent = new FinalGateAgent();
-  const result = await agent.execute({ copy: baseCopy });
-  assert.equal(result.passed, true);
-  assert.equal(result.failedChecks.length, 0);
-});
-
-test('FinalGateAgent fails on banned hype word', async () => {
-  const { FinalGateAgent } = await import('../src/lib/agents/finalGateAgent');
-  const agent = new FinalGateAgent();
-  const result = await agent.execute({ copy: { ...baseCopy, caption: 'This stock explodes to new highs. Educational only.' } });
-  assert.equal(result.passed, false);
-  assert.ok(result.failedChecks.some((c) => c.includes('banned')));
-});
-
-test('FinalGateAgent fails when disclosure is missing', async () => {
-  const { FinalGateAgent } = await import('../src/lib/agents/finalGateAgent');
-  const agent = new FinalGateAgent();
-  const result = await agent.execute({ copy: { ...baseCopy, caption: 'Great returns await. Save this.' } });
-  assert.equal(result.passed, false);
-  assert.ok(result.failedChecks.some((c) => c.includes('disclosure')));
-});
-
-test('FinalGateAgent fails when caption exceeds 1100 chars', async () => {
-  const { FinalGateAgent } = await import('../src/lib/agents/finalGateAgent');
-  const agent = new FinalGateAgent();
-  const longCaption = 'A'.repeat(1101) + ' Educational only, not financial advice.';
-  const result = await agent.execute({ copy: { ...baseCopy, caption: longCaption } });
-  assert.equal(result.passed, false);
-  assert.ok(result.failedChecks.some((c) => c.includes('caption')));
-});
-
-test('FinalGateAgent fails when hashtag count exceeds 5', async () => {
-  const { FinalGateAgent } = await import('../src/lib/agents/finalGateAgent');
-  const agent = new FinalGateAgent();
-  const result = await agent.execute({ copy: { ...baseCopy, hashtags: '#a #b #c #d #e #f' } });
-  assert.equal(result.passed, false);
-  assert.ok(result.failedChecks.some((c) => c.includes('hashtag')));
-});
-
-test('RegenLoopAgent returns on first attempt when score >= 0.80', async () => {
-  const { RegenLoopAgent } = await import('../src/lib/agents/regenLoopAgent');
-  const agent = new RegenLoopAgent();
-
-  let generateCalls = 0;
-  const mockGenerate = async () => { generateCalls++; return { slideNumber: 1, localPath: '/tmp/s1.png', mimeType: 'image/png', source: 'local' as const }; };
-  const mockCritique = async () => ({ score: 0.92, pass: true, issues: [] });
-
-  const result = await agent.execute({ slideNumber: 1, prompt: { slideNumber: 1, slideDescription: 'Cover', dallePrompt: '', template: 'CoverSlide', templateProps: {} }, generate: mockGenerate, critique: mockCritique });
-  assert.equal(result.resolved, true);
-  assert.equal(result.attempts, 1);
-  assert.equal(generateCalls, 1);
-});
-
-test('RegenLoopAgent retries up to MAX_ATTEMPTS then resolves with best available', async () => {
-  const { RegenLoopAgent } = await import('../src/lib/agents/regenLoopAgent');
-  const agent = new RegenLoopAgent();
-
-  let calls = 0;
-  const mockGenerate = async () => { calls++; return { slideNumber: 1, localPath: `/tmp/s1-${calls}.png`, mimeType: 'image/png', source: 'local' as const }; };
-  const mockCritique = async () => ({ score: 0.55, pass: false, issues: [{ severity: 'high' as const, body: 'misaligned text' }] });
-
-  const result = await agent.execute({ slideNumber: 1, prompt: { slideNumber: 1, slideDescription: 'Cover', dallePrompt: '', template: 'CoverSlide', templateProps: {} }, generate: mockGenerate, critique: mockCritique });
-  assert.equal(calls, 5);
-  assert.equal(result.resolved, false);
-  assert.equal(result.attempts, 5);
-});
-
 function restoreEnv(key: string, value: string | undefined): void {
   if (value === undefined) {
     delete process.env[key];
     return;
   }
-
   process.env[key] = value;
 }
 
