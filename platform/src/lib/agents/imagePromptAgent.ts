@@ -110,7 +110,7 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt
 }
 
 const BACKGROUND_DETAILS: Record<string, string> = {
-  BREAKING_NEWS:        'Subtle upward-trending green candlestick chart pattern barely visible in upper 25%, opacity 8%',
+  BREAKING_NEWS:        'Very faint green candlestick chart pattern distributed evenly across the full canvas at opacity 5%, no concentrated clusters',
   HUMOR_MEME:           'Very faint diagonal speed lines, comic-book texture, opacity 5%',
   DATA_SHOCK:           'Faint circuit-board or data-grid pattern, opacity 6%',
   CEO_AUTHORITY:        'Subtle radial gradient from center lighter outward, spotlight feel, opacity 12%',

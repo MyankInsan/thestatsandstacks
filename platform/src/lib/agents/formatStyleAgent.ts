@@ -76,7 +76,8 @@ export class FormatStyleAgent {
         visualTone: parsed.visualTone || 'dramatic, bold, high-energy',
         reasoning: parsed.reasoning || '',
       };
-    } catch {
+    } catch (err) {
+      console.warn('[FormatStyleAgent] Gemini failed, using fallback.', err instanceof Error ? err.message : String(err));
       return buildFallback(recentTypes);
     }
   }
