@@ -6,16 +6,6 @@ on:
     - cron: '0 15 * * *'
     - cron: '0 16 * * *'
   workflow_dispatch:
-    inputs:
-      day_type:
-        description: 'Override day type (auto = use schedule)'
-        required: false
-        default: 'auto'
-        type: choice
-        options:
-          - auto
-          - photo
-          - video
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
@@ -65,10 +55,6 @@ jobs:
         working-directory: platform
         run: npm ci
 
-      - name: Install Chromium and FFmpeg
-        if: steps.send-window.outputs.should_run == 'true'
-        run: sudo apt-get update -qq && sudo apt-get install -y chromium-browser ffmpeg
-
       - name: Run Daily Pipeline
         if: steps.send-window.outputs.should_run == 'true'
         working-directory: platform
@@ -78,22 +64,6 @@ jobs:
           WORKFLOW_TIME_ZONE: America/Vancouver
           CONTENT_HISTORY_PATH: /tmp/thestatsandstacks-history/content-history.json
           ZERO_COST_MODE: "true"
-          FREE_IMAGE_GENERATION_ONLY: "true"
-          ALLOW_PAID_IMAGE_GENERATION: "false"
-          GEMINI_IMAGE_GENERATION_ENABLED: "false"
-          ALLOW_GEMINI_IMAGE_API_SPEND: "false"
-          CLOUDFLARE_WORKERS_AI_ENABLED: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' && secrets.CLOUDFLARE_API_TOKEN != '' && 'true' || 'false' }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_IMAGE_MODEL: "@cf/black-forest-labs/flux-1-schnell"
-          CLOUDFLARE_IMAGE_STEPS: "4"
-          CLOUDFLARE_MAX_IMAGES_PER_RUN: "8"
-          CLOUDFLARE_ALLOW_PAID_OVERAGE: "false"
-          ENABLE_LICENSED_ASSET_SOURCING: ${{ secrets.PEXELS_API_KEY != '' && 'true' || 'false' }}
-          PREFER_STOCK_ASSET_SOURCING: "false"
-          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
-          ENABLE_WIKIMEDIA_SOURCING: "false"
-          WIKIMEDIA_USER_AGENT: thestatsandstacks-content-bot/1.0
           ENABLE_REDDIT_RESEARCH: "true"
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
@@ -104,9 +74,6 @@ jobs:
           DELIVERY_EMAIL: ${{ secrets.DELIVERY_EMAIL }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
-          DAY_TYPE_OVERRIDE: ${{ github.event.inputs.day_type == 'auto' && '' || github.event.inputs.day_type }}
         run: npm run daily
 
       - name: Upload generated post package
