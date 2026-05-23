@@ -3,18 +3,15 @@ import type { ContentHistoryEntry } from '../services/contentHistory';
 import type { StrategyDecision } from './contentStrategyAgent';
 
 export type FormatType =
-  | 'BREAKING_NEWS'
-  | 'HUMOR_MEME'
-  | 'DATA_SHOCK'
-  | 'CEO_AUTHORITY'
-  | 'EDUCATIONAL_CAROUSEL'
-  | 'HOT_TAKE'
-  | 'MARKET_SCOREBOARD'
-  | 'MYTH_VS_FACT';
+  | 'BAR_CHART_INFOGRAPHIC'
+  | 'VS_COMPARISON_INFOGRAPHIC'
+  | 'PYRAMID_WEALTH_INFOGRAPHIC'
+  | 'CHECKLIST_INFOGRAPHIC'
+  | 'FLOWCHART_INFOGRAPHIC';
 
 export const FORMAT_TYPES: FormatType[] = [
-  'BREAKING_NEWS', 'HUMOR_MEME', 'DATA_SHOCK', 'CEO_AUTHORITY',
-  'EDUCATIONAL_CAROUSEL', 'HOT_TAKE', 'MARKET_SCOREBOARD', 'MYTH_VS_FACT',
+  'BAR_CHART_INFOGRAPHIC', 'VS_COMPARISON_INFOGRAPHIC', 'PYRAMID_WEALTH_INFOGRAPHIC',
+  'CHECKLIST_INFOGRAPHIC', 'FLOWCHART_INFOGRAPHIC',
 ];
 
 export interface ColorScheme {
@@ -33,14 +30,11 @@ export interface FormatDecision {
 }
 
 export const COLOR_SCHEMES: Record<FormatType, ColorScheme> = {
-  BREAKING_NEWS:        { bg: '#000000', primaryText: '#FFFFFF', accent1: '#39FF14', accent2: '#00CFFF' },
-  HUMOR_MEME:           { bg: '#0D0D0D', primaryText: '#FFFFFF', accent1: '#FF4500', accent2: '#FFD700' },
-  DATA_SHOCK:           { bg: '#020617', primaryText: '#FFFFFF', accent1: '#00FF87', accent2: '#FFFFFF' },
-  CEO_AUTHORITY:        { bg: '#0A0A0A', primaryText: '#FFFFFF', accent1: '#FFD700', accent2: '#FFFFFF' },
-  EDUCATIONAL_CAROUSEL: { bg: '#050510', primaryText: '#FFFFFF', accent1: '#6366F1', accent2: '#22D3EE' },
-  HOT_TAKE:             { bg: '#1A0000', primaryText: '#FFFFFF', accent1: '#FF3B30', accent2: '#FFFFFF' },
-  MARKET_SCOREBOARD:    { bg: '#000000', primaryText: '#FFFFFF', accent1: '#00FF87', accent2: '#FF3B30' },
-  MYTH_VS_FACT:         { bg: '#080808', primaryText: '#FFFFFF', accent1: '#FF3B30', accent2: '#39FF14' },
+  BAR_CHART_INFOGRAPHIC:       { bg: '#000000', primaryText: '#FFFFFF', accent1: '#39FF14', accent2: '#00CFFF' },
+  VS_COMPARISON_INFOGRAPHIC:   { bg: '#000000', primaryText: '#FFFFFF', accent1: '#FF3B30', accent2: '#39FF14' },
+  PYRAMID_WEALTH_INFOGRAPHIC:  { bg: '#000000', primaryText: '#FFFFFF', accent1: '#FFD700', accent2: '#FFFFFF' },
+  CHECKLIST_INFOGRAPHIC:       { bg: '#000000', primaryText: '#FFFFFF', accent1: '#00FF87', accent2: '#FFFFFF' },
+  FLOWCHART_INFOGRAPHIC:       { bg: '#000000', primaryText: '#FFFFFF', accent1: '#6366F1', accent2: '#22D3EE' },
 };
 
 export class FormatStyleAgent {
@@ -92,24 +86,21 @@ TICKERS IN NEWS: ${tickers.join(', ') || 'none'}
 RECENT FORMATS USED (do NOT repeat): ${recentTypes.join(', ') || 'none'}
 
 AVAILABLE FORMATS — pick exactly one you haven't used recently:
-- BREAKING_NEWS: Real market event today. "JUST IN:" urgency. Bold dark poster style.
-- HUMOR_MEME: Markets did something absurd or ironic. Illustrated cartoon character. Relatable humor.
-- DATA_SHOCK: Massive number to reveal — ATH, ATL, record earnings. Pure stat as hero.
-- CEO_AUTHORITY: Company milestone or CEO quote. Portrait + logo + achievement.
-- EDUCATIONAL_CAROUSEL: Complex concept needing step-by-step explanation. Clean numbered breakdown.
-- HOT_TAKE: Contrarian market view that surprises. Bold opinion statement on gradient.
-- MARKET_SCOREBOARD: Multiple tickers moving significantly today. Grid of ticker cards.
-- MYTH_VS_FACT: Common financial misconception to bust. Split-screen contrast.
+- BAR_CHART_INFOGRAPHIC: Flat black background, horizontal neon bars ranking data, with an illustrated mascot in the corner.
+- VS_COMPARISON_INFOGRAPHIC: Split layout comparing two concepts (e.g. Red vs Green, Myth vs Fact).
+- PYRAMID_WEALTH_INFOGRAPHIC: A large tiered pyramid showing hierarchy or asset allocation.
+- CHECKLIST_INFOGRAPHIC: Massive bold checkmarks with concise text steps.
+- FLOWCHART_INFOGRAPHIC: Winding neon path showing a process or compounding over time.
 
 SLIDE COUNT: 6 (simple), 7-8 (multi-angle story), 9 (deep educational only)
 
 Return ONLY valid JSON, no markdown fences:
-{"formatType":"BREAKING_NEWS","slideCount":7,"visualTone":"urgent and dramatic — shocked trader at terminal","reasoning":"NVDA earnings is a real breaking event"}`;
+{"formatType":"BAR_CHART_INFOGRAPHIC","slideCount":7,"visualTone":"bold data-driven graphic","reasoning":"Comparing tech stock returns is perfect for a bar chart"}`;
 }
 
 function fallbackType(recentTypes: string[]): FormatType {
   const recent = new Set(recentTypes);
-  return FORMAT_TYPES.find(t => !recent.has(t)) ?? 'EDUCATIONAL_CAROUSEL';
+  return FORMAT_TYPES.find(t => !recent.has(t)) ?? 'BAR_CHART_INFOGRAPHIC';
 }
 
 function buildFallback(recentTypes: string[]): FormatDecision {

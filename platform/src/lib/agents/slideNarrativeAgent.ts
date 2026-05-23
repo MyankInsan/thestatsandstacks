@@ -81,7 +81,7 @@ SLIDE NARRATIVE RULES:
 - Last slide: Always role "cta" — strong follow/save prompt for @thestatsandstacks
 - Each headline: max 8 words, bold and punchy
 - headlineColorMap: break headline into parts, assign each part a color (primary=white, accent1=neon, accent2=cyan/secondary)
-- visualElement: describe a SPECIFIC scene (e.g. "shocked young man in business casual staring at phone, mouth open, three green monitors behind him, dramatic side lighting") — not vague like "person"
+- visualElement: describe a SPECIFIC, photorealistic scene. MUST be minimalist, modern corporate/architectural photography. NO glowing neon, NO sci-fi, NO robots, NO cartoon expressions. (e.g. "clean, minimalist dark desk surface with a subtly out-of-focus financial newspaper in the background, natural daylight")
 - dataPoint: include only if there's a real number/stat to hero (e.g. "+18.2% EPS BEAT")
 - subtext: one short line of supporting context, max 12 words
 
@@ -99,7 +99,7 @@ Return ONLY valid JSON matching this exact schema (no markdown):
       "eyebrow": "JUST IN:",
       "subtext": "Wall Street didn't see this coming",
       "dataPoint": null,
-      "visualElement": "shocked young man in business casual sitting at trading desk, mouth agape, three monitors showing green candles, dramatic rim lighting from the left",
+      "visualElement": "over-the-shoulder view of a modern minimalist trading desk, a single sleek monitor slightly out of focus, natural window lighting, clean aesthetic",
       "visualPosition": "top",
       "mood": "urgent, high-energy, breaking news",
       "narrativeNote": "Opens with the hook — sets up the big reveal in slide 2"
@@ -109,64 +109,34 @@ Return ONLY valid JSON matching this exact schema (no markdown):
 }
 
 const FALLBACK_EYEBROWS: Record<string, string> = {
-  BREAKING_NEWS:        'JUST IN:',
-  DATA_SHOCK:           'THE NUMBERS:',
-  CEO_AUTHORITY:        'KEY INSIGHT:',
-  EDUCATIONAL_CAROUSEL: 'STEP:',
-  HOT_TAKE:             'HOT TAKE:',
-  MARKET_SCOREBOARD:    'MARKET UPDATE:',
-  MYTH_VS_FACT:         'MYTH BUSTED:',
-  HUMOR_MEME:           'REAL TALK:',
+  BAR_CHART_INFOGRAPHIC:       'RANKING:',
+  VS_COMPARISON_INFOGRAPHIC:   'COMPARISON:',
+  PYRAMID_WEALTH_INFOGRAPHIC:  'HIERARCHY:',
+  CHECKLIST_INFOGRAPHIC:       'CHECKLIST:',
+  FLOWCHART_INFOGRAPHIC:       'PROCESS:',
 };
 
 const FALLBACK_VISUAL_VARIANTS: Record<string, string[]> = {
-  BREAKING_NEWS: [
-    'shocked trader in business casual at standing desk, multiple green monitors in background, dramatic overhead lighting',
-    'close-up of hands gripping edge of a trading desk, ultrawide monitor showing a steep candlestick chart, harsh side lighting',
-    'wide shot of empty trading floor at night with rows of glowing screens, dramatic green light casting long shadows',
-    'over-the-shoulder view of analyst staring at dual monitors with candlestick charts, tense atmosphere, dark office',
+  BAR_CHART_INFOGRAPHIC: [
+    'solid black background, bold flat infographic, neon green horizontal bars, flat vector illustration of a confident investor in the bottom right corner',
+    'solid black background, bold flat infographic, cyan horizontal bars, flat vector illustration of a golden bull in the corner',
+    'solid black background, horizontal bar chart layout, negative space for text, flat illustration of Warren Buffett in the corner',
   ],
-  HUMOR_MEME: [
-    'cartoon-style illustrated investor character with wide eyes and sweat drops, wearing a suit and holding a phone showing green numbers, comic-book style rendering',
-    'illustrated investor character doing a shocked double-take at a tiny chart blip, comedic proportions, bold comic-book rendering',
-    'cartoon dog in suit calmly drinking coffee while everything around it burns, meme-style flat illustration',
-    'illustrated character with steam coming from ears, sitting at a melting computer, comic exaggeration, bold flat colors',
+  VS_COMPARISON_INFOGRAPHIC: [
+    'solid black background, flat split-screen infographic layout, left side red theme, right side green theme, vector icons for each side',
+    'solid black background, flat split-screen layout, two opposing flat illustrated characters representing good and bad habits',
   ],
-  DATA_SHOCK: [
-    'abstract glowing number display floating in dark space with radiant light beams emanating outward, futuristic data visualization style',
-    'massive illuminated percentage figure suspended in a dark void, surrounded by cascading data streams, cinematic render',
-    'holographic bar chart erupting upward from a dark surface, neon glow, dramatic data visualization, no text',
-    'close-up of a digital display showing a dramatic number, reflective dark surface, neon rim lighting',
+  PYRAMID_WEALTH_INFOGRAPHIC: [
+    'solid black background, massive flat vector pyramid chart in gold, flat illustrated character standing at the base',
+    'solid black background, large tiered hierarchy chart, flat minimalist icons inside each tier, clean layout',
   ],
-  CEO_AUTHORITY: [
-    'confident executive in dark suit standing against blurred city skyline at night, single key light from above, authoritative posture',
-    'silhouette of executive looking out floor-to-ceiling window over a glowing city at night, power stance, dark interior',
-    'close-up of executive hands resting on a polished boardroom table, luxury details softly blurred in background',
-    'executive at a podium with dramatic stage lighting, confident expression, implied audience, dark background',
+  CHECKLIST_INFOGRAPHIC: [
+    'solid black background, massive neon green checkmarks, negative space for text, flat vector illustration of a character holding a clipboard',
+    'solid black background, massive cyan checkmarks on the left, flat vector illustration of a character pointing to the center from the right',
   ],
-  EDUCATIONAL_CAROUSEL: [
-    'clean organized desk setup from above — laptop, notebook with numbered list, coffee cup, soft natural window light',
-    'minimalist white desk with open notebook and hand-drawn diagram, single pen, clean negative space, top-down view',
-    'flat-lay of a financial planning setup — calculator, printed chart, coffee, clean professional aesthetic',
-    'over-the-shoulder view of someone writing in a structured notebook, financial book open beside it, warm desk lamp',
-  ],
-  HOT_TAKE: [
-    'lone figure in dark silhouette standing at edge of skyscraper rooftop at dawn, city lights below, dramatic atmospheric shot',
-    'bold close-up of someone pointing directly at camera, slight smirk, dark dramatic studio backdrop',
-    'dramatic low-angle shot of a single person standing in an empty arena, spotlight from above, strong shadow',
-    'side-lit portrait of confident person mid-speech, dark background, strong rim light from one side',
-  ],
-  MARKET_SCOREBOARD: [
-    'wall of illuminated ticker displays in a dark trading floor, multiple screens showing green and red numbers, Bloomberg terminal aesthetic',
-    'massive LED scoreboard-style display in a dark hall, multiple tickers glowing in green and red, dramatic wide shot',
-    'close-up of a Reuters terminal screen with cascading price feeds, reflected in a polished dark desk surface',
-    'overhead drone shot of a trading floor, dozens of analyst workstations lit by glowing screens, organized energy',
-  ],
-  MYTH_VS_FACT: [
-    'split composition — left side shows a broken clock in warm red tones, right side shows a precise compass in cool green tones',
-    'split-screen image — left shows crumpled money in harsh red light, right shows organized bills in cool blue light',
-    'diptych — left half shows tangled strings in warm chaotic light, right half shows a clean straight line in cool calm light',
-    'split view — left side blurry and warm-toned, right side sharp and cool-toned, strong visual contrast',
+  FLOWCHART_INFOGRAPHIC: [
+    'solid black background, winding glowing neon path, flat minimalist icons at each milestone, negative space for descriptions',
+    'solid black background, decision tree flowchart layout, glowing green nodes, clean flat styling',
   ],
 };
 
@@ -192,7 +162,7 @@ function parseBreakdown(breakdown: string): { headline: string; subtext: string 
 function buildFallback(strategy: StrategyDecision, format: FormatDecision): SlideNarrative {
   const count = format.slideCount;
   const eyebrow = FALLBACK_EYEBROWS[format.formatType] ?? 'KEY INSIGHT:';
-  const visualVariants = FALLBACK_VISUAL_VARIANTS[format.formatType] ?? FALLBACK_VISUAL_VARIANTS.BREAKING_NEWS;
+  const visualVariants = FALLBACK_VISUAL_VARIANTS[format.formatType] ?? FALLBACK_VISUAL_VARIANTS.BAR_CHART_INFOGRAPHIC;
 
   const slides: SlideSpec[] = [];
 

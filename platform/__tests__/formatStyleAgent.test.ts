@@ -38,16 +38,16 @@ test('FormatStyleAgent fallback avoids the last two format types', async () => {
   const result = await agent.execute({
     strategy: mockStrategy,
     contentHistory: [
-      { date: '2026-05-21', topic: 't', hook: 'h', format: 'CAROUSEL', formatType: 'BREAKING_NEWS', slideCount: 7, keywords: [] },
-      { date: '2026-05-20', topic: 't', hook: 'h', format: 'CAROUSEL', formatType: 'HUMOR_MEME', slideCount: 7, keywords: [] },
+      { date: '2026-05-21', topic: 't', hook: 'h', format: 'CAROUSEL', formatType: 'BAR_CHART_INFOGRAPHIC', slideCount: 7, keywords: [] },
+      { date: '2026-05-20', topic: 't', hook: 'h', format: 'CAROUSEL', formatType: 'VS_COMPARISON_INFOGRAPHIC', slideCount: 7, keywords: [] },
     ],
     tickerSymbols: [],
   });
 
   process.env.GEMINI_API_KEY = saved ?? '';
 
-  assert.notEqual(result.formatType, 'BREAKING_NEWS', 'Should not repeat BREAKING_NEWS');
-  assert.notEqual(result.formatType, 'HUMOR_MEME', 'Should not repeat HUMOR_MEME');
+  assert.notEqual(result.formatType, 'BAR_CHART_INFOGRAPHIC', 'Should not repeat BAR_CHART_INFOGRAPHIC');
+  assert.notEqual(result.formatType, 'VS_COMPARISON_INFOGRAPHIC', 'Should not repeat VS_COMPARISON_INFOGRAPHIC');
 });
 
 test('COLOR_SCHEMES covers all FORMAT_TYPES', () => {

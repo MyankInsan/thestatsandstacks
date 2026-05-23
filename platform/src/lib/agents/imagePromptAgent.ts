@@ -82,7 +82,7 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt
     ``,
     `VISUAL ELEMENT (${visualZoneLabel}):`,
     slide.visualElement,
-    `Style: photorealistic editorial illustration or high-quality cinematic render. Mood: ${slide.mood}.`,
+    `Style: Flat, 2D vector infographic illustration, extremely high contrast, bold clean shapes, solid black background. NO photorealism, NO 3D rendering. Mood: ${slide.mood}.`,
     `Important: do not render any text inside this visual element area.`,
     ``,
     `TEXT ZONE (lower ${textZonePercent}% of canvas, centered horizontally, stacked vertically):`,
@@ -110,12 +110,9 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt
 }
 
 const BACKGROUND_DETAILS: Record<string, string> = {
-  BREAKING_NEWS:        'Very faint green candlestick chart pattern distributed evenly across the full canvas at opacity 5%, no concentrated clusters',
-  HUMOR_MEME:           'Very faint diagonal speed lines, comic-book texture, opacity 5%',
-  DATA_SHOCK:           'Faint circuit-board or data-grid pattern, opacity 6%',
-  CEO_AUTHORITY:        'Subtle radial gradient from center lighter outward, spotlight feel, opacity 12%',
-  EDUCATIONAL_CAROUSEL: 'Clean geometric grid lines at 15° angle, very subtle, opacity 4%',
-  HOT_TAKE:             'Deep red gradient bleeding from bottom-right, opacity 18%',
-  MARKET_SCOREBOARD:    'Matrix-style faint falling number columns, opacity 5%',
-  MYTH_VS_FACT:         'Subtle split-tone: slightly warmer left half, cooler right half, opacity 7%',
+  BAR_CHART_INFOGRAPHIC:       'Solid pitch black (#000000), no texture, pure negative space for infographics',
+  VS_COMPARISON_INFOGRAPHIC:   'Solid pitch black (#000000), no texture, pure negative space for infographics',
+  PYRAMID_WEALTH_INFOGRAPHIC:  'Solid pitch black (#000000), no texture, pure negative space for infographics',
+  CHECKLIST_INFOGRAPHIC:       'Solid pitch black (#000000), no texture, pure negative space for infographics',
+  FLOWCHART_INFOGRAPHIC:       'Solid pitch black (#000000), no texture, pure negative space for infographics',
 };

@@ -37,9 +37,9 @@ const mockSlides: SlideSpec[] = [
 ];
 
 const mockFormat: FormatDecision = {
-  formatType: 'BREAKING_NEWS',
-  slideCount: 2,
-  colorScheme: COLOR_SCHEMES.BREAKING_NEWS,
+  formatType: 'BAR_CHART_INFOGRAPHIC',
+  slideCount: 7,
+  colorScheme: COLOR_SCHEMES.BAR_CHART_INFOGRAPHIC,
   visualTone: 'urgent and dramatic',
   reasoning: 'test',
 };
