@@ -9,6 +9,7 @@ const mockStrategy: StrategyDecision = {
   topic: 'NVDA earnings beat',
   hook: 'Nvidia just crushed estimates',
   format: 'CAROUSEL',
+    viralFormat: 'HYPOTHETICAL_CHART',
   slideCount: 7,
   slideBreakdown: ['Cover', 'The stat', 'Context', 'Why it matters', 'What to watch', 'Risk', 'CTA'],
   reasoning: 'Hot topic',

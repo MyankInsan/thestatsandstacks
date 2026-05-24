@@ -16,6 +16,7 @@ test('CopywritingAgent normalization caps captions and hashtags for Instagram', 
     topic: '5 Money Leaks Canadians Can Fix This Week',
     hook: 'One leak fixed is momentum.',
     format: 'CAROUSEL',
+    viralFormat: 'HYPOTHETICAL_CHART',
     slideCount: 6,
     slideBreakdown: [],
     reasoning: 'test',
@@ -40,6 +41,7 @@ test('CopywritingAgent normalization adds a follow reason to short captions', ()
     topic: 'The 10-Minute Portfolio Check Before Adding More Money',
     hook: 'Check this before adding money.',
     format: 'WATCHLIST_EDUCATION',
+    viralFormat: 'HYPOTHETICAL_CHART',
     slideCount: 8,
     slideBreakdown: [],
     reasoning: 'test',
@@ -62,6 +64,7 @@ test('CopywritingAgent normalization cleans hot-stock prompt artifacts', () => {
     topic: 'SanDisk (SNDK) AI Storage Heat Check: What the Move Actually Means',
     hook: 'SanDisk is a case study.',
     format: 'WATCHLIST_EDUCATION',
+    viralFormat: 'HYPOTHETICAL_CHART',
     slideCount: 8,
     slideBreakdown: [],
     reasoning: 'test',
@@ -187,6 +190,7 @@ test('ComplianceQAAgent blocks investment recommendation language', async () => 
       topic: 'Best stocks to buy now',
       hook: 'Buy these stocks today',
       format: 'WATCHLIST_EDUCATION',
+    viralFormat: 'HYPOTHETICAL_CHART',
       slideCount: 1,
       slideBreakdown: ['Slide 1: Buy these stocks today | Guaranteed returns | Price target $100'],
       reasoning: 'test',
@@ -205,6 +209,7 @@ test('ComplianceQAAgent blocks unsafe hot-stock performance claims', async () =>
       topic: 'SanDisk explodes 4068% in 1 day',
       hook: '4068% today',
       format: 'WATCHLIST_EDUCATION',
+    viralFormat: 'HYPOTHETICAL_CHART',
       slideCount: 1,
       slideBreakdown: ['Slide 1: SanDisk explodes 4068% in 1 day | Phantom surge | Inactive ticker'],
       reasoning: 'test',
@@ -222,7 +227,8 @@ test('ComplianceQAAgent blocks unsafe hot-stock performance claims', async () =>
 test('HistoryGuardAgent blocks a topic that matches a recent entry', async () => {
   const { HistoryGuardAgent } = await import('../src/lib/agents/historyGuardAgent');
   const agent = new HistoryGuardAgent();
-  const history = [{ date: '2026-05-15', topic: 'TFSA vs RRSP comparison guide', hook: '', format: 'CAROUSEL', slideCount: 6, keywords: ['tfsa', 'rrsp', 'comparison'] }];
+  const history = [{ date: '2026-05-15', topic: 'TFSA vs RRSP comparison guide', hook: '', format: 'CAROUSEL',
+    viralFormat: 'HYPOTHETICAL_CHART', slideCount: 6, keywords: ['tfsa', 'rrsp', 'comparison'] }];
   const result = await agent.execute({ topic: 'TFSA vs RRSP: which is better?', contentHistory: history });
   assert.equal(result.block, true);
   assert.ok(typeof result.suggestedPivot === 'string');
@@ -231,7 +237,8 @@ test('HistoryGuardAgent blocks a topic that matches a recent entry', async () =>
 test('HistoryGuardAgent passes a clearly different topic', async () => {
   const { HistoryGuardAgent } = await import('../src/lib/agents/historyGuardAgent');
   const agent = new HistoryGuardAgent();
-  const history = [{ date: '2026-05-15', topic: 'TFSA vs RRSP comparison guide', hook: '', format: 'CAROUSEL', slideCount: 6, keywords: ['tfsa', 'rrsp'] }];
+  const history = [{ date: '2026-05-15', topic: 'TFSA vs RRSP comparison guide', hook: '', format: 'CAROUSEL',
+    viralFormat: 'HYPOTHETICAL_CHART', slideCount: 6, keywords: ['tfsa', 'rrsp'] }];
   const result = await agent.execute({ topic: 'How to build an emergency fund', contentHistory: history });
   assert.equal(result.block, false);
 });

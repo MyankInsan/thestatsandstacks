@@ -45,7 +45,8 @@ const mockFormat: FormatDecision = {
 };
 
 const mockStrategy: StrategyDecision = {
-  topic: 'NVDA earnings', hook: 'h', format: 'CAROUSEL', slideCount: 2,
+  topic: 'NVDA earnings', hook: 'h', format: 'CAROUSEL',
+    viralFormat: 'HYPOTHETICAL_CHART', slideCount: 2,
   slideBreakdown: [], reasoning: '', targetAudience: 'test', searchKeywords: [],
 };
 
