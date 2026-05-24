@@ -68,7 +68,7 @@ export class FormatStyleAgent {
         visualTone: parsed.visualTone || 'dramatic, bold, high-energy',
         reasoning: parsed.reasoning || '',
       };
-    } catch (err) {
+    } catch {
       return buildFallback(assignedFormat, input.strategy);
     }
   }

@@ -1,6 +1,5 @@
 import type { SlideSpec } from './slideNarrativeAgent';
 import type { FormatDecision } from './formatStyleAgent';
-import type { StrategyDecision } from './contentStrategyAgent';
 
 export interface SlideImagePrompt {
   slideNumber: number;
@@ -60,10 +59,28 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt
     .replace('[accent1]', colorScheme.accent1)
     .replace('[accent2]', colorScheme.accent2);
 
+  // Compile individual text pieces for the structured overlay layout section
+  const textElements: string[] = [];
+  if (slide.eyebrow) textElements.push(`Eyebrow: "${slide.eyebrow}"`);
+  if (slide.headline) textElements.push(`Headline: "${slide.headline}"`);
+  if (slide.subtext) textElements.push(`Subtext: "${slide.subtext}"`);
+  if (slide.dataPoint) textElements.push(`Data Point: "${slide.dataPoint}"`);
+  const textSection = textElements.join(' | ');
+
+  // Wrap visual style prompt template with canvas, background, brand mark, and overlay specs
+  const compiledPrompt = [
+    `Create a 1080x1350 portrait Instagram image.`,
+    `Background: Solid background color ${colorScheme.bg} with clean dark-mode gradients and cinematic studio lighting.`,
+    `Visual element: ${finalPrompt}`,
+    textSection ? `Text overlay layout details: ${textSection}` : '',
+    `Brand watermark: Faint logo mark and "@thestatsandstacks" in small white font in the bottom-left corner.`,
+    `Constraints: High-end professional rendering, perfect spelling and legible typography, no overlapping letters, no other borders or watermarks.`
+  ].filter(line => line !== '').join('\n\n');
+
   return {
     slideNumber: slide.slideNumber,
     role: slide.role,
     slideTitle: slide.role.toUpperCase().replace(/_/g, ' '),
-    geminiPrompt: finalPrompt,
+    geminiPrompt: compiledPrompt,
   };
 }

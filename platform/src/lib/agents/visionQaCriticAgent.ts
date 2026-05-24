@@ -1,5 +1,3 @@
-import { z } from 'zod';
-
 export interface VisionQARequest {
   imageUrl: string;
   expectedText: string[];
@@ -16,6 +14,8 @@ export interface VisionQAResponse {
 
 // A mock implementation of the VLM API call (e.g., GPT-4o Vision or Gemini Pro Vision)
 async function callVisionLanguageModel(imageUrl: string, prompt: string): Promise<string> {
+  void imageUrl; // satisfy linter
+  void prompt; // satisfy linter
   // In a real implementation, this would send the image URL and prompt to the VLM API.
   // We mock the response here for the sake of the architecture skeleton.
   return JSON.stringify({

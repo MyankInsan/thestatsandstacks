@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { ImagePromptAgent } from '../src/lib/agents/imagePromptAgent';
 import type { SlideSpec } from '../src/lib/agents/slideNarrativeAgent';
 import type { FormatDecision } from '../src/lib/agents/formatStyleAgent';
-import type { StrategyDecision } from '../src/lib/agents/contentStrategyAgent';
+import type { ViralStyle } from '../src/lib/agents/promptLibrary';
 import { COLOR_SCHEMES } from '../src/lib/agents/formatStyleAgent';
 
 const mockSlides: SlideSpec[] = [
@@ -17,7 +17,7 @@ const mockSlides: SlideSpec[] = [
     ],
     eyebrow: 'JUST IN:',
     subtext: 'Wall Street did not see this coming',
-    visualStyle: 'LINE_CHART' as any, // 'shocked young trader at desk, three green monitors, dramatic rim lighting',
+    visualStyle: 'LINE_CHART' as ViralStyle,
     visualPosition: 'top',
     mood: 'urgent, dramatic',
     narrativeNote: 'cover hook',
@@ -29,7 +29,7 @@ const mockSlides: SlideSpec[] = [
     headlineColorMap: [{ text: 'EPS BEAT BY', color: 'primary' }],
     dataPoint: '$0.08 A SHARE',
     subtext: 'Wall Street expected $0.88',
-    visualStyle: 'LINE_CHART' as any, // 'glowing digital number display in dark space',
+    visualStyle: 'LINE_CHART' as ViralStyle,
     visualPosition: 'background',
     mood: 'shock and awe',
     narrativeNote: 'the big number',
@@ -42,12 +42,6 @@ const mockFormat: FormatDecision = {
   colorScheme: COLOR_SCHEMES.PHOTOREALISTIC_NEWS_FLASH,
   visualTone: 'urgent and dramatic',
   reasoning: 'test',
-};
-
-const mockStrategy: StrategyDecision = {
-  topic: 'NVDA earnings', hook: 'h', format: 'CAROUSEL',
-     slideCount: 2,
-  slideBreakdown: [], reasoning: '', targetAudience: 'test', searchKeywords: [],
 };
 
 test('ImagePromptAgent returns one prompt per slide', () => {

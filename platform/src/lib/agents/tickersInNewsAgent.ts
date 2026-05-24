@@ -27,7 +27,8 @@ export class TickersInNewsAgent extends BaseAgent {
     super('TickersInNewsAgent');
   }
 
-  async execute(_input: Record<string, never>): Promise<TickersInNewsResult> {
+  async execute(input: Record<string, never>): Promise<TickersInNewsResult> {
+    void input; // satisfy linter
     console.log(`[${this.name}] 📰 Scanning news headlines for market tickers...`);
     const rawItems = await fetchRssHeadlines();
     if (!rawItems.length) {

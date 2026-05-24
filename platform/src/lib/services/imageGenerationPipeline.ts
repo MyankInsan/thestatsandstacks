@@ -3,6 +3,7 @@ import { VisionQaCriticAgent, VisionQARequest, VisionQAResponse } from '../agent
 
 // Mock Image Generation API Client (e.g., Midjourney API / Ideogram API wrapper)
 async function callImageGenerationApi(prompt: string): Promise<string> {
+  void prompt; // satisfy linter
   // Returns a URL to the generated image
   return "https://storage.googleapis.com/thestatsandstacks-assets/generated/mock-image.png";
 }
