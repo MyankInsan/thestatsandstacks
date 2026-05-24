@@ -82,7 +82,7 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt
     ``,
     `VISUAL ELEMENT (${visualZoneLabel}):`,
     slide.visualElement,
-    `Style: Flat, 2D vector infographic illustration, extremely high contrast, bold clean shapes, solid black background. NO photorealism, NO 3D rendering. Mood: ${slide.mood}.`,
+    `Style: Hyper-realistic cinematic photography, shot on 35mm lens, 8k resolution, photorealistic lighting, extremely lifelike. The scene must look like a real photograph, not AI generated. Mood: ${slide.mood}.`,
     `Important: do not render any text inside this visual element area.`,
     ``,
     `TEXT ZONE (lower ${textZonePercent}% of canvas, centered horizontally, stacked vertically):`,
@@ -110,9 +110,8 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt
 }
 
 const BACKGROUND_DETAILS: Record<string, string> = {
-  BAR_CHART_INFOGRAPHIC:       'Solid pitch black (#000000), no texture, pure negative space for infographics',
-  VS_COMPARISON_INFOGRAPHIC:   'Solid pitch black (#000000), no texture, pure negative space for infographics',
-  PYRAMID_WEALTH_INFOGRAPHIC:  'Solid pitch black (#000000), no texture, pure negative space for infographics',
-  CHECKLIST_INFOGRAPHIC:       'Solid pitch black (#000000), no texture, pure negative space for infographics',
-  FLOWCHART_INFOGRAPHIC:       'Solid pitch black (#000000), no texture, pure negative space for infographics',
+  PHOTOREALISTIC_NEWS_FLASH:        'Cinematic depth of field, dramatic shadows, highly detailed',
+  PHOTOREALISTIC_LUXURY_LIFESTYLE:  'Luxury aesthetic, golden hour lighting, rich textures, bokeh effect',
+  PHOTOREALISTIC_MARKET_UPDATE:     'High-contrast lighting, glowing screen reflections, sharp focus on foreground',
+  PHOTOREALISTIC_EXPERT_SHOCK:      'Studio lighting, moody atmosphere, sharp subject with soft blurred background',
 };

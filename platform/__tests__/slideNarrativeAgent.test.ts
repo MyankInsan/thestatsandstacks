@@ -17,9 +17,9 @@ const mockStrategy: StrategyDecision = {
 };
 
 const mockFormat: FormatDecision = {
-  formatType: 'BAR_CHART_INFOGRAPHIC',
+  formatType: 'PHOTOREALISTIC_NEWS_FLASH',
   slideCount: 6,
-  colorScheme: COLOR_SCHEMES.BAR_CHART_INFOGRAPHIC,
+  colorScheme: COLOR_SCHEMES.PHOTOREALISTIC_NEWS_FLASH,
   visualTone: 'urgent and dramatic',
   reasoning: 'breaking event',
 };

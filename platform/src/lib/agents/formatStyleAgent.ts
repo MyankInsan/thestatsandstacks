@@ -3,15 +3,13 @@ import type { ContentHistoryEntry } from '../services/contentHistory';
 import type { StrategyDecision } from './contentStrategyAgent';
 
 export type FormatType =
-  | 'BAR_CHART_INFOGRAPHIC'
-  | 'VS_COMPARISON_INFOGRAPHIC'
-  | 'PYRAMID_WEALTH_INFOGRAPHIC'
-  | 'CHECKLIST_INFOGRAPHIC'
-  | 'FLOWCHART_INFOGRAPHIC';
+  | 'PHOTOREALISTIC_NEWS_FLASH'
+  | 'PHOTOREALISTIC_LUXURY_LIFESTYLE'
+  | 'PHOTOREALISTIC_MARKET_UPDATE'
+  | 'PHOTOREALISTIC_EXPERT_SHOCK';
 
 export const FORMAT_TYPES: FormatType[] = [
-  'BAR_CHART_INFOGRAPHIC', 'VS_COMPARISON_INFOGRAPHIC', 'PYRAMID_WEALTH_INFOGRAPHIC',
-  'CHECKLIST_INFOGRAPHIC', 'FLOWCHART_INFOGRAPHIC',
+  'PHOTOREALISTIC_NEWS_FLASH', 'PHOTOREALISTIC_LUXURY_LIFESTYLE', 'PHOTOREALISTIC_MARKET_UPDATE', 'PHOTOREALISTIC_EXPERT_SHOCK',
 ];
 
 export interface ColorScheme {
@@ -30,11 +28,10 @@ export interface FormatDecision {
 }
 
 export const COLOR_SCHEMES: Record<FormatType, ColorScheme> = {
-  BAR_CHART_INFOGRAPHIC:       { bg: '#000000', primaryText: '#FFFFFF', accent1: '#39FF14', accent2: '#00CFFF' },
-  VS_COMPARISON_INFOGRAPHIC:   { bg: '#000000', primaryText: '#FFFFFF', accent1: '#FF3B30', accent2: '#39FF14' },
-  PYRAMID_WEALTH_INFOGRAPHIC:  { bg: '#000000', primaryText: '#FFFFFF', accent1: '#FFD700', accent2: '#FFFFFF' },
-  CHECKLIST_INFOGRAPHIC:       { bg: '#000000', primaryText: '#FFFFFF', accent1: '#00FF87', accent2: '#FFFFFF' },
-  FLOWCHART_INFOGRAPHIC:       { bg: '#000000', primaryText: '#FFFFFF', accent1: '#6366F1', accent2: '#22D3EE' },
+  PHOTOREALISTIC_NEWS_FLASH:        { bg: '#050505', primaryText: '#FFFFFF', accent1: '#39FF14', accent2: '#00CFFF' },
+  PHOTOREALISTIC_LUXURY_LIFESTYLE:  { bg: '#0A0A0A', primaryText: '#FFFFFF', accent1: '#FFD700', accent2: '#FFFFFF' },
+  PHOTOREALISTIC_MARKET_UPDATE:     { bg: '#050505', primaryText: '#FFFFFF', accent1: '#FF3B30', accent2: '#39FF14' },
+  PHOTOREALISTIC_EXPERT_SHOCK:      { bg: '#000000', primaryText: '#FFFFFF', accent1: '#FF3B30', accent2: '#FFD700' },
 };
 
 export class FormatStyleAgent {
@@ -86,21 +83,20 @@ TICKERS IN NEWS: ${tickers.join(', ') || 'none'}
 RECENT FORMATS USED (do NOT repeat): ${recentTypes.join(', ') || 'none'}
 
 AVAILABLE FORMATS — pick exactly one you haven't used recently:
-- BAR_CHART_INFOGRAPHIC: Flat black background, horizontal neon bars ranking data, with an illustrated mascot in the corner.
-- VS_COMPARISON_INFOGRAPHIC: Split layout comparing two concepts (e.g. Red vs Green, Myth vs Fact).
-- PYRAMID_WEALTH_INFOGRAPHIC: A large tiered pyramid showing hierarchy or asset allocation.
-- CHECKLIST_INFOGRAPHIC: Massive bold checkmarks with concise text steps.
-- FLOWCHART_INFOGRAPHIC: Winding neon path showing a process or compounding over time.
+- PHOTOREALISTIC_NEWS_FLASH: Hyper-realistic breaking news aesthetic, featuring public figures, politicians, or major CEOs, dramatic cinematic lighting.
+- PHOTOREALISTIC_LUXURY_LIFESTYLE: Hyper-realistic luxury aesthetic, featuring high-end items (watches, supercars, mansions, private jets) communicating wealth.
+- PHOTOREALISTIC_MARKET_UPDATE: Hyper-realistic trading desk, glowing green/red screens, high-stress or highly focused trading environment.
+- PHOTOREALISTIC_EXPERT_SHOCK: Hyper-realistic portrait of an expert reacting with shock, or a dramatic high-contrast conceptual shot.
 
 SLIDE COUNT: 6 (simple), 7-8 (multi-angle story), 9 (deep educational only)
 
 Return ONLY valid JSON, no markdown fences:
-{"formatType":"BAR_CHART_INFOGRAPHIC","slideCount":7,"visualTone":"bold data-driven graphic","reasoning":"Comparing tech stock returns is perfect for a bar chart"}`;
+{"formatType":"PHOTOREALISTIC_NEWS_FLASH","slideCount":7,"visualTone":"urgent, hyper-realistic, breaking news","reasoning":"Trump news requires a dramatic photorealistic news flash format."}`;
 }
 
 function fallbackType(recentTypes: string[]): FormatType {
   const recent = new Set(recentTypes);
-  return FORMAT_TYPES.find(t => !recent.has(t)) ?? 'BAR_CHART_INFOGRAPHIC';
+  return FORMAT_TYPES.find(t => !recent.has(t)) ?? 'PHOTOREALISTIC_NEWS_FLASH';
 }
 
 function buildFallback(recentTypes: string[]): FormatDecision {
@@ -109,7 +105,7 @@ function buildFallback(recentTypes: string[]): FormatDecision {
     formatType,
     slideCount: 7,
     colorScheme: COLOR_SCHEMES[formatType],
-    visualTone: 'dramatic, bold, high-energy finance content',
+    visualTone: 'dramatic, hyper-realistic, cinematic finance content',
     reasoning: 'Fallback — Gemini unavailable',
   };
 }

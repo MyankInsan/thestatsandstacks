@@ -81,7 +81,7 @@ SLIDE NARRATIVE RULES:
 - Last slide: Always role "cta" — strong follow/save prompt for @thestatsandstacks
 - Each headline: max 8 words, bold and punchy
 - headlineColorMap: break headline into parts, assign each part a color (primary=white, accent1=neon, accent2=cyan/secondary)
-- visualElement: describe a SPECIFIC, photorealistic scene. MUST be minimalist, modern corporate/architectural photography. NO glowing neon, NO sci-fi, NO robots, NO cartoon expressions. (e.g. "clean, minimalist dark desk surface with a subtly out-of-focus financial newspaper in the background, natural daylight")
+- visualElement: describe a SPECIFIC, photorealistic scene. MUST be highly photorealistic, cinematic photography. Describe luxury settings (e.g. mansions, private jets, supercars), realistic trading floors, public figures in dramatic lighting, or high-end items. NO 2D illustrations, no vectors. (e.g. "A hyper-realistic shot of a luxury watch on a marble desk, cinematic lighting, out of focus background")
 - dataPoint: include only if there's a real number/stat to hero (e.g. "+18.2% EPS BEAT")
 - subtext: one short line of supporting context, max 12 words
 
@@ -109,34 +109,28 @@ Return ONLY valid JSON matching this exact schema (no markdown):
 }
 
 const FALLBACK_EYEBROWS: Record<string, string> = {
-  BAR_CHART_INFOGRAPHIC:       'RANKING:',
-  VS_COMPARISON_INFOGRAPHIC:   'COMPARISON:',
-  PYRAMID_WEALTH_INFOGRAPHIC:  'HIERARCHY:',
-  CHECKLIST_INFOGRAPHIC:       'CHECKLIST:',
-  FLOWCHART_INFOGRAPHIC:       'PROCESS:',
+  PHOTOREALISTIC_NEWS_FLASH:        'BREAKING:',
+  PHOTOREALISTIC_LUXURY_LIFESTYLE:  'LIFESTYLE:',
+  PHOTOREALISTIC_MARKET_UPDATE:     'MARKET:',
+  PHOTOREALISTIC_EXPERT_SHOCK:      'INSIGHT:',
 };
 
 const FALLBACK_VISUAL_VARIANTS: Record<string, string[]> = {
-  BAR_CHART_INFOGRAPHIC: [
-    'solid black background, bold flat infographic, neon green horizontal bars, flat vector illustration of a confident investor in the bottom right corner',
-    'solid black background, bold flat infographic, cyan horizontal bars, flat vector illustration of a golden bull in the corner',
-    'solid black background, horizontal bar chart layout, negative space for text, flat illustration of Warren Buffett in the corner',
+  PHOTOREALISTIC_NEWS_FLASH: [
+    'hyper-realistic breaking news photo, public figure giving a speech at a podium, dramatic lighting, out of focus crowd in background',
+    'hyper-realistic cinematic shot of a glowing red market ticker on a Wall Street building, rainy night, neon reflections',
   ],
-  VS_COMPARISON_INFOGRAPHIC: [
-    'solid black background, flat split-screen infographic layout, left side red theme, right side green theme, vector icons for each side',
-    'solid black background, flat split-screen layout, two opposing flat illustrated characters representing good and bad habits',
+  PHOTOREALISTIC_LUXURY_LIFESTYLE: [
+    'hyper-realistic photo of the interior of a private jet, leather seats, a glass of champagne on the table, overlooking the clouds',
+    'hyper-realistic photo of a luxury sports car parked in front of a modern mansion at sunset, cinematic lighting',
   ],
-  PYRAMID_WEALTH_INFOGRAPHIC: [
-    'solid black background, massive flat vector pyramid chart in gold, flat illustrated character standing at the base',
-    'solid black background, large tiered hierarchy chart, flat minimalist icons inside each tier, clean layout',
+  PHOTOREALISTIC_MARKET_UPDATE: [
+    'hyper-realistic shot of a high-end trading desk, multiple monitors glowing green and red with stock charts, dark room, highly focused',
+    'hyper-realistic macro photography of a smartphone displaying a booming stock chart, held by a person in a tailored suit',
   ],
-  CHECKLIST_INFOGRAPHIC: [
-    'solid black background, massive neon green checkmarks, negative space for text, flat vector illustration of a character holding a clipboard',
-    'solid black background, massive cyan checkmarks on the left, flat vector illustration of a character pointing to the center from the right',
-  ],
-  FLOWCHART_INFOGRAPHIC: [
-    'solid black background, winding glowing neon path, flat minimalist icons at each milestone, negative space for descriptions',
-    'solid black background, decision tree flowchart layout, glowing green nodes, clean flat styling',
+  PHOTOREALISTIC_EXPERT_SHOCK: [
+    'hyper-realistic portrait of a financial expert looking shocked, dramatic lighting, dark background, cinematic depth of field',
+    'hyper-realistic photo of a trader with hands on their head in disbelief, trading floor background, intense emotion',
   ],
 };
 
@@ -162,7 +156,7 @@ function parseBreakdown(breakdown: string): { headline: string; subtext: string 
 function buildFallback(strategy: StrategyDecision, format: FormatDecision): SlideNarrative {
   const count = format.slideCount;
   const eyebrow = FALLBACK_EYEBROWS[format.formatType] ?? 'KEY INSIGHT:';
-  const visualVariants = FALLBACK_VISUAL_VARIANTS[format.formatType] ?? FALLBACK_VISUAL_VARIANTS.BAR_CHART_INFOGRAPHIC;
+  const visualVariants = FALLBACK_VISUAL_VARIANTS[format.formatType] ?? FALLBACK_VISUAL_VARIANTS.PHOTOREALISTIC_NEWS_FLASH;
 
   const slides: SlideSpec[] = [];
 
@@ -214,7 +208,7 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision): Slid
       { text: 'DAILY INSIGHTS', color: 'accent1' },
     ],
     subtext: 'Canadian finance, no hype — @thestatsandstacks',
-    visualElement: 'clean dark background with a subtle upward bar chart icon glowing in the center, minimalist and authoritative',
+    visualElement: 'hyper-realistic photography of a sleek, dark marble surface reflecting a subtle upward green arrow projection, highly professional and authoritative',
     visualPosition: 'center',
     mood: 'confident and inviting',
     narrativeNote: 'CTA — drive follows and saves',

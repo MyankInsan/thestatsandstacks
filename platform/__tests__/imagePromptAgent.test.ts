@@ -37,9 +37,9 @@ const mockSlides: SlideSpec[] = [
 ];
 
 const mockFormat: FormatDecision = {
-  formatType: 'BAR_CHART_INFOGRAPHIC',
+  formatType: 'PHOTOREALISTIC_NEWS_FLASH',
   slideCount: 7,
-  colorScheme: COLOR_SCHEMES.BAR_CHART_INFOGRAPHIC,
+  colorScheme: COLOR_SCHEMES.PHOTOREALISTIC_NEWS_FLASH,
   visualTone: 'urgent and dramatic',
   reasoning: 'test',
 };
@@ -69,7 +69,7 @@ test('Each prompt contains canvas size and brand handle', () => {
 test('Prompt includes correct background hex color', () => {
   const agent = new ImagePromptAgent();
   const result = agent.execute({ slides: mockSlides, format: mockFormat, strategy: mockStrategy });
-  assert.ok(result.slides[0].geminiPrompt.includes('#000000'), 'must include bg color');
+  assert.ok(result.slides[0].geminiPrompt.includes('#050505'), 'must include bg color');
 });
 
 test('Prompt includes exact headline text', () => {

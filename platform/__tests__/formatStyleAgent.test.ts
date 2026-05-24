@@ -38,7 +38,7 @@ test('FormatStyleAgent fallback avoids the last two format types', async () => {
   const result = await agent.execute({
     strategy: mockStrategy,
     contentHistory: [
-      { date: '2026-05-21', topic: 't', hook: 'h', format: 'CAROUSEL', formatType: 'BAR_CHART_INFOGRAPHIC', slideCount: 7, keywords: [] },
+      { date: '2026-05-21', topic: 't', hook: 'h', format: 'CAROUSEL', formatType: 'PHOTOREALISTIC_NEWS_FLASH', slideCount: 7, keywords: [] },
       { date: '2026-05-20', topic: 't', hook: 'h', format: 'CAROUSEL', formatType: 'VS_COMPARISON_INFOGRAPHIC', slideCount: 7, keywords: [] },
     ],
     tickerSymbols: [],
@@ -46,7 +46,7 @@ test('FormatStyleAgent fallback avoids the last two format types', async () => {
 
   process.env.GEMINI_API_KEY = saved ?? '';
 
-  assert.notEqual(result.formatType, 'BAR_CHART_INFOGRAPHIC', 'Should not repeat BAR_CHART_INFOGRAPHIC');
+  assert.notEqual(result.formatType, 'PHOTOREALISTIC_NEWS_FLASH', 'Should not repeat PHOTOREALISTIC_NEWS_FLASH');
   assert.notEqual(result.formatType, 'VS_COMPARISON_INFOGRAPHIC', 'Should not repeat VS_COMPARISON_INFOGRAPHIC');
 });
 
