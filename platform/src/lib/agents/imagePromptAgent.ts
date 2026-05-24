@@ -27,12 +27,9 @@ export class ImagePromptAgent {
 
 function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt {
   const { colorScheme, formatType } = format;
-  const textZonePercent = slide.visualPosition === 'background' ? 65 : 50;
-  const visualZoneLabel = slide.visualPosition === 'top'
-    ? `upper ${100 - textZonePercent}% of canvas`
-    : slide.visualPosition === 'background'
-    ? 'full canvas, behind everything else, opacity 25-35%'
-    : `${slide.visualPosition} half of canvas`;
+  const slideIndex = slide.slideNumber - 1;
+  const layout = LAYOUT_SEQUENCE[slideIndex % LAYOUT_SEQUENCE.length];
+  const layoutRules = getLayoutRules(layout, colorScheme.bg);
 
   const textLines: string[] = [];
 
@@ -80,16 +77,15 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt
     ``,
     `BACKGROUND: Fill entire canvas with ${colorScheme.bg}. ${bgDetail}.`,
     ``,
-    `VISUAL ELEMENT (${visualZoneLabel}):`,
+    `VISUAL ELEMENT (${layoutRules.visualZoneLabel}):`,
     slide.visualElement,
     `Style: Hyper-realistic cinematic photography, shot on 35mm lens, 8k resolution, photorealistic lighting, extremely lifelike. The scene must look like a real photograph, not AI generated. Mood: ${slide.mood}.`,
-    `Important: do not render any text inside this visual element area.`,
+    `Important: adhere strictly to the visual zone boundaries.`,
     ``,
-    `TEXT ZONE (lower ${textZonePercent}% of canvas, centered horizontally, stacked vertically):`,
+    `TEXT ZONE (${layoutRules.textZoneLabel}):`,
     ...textLines,
     ``,
-    `GRADIENT OVERLAY: Apply a dark gradient from ${100 - textZonePercent - 10}% canvas height to the bottom edge, `,
-    `color ${colorScheme.bg}, opacity 80-88%, ensuring all text above is fully legible against the visual element.`,
+    `OVERLAY/BACKGROUND FX: ${layoutRules.overlayRules}`,
     ``,
     `BRAND ELEMENT:`,
     `- Bottom-left corner: a small upward-trending bar-chart icon followed by the text "@thestatsandstacks" — rendered in white, small and subtle, placed near the bottom-left edge`,
@@ -114,4 +110,54 @@ const BACKGROUND_DETAILS: Record<string, string> = {
   PHOTOREALISTIC_LUXURY_LIFESTYLE:  'Luxury aesthetic, golden hour lighting, rich textures, bokeh effect',
   PHOTOREALISTIC_MARKET_UPDATE:     'High-contrast lighting, glowing screen reflections, sharp focus on foreground',
   PHOTOREALISTIC_EXPERT_SHOCK:      'Studio lighting, moody atmosphere, sharp subject with soft blurred background',
+  PHOTOREALISTIC_MINIMAL_TECH:      'Sleek, bright minimal studio background, subtle glass reflections',
 };
+
+type LayoutType = 'FULL_BLEED' | 'BOTTOM_SPLIT' | 'TOP_SPLIT' | 'LETTERBOX' | 'LOWER_THIRD' | 'MINIMAL_CARD';
+
+const LAYOUT_SEQUENCE: LayoutType[] = [
+  'FULL_BLEED',
+  'BOTTOM_SPLIT',
+  'TOP_SPLIT',
+  'LETTERBOX',
+  'LOWER_THIRD',
+  'MINIMAL_CARD',
+  'BOTTOM_SPLIT',
+  'TOP_SPLIT',
+  'MINIMAL_CARD'
+];
+
+function getLayoutRules(layout: LayoutType, bgHex: string) {
+  switch (layout) {
+    case 'FULL_BLEED': return {
+      visualZoneLabel: 'fills the entire 1080x1350 canvas',
+      textZoneLabel: 'centered exactly in the middle of the canvas, overlaid on the photo',
+      overlayRules: `Apply a heavy dark vignette around the edges and a subtle 40% darkening over the entire center image so white text is highly legible.`
+    };
+    case 'BOTTOM_SPLIT': return {
+      visualZoneLabel: 'upper 60% of canvas',
+      textZoneLabel: 'lower 40% of canvas, centered horizontally, stacked vertically',
+      overlayRules: `Apply a dark gradient from 50% canvas height to the bottom edge, color ${bgHex}, opacity 100% at bottom.`
+    };
+    case 'TOP_SPLIT': return {
+      visualZoneLabel: 'lower 60% of canvas',
+      textZoneLabel: 'upper 40% of canvas, centered horizontally, stacked vertically',
+      overlayRules: `Apply a dark gradient from 50% canvas height to the top edge, color ${bgHex}, opacity 100% at top.`
+    };
+    case 'LETTERBOX': return {
+      visualZoneLabel: 'exact center of the canvas, rendered as a 1:1 square photo',
+      textZoneLabel: 'split between the top 20% and bottom 20% of the canvas',
+      overlayRules: `No gradient. The top and bottom 20% areas should be solid ${bgHex} blocks framing the center square photo.`
+    };
+    case 'LOWER_THIRD': return {
+      visualZoneLabel: 'fills entire canvas, but subject framed heavily in upper half',
+      textZoneLabel: 'absolute bottom 25% of canvas, compact text',
+      overlayRules: `Sharp, highly opaque dark gradient strictly in the bottom 30% of the image, fading sharply into the photo above it.`
+    };
+    case 'MINIMAL_CARD': return {
+      visualZoneLabel: 'very subtle, soft focus in the background, heavily blurred, opacity 15%',
+      textZoneLabel: 'occupies the entire center 60% of the canvas, lots of negative space',
+      overlayRules: `Solid ${bgHex} background over the entire canvas, letting the visual element barely peek through as a watermark texture.`
+    };
+  }
+}

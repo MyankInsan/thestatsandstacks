@@ -6,10 +6,15 @@ export type FormatType =
   | 'PHOTOREALISTIC_NEWS_FLASH'
   | 'PHOTOREALISTIC_LUXURY_LIFESTYLE'
   | 'PHOTOREALISTIC_MARKET_UPDATE'
-  | 'PHOTOREALISTIC_EXPERT_SHOCK';
+  | 'PHOTOREALISTIC_EXPERT_SHOCK'
+  | 'PHOTOREALISTIC_MINIMAL_TECH';
 
 export const FORMAT_TYPES: FormatType[] = [
-  'PHOTOREALISTIC_NEWS_FLASH', 'PHOTOREALISTIC_LUXURY_LIFESTYLE', 'PHOTOREALISTIC_MARKET_UPDATE', 'PHOTOREALISTIC_EXPERT_SHOCK',
+  'PHOTOREALISTIC_NEWS_FLASH', 
+  'PHOTOREALISTIC_LUXURY_LIFESTYLE', 
+  'PHOTOREALISTIC_MARKET_UPDATE', 
+  'PHOTOREALISTIC_EXPERT_SHOCK',
+  'PHOTOREALISTIC_MINIMAL_TECH'
 ];
 
 export interface ColorScheme {
@@ -32,6 +37,7 @@ export const COLOR_SCHEMES: Record<FormatType, ColorScheme> = {
   PHOTOREALISTIC_LUXURY_LIFESTYLE:  { bg: '#0A0A0A', primaryText: '#FFFFFF', accent1: '#FFD700', accent2: '#FFFFFF' },
   PHOTOREALISTIC_MARKET_UPDATE:     { bg: '#050505', primaryText: '#FFFFFF', accent1: '#FF3B30', accent2: '#39FF14' },
   PHOTOREALISTIC_EXPERT_SHOCK:      { bg: '#000000', primaryText: '#FFFFFF', accent1: '#FF3B30', accent2: '#FFD700' },
+  PHOTOREALISTIC_MINIMAL_TECH:      { bg: '#F8F9FA', primaryText: '#111827', accent1: '#2563EB', accent2: '#4B5563' },
 };
 
 export class FormatStyleAgent {
@@ -40,12 +46,10 @@ export class FormatStyleAgent {
     contentHistory: ContentHistoryEntry[];
     tickerSymbols: string[];
   }): Promise<FormatDecision> {
-    const recentTypes = input.contentHistory
-      .slice(-3)
-      .map(e => e.formatType)
-      .filter((t): t is string => Boolean(t));
+    const dayOfYear = Math.floor(Date.now() / 86400000);
+    const assignedFormat = FORMAT_TYPES[dayOfYear % 5];
 
-    const prompt = buildPrompt(input.strategy, recentTypes, input.tickerSymbols);
+    const prompt = buildPrompt(input.strategy, assignedFormat, input.tickerSymbols);
 
     try {
       const genAI = getGeminiClient();
@@ -53,58 +57,46 @@ export class FormatStyleAgent {
       const result = await model.generateContent(prompt);
       const text = result.response.text().replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
       const parsed = JSON.parse(text) as {
-        formatType: FormatType;
         slideCount: number;
         visualTone: string;
         reasoning: string;
       };
 
-      const formatType = FORMAT_TYPES.includes(parsed.formatType) ? parsed.formatType : fallbackType(recentTypes);
       return {
-        formatType,
+        formatType: assignedFormat,
         slideCount: Math.min(9, Math.max(6, Number(parsed.slideCount) || 7)),
-        colorScheme: COLOR_SCHEMES[formatType],
+        colorScheme: COLOR_SCHEMES[assignedFormat],
         visualTone: parsed.visualTone || 'dramatic, bold, high-energy',
         reasoning: parsed.reasoning || '',
       };
     } catch (err) {
       console.warn('[FormatStyleAgent] Gemini failed, using fallback.', err instanceof Error ? err.message : String(err));
-      return buildFallback(recentTypes);
+      return buildFallback(assignedFormat);
     }
   }
 }
 
-function buildPrompt(strategy: StrategyDecision, recentTypes: string[], tickers: string[]): string {
-  return `You are a viral finance Instagram content strategist. Pick the best visual format for today's post.
+function buildPrompt(strategy: StrategyDecision, assignedFormat: string, tickers: string[]): string {
+  return `You are a viral finance Instagram content strategist. We are using a strictly rotating daily visual format.
 
 TODAY'S TOPIC: ${strategy.topic}
 HOOK: ${strategy.hook}
 TICKERS IN NEWS: ${tickers.join(', ') || 'none'}
-RECENT FORMATS USED (do NOT repeat): ${recentTypes.join(', ') || 'none'}
 
-AVAILABLE FORMATS — pick exactly one you haven't used recently:
-- PHOTOREALISTIC_NEWS_FLASH: Hyper-realistic breaking news aesthetic, featuring public figures, politicians, or major CEOs, dramatic cinematic lighting.
-- PHOTOREALISTIC_LUXURY_LIFESTYLE: Hyper-realistic luxury aesthetic, featuring high-end items (watches, supercars, mansions, private jets) communicating wealth.
-- PHOTOREALISTIC_MARKET_UPDATE: Hyper-realistic trading desk, glowing green/red screens, high-stress or highly focused trading environment.
-- PHOTOREALISTIC_EXPERT_SHOCK: Hyper-realistic portrait of an expert reacting with shock, or a dramatic high-contrast conceptual shot.
+MANDATORY FORMAT FOR TODAY: ${assignedFormat}
+(Do not change this format. Just return it in your thought process).
 
 SLIDE COUNT: 6 (simple), 7-8 (multi-angle story), 9 (deep educational only)
 
 Return ONLY valid JSON, no markdown fences:
-{"formatType":"PHOTOREALISTIC_NEWS_FLASH","slideCount":7,"visualTone":"urgent, hyper-realistic, breaking news","reasoning":"Trump news requires a dramatic photorealistic news flash format."}`;
+{"slideCount":7,"visualTone":"urgent, hyper-realistic, breaking news","reasoning":"Trump news requires a dramatic photorealistic news flash format."}`;
 }
 
-function fallbackType(recentTypes: string[]): FormatType {
-  const recent = new Set(recentTypes);
-  return FORMAT_TYPES.find(t => !recent.has(t)) ?? 'PHOTOREALISTIC_NEWS_FLASH';
-}
-
-function buildFallback(recentTypes: string[]): FormatDecision {
-  const formatType = fallbackType(recentTypes);
+function buildFallback(assignedFormat: FormatType): FormatDecision {
   return {
-    formatType,
+    formatType: assignedFormat,
     slideCount: 7,
-    colorScheme: COLOR_SCHEMES[formatType],
+    colorScheme: COLOR_SCHEMES[assignedFormat],
     visualTone: 'dramatic, hyper-realistic, cinematic finance content',
     reasoning: 'Fallback — Gemini unavailable',
   };
