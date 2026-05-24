@@ -2,9 +2,11 @@ name: Daily Instagram Post
 
 on:
   schedule:
-    # Runs at both possible UTC offsets; the guard below chooses the one matching 8:00 AM Vancouver.
+    # Runs at both possible UTC offsets; the guard below chooses the one matching 8:00 AM and 1:00 PM Vancouver.
     - cron: '0 15 * * *'
     - cron: '0 16 * * *'
+    - cron: '0 20 * * *'
+    - cron: '0 21 * * *'
   workflow_dispatch:
 
 env:
@@ -24,13 +26,14 @@ jobs:
         id: send-window
         run: |
           scheduled_hour="$(echo "${{ github.event.schedule }}" | awk '{print $2}')"
-          target_utc_hour="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=8, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
+          target_utc_hour_am="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=8, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
+          target_utc_hour_pm="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=13, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
 
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$scheduled_hour" = "$target_utc_hour" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$scheduled_hour" = "$target_utc_hour_am" ] || [ "$scheduled_hour" = "$target_utc_hour_pm" ]; then
             echo "should_run=true" >> "$GITHUB_OUTPUT"
           else
             echo "should_run=false" >> "$GITHUB_OUTPUT"
-            echo "Skipping because cron UTC hour $scheduled_hour does not match today's 8 AM Vancouver UTC hour $target_utc_hour."
+            echo "Skipping because cron UTC hour $scheduled_hour does not match today's Vancouver UTC hours ($target_utc_hour_am or $target_utc_hour_pm)."
           fi
 
       - name: Setup Node.js
