@@ -57,21 +57,19 @@ export class FormatStyleAgent {
       const result = await model.generateContent(prompt);
       const text = result.response.text().replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
       const parsed = JSON.parse(text) as {
-        slideCount: number;
         visualTone: string;
         reasoning: string;
       };
 
       return {
         formatType: assignedFormat,
-        slideCount: Math.min(9, Math.max(6, Number(parsed.slideCount) || 7)),
+        slideCount: input.strategy.slideCount,
         colorScheme: COLOR_SCHEMES[assignedFormat],
         visualTone: parsed.visualTone || 'dramatic, bold, high-energy',
         reasoning: parsed.reasoning || '',
       };
     } catch (err) {
-      console.warn('[FormatStyleAgent] Gemini failed, using fallback.', err instanceof Error ? err.message : String(err));
-      return buildFallback(assignedFormat);
+      return buildFallback(assignedFormat, input.strategy);
     }
   }
 }
@@ -89,13 +87,13 @@ MANDATORY FORMAT FOR TODAY: ${assignedFormat}
 SLIDE COUNT: 6 (simple), 7-8 (multi-angle story), 9 (deep educational only)
 
 Return ONLY valid JSON, no markdown fences:
-{"slideCount":7,"visualTone":"urgent, hyper-realistic, breaking news","reasoning":"Trump news requires a dramatic photorealistic news flash format."}`;
+{"visualTone":"urgent, hyper-realistic, breaking news","reasoning":"Trump news requires a dramatic photorealistic news flash format."}`;
 }
 
-function buildFallback(assignedFormat: FormatType): FormatDecision {
+function buildFallback(assignedFormat: FormatType, strategy: StrategyDecision): FormatDecision {
   return {
     formatType: assignedFormat,
-    slideCount: 7,
+    slideCount: strategy.slideCount,
     colorScheme: COLOR_SCHEMES[assignedFormat],
     visualTone: 'dramatic, hyper-realistic, cinematic finance content',
     reasoning: 'Fallback — Gemini unavailable',

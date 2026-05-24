@@ -82,7 +82,8 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt
     ``,
     `VISUAL ELEMENT (${layoutRules.visualZoneLabel}):`,
     slide.visualElement,
-    `Style: ${cameraAngle}, 8k resolution, ${lightingStyle}. The scene must look like a real photograph, not AI generated. Mood: ${slide.mood}.`,
+    `Style: ${cameraAngle}, ${lightingStyle}. Candid photography, shot on Kodak Portra 400 film, natural film grain, chromatic aberration. The scene must look like a raw, unedited photograph. Mood: ${slide.mood}.`,
+    `Negative Prompting (CRITICAL): NO plastic skin, NO 3D render, NO Unreal Engine, NO symmetrical faces, NO CGI, NO airbrushed perfection.`,
     `Physical Color Branding: Incorporate the hex colors ${colorScheme.accent1} and ${colorScheme.accent2} directly into the physical environment (e.g. as neon signs, practical lights, clothing accents, or reflections).`,
     `Important: adhere strictly to the visual zone boundaries.`,
     ``,
@@ -94,11 +95,13 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt
     `BRAND ELEMENT:`,
     `- Bottom-left corner: a small upward-trending bar-chart icon followed by the text "@thestatsandstacks" — rendered in white, small and subtle, placed near the bottom-left edge`,
     ``,
-    `STRICT RULES:`,
+    `STRICT TYPOGRAPHY & LAYOUT RULES:`,
     `- Render ALL text exactly as specified above — every word, every color. Numbers must be pixel-perfect.`,
+    `- Readability is paramount: Place solid, slightly transparent dark boxes or pills behind the text instead of using muddy drop shadows.`,
     `- Use ONLY these hex colors: bg=${colorScheme.bg}, text=${colorScheme.primaryText}, accent1=${colorScheme.accent1}, accent2=${colorScheme.accent2}, white=#FFFFFF.`,
     `- Do not add any other text, numbers, labels, counters, borders, watermarks, UI elements, or decorations beyond what is listed above.`,
     `- Overall mood: ${slide.mood}.`,
+    `--style raw --s 50 --ar 4:5`
   ].join('\n');
 
   return {
@@ -133,9 +136,10 @@ const LIGHTING_STYLES = [
   'Moody chiaroscuro lighting, deep shadows',
 ];
 
-type LayoutType = 'FULL_BLEED' | 'BOTTOM_SPLIT' | 'TOP_SPLIT' | 'LETTERBOX' | 'LOWER_THIRD' | 'MINIMAL_CARD';
+type LayoutType = 'FULL_BLEED' | 'BOTTOM_SPLIT' | 'TOP_SPLIT' | 'LETTERBOX' | 'LOWER_THIRD' | 'MINIMAL_CARD' | 'SPLIT_SCREEN_CONTRAST';
 
 const LAYOUT_SEQUENCE: LayoutType[] = [
+  'SPLIT_SCREEN_CONTRAST',
   'FULL_BLEED',
   'BOTTOM_SPLIT',
   'TOP_SPLIT',
@@ -178,6 +182,11 @@ function getLayoutRules(layout: LayoutType, bgHex: string) {
       visualZoneLabel: 'very subtle, soft focus in the background, heavily blurred, opacity 15%',
       textZoneLabel: 'occupies the entire center 60% of the canvas, lots of negative space',
       overlayRules: `Solid ${bgHex} background over the entire canvas, letting the visual element barely peek through as a watermark texture.`
+    };
+    case 'SPLIT_SCREEN_CONTRAST': return {
+      visualZoneLabel: 'split perfectly down the middle vertically: left side one concept, right side the contrasting concept',
+      textZoneLabel: 'text divided across the two halves, with clear contrasting colors or labels (e.g. A vs B)',
+      overlayRules: `A harsh, visible dividing line down the middle of the canvas.`
     };
   }
 }
