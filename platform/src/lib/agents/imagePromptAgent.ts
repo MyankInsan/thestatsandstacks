@@ -25,84 +25,95 @@ export class ImagePromptAgent {
   }
 }
 
+// Modular Prompt Dictionaries for "Premium, Non-Hype" Aesthetic
+const FORMATS = [
+  'Macro editorial photography',
+  'Abstract 3D render',
+  'Minimalist digital illustration',
+  'Architectural visualization'
+];
+
+const SUBJECT_ABSTRACTIONS = [
+  'smooth flowing topographic lines',
+  'subtle ascending geometric forms',
+  'interconnected delicate nodes',
+  'monolithic abstract forms',
+  'layered tectonic plates',
+  'calm fluid dynamics',
+  'minimalist data visualization',
+  'abstract structured grid patterns',
+  'clean translucent layering'
+];
+
+const MATERIALITIES = [
+  'frosted glass and brushed charcoal metal',
+  'matte navy surface with subtle gold foil accents',
+  'dark emerald marble with brass inlay',
+  'smooth dark silk and slate',
+  'brushed steel and dark glass',
+  'matte porcelain with subtle metallic veins'
+];
+
+const LIGHTING = [
+  'soft studio lighting with subtle rim light',
+  'cinematic volumetric lighting',
+  'diffused soft-box lighting',
+  'chiaroscuro lighting',
+  'architectural lighting with soft ambient occlusion'
+];
+
+const COMPOSITION_STYLE = [
+  'high-end editorial financial aesthetic, vast negative space, elegant, clean modern corporate style, hyper-realistic, 8k',
+  'Swiss design influence, minimalist, sharp focus, sophisticated wealth management branding, pristine',
+  'editorial magazine quality, clean layout, ample negative space for text overlay, balanced composition, ultra-detailed',
+  'contemporary corporate aesthetic, rigid geometry, depth of field, minimalist perfection'
+];
+
+// Always include this for Midjourney/Ideogram to avoid the "finance bro" AI slop
+const NEGATIVE_PROMPT = '--no coins, neon, literal arrows, bull, bear, cyberpunk, chaotic, messy, cluttered, low resolution, cheap 3d render, plastic, watermark, messy text, glowing green';
+
+const PARAMETERS = '--ar 4:5 --style raw --v 6.0 --s 200';
+
+function getRandomElement<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt {
-  const { colorScheme, formatType } = format;
-  const slideIndex = slide.slideNumber - 1;
-  const layout = LAYOUT_SEQUENCE[slideIndex % LAYOUT_SEQUENCE.length];
-  const layoutRules = getLayoutRules(layout, colorScheme.bg);
+  const { colorScheme } = format;
+  
+  // 1. Pick randomized but curated modular elements for the visual
+  const formatType = getRandomElement(FORMATS);
+  const subject = getRandomElement(SUBJECT_ABSTRACTIONS);
+  const materiality = getRandomElement(MATERIALITIES);
+  const lighting = getRandomElement(LIGHTING);
+  const style = getRandomElement(COMPOSITION_STYLE);
+  
+  // 2. Format the Color Palette
+  const colorPalette = `${colorScheme.bg}, ${colorScheme.primaryText}, ${colorScheme.accent1}, and ${colorScheme.accent2} color palette`;
 
-  const cameraAngle = CAMERA_ANGLES[slideIndex % CAMERA_ANGLES.length];
-  const lightingStyle = LIGHTING_STYLES[slideIndex % LIGHTING_STYLES.length];
-
-  const textLines: string[] = [];
-
-  if (slide.eyebrow) {
-    textLines.push(
-      `- EYEBROW: Render "${slide.eyebrow}" in ${colorScheme.accent2}, bold condensed sans-serif, ` +
-      `~45px, centered, wide letter-spacing, positioned at top of text zone`
-    );
-  }
-
-  if (slide.headlineColorMap.length > 0) {
-    const colorParts = slide.headlineColorMap.map(part => {
-      const hex = part.color === 'accent1' ? colorScheme.accent1
-                : part.color === 'accent2' ? colorScheme.accent2
-                : colorScheme.primaryText;
-      return `"${part.text}" in ${hex}`;
-    });
-    textLines.push(
-      `- HEADLINE: ${colorParts.join(', then ')} — bold condensed Impact-style sans-serif, ` +
-      `~100-120px, centered, stacked in 1-2 lines, tight line-height`
-    );
-  } else {
-    textLines.push(
-      `- HEADLINE: "${slide.headline}" in ${colorScheme.primaryText}, bold condensed Impact-style sans-serif, ~110px, centered`
-    );
+  // 3. Assemble the Text that needs to be generated in the image
+  // For AI Image Generation, we need to be very explicit about what text is rendered.
+  let textToRender = '';
+  
+  if (slide.headlineColorMap && slide.headlineColorMap.length > 0) {
+    const headline = slide.headlineColorMap.map(part => part.text).join(' ');
+    textToRender += `The large bold text "${headline}" centered on the surface. `;
+  } else if (slide.headline) {
+    textToRender += `The large bold text "${slide.headline}" centered on the surface. `;
   }
 
   if (slide.dataPoint) {
-    textLines.push(
-      `- DATA POINT (visual centerpiece): "${slide.dataPoint}" in ${colorScheme.accent1}, ` +
-      `ultra-bold condensed, ~140-160px, centered — make this the most visually dominant element`
-    );
+    textToRender += `The massive number "${slide.dataPoint}" written cleanly below the headline. `;
   }
-
+  
   if (slide.subtext) {
-    textLines.push(
-      `- SUBTEXT: "${slide.subtext}" in ${colorScheme.primaryText}, regular weight, ~48px, centered, below headline`
-    );
+    textToRender += `The small subtitle "${slide.subtext}" written below. `;
   }
 
-  const bgDetail = BACKGROUND_DETAILS[formatType] ?? 'minimal texture, clean and dark';
-
-  const prompt = [
-    `Create a 1080x1350 portrait Instagram image. This is a ${formatType} finance carousel slide.`,
-    ``,
-    `BACKGROUND: Fill entire canvas with ${colorScheme.bg}. ${bgDetail}.`,
-    ``,
-    `VISUAL ELEMENT (${layoutRules.visualZoneLabel}):`,
-    slide.visualElement,
-    `Style: ${cameraAngle}, ${lightingStyle}. Candid photography, shot on Kodak Portra 400 film, natural film grain, chromatic aberration. The scene must look like a raw, unedited photograph. Mood: ${slide.mood}.`,
-    `Negative Prompting (CRITICAL): NO plastic skin, NO 3D render, NO Unreal Engine, NO symmetrical faces, NO CGI, NO airbrushed perfection.`,
-    `Physical Color Branding: Incorporate the hex colors ${colorScheme.accent1} and ${colorScheme.accent2} directly into the physical environment (e.g. as neon signs, practical lights, clothing accents, or reflections).`,
-    `Important: adhere strictly to the visual zone boundaries.`,
-    ``,
-    `TEXT ZONE (${layoutRules.textZoneLabel}):`,
-    ...textLines,
-    ``,
-    `OVERLAY/BACKGROUND FX: ${layoutRules.overlayRules}`,
-    ``,
-    `BRAND ELEMENT:`,
-    `- Bottom-left corner: a small upward-trending bar-chart icon followed by the text "@thestatsandstacks" — rendered in white, small and subtle, placed near the bottom-left edge`,
-    ``,
-    `STRICT TYPOGRAPHY & LAYOUT RULES:`,
-    `- Render ALL text exactly as specified above — every word, every color. Numbers must be pixel-perfect.`,
-    `- Readability is paramount: Place solid, slightly transparent dark boxes or pills behind the text instead of using muddy drop shadows.`,
-    `- Use ONLY these hex colors: bg=${colorScheme.bg}, text=${colorScheme.primaryText}, accent1=${colorScheme.accent1}, accent2=${colorScheme.accent2}, white=#FFFFFF.`,
-    `- Do not add any other text, numbers, labels, counters, borders, watermarks, UI elements, or decorations beyond what is listed above.`,
-    `- Overall mood: ${slide.mood}.`,
-    `--style raw --s 50 --ar 4:5`
-  ].join('\n');
+  // 4. Construct the final Prompt using the Formula:
+  // [Format] of [Subject], [Materiality]. [Color_Palette]. [Lighting]. [Composition_&_Style]. [Text]. [Parameters] [Negative_Prompt]
+  
+  const prompt = `${formatType} of ${subject}, ${materiality}. ${colorPalette}. ${lighting}. ${style}. ${textToRender.trim()} ${PARAMETERS} ${NEGATIVE_PROMPT}`;
 
   return {
     slideNumber: slide.slideNumber,
@@ -110,83 +121,4 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt
     slideTitle: slide.role.toUpperCase().replace(/_/g, ' '),
     geminiPrompt: prompt,
   };
-}
-
-const BACKGROUND_DETAILS: Record<string, string> = {
-  PHOTOREALISTIC_NEWS_FLASH:        'Cinematic depth of field, dramatic shadows, highly detailed',
-  PHOTOREALISTIC_LUXURY_LIFESTYLE:  'Luxury aesthetic, golden hour lighting, rich textures, bokeh effect',
-  PHOTOREALISTIC_MARKET_UPDATE:     'High-contrast lighting, glowing screen reflections, sharp focus on foreground',
-  PHOTOREALISTIC_EXPERT_SHOCK:      'Studio lighting, moody atmosphere, sharp subject with soft blurred background',
-  PHOTOREALISTIC_MINIMAL_TECH:      'Sleek, bright minimal studio background, subtle glass reflections',
-};
-
-const CAMERA_ANGLES = [
-  'Low-angle Dutch tilt shot, 35mm lens, depth of field',
-  'Drone top-down view, sharp focus',
-  'Macro close-up, f/1.8 aperture, dramatic bokeh',
-  'Over-the-shoulder perspective, wide-angle 24mm lens',
-  'Eye-level medium portrait, 85mm lens, extremely sharp',
-];
-
-const LIGHTING_STYLES = [
-  'Volumetric fog with harsh rim lighting',
-  'Neon cyberpunk ambient glow, high contrast',
-  'Golden hour sun flares, soft shadows',
-  'Harsh studio strobe lighting, editorial vogue style',
-  'Moody chiaroscuro lighting, deep shadows',
-];
-
-type LayoutType = 'FULL_BLEED' | 'BOTTOM_SPLIT' | 'TOP_SPLIT' | 'LETTERBOX' | 'LOWER_THIRD' | 'MINIMAL_CARD' | 'SPLIT_SCREEN_CONTRAST';
-
-const LAYOUT_SEQUENCE: LayoutType[] = [
-  'SPLIT_SCREEN_CONTRAST',
-  'FULL_BLEED',
-  'BOTTOM_SPLIT',
-  'TOP_SPLIT',
-  'LETTERBOX',
-  'LOWER_THIRD',
-  'MINIMAL_CARD',
-  'BOTTOM_SPLIT',
-  'TOP_SPLIT',
-  'MINIMAL_CARD'
-];
-
-function getLayoutRules(layout: LayoutType, bgHex: string) {
-  switch (layout) {
-    case 'FULL_BLEED': return {
-      visualZoneLabel: 'fills the entire 1080x1350 canvas',
-      textZoneLabel: 'centered exactly in the middle of the canvas, overlaid on the photo',
-      overlayRules: `Apply a heavy dark vignette around the edges and a subtle 40% darkening over the entire center image so white text is highly legible.`
-    };
-    case 'BOTTOM_SPLIT': return {
-      visualZoneLabel: 'upper 60% of canvas',
-      textZoneLabel: 'lower 40% of canvas, centered horizontally, stacked vertically',
-      overlayRules: `Apply a dark gradient from 50% canvas height to the bottom edge, color ${bgHex}, opacity 100% at bottom.`
-    };
-    case 'TOP_SPLIT': return {
-      visualZoneLabel: 'lower 60% of canvas',
-      textZoneLabel: 'upper 40% of canvas, centered horizontally, stacked vertically',
-      overlayRules: `Apply a dark gradient from 50% canvas height to the top edge, color ${bgHex}, opacity 100% at top.`
-    };
-    case 'LETTERBOX': return {
-      visualZoneLabel: 'exact center of the canvas, rendered as a 1:1 square photo',
-      textZoneLabel: 'split between the top 20% and bottom 20% of the canvas',
-      overlayRules: `No gradient. The top and bottom 20% areas should be solid ${bgHex} blocks framing the center square photo.`
-    };
-    case 'LOWER_THIRD': return {
-      visualZoneLabel: 'fills entire canvas, but subject framed heavily in upper half',
-      textZoneLabel: 'absolute bottom 25% of canvas, compact text',
-      overlayRules: `Sharp, highly opaque dark gradient strictly in the bottom 30% of the image, fading sharply into the photo above it.`
-    };
-    case 'MINIMAL_CARD': return {
-      visualZoneLabel: 'very subtle, soft focus in the background, heavily blurred, opacity 15%',
-      textZoneLabel: 'occupies the entire center 60% of the canvas, lots of negative space',
-      overlayRules: `Solid ${bgHex} background over the entire canvas, letting the visual element barely peek through as a watermark texture.`
-    };
-    case 'SPLIT_SCREEN_CONTRAST': return {
-      visualZoneLabel: 'split perfectly down the middle vertically: left side one concept, right side the contrasting concept',
-      textZoneLabel: 'text divided across the two halves, with clear contrasting colors or labels (e.g. A vs B)',
-      overlayRules: `A harsh, visible dividing line down the middle of the canvas.`
-    };
-  }
 }
