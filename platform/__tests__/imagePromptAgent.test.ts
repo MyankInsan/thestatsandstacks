@@ -17,7 +17,7 @@ const mockSlides: SlideSpec[] = [
     ],
     eyebrow: 'JUST IN:',
     subtext: 'Wall Street did not see this coming',
-    visualElement: 'shocked young trader at desk, three green monitors, dramatic rim lighting',
+    visualStyle: 'LINE_CHART' as any, // 'shocked young trader at desk, three green monitors, dramatic rim lighting',
     visualPosition: 'top',
     mood: 'urgent, dramatic',
     narrativeNote: 'cover hook',
@@ -29,7 +29,7 @@ const mockSlides: SlideSpec[] = [
     headlineColorMap: [{ text: 'EPS BEAT BY', color: 'primary' }],
     dataPoint: '$0.08 A SHARE',
     subtext: 'Wall Street expected $0.88',
-    visualElement: 'glowing digital number display in dark space',
+    visualStyle: 'LINE_CHART' as any, // 'glowing digital number display in dark space',
     visualPosition: 'background',
     mood: 'shock and awe',
     narrativeNote: 'the big number',
@@ -46,19 +46,19 @@ const mockFormat: FormatDecision = {
 
 const mockStrategy: StrategyDecision = {
   topic: 'NVDA earnings', hook: 'h', format: 'CAROUSEL',
-    viralFormat: 'HYPOTHETICAL_CHART', slideCount: 2,
+     slideCount: 2,
   slideBreakdown: [], reasoning: '', targetAudience: 'test', searchKeywords: [],
 };
 
 test('ImagePromptAgent returns one prompt per slide', () => {
   const agent = new ImagePromptAgent();
-  const result = agent.execute({ slides: mockSlides, format: mockFormat, strategy: mockStrategy });
+  const result = agent.execute({ slides: mockSlides, format: mockFormat });
   assert.equal(result.slides.length, 2);
 });
 
 test('Each prompt contains canvas size and brand handle', () => {
   const agent = new ImagePromptAgent();
-  const result = agent.execute({ slides: mockSlides, format: mockFormat, strategy: mockStrategy });
+  const result = agent.execute({ slides: mockSlides, format: mockFormat });
 
   for (const slide of result.slides) {
     assert.ok(slide.geminiPrompt.includes('1080x1350'), 'must specify canvas size');
@@ -69,19 +69,19 @@ test('Each prompt contains canvas size and brand handle', () => {
 
 test('Prompt includes correct background hex color', () => {
   const agent = new ImagePromptAgent();
-  const result = agent.execute({ slides: mockSlides, format: mockFormat, strategy: mockStrategy });
+  const result = agent.execute({ slides: mockSlides, format: mockFormat });
   assert.ok(result.slides[0].geminiPrompt.includes('#050505'), 'must include bg color');
 });
 
 test('Prompt includes exact headline text', () => {
   const agent = new ImagePromptAgent();
-  const result = agent.execute({ slides: mockSlides, format: mockFormat, strategy: mockStrategy });
+  const result = agent.execute({ slides: mockSlides, format: mockFormat });
   assert.ok(result.slides[0].geminiPrompt.includes('NVIDIA'), 'must include headline word');
   assert.ok(result.slides[0].geminiPrompt.includes('JUST IN:'), 'must include eyebrow');
 });
 
 test('Prompt includes dataPoint when present', () => {
   const agent = new ImagePromptAgent();
-  const result = agent.execute({ slides: mockSlides, format: mockFormat, strategy: mockStrategy });
+  const result = agent.execute({ slides: mockSlides, format: mockFormat });
   assert.ok(result.slides[1].geminiPrompt.includes('$0.08 A SHARE'), 'must include dataPoint');
 });

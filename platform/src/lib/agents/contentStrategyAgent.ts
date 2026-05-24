@@ -6,13 +6,10 @@ import {
   noveltyPenalty,
 } from '../services/contentHistory';
 
-export type ViralFormat = 'HYPOTHETICAL_CHART' | 'BILLION_DOLLAR_WEB' | 'INSIDER_PORTFOLIO' | 'BOLD_REALITY' | 'POP_CULTURE_WINNER';
-
 export interface StrategyDecision {
   topic: string;
   hook: string;
   format: 'CAROUSEL' | 'SINGLE_IMAGE' | 'WATCHLIST_EDUCATION';
-  viralFormat: ViralFormat;
   slideCount: number;
   slideBreakdown: string[];
   reasoning: string;
@@ -64,12 +61,6 @@ FORMAT DECISION RULES:
 - Hot tickers such as SanDisk/SNDK are allowed when the angle is "what happened", "what to watch", or "hypothetical history". You may estimate historical returns for hypothetical posts if exact numbers aren't in the signals, but do not invent future earnings or performance metrics.
 - Do not use hype verbs in hooks or titles: explodes, moons, blasts off, skyrockets, must-buy, can't miss. Premium market education should sound calm even when the topic is hot.
 - Do not put exact percentage moves in the cover hook. If a source window says 1Y/YTD/from 52-week low, never rewrite it as 1 day/today.
-- You MUST select a "viralFormat" for the visual style of this content. Pick ONE of the following that best fits the topic:
-  1. "HYPOTHETICAL_CHART" (Best for "What If" historical comparisons or basic stock trend stats)
-  2. "BILLION_DOLLAR_WEB" (Best for explaining a company's acquisitions, sectors, or ecosystem)
-  3. "INSIDER_PORTFOLIO" (Best for breaking down a famous investor's holdings or index weights)
-  4. "BOLD_REALITY" (Best for single-number stats, massive returns, or heavy macro facts overlaying real life)
-  5. "POP_CULTURE_WINNER" (Best for "stocks that tripled" or tying market trends to a lifestyle/fame vibe)
 
 Here are the top topics: ${JSON.stringify(input.trends.topics)}
 
@@ -82,7 +73,6 @@ Pick the best one. Output ONLY valid JSON (no markdown, no code fences):
   "topic": "exact topic title",
   "hook": "the hook text for slide 1",
   "format": "CAROUSEL" or "SINGLE_IMAGE" or "WATCHLIST_EDUCATION",
-  "viralFormat": "HYPOTHETICAL_CHART" | "BILLION_DOLLAR_WEB" | "INSIDER_PORTFOLIO" | "BOLD_REALITY" | "POP_CULTURE_WINNER",
   "slideCount": number,
   "slideBreakdown": ["Slide 1: exact on-image headline | short supporting point | short supporting point", "Slide 2: exact on-image headline | short supporting point | short supporting point", ...],
   "reasoning": "why this format and topic",
@@ -117,7 +107,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'If You Invested $10,000 in SanDisk 5 Years Ago',
     hook: 'What $10k in SNDK looks like today.',
     format: 'CAROUSEL',
-    viralFormat: 'HYPOTHETICAL_CHART',
     slideCount: 6,
     slideBreakdown: [
       'Slide 1: What $10k in SNDK looks like today | The power of holding a tech winner | Let\'s look at the math',
@@ -136,7 +125,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'How President Trump\'s Policies Impact the Tech Sector',
     hook: 'What the new policies mean for Tech.',
     format: 'WATCHLIST_EDUCATION',
-    viralFormat: 'BOLD_REALITY',
     slideCount: 7,
     slideBreakdown: [
       'Slide 1: What the new policies mean for Tech | Breaking down the macro shift | How tariffs and taxes affect margins',
@@ -156,7 +144,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'SanDisk (SNDK) AI Storage Heat Check: What the Move Actually Means',
     hook: 'SanDisk is a case study.',
     format: 'WATCHLIST_EDUCATION',
-    viralFormat: 'BILLION_DOLLAR_WEB',
     slideCount: 8,
     slideBreakdown: [
       'Slide 1: SanDisk is a case study | A hot stock is not automatically a plan | Use the move to learn the process',
@@ -177,7 +164,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'Stock Watchlist Rule: 5 Checks Before You Buy Any Stock',
     hook: 'A stock is not a plan.',
     format: 'WATCHLIST_EDUCATION',
-    viralFormat: 'POP_CULTURE_WINNER',
     slideCount: 8,
     slideBreakdown: [
       'Slide 1: A stock is not a plan | Before you buy, know why it belongs | Hype is not a thesis',
@@ -198,7 +184,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'Before Chasing a Hot Stock, Check These 4 Risks',
     hook: 'Hot stocks can cool off fast.',
     format: 'WATCHLIST_EDUCATION',
-    viralFormat: 'BOLD_REALITY',
     slideCount: 7,
     slideBreakdown: [
       'Slide 1: Hot stocks can cool off fast | Before chasing momentum, check the risk | Popular is not the same as safe',
@@ -218,7 +203,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?',
     hook: 'Most Canadians pick the wrong account first.',
     format: 'CAROUSEL',
-    viralFormat: 'HYPOTHETICAL_CHART',
     slideCount: 7,
     slideBreakdown: [
       'Slide 1: Most Canadians pick the wrong account first | The order matters more than people think | Start with the account that matches your next real goal',
@@ -238,7 +222,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: '5 Money Leaks Quietly Keeping Canadians Broke',
     hook: 'These small leaks do the most damage.',
     format: 'CAROUSEL',
-    viralFormat: 'INSIDER_PORTFOLIO',
     slideCount: 7,
     slideBreakdown: [
       'Slide 1: These small leaks do the most damage | The problem is not always income | It is often money leaving without a job',
@@ -258,7 +241,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: '5 Money Leaks Canadians Can Fix This Week',
     hook: 'One leak fixed is momentum.',
     format: 'CAROUSEL',
-    viralFormat: 'INSIDER_PORTFOLIO',
     slideCount: 6,
     slideBreakdown: [
       'Slide 1: One leak fixed is momentum | Start with the leak you can see | Then automate the fix',
@@ -277,7 +259,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'The Canadian Payday Order of Operations',
     hook: 'Do this before your money disappears.',
     format: 'CAROUSEL',
-    viralFormat: 'HYPOTHETICAL_CHART',
     slideCount: 8,
     slideBreakdown: [
       'Slide 1: Do this before your money disappears | Payday needs a system | Not another motivation quote',
@@ -298,7 +279,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'Credit Score Myths Canadians Still Believe',
     hook: 'Some credit advice is just noise.',
     format: 'CAROUSEL',
-    viralFormat: 'BOLD_REALITY',
     slideCount: 7,
     slideBreakdown: [
       'Slide 1: Some credit advice is just noise | Credit scores matter | But not every myth deserves your attention',
@@ -318,7 +298,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'HISA vs GIC vs ETF: Where Should Short-Term Money Go?',
     hook: 'Do not invest money you need soon.',
     format: 'CAROUSEL',
-    viralFormat: 'BILLION_DOLLAR_WEB',
     slideCount: 8,
     slideBreakdown: [
       'Slide 1: Do not invest money you need soon | Timeline decides the tool | Not excitement, not headlines',
@@ -339,7 +318,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'Canada/US Stock Watchlist: The 6-Point Research Screen',
     hook: 'A watchlist is not a buy list.',
     format: 'WATCHLIST_EDUCATION',
-    viralFormat: 'POP_CULTURE_WINNER',
     slideCount: 8,
     slideBreakdown: [
       'Slide 1: A watchlist is not a buy list | Use it to organize research | Not to chase a ticker',
@@ -360,7 +338,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'Earnings Season Cheat Sheet: What Beginners Should Check First',
     hook: 'Do not read earnings like a headline.',
     format: 'CAROUSEL',
-    viralFormat: 'HYPOTHETICAL_CHART',
     slideCount: 7,
     slideBreakdown: [
       'Slide 1: Do not read earnings like a headline | One beat or miss is not the full story | Start with the business trend',
@@ -380,7 +357,7 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'Finfluencer Red Flags: 7 Phrases Investors Should Pause On',
     hook: 'Good finance content does not need pressure.',
     format: 'CAROUSEL',
-    viralFormat: 'BOLD_REALITY',
+    
     slideCount: 7,
     slideBreakdown: [
       'Slide 1: Good finance content does not need pressure | Pause when advice sounds too certain | Risk deserves daylight',
@@ -400,7 +377,7 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'Why the First $100K Feels So Slow for Canadian Investors',
     hook: 'The first $100K feels slow.',
     format: 'CAROUSEL',
-    viralFormat: 'POP_CULTURE_WINNER',
+    
     slideCount: 7,
     slideBreakdown: [
       'Slide 1: The first $100K feels slow | Early wealth is mostly built by habits | The acceleration comes later',
@@ -420,7 +397,7 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'The 10-Minute Portfolio Check Before Adding More Money',
     hook: 'Check this before adding money.',
     format: 'WATCHLIST_EDUCATION',
-    viralFormat: 'INSIDER_PORTFOLIO',
+    
     slideCount: 8,
     slideBreakdown: [
       'Slide 1: Check this before adding money | A portfolio needs a quick inspection | More money is not always the fix',
@@ -473,10 +450,7 @@ function normalizeStrategy(
     return getRotatingFallbackStrategy(trends, contentHistory);
   }
 
-  const validViralFormats: ViralFormat[] = ['HYPOTHETICAL_CHART', 'BILLION_DOLLAR_WEB', 'INSIDER_PORTFOLIO', 'BOLD_REALITY', 'POP_CULTURE_WINNER'];
-  if (!strategy.viralFormat || !validViralFormats.includes(strategy.viralFormat)) {
-    strategy.viralFormat = 'HYPOTHETICAL_CHART';
-  }
+
 
   if (strategy.slideCount < 1 || strategy.slideCount > 9 || strategy.slideBreakdown.length !== strategy.slideCount) {
     return getRotatingFallbackStrategy(trends, contentHistory);

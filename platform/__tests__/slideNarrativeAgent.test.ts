@@ -9,7 +9,7 @@ const mockStrategy: StrategyDecision = {
   topic: 'NVDA earnings beat',
   hook: 'Nvidia just crushed estimates',
   format: 'CAROUSEL',
-    viralFormat: 'HYPOTHETICAL_CHART',
+    
   slideCount: 7,
   slideBreakdown: ['Cover', 'The stat', 'Context', 'Why it matters', 'What to watch', 'Risk', 'CTA'],
   reasoning: 'Hot topic',
@@ -50,7 +50,7 @@ test('SlideNarrativeAgent fallback — each slide has required fields', async ()
     assert.ok(slide.slideNumber >= 1, 'slideNumber must be >= 1');
     assert.ok(slide.headline.length > 0, 'headline must not be empty');
     assert.ok(Array.isArray(slide.headlineColorMap), 'headlineColorMap must be an array');
-    assert.ok(slide.visualElement.length > 0, 'visualElement must not be empty');
+    assert.ok(slide.visualStyle.length > 0, 'visualStyle must not be empty');
     assert.ok(['cover','shock_stat','context','breakdown','data','humor','cta'].includes(slide.role), `Unknown role: ${slide.role}`);
   }
 });

@@ -1,6 +1,7 @@
 import { getGeminiClient, getGeminiTextModelName } from '../services/gemini';
 import type { StrategyDecision } from './contentStrategyAgent';
 import type { FormatDecision } from './formatStyleAgent';
+import type { ViralStyle } from './promptLibrary';
 
 export interface HeadlineColor {
   text: string;
@@ -17,7 +18,7 @@ export interface SlideSpec {
   subtext?: string;
   eyebrow?: string;
   dataPoint?: string;
-  visualElement: string;
+  visualStyle: ViralStyle;
   visualPosition: 'top' | 'background' | 'left' | 'right' | 'center';
   mood: string;
   narrativeNote: string;
@@ -83,10 +84,12 @@ SLIDE NARRATIVE RULES:
 - Last slide: Always role "cta" — strong follow/save prompt for @thestatsandstacks
 - Each headline: max 8 words, bold and punchy
 - headlineColorMap: break headline into parts, assign each part a color (primary=white, accent1=neon, accent2=cyan/secondary)
-- visualElement: YOU MUST DESCRIBE A COHESIVE, HIGHLY EMOTIONAL PHOTOSHOOT AND METAPHORICAL DATA.
-  1. For data points, INVENT A PHYSICAL METAPHOR (e.g. "A stack of melting gold coins on dark marble" for inflation, "A heavy rusted iron chain dragging down a wooden boat" for debt).
-  2. If using human subjects, use intense action verbs (e.g., "gripping his hair", "staring intensely at a glowing red screen"). Emotion stops the scroll!
-  3. No 2D illustrations, no generic static charts. 
+- visualStyle: YOU MUST ASSIGN A DIFFERENT VISUAL STYLE TO EACH SLIDE based on its role. Choose EXACTLY ONE from this list of keys:
+  Data: LINE_CHART, DONUT_CHART, BAR_CHART_HORIZONTAL, SANKEY_DIAGRAM, RADAR_CHART, AREA_CHART, CANDLESTICK_CHART
+  Metaphor: ANIMAL_METAPHOR, NATURE_METAPHOR, LUXURY_LIFESTYLE, TECH_HUD, CHESS_BOARD_STRATEGY, VAULT_SECURITY, SPORTS_RACING, SPACE_EXPLORATION, GAMING_LEVEL_UP
+  Human: POP_CULTURE_PORTRAIT, CARICATURE_PORTRAIT, EXPERT_CUTOUT, TRADER_DESK_SILHOUETTE, CROWD_PANIC
+  Layout: ARCHITECTURAL_OVERLAY, MINIMALIST_CHECKLIST, GLOWING_QUOTE, NEON_TERMINAL, MAGAZINE_COVER, BILLBOARD_HIGHWAY, FLUID_LIQUID_TEXT, GLASSMORPHISM_UI, GRUNGE_STREET_POSTER
+  Mix it up! Do not use the same visualStyle twice in a row.
 - dataPoint: include only if there's a real number/stat to hero (e.g. "+18.2% EPS BEAT")
 - subtext: one short line of supporting context, max 12 words
 
@@ -104,7 +107,7 @@ Return ONLY valid JSON matching this exact schema (no markdown):
       "eyebrow": "JUST IN:",
       "subtext": "Wall Street didn't see this coming",
       "dataPoint": null,
-      "visualElement": "over-the-shoulder view of a modern minimalist trading desk, a single sleek monitor slightly out of focus, natural window lighting, clean aesthetic",
+      "visualStyle": "ANIMAL_METAPHOR",
       "visualPosition": "top",
       "mood": "urgent, high-energy, breaking news",
       "narrativeNote": "Opens with the hook — sets up the big reveal in slide 2"
@@ -120,27 +123,14 @@ const FALLBACK_EYEBROWS: Record<string, string> = {
   PHOTOREALISTIC_EXPERT_SHOCK:      'INSIGHT:',
 };
 
-const FALLBACK_VISUAL_VARIANTS: Record<string, string[]> = {
-  PHOTOREALISTIC_NEWS_FLASH: [
-    'hyper-realistic breaking news photo, public figure giving a speech at a podium, dramatic lighting, out of focus crowd in background',
-    'hyper-realistic cinematic shot of a glowing red market ticker on a Wall Street building, rainy night, neon reflections',
-  ],
-  PHOTOREALISTIC_LUXURY_LIFESTYLE: [
-    'hyper-realistic photo of the interior of a private jet, leather seats, a glass of champagne on the table, overlooking the clouds',
-    'hyper-realistic photo of a luxury sports car parked in front of a modern mansion at sunset, cinematic lighting',
-  ],
-  PHOTOREALISTIC_MARKET_UPDATE: [
-    'hyper-realistic shot of a high-end trading desk, multiple monitors glowing green and red with stock charts, dark room, highly focused',
-    'hyper-realistic macro photography of a smartphone displaying a booming stock chart, held by a person in a tailored suit',
-  ],
-  PHOTOREALISTIC_EXPERT_SHOCK: [
-    'hyper-realistic portrait of a financial expert looking shocked, dramatic lighting, dark background, cinematic depth of field',
-    'hyper-realistic photo of a trader with hands on their head in disbelief, trading floor background, intense emotion',
-  ],
+const FALLBACK_VISUAL_VARIANTS: Record<string, ViralStyle[]> = {
+  PHOTOREALISTIC_NEWS_FLASH: ['ARCHITECTURAL_OVERLAY', 'CROWD_PANIC'],
+  PHOTOREALISTIC_LUXURY_LIFESTYLE: ['LUXURY_LIFESTYLE', 'MAGAZINE_COVER'],
+  PHOTOREALISTIC_MARKET_UPDATE: ['TRADER_DESK_SILHOUETTE', 'LINE_CHART'],
+  PHOTOREALISTIC_EXPERT_SHOCK: ['EXPERT_CUTOUT', 'CARICATURE_PORTRAIT'],
 };
 
 function stripBreakdownPrefixes(text: string): string {
-  // Strip "Slide N:" then any remaining "Word N:" prefix (e.g. "Risk 1:", "Check 2:", "Catalyst 3:")
   return text
     .replace(/^slide\s*\d+[:.]\s*/i, '')
     .replace(/^\w[\w]*\s+\d+[:.]\s*/i, '')
@@ -177,7 +167,7 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision): Slid
     ],
     eyebrow,
     subtext: strategy.topic,
-    visualElement: visualVariants[0],
+    visualStyle: visualVariants[0],
     visualPosition: 'top',
     mood: format.visualTone,
     narrativeNote: 'Cover hook',
@@ -197,7 +187,7 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision): Slid
         { text: headlineWords.slice(headlineHalf).join(' '), color: 'primary' },
       ],
       subtext,
-      visualElement: visualVariants[i % visualVariants.length],
+      visualStyle: visualVariants[i % visualVariants.length],
       visualPosition: 'top',
       mood: format.visualTone,
       narrativeNote: `Slide ${i} of the breakdown`,
@@ -213,7 +203,7 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision): Slid
       { text: 'DAILY INSIGHTS', color: 'accent1' },
     ],
     subtext: 'Canadian finance, no hype — @thestatsandstacks',
-    visualElement: 'hyper-realistic photography of a sleek, dark marble surface reflecting a subtle upward green arrow projection, highly professional and authoritative',
+    visualStyle: 'MINIMALIST_CHECKLIST',
     visualPosition: 'center',
     mood: 'confident and inviting',
     narrativeNote: 'CTA — drive follows and saves',
