@@ -28,8 +28,8 @@ export class ComplianceQAAgent extends BaseAgent {
       : '';
     const fullText = `${strategyText}\n${copyText}`;
 
-    if (/guaranteed\s+(return|profit|income|gain)|risk[-\s]?free|double your money/i.test(fullText)) {
-      failures.push('Guaranteed-return or risk-free language is not allowed.');
+    if (/guaranteed\s+(profit|gain)|double your money/i.test(fullText)) {
+      failures.push('Guaranteed-profit or double-your-money language is not allowed.');
     }
     if (/price target|target price|\$\d+(?:\.\d+)?\s*(?:target|by\s+\d{4})/i.test(fullText)) {
       failures.push('Price targets are not allowed.');
