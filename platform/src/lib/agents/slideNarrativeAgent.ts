@@ -81,7 +81,10 @@ SLIDE NARRATIVE RULES:
 - Last slide: Always role "cta" — strong follow/save prompt for @thestatsandstacks
 - Each headline: max 8 words, bold and punchy
 - headlineColorMap: break headline into parts, assign each part a color (primary=white, accent1=neon, accent2=cyan/secondary)
-- visualElement: describe a SPECIFIC, photorealistic scene. MUST be highly photorealistic, cinematic photography. Describe luxury settings (e.g. mansions, private jets, supercars), realistic trading floors, public figures in dramatic lighting, or high-end items. NO 2D illustrations, no vectors. (e.g. "A hyper-realistic shot of a luxury watch on a marble desk, cinematic lighting, out of focus background")
+- visualElement: YOU MUST DESCRIBE A COHESIVE, HIGHLY EMOTIONAL PHOTOSHOOT.
+  1. Pick a specific continuous subject for the whole carousel (e.g. "A stressed Wall Street trader in a wrinkled navy suit" or "A focused female investor in a sleek glass office"). Use this exact same subject description in every single slide to maintain consistency.
+  2. Use action verbs and intense human emotion (e.g., "gripping his hair", "staring intensely at a glowing red screen", "looking exhausted but triumphant"). Emotion stops the scroll!
+  3. No 2D illustrations, no generic static desks. The scenes must feature a human subject doing something dramatic.
 - dataPoint: include only if there's a real number/stat to hero (e.g. "+18.2% EPS BEAT")
 - subtext: one short line of supporting context, max 12 words
 

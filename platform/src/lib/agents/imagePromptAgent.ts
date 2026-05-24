@@ -31,6 +31,9 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt
   const layout = LAYOUT_SEQUENCE[slideIndex % LAYOUT_SEQUENCE.length];
   const layoutRules = getLayoutRules(layout, colorScheme.bg);
 
+  const cameraAngle = CAMERA_ANGLES[slideIndex % CAMERA_ANGLES.length];
+  const lightingStyle = LIGHTING_STYLES[slideIndex % LIGHTING_STYLES.length];
+
   const textLines: string[] = [];
 
   if (slide.eyebrow) {
@@ -79,7 +82,8 @@ function buildPrompt(slide: SlideSpec, format: FormatDecision): SlideImagePrompt
     ``,
     `VISUAL ELEMENT (${layoutRules.visualZoneLabel}):`,
     slide.visualElement,
-    `Style: Hyper-realistic cinematic photography, shot on 35mm lens, 8k resolution, photorealistic lighting, extremely lifelike. The scene must look like a real photograph, not AI generated. Mood: ${slide.mood}.`,
+    `Style: ${cameraAngle}, 8k resolution, ${lightingStyle}. The scene must look like a real photograph, not AI generated. Mood: ${slide.mood}.`,
+    `Physical Color Branding: Incorporate the hex colors ${colorScheme.accent1} and ${colorScheme.accent2} directly into the physical environment (e.g. as neon signs, practical lights, clothing accents, or reflections).`,
     `Important: adhere strictly to the visual zone boundaries.`,
     ``,
     `TEXT ZONE (${layoutRules.textZoneLabel}):`,
@@ -112,6 +116,22 @@ const BACKGROUND_DETAILS: Record<string, string> = {
   PHOTOREALISTIC_EXPERT_SHOCK:      'Studio lighting, moody atmosphere, sharp subject with soft blurred background',
   PHOTOREALISTIC_MINIMAL_TECH:      'Sleek, bright minimal studio background, subtle glass reflections',
 };
+
+const CAMERA_ANGLES = [
+  'Low-angle Dutch tilt shot, 35mm lens, depth of field',
+  'Drone top-down view, sharp focus',
+  'Macro close-up, f/1.8 aperture, dramatic bokeh',
+  'Over-the-shoulder perspective, wide-angle 24mm lens',
+  'Eye-level medium portrait, 85mm lens, extremely sharp',
+];
+
+const LIGHTING_STYLES = [
+  'Volumetric fog with harsh rim lighting',
+  'Neon cyberpunk ambient glow, high contrast',
+  'Golden hour sun flares, soft shadows',
+  'Harsh studio strobe lighting, editorial vogue style',
+  'Moody chiaroscuro lighting, deep shadows',
+];
 
 type LayoutType = 'FULL_BLEED' | 'BOTTOM_SPLIT' | 'TOP_SPLIT' | 'LETTERBOX' | 'LOWER_THIRD' | 'MINIMAL_CARD';
 
