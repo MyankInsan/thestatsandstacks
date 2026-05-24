@@ -68,6 +68,10 @@ export class ComplianceQAAgent extends BaseAgent {
 }
 
 function hasExtremeOneDayPerformanceClaim(text: string): boolean {
+  if (/if you invested|years ago|months ago/i.test(text)) {
+    return false; // Exempt hypothetical multi-year/month retrospectives from 1-day claim limits
+  }
+
   const claims = [
     ...text.matchAll(/(?:1\s*day|1d|today)[^\n.%]{0,42}([+-]?\d+(?:,\d{3})*(?:\.\d+)?)%/gi),
     ...text.matchAll(/([+-]?\d+(?:,\d{3})*(?:\.\d+)?)%[^\n.]{0,42}(?:1\s*day|1d|today)/gi),

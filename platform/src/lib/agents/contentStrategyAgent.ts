@@ -55,10 +55,10 @@ FORMAT DECISION RULES:
 - Keep slide text compact enough for premium typography: headline under 11 words, supporting points under 12 words each, no paragraphs.
 - Avoid empty-space slides: each slide should justify the visual module with a chart, checklist, comparison, risk meter, account map, or decision framework.
 - Do not choose a topic that is similar to the last 10 posts unless the angle is meaningfully different.
-- Optimize for a daily mix: Canadian money systems, tax/account explainers, investor risk protection, and occasional Canada/US stock research education.
-- Stock content should feel useful to stock-curious followers, but it must be framed as "how to research" or "what to check", not as "buy these stocks".
-- Never use "stocks to buy", "best stock to buy", "buy this stock", "sell this stock", price targets, or recommendation phrasing. If a ticker or company is discussed, treat it only as an educational research case study.
-- Hot tickers such as SanDisk/SNDK are allowed when the angle is "what happened / why it matters / what to watch / risks", never "should you trade it." Do not invent exact returns, earnings numbers, or dates; only use exact numbers when they appear in the research signals.
+- Optimize for a daily mix: Macro-economic/political news, Trading psychology, Hypothetical 'What-If' scenarios, Investor protection, and occasional Canadian account explainers.
+- Stock content should feel useful to stock-curious followers. Hypothetical scenarios (e.g., "If you invested $10,000 in [Stock] 5 years ago") are highly encouraged for engagement, as long as they explicitly frame it as past education.
+- Never use "stocks to buy", "best stock to buy", "buy this stock", "sell this stock", price targets, or recommendation phrasing. For hypotheticals, you may estimate historical numbers if exact ones are unavailable, but keep them realistic.
+- Hot tickers such as SanDisk/SNDK are allowed when the angle is "what happened", "what to watch", or "hypothetical history". You may estimate historical returns for hypothetical posts if exact numbers aren't in the signals, but do not invent future earnings or performance metrics.
 - Do not use hype verbs in hooks or titles: explodes, moons, blasts off, skyrockets, must-buy, can't miss. Premium market education should sound calm even when the topic is hot.
 - Do not put exact percentage moves in the cover hook. If a source window says 1Y/YTD/from 52-week low, never rewrite it as 1 day/today.
 
@@ -103,6 +103,43 @@ Pick the best one. Output ONLY valid JSON (no markdown, no code fences):
 }
 
 const fallbackStrategies: StrategyDecision[] = [
+  {
+    topic: 'If You Invested $10,000 in SanDisk 5 Years Ago',
+    hook: 'What $10k in SNDK looks like today.',
+    format: 'CAROUSEL',
+    slideCount: 6,
+    slideBreakdown: [
+      'Slide 1: What $10k in SNDK looks like today | The power of holding a tech winner | Let\'s look at the math',
+      'Slide 2: The Initial Investment | $10,000 invested 5 years ago | Buying when the market was uncertain',
+      'Slide 3: The Growth Journey | Through macro shocks and rate hikes | The stock continued its trajectory',
+      'Slide 4: The Result Today | That $10,000 is now worth $XX,XXX | A massive X% return',
+      'Slide 5: The Lesson | Time in the market beats timing the market | Conviction pays off',
+      'Slide 6: Save this reminder | Wealth is built slowly, then all at once | Educational only, not financial advice',
+    ],
+    reasoning: 'Hypothetical "What If" scenarios are incredibly viral and drive massive engagement through FOMO and educational realization.',
+    targetAudience: 'Investors and traders who want to see the power of long-term holding in popular stocks.',
+    searchKeywords: ['SanDisk stock', 'if you invested', 'compound growth', 'tech stocks'],
+    contentPillar: 'Hypothetical "What If" investment scenarios',
+  },
+  {
+    topic: 'How President Trump\'s Policies Impact the Tech Sector',
+    hook: 'What the new policies mean for Tech.',
+    format: 'WATCHLIST_EDUCATION',
+    slideCount: 7,
+    slideBreakdown: [
+      'Slide 1: What the new policies mean for Tech | Breaking down the macro shift | How tariffs and taxes affect margins',
+      'Slide 2: The Tariff Impact | Higher costs for hardware imports | Supply chains are shifting fast',
+      'Slide 3: The Tax Cuts | Lower corporate tax rates boost earnings | Software margins expand',
+      'Slide 4: Who Wins? | Domestic manufacturers | Companies with strong US revenue bases',
+      'Slide 5: Who is at Risk? | Heavy reliance on overseas assembly | Companies with narrow hardware margins',
+      'Slide 6: What to Watch Next | Fed rate decisions | Trade negotiations | Quarterly guidance updates',
+      'Slide 7: Save this macro checklist | Watch the policies, not just the prices | Educational only, not financial advice',
+    ],
+    reasoning: 'Macro-political news tied to market impacts creates high-save content that feels timely and authoritative.',
+    targetAudience: 'Active investors and traders trying to navigate political news and its market effects.',
+    searchKeywords: ['Trump tech stocks', 'market news', 'macro economics', 'stock market update'],
+    contentPillar: 'Global macro-economic news',
+  },
   {
     topic: 'SanDisk (SNDK) AI Storage Heat Check: What the Move Actually Means',
     hook: 'SanDisk is a case study.',
@@ -462,6 +499,10 @@ function containsBlockedMarketHypeLanguage(strategy: StrategyDecision): boolean 
 }
 
 function hasExtremeOneDayPerformanceClaim(text: string): boolean {
+  if (/if you invested|years ago|months ago/i.test(text)) {
+    return false;
+  }
+
   const claims = [
     ...text.matchAll(/(?:1\s*day|1d|today)[^\n.%]{0,42}([+-]?\d+(?:,\d{3})*(?:\.\d+)?)%/gi),
     ...text.matchAll(/([+-]?\d+(?:,\d{3})*(?:\.\d+)?)%[^\n.]{0,42}(?:1\s*day|1d|today)/gi),

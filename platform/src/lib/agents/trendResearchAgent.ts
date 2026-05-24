@@ -61,17 +61,13 @@ RESEARCH APPROACH:
 10. Do not put exact percentage moves in topic titles. Use "heat check", "risk filter", or "case study" language instead. If a signal says a move is 1Y/YTD/from 52-week low, never rewrite it as 1 day/today.
 
 CONTENT PILLARS TO DRAW FROM:
-- TFSA vs RRSP vs FHSA comparisons
-- Canadian tax strategies and deductions
-- GIC vs HISA vs ETF comparisons
-- First-time home buyer programs
-- Dividend investing for Canadians
-- Credit score optimization
-- stock education without recommendations
-- market literacy and risk management
-- Canadian/US market watchlist education
-- market-news explainers and chart lessons
-- investor psychology and fraud/risk prevention
+- Global macro-economic news and political impacts on markets (e.g., President statements, Fed rates)
+- Trading psychology, trader habits, and market sentiment
+- Hypothetical "What If" investment scenarios (e.g., "If you invested $10,000 in X 5 years ago")
+- Market-news explainers and "what to watch" for breaking stock catalysts
+- TFSA vs RRSP vs FHSA comparisons and Canadian tax strategies (Secondary)
+- Dividend investing and beginner market literacy
+- Investor protection and risk management
 
 RECENT CONTENT TO AVOID REPEATING TOO SOON:
 ${JSON.stringify(contentHistory.slice(-14), null, 2)}
@@ -140,6 +136,7 @@ async function collectResearchSignals(today: Date): Promise<ResearchSignalBrief[
     () => buildCreatorReferenceSignal(),
     () => buildSeasonalFinanceSignal(today),
     () => buildMarketEducationSignal(today),
+    () => buildMacroNewsSignal(),
     () => collectRedditApiSignal(),
   ];
 
@@ -257,6 +254,25 @@ async function buildMarketEducationSignal(today: Date): Promise<ResearchSignalBr
     sourceUrls: [
       'https://www.osc.ca/en/investors/investor-research-and-reports/social-media-and-retail-investing-rise-finfluencers',
       'https://www.ciro.ca/newsroom/publications/joint-canadian-securities-administrators-and-canadian-investment-regulatory-organization-staff',
+    ],
+  };
+}
+
+async function buildMacroNewsSignal(): Promise<ResearchSignalBrief> {
+  return {
+    source: 'macro-news-and-hypotheticals',
+    status: 'fallback',
+    summary: 'Global market news, political catalysts, and highly shareable "What If" hypothetical investment scenarios drive massive growth on Instagram.',
+    topicSeeds: [
+      'If you invested $10,000 in a hot stock 5 years ago',
+      'How recent political or presidential news shifts the market',
+      'Trading psychology and overcoming fear/greed',
+      'The compounding snowball of dividend growth',
+      'Macro-economic shock: what it means for your portfolio',
+    ],
+    sourceUrls: [
+      'https://www.federalreserve.gov/',
+      'https://www.bankofcanada.ca/',
     ],
   };
 }
