@@ -66,10 +66,7 @@ export class ImagePromptAgent extends BaseAgent {
         visualDescription = buildFallbackVisualDescription(slide, input.format);
       }
 
-      // Ensure v6 parameters are present at the end of the prompt
-      if (!visualDescription.includes('--ar 4:5')) {
-        visualDescription = `${visualDescription.trim()} --ar 4:5 --style raw --v 6.0 --s 200`;
-      }
+
 
       const compiledPrompt = compilePromptString(slide, visualDescription, input.format);
 
@@ -111,7 +108,7 @@ function buildLlmPrompt(input: {
     .map(([style, desc]) => `- ${style}: ${desc}`)
     .join('\n');
 
-  return `You are a world-class creative director and Midjourney v6 prompt engineer for "TheStatsAndStacks", a premium Canadian personal finance brand on Instagram.
+  return `You are a world-class creative director and AI image generator prompt expert for "TheStatsAndStacks", a premium Canadian personal finance brand on Instagram.
 
 TODAY'S POST CONTEXT:
 - TOPIC: ${topic}
@@ -137,11 +134,9 @@ PROMPT DESIGN RULES:
 ${styleReference}
 3. ENFORCE SEQUENCE-AWARE VARIETY:
    Ensure there is distinct visual variety across slides. Alternately rotate camera angles and styles (e.g., Close-up studio cutout -> Wide-angle workspace -> 2D clean visual chart -> Abstract dynamic action shot). No two adjacent slides should look identical in layout or main subject.
-4. MIDJOURNEY V6 PARAMETERS:
-   Ensure all visual descriptions end with "--ar 4:5 --style raw --v 6.0 --s 200".
-5. EXCLUDE GRAPHICAL TEXT & WATERMARKS:
+4. EXCLUDE GRAPHICAL TEXT & WATERMARKS:
    Do not describe overlapping text, random floating letters, labels, or photo watermarks in your visual descriptions. The code will handle text overlays.
-6. PREMIUM CTA SLIDE RULE:
+5. PREMIUM CTA SLIDE RULE:
    For the final slide (role: cta), do NOT write prompts for simple checklists or plain flat backgrounds. Instead, construct a highly premium, cinematic visual scene (e.g., a stunning, ultra-premium cinematic executive boardroom with a large dark marble table and floor-to-ceiling glass windows overlooking a glowing nighttime city skyline, or a glowing bank vault door filled with gold bars, or a premium glassmorphic geometric composition with high specular highlights) that represents long-term wealth, compounding growth, or financial success. This makes the CTA feel extremely high-end.
 
 Return ONLY valid JSON matching this exact schema (no markdown, no code fences):
@@ -149,7 +144,7 @@ Return ONLY valid JSON matching this exact schema (no markdown, no code fences):
   "slides": [
     {
       "slideNumber": number,
-      "visualDescription": "The complete, highly detailed Midjourney v6 prompt starting with the main subject and ending with --ar 4:5 --style raw --v 6.0 --s 200"
+      "visualDescription": "The complete, highly detailed prompt starting with the main subject and optimized for advanced AI image generators"
     }
   ]
 }`;
