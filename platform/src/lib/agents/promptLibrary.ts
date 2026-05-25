@@ -28,7 +28,11 @@ export type ViralStyle =
   | 'EXPERT_CUTOUT'
   | 'TRADER_DESK_SILHOUETTE'
   | 'CROWD_PANIC'
-
+  | 'EXECUTIVE_LINEUP'
+  | 'LEADER_LOGO_CUTOUTS'
+  | 'CORPORATE_OFFICE_SPACE'
+  | 'MILITARY_AEROSPACE_METAPHOR'
+  
   // Typography & Layouts
   | 'ARCHITECTURAL_OVERLAY'
   | 'MINIMALIST_CHECKLIST'
@@ -70,6 +74,10 @@ export const PROMPT_LIBRARY: Record<ViralStyle, string> = {
   EXPERT_CUTOUT: 'A professional, sharp photograph cutout of a famous investor (e.g., Cathie Wood) smiling confidently. Background is pure pitch black. Next to them is a floating list of massive text. --ar 4:5 --style raw --v 6.0 --s 200',
   TRADER_DESK_SILHOUETTE: 'A moody, cinematic silhouette of a trader sitting at a multi-monitor desk in a dark room. The only light comes from the glowing screens reflecting off their glasses. --ar 4:5 --style raw --v 6.0 --s 200',
   CROWD_PANIC: 'A blurred, chaotic scene of a massive crowd on a trading floor, hands in the air, papers flying. Desaturated colors with harsh red emergency lighting. --ar 4:5 --style raw --v 6.0 --s 200',
+  EXECUTIVE_LINEUP: 'A crisp, professional press-release photograph of three corporate executives standing side-by-side in formal wear. The middle executive is looking confidently at the camera. The background is a clean studio wall. Recognized corporate logo badges are neatly aligned above their heads. Sharp, commercial lighting, high contrast. --ar 4:5 --style raw --v 6.0 --s 200',
+  LEADER_LOGO_CUTOUTS: 'A sharp, high-contrast cutout portrait of a prominent political leader (e.g. Donald Trump) in a suit standing centered and looking confidently forward. Floating symmetrically on their left and right sides are two crisp circular logo badges: one containing a high-tech stealth jet and the other a corporate emblem. Volumetric side-lighting, soft blurred natural background. --ar 4:5 --style raw --v 6.0 --s 200',
+  CORPORATE_OFFICE_SPACE: 'A premium, clean editorial photograph of a modern tech corporate office interior. Concrete walls, glass partitions, desks with monitors, employees working in smart-casual attire. A concrete wall displays a clean, white corporate logo mark. Moody studio side-lighting. --ar 4:5 --style raw --v 6.0 --s 200',
+  MILITARY_AEROSPACE_METAPHOR: 'A cinematic, dramatic high-fidelity 3D render of a sleek hypersonic military cruise missile flying at extreme speeds through the upper atmosphere. A glowing orange jet flame and pink trail stream behind it. A dramatic sunset sky is in the background with soft clouds below. High-end rendering, detailed metallic textures. --ar 4:5 --style raw --v 6.0 --s 200',
 
   // Typography & Layouts
   ARCHITECTURAL_OVERLAY: 'A cinematic, hyper-realistic, slightly desaturated photograph of a corporate headquarters or Wall Street building. High contrast, premium editorial photo. --ar 4:5 --style raw --v 6.0 --s 200',
