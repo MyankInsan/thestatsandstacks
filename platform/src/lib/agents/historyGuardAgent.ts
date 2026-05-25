@@ -10,7 +10,7 @@ export interface HistoryGuardResult {
 }
 
 const BLOCK_THRESHOLD = 0.52;
-const WINDOW_DAYS = 60;
+const WINDOW_DAYS = 50;
 
 export class HistoryGuardAgent extends BaseAgent {
   constructor() {

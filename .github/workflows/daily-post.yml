@@ -18,6 +18,8 @@ env:
 jobs:
   generate-post:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     timeout-minutes: 15
 
     steps:
@@ -47,15 +49,6 @@ jobs:
           cache: 'npm'
           cache-dependency-path: platform/package-lock.json
 
-      - name: Restore content memory
-        if: steps.send-window.outputs.should_run == 'true'
-        uses: actions/cache@v4
-        with:
-          path: /tmp/thestatsandstacks-history
-          key: thestatsandstacks-history-${{ github.run_id }}
-          restore-keys: |
-            thestatsandstacks-history-
-
       - name: Install dependencies
         if: steps.send-window.outputs.should_run == 'true'
         working-directory: platform
@@ -66,9 +59,9 @@ jobs:
         working-directory: platform
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_TEXT_MODEL: gemini-2.5-flash
+          GEMINI_TEXT_MODEL: gemini-flash-latest
           WORKFLOW_TIME_ZONE: America/Vancouver
-          CONTENT_HISTORY_PATH: /tmp/thestatsandstacks-history/content-history.json
+          CONTENT_HISTORY_PATH: content-history.json
           ZERO_COST_MODE: "true"
           ENABLE_REDDIT_RESEARCH: "true"
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
@@ -81,6 +74,15 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: npm run daily
+
+      - name: Commit and push content history changes
+        if: steps.send-window.outputs.should_run == 'true' && success()
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add platform/content-history.json
+          git commit -m "Update content history [skip ci]" || echo "No changes to commit"
+          git push
 
       - name: Upload generated post package
         if: steps.send-window.outputs.should_run == 'true' && always()

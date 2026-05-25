@@ -24,7 +24,7 @@ async function main() {
 
   const outputDir = path.join('/tmp', 'thestatsandstacks', today);
   const historyPath = process.env.CONTENT_HISTORY_PATH
-    || path.join('/tmp', 'thestatsandstacks-history', 'content-history.json');
+    || path.join(__dirname, 'content-history.json');
 
   const contentHistory = loadContentHistory(historyPath);
   fs.mkdirSync(outputDir, { recursive: true });

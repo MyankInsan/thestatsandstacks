@@ -10,5 +10,5 @@ export function getGeminiClient(): GoogleGenerativeAI {
 }
 
 export function getGeminiTextModelName(): string {
-  return process.env.GEMINI_TEXT_MODEL || 'gemini-2.5-flash';
+  return process.env.GEMINI_TEXT_MODEL || 'gemini-flash-latest';
 }

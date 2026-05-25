@@ -26,7 +26,7 @@ export function loadContentHistory(historyPath: string): ContentHistoryEntry[] {
 
 export function appendContentHistory(historyPath: string, entry: ContentHistoryEntry): void {
   const history = loadContentHistory(historyPath);
-  const next = [...history.filter((item) => item.date !== entry.date), entry].slice(-45);
+  const next = [...history.filter((item) => item.date !== entry.date), entry].slice(-100);
   fs.mkdirSync(path.dirname(historyPath), { recursive: true });
   fs.writeFileSync(historyPath, `${JSON.stringify(next, null, 2)}\n`, 'utf-8');
 }
