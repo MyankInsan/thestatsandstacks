@@ -42,7 +42,8 @@ export type ViralStyle =
   | 'BILLBOARD_HIGHWAY'
   | 'FLUID_LIQUID_TEXT'
   | 'GLASSMORPHISM_UI'
-  | 'GRUNGE_STREET_POSTER';
+  | 'GRUNGE_STREET_POSTER'
+  | 'PREMIUM_CTA';
 
 export const PROMPT_LIBRARY: Record<ViralStyle, string> = {
   // Data Vis
@@ -89,4 +90,5 @@ export const PROMPT_LIBRARY: Record<ViralStyle, string> = {
   FLUID_LIQUID_TEXT: 'Abstract 3D typography made of dark, swirling metallic liquid and glowing lava. The liquid forms the words. --ar 4:5 --style raw --v 6.0 --s 200',
   GLASSMORPHISM_UI: 'A clean, modern Apple-style UI layout. A frosted glass panel hovering over a blurred colorful background. The glass panel contains crisp dark text. --ar 4:5 --style raw --v 6.0 --s 200',
   GRUNGE_STREET_POSTER: 'A heavily textured, distressed paper poster glued to a dark, gritty brick wall in a rainy alley. Spray painted stenciled letters. --ar 4:5 --style raw --v 6.0 --s 200',
+  PREMIUM_CTA: 'A stunning, ultra-premium cinematic shot of a modern, luxury executive boardroom with a large dark marble table. In the center of the table rests a glowing, sleek 3D holographic globe and active financial chart lines representing compounding wealth. The background shows floor-to-ceiling glass windows overlooking a glowing nighttime city skyline. Warm golden hour lighting, rich textures, professional editorial photography. --ar 4:5 --style raw --v 6.0 --s 200',
 };

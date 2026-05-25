@@ -141,6 +141,8 @@ ${styleReference}
    Ensure all visual descriptions end with "--ar 4:5 --style raw --v 6.0 --s 200".
 5. EXCLUDE GRAPHICAL TEXT & WATERMARKS:
    Do not describe overlapping text, random floating letters, labels, or photo watermarks in your visual descriptions. The code will handle text overlays.
+6. PREMIUM CTA SLIDE RULE:
+   For the final slide (role: cta), do NOT write prompts for simple checklists or plain flat backgrounds. Instead, construct a highly premium, cinematic visual scene (e.g., a stunning, ultra-premium cinematic executive boardroom with a large dark marble table and floor-to-ceiling glass windows overlooking a glowing nighttime city skyline, or a glowing bank vault door filled with gold bars, or a premium glassmorphic geometric composition with high specular highlights) that represents long-term wealth, compounding growth, or financial success. This makes the CTA feel extremely high-end.
 
 Return ONLY valid JSON matching this exact schema (no markdown, no code fences):
 {

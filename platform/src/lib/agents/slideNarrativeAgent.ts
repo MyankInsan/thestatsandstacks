@@ -81,14 +81,14 @@ SLIDE NARRATIVE RULES:
 - Slide 2: Agitator / Secondary Hook — deepen the problem or expand the hook.
 - Middle slides: Implement the PAS (Problem-Agitate-Solve) framework. EVERY middle slide MUST end with an "Open Loop" transition (e.g. "But here is the catch ->", "Which leads to the next step ->").
 - Penultimate Slide: The Summary/Cheat-sheet. A highly savable bulleted list.
-- Last slide: Always role "cta" — strong follow/save prompt for @thestatsandstacks
+- Last slide: Always role "cta" — strong follow/save prompt for @thestatsandstacks. For this last slide, always assign the visualStyle "PREMIUM_CTA" or a highly premium cinematic style (like LUXURY_LIFESTYLE or VAULT_SECURITY) to ensure the call-to-action looks exceptionally high-end. Never use MINIMALIST_CHECKLIST for the CTA slide.
 - Each headline: max 8 words, bold and punchy
 - headlineColorMap: break headline into parts, assign each part a color (primary=white, accent1=neon, accent2=cyan/secondary)
 - visualStyle: YOU MUST ASSIGN A DIFFERENT VISUAL STYLE TO EACH SLIDE based on its role. Choose EXACTLY ONE from this list of keys:
   Data: LINE_CHART, DONUT_CHART, BAR_CHART_HORIZONTAL, SANKEY_DIAGRAM, RADAR_CHART, AREA_CHART, CANDLESTICK_CHART, COMPARISON_TABLE, HEATMAP_GRID, CIRCULAR_PORTFOLIO_WHEEL
   Metaphor: ANIMAL_METAPHOR, NATURE_METAPHOR, LUXURY_LIFESTYLE, TECH_HUD, CHESS_BOARD_STRATEGY, VAULT_SECURITY, SPORTS_RACING, SPACE_EXPLORATION, GAMING_LEVEL_UP, MILITARY_AEROSPACE_METAPHOR, CORPORATE_OFFICE_SPACE
   Human: POP_CULTURE_PORTRAIT, CARICATURE_PORTRAIT, EXPERT_CUTOUT, TRADER_DESK_SILHOUETTE, CROWD_PANIC, EXECUTIVE_LINEUP, LEADER_LOGO_CUTOUTS
-  Layout: ARCHITECTURAL_OVERLAY, MINIMALIST_CHECKLIST, GLOWING_QUOTE, NEON_TERMINAL, MAGAZINE_COVER, BILLBOARD_HIGHWAY, FLUID_LIQUID_TEXT, GLASSMORPHISM_UI, GRUNGE_STREET_POSTER
+  Layout: ARCHITECTURAL_OVERLAY, MINIMALIST_CHECKLIST, GLOWING_QUOTE, NEON_TERMINAL, MAGAZINE_COVER, BILLBOARD_HIGHWAY, FLUID_LIQUID_TEXT, GLASSMORPHISM_UI, GRUNGE_STREET_POSTER, PREMIUM_CTA
   Mix it up! Do not use the same visualStyle twice in a row.
 - dataPoint: include only if there's a real number/stat to hero (e.g. "+18.2% EPS BEAT")
 - subtext: one short line of supporting context, max 12 words
@@ -203,7 +203,7 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision): Slid
       { text: 'DAILY INSIGHTS', color: 'accent1' },
     ],
     subtext: 'Canadian finance, no hype — @thestatsandstacks',
-    visualStyle: 'MINIMALIST_CHECKLIST',
+    visualStyle: 'PREMIUM_CTA',
     visualPosition: 'center',
     mood: 'confident and inviting',
     narrativeNote: 'CTA — drive follows and saves',
