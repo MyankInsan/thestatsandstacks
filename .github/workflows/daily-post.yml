@@ -2,13 +2,15 @@ name: Daily Instagram Post
 
 on:
   schedule:
-    # Runs at possible UTC offsets for 8 AM, 12 PM, and 2 PM America/Vancouver.
+    # Runs at possible UTC offsets for 7 AM, 9 AM, 11 AM, and 1 PM America/Vancouver (accounting for Daylight Saving Time changes).
+    - cron: '0 14 * * *'
     - cron: '0 15 * * *'
     - cron: '0 16 * * *'
+    - cron: '0 17 * * *'
+    - cron: '0 18 * * *'
     - cron: '0 19 * * *'
     - cron: '0 20 * * *'
     - cron: '0 21 * * *'
-    - cron: '0 22 * * *'
   workflow_dispatch:
 
 env:
@@ -30,15 +32,16 @@ jobs:
         id: send-window
         run: |
           scheduled_hour="$(echo "${{ github.event.schedule }}" | awk '{print $2}')"
-          target_utc_hour_8am="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=8, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
-          target_utc_hour_12pm="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=12, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
-          target_utc_hour_2pm="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=14, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
+          target_utc_hour_7am="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=7, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
+          target_utc_hour_9am="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=9, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
+          target_utc_hour_11am="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=11, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
+          target_utc_hour_1pm="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=13, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
 
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$scheduled_hour" = "$target_utc_hour_8am" ] || [ "$scheduled_hour" = "$target_utc_hour_12pm" ] || [ "$scheduled_hour" = "$target_utc_hour_2pm" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$scheduled_hour" = "$target_utc_hour_7am" ] || [ "$scheduled_hour" = "$target_utc_hour_9am" ] || [ "$scheduled_hour" = "$target_utc_hour_11am" ] || [ "$scheduled_hour" = "$target_utc_hour_1pm" ]; then
             echo "should_run=true" >> "$GITHUB_OUTPUT"
           else
             echo "should_run=false" >> "$GITHUB_OUTPUT"
-            echo "Skipping because cron UTC hour $scheduled_hour does not match today's Vancouver UTC hours ($target_utc_hour_8am, $target_utc_hour_12pm, or $target_utc_hour_2pm)."
+            echo "Skipping because cron UTC hour $scheduled_hour does not match today's Vancouver UTC hours ($target_utc_hour_7am, $target_utc_hour_9am, $target_utc_hour_11am, or $target_utc_hour_1pm)."
           fi
 
       - name: Setup Node.js
