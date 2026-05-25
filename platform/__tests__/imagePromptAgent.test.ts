@@ -44,15 +44,15 @@ const mockFormat: FormatDecision = {
   reasoning: 'test',
 };
 
-test('ImagePromptAgent returns one prompt per slide', () => {
+test('ImagePromptAgent returns one prompt per slide', async () => {
   const agent = new ImagePromptAgent();
-  const result = agent.execute({ slides: mockSlides, format: mockFormat });
+  const result = await agent.execute({ slides: mockSlides, format: mockFormat });
   assert.equal(result.slides.length, 2);
 });
 
-test('Each prompt contains canvas size and brand handle', () => {
+test('Each prompt contains canvas size and brand handle', async () => {
   const agent = new ImagePromptAgent();
-  const result = agent.execute({ slides: mockSlides, format: mockFormat });
+  const result = await agent.execute({ slides: mockSlides, format: mockFormat });
 
   for (const slide of result.slides) {
     assert.ok(slide.geminiPrompt.includes('1080x1350'), 'must specify canvas size');
@@ -61,21 +61,21 @@ test('Each prompt contains canvas size and brand handle', () => {
   }
 });
 
-test('Prompt includes correct background hex color', () => {
+test('Prompt includes correct background hex color', async () => {
   const agent = new ImagePromptAgent();
-  const result = agent.execute({ slides: mockSlides, format: mockFormat });
+  const result = await agent.execute({ slides: mockSlides, format: mockFormat });
   assert.ok(result.slides[0].geminiPrompt.includes('#050505'), 'must include bg color');
 });
 
-test('Prompt includes exact headline text', () => {
+test('Prompt includes exact headline text', async () => {
   const agent = new ImagePromptAgent();
-  const result = agent.execute({ slides: mockSlides, format: mockFormat });
+  const result = await agent.execute({ slides: mockSlides, format: mockFormat });
   assert.ok(result.slides[0].geminiPrompt.includes('NVIDIA'), 'must include headline word');
   assert.ok(result.slides[0].geminiPrompt.includes('JUST IN:'), 'must include eyebrow');
 });
 
-test('Prompt includes dataPoint when present', () => {
+test('Prompt includes dataPoint when present', async () => {
   const agent = new ImagePromptAgent();
-  const result = agent.execute({ slides: mockSlides, format: mockFormat });
+  const result = await agent.execute({ slides: mockSlides, format: mockFormat });
   assert.ok(result.slides[1].geminiPrompt.includes('$0.08 A SHARE'), 'must include dataPoint');
 });

@@ -107,7 +107,7 @@ async function main() {
 
   // ── AGENT 6: IMAGE PROMPTS ────────────────────────────────────────────────
   console.log('━━━ AGENT 6: IMAGE PROMPTS ━━━');
-  const promptSet = new ImagePromptAgent().execute({ slides: narrative.slides, format });
+  const promptSet = await new ImagePromptAgent().execute({ slides: narrative.slides, format, strategy });
   console.log(`   Generated ${promptSet.slides.length} complete Gemini prompts`);
   const promptsText = promptSet.slides.map(s => `SLIDE ${s.slideNumber} (${s.role}):\n${s.geminiPrompt}\n\n`).join('');
   fs.writeFileSync(path.join(outputDir, 'PROMPTS.txt'), promptsText, 'utf-8');
