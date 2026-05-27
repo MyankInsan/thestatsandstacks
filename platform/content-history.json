@@ -278,6 +278,66 @@
         "accent1": "#FF3B30",
         "accent2": "#39FF14"
       }
+    },
+    {
+      "date": "2026-05-27",
+      "topic": "What Norway's $1.7T fund owns in Canada",
+      "hook": "I pulled Norway’s $1.7T filing. Here’s what’s inside",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "Norway sovereign wealth fund Canada",
+        "NBIM Canadian holdings",
+        "what institutions buy in Canada",
+        "top Canadian dividend stocks"
+      ],
+      "visualSignature": "2026-05-27-26533076641",
+      "schemaVersion": 2,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-05-27T19:16:41.723Z",
+      "tickersFeatured": [
+        "JPM",
+        "BA",
+        "LULU",
+        "ANF",
+        "FL",
+        "DKS",
+        "AZO",
+        "AAL",
+        "DIS",
+        "IMAX",
+        "STLA",
+        "AVB",
+        "EQR",
+        "WMT",
+        "LLY",
+        "TGT"
+      ],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "RECEIPT_DROP",
+      "ctaId": "share_use_case",
+      "angleId": "CAP_TABLE_INSTITUTIONAL",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "EXPERT_CUTOUT",
+        "CORPORATE_OFFICE_SPACE",
+        "TICKER_TAPE_HERO",
+        "CAP_TABLE_GRID",
+        "CHESS_BOARD_STRATEGY",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "EXPERT_CUTOUT",
+      "portraitSubjects": [
+        "trump"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      }
     }
   ]
 }
