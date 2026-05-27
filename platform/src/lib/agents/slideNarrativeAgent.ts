@@ -45,9 +45,11 @@ export class SlideNarrativeAgent {
     let parsed: SlideSpec[] | null = null;
     let hadViolation = false;
     let lastError: unknown;
+    let previousViolations: string[] = [];
+    let previousOffendingStyles: ViralStyle[] = [];
 
     for (let attempt = 1; attempt <= 2; attempt++) {
-      const prompt = buildPrompt(input.strategy, input.format, input.tickerSymbols, input.constraints, attempt);
+      const prompt = buildPrompt(input.strategy, input.format, input.tickerSymbols, input.constraints, attempt, previousViolations, previousOffendingStyles);
       try {
         const genAI = getGeminiClient();
         const model = genAI.getGenerativeModel({ model: getGeminiTextModelName() });
@@ -74,8 +76,12 @@ export class SlideNarrativeAgent {
           break;
         } else {
           hadViolation = true;
-          console.warn(`[SlideNarrativeAgent] Attempt ${attempt} violated constraints: ${violations.join('; ')}. ${attempt < 2 ? 'Retrying with stricter prompt.' : 'Falling back.'}`);
-          if (attempt < 2) continue;
+          console.warn(`[SlideNarrativeAgent] Attempt ${attempt} violated constraints: ${violations.join('; ')}. ${attempt < 2 ? 'Retrying with stricter prompt + ban-list.' : 'Falling back.'}`);
+          if (attempt < 2) {
+            previousViolations = violations;
+            previousOffendingStyles = collectOffendingStyles(candidate, violations);
+            continue;
+          }
         }
       } catch (err) {
         lastError = err;
@@ -98,9 +104,11 @@ function buildPrompt(
   tickers: string[],
   constraints: CarouselConstraints | undefined,
   attempt: number,
+  previousViolations: string[] = [],
+  previousOffendingStyles: ViralStyle[] = [],
 ): string {
-  const constraintsBlock = constraints ? buildConstraintsBlock(constraints, attempt) : '';
-  const allowedStyles = filterAllowedStyles(constraints);
+  const constraintsBlock = constraints ? buildConstraintsBlock(constraints, attempt, previousViolations) : '';
+  const allowedStyles = filterAllowedStyles(constraints, previousOffendingStyles);
 
   return `You are a viral finance Instagram content writer. Write the complete slide narrative for a ${format.slideCount}-slide carousel.
 
@@ -150,7 +158,7 @@ Return ONLY valid JSON matching this exact schema (no markdown):
 }`;
 }
 
-function buildConstraintsBlock(c: CarouselConstraints, attempt: number): string {
+function buildConstraintsBlock(c: CarouselConstraints, attempt: number, previousViolations: string[] = []): string {
   const lines: string[] = ['', 'HARD CONSTRAINTS (must satisfy):'];
   if (c.excludedStyles.length > 0) {
     lines.push(`- Do NOT use these visualStyles (recently used): ${c.excludedStyles.join(', ')}`);
@@ -173,16 +181,35 @@ function buildConstraintsBlock(c: CarouselConstraints, attempt: number): string 
   if (c.payoffSlideIndex !== undefined) {
     lines.push(`- payoff slide index: ${c.payoffSlideIndex}. The cover headline should reference "Slide ${c.payoffSlideIndex}" payoff, and slide ${c.payoffSlideIndex} must deliver the hero data point.`);
   }
-  if (attempt > 1) {
-    lines.push('- This is attempt #' + attempt + '. The previous output violated constraints. Be strict this time.');
+  if (attempt > 1 && previousViolations.length > 0) {
+    lines.push('- ATTEMPT #' + attempt + '. The previous attempt violated these constraints (you MUST fix them now):');
+    for (const v of previousViolations) lines.push('    • ' + v);
+    lines.push('  Pick DIFFERENT visualStyles than the offending ones. No two adjacent slides may share a visualStyle.');
   }
   return lines.join('\n');
 }
 
-function filterAllowedStyles(constraints: CarouselConstraints | undefined): ViralStyle[] {
+function filterAllowedStyles(constraints: CarouselConstraints | undefined, previousOffendingStyles: ViralStyle[] = []): ViralStyle[] {
   const base = ROTATION_ALLOWLIST;
-  if (!constraints) return base;
-  return base.filter((s) => !constraints.excludedStyles.includes(s));
+  const excluded = new Set<ViralStyle>([
+    ...(constraints?.excludedStyles ?? []),
+    ...previousOffendingStyles,
+  ]);
+  const filtered = base.filter((s) => !excluded.has(s));
+  // Never let the allowlist collapse below 8 styles — fall back to the base list.
+  return filtered.length >= 8 ? filtered : base.filter((s) => !(constraints?.excludedStyles ?? []).includes(s));
+}
+
+function collectOffendingStyles(slides: SlideSpec[], violations: string[]): ViralStyle[] {
+  const offenders = new Set<ViralStyle>();
+  for (const v of violations) {
+    const match = v.match(/\b([A-Z_]+)\b\s*$/);
+    if (match) {
+      const style = match[1] as ViralStyle;
+      if (slides.some((s) => s.visualStyle === style)) offenders.add(style);
+    }
+  }
+  return Array.from(offenders);
 }
 
 function validateAgainstConstraints(slides: SlideSpec[], constraints: CarouselConstraints | undefined): string[] {
