@@ -174,6 +174,48 @@
         "accent1": "#FF3B30",
         "accent2": "#39FF14"
       }
+    },
+    {
+      "date": "2026-05-26",
+      "topic": "How President Trump's Policies Impact the Tech Sector",
+      "hook": "What the new policies mean for Tech.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 7,
+      "keywords": [
+        "SNDK stock",
+        "Sandisk Corporation stock",
+        "hot stock risk checklist",
+        "market catalyst explained"
+      ],
+      "visualSignature": "2026-05-26-26493697129",
+      "schemaVersion": 2,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-05-27T05:58:53.228Z",
+      "tickersFeatured": [],
+      "topicCategory": "POLICY",
+      "hookFormulaId": "QUIET_NUMBER",
+      "ctaId": "follow_authority",
+      "angleId": "INDEX_REBALANCE",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "ARCHITECTURAL_OVERLAY",
+        "MILITARY_AEROSPACE_METAPHOR",
+        "ARCHITECTURAL_OVERLAY",
+        "CROWD_PANIC",
+        "MILITARY_AEROSPACE_METAPHOR",
+        "ARCHITECTURAL_OVERLAY",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "ARCHITECTURAL_OVERLAY",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#39FF14",
+        "accent2": "#00CFFF"
+      }
     }
   ]
 }
