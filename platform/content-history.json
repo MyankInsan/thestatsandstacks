@@ -133,6 +133,47 @@
         "accent1": "#FFD700",
         "accent2": "#FFFFFF"
       }
+    },
+    {
+      "date": "2026-05-26",
+      "topic": "If You Invested $10,000 in SanDisk 5 Years Ago",
+      "hook": "What $10k in SNDK looks like today.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 6,
+      "keywords": [
+        "SNDK stock",
+        "Sandisk Corporation stock",
+        "hot stock risk checklist",
+        "market catalyst explained"
+      ],
+      "visualSignature": "2026-05-26-26493291437",
+      "schemaVersion": 2,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-05-27T05:46:31.192Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "IF_THEN_LADDER",
+      "ctaId": "reference_save",
+      "angleId": "ETF_XRAY",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "TRADER_DESK_SILHOUETTE",
+        "CORPORATE_OFFICE_SPACE",
+        "TRADER_DESK_SILHOUETTE",
+        "LINE_CHART",
+        "CORPORATE_OFFICE_SPACE",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "TRADER_DESK_SILHOUETTE",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
+      }
     }
   ]
 }
