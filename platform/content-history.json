@@ -216,6 +216,68 @@
         "accent1": "#39FF14",
         "accent2": "#00CFFF"
       }
+    },
+    {
+      "date": "2026-05-27",
+      "topic": "Micron Technology (MU) Heat Check: The 5-Question Risk Filter",
+      "hook": "Micron is up 188% YTD. Should you care?",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 6,
+      "keywords": [
+        "MU stock",
+        "Micron Technology stock",
+        "AI chip stocks",
+        "investing risk checklist"
+      ],
+      "visualSignature": "2026-05-27-26525978535",
+      "schemaVersion": 2,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-05-27T17:01:00.796Z",
+      "tickersFeatured": [
+        "JPM",
+        "BA",
+        "LULU",
+        "ANF",
+        "FL",
+        "DKS",
+        "AZO",
+        "AAL",
+        "SAVE",
+        "DIS",
+        "IMAX",
+        "AVB",
+        "EQR",
+        "STLA",
+        "WMT",
+        "LLY",
+        "ELF",
+        "TGT"
+      ],
+      "topicCategory": "EARNINGS",
+      "hookFormulaId": "ANTI_FOMO",
+      "ctaId": "swipe_promise",
+      "angleId": "BUYBACK_SCOREBOARD",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "NEON_TERMINAL",
+        "POP_CULTURE_PORTRAIT",
+        "LINE_CHART",
+        "PORTFOLIO_BAR_RACE",
+        "MINIMALIST_CHECKLIST",
+        "VAULT_SECURITY"
+      ],
+      "coverVisualStyle": "NEON_TERMINAL",
+      "portraitSubjects": [
+        "elon_musk"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
+      }
     }
   ]
 }
