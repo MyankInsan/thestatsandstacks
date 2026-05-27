@@ -338,6 +338,67 @@
         "accent1": "#FF3B30",
         "accent2": "#FFD700"
       }
+    },
+    {
+      "date": "2026-05-27",
+      "topic": "How a 1% MER actually compounds over 30 years",
+      "hook": "1% sounds small. Here is the 30-year math",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "MER fees Canada",
+        "mutual fund vs ETF compounding",
+        "Canadian investment fees math",
+        "low cost index funds Canada"
+      ],
+      "visualSignature": "2026-05-27-26541297901",
+      "schemaVersion": 2,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-05-27T22:02:19.600Z",
+      "tickersFeatured": [
+        "JPM",
+        "BA",
+        "LULU",
+        "ANF",
+        "FL",
+        "DKS",
+        "AZO",
+        "AAL",
+        "SAVE",
+        "DIS",
+        "IMAX",
+        "AVB",
+        "EQR",
+        "STLA",
+        "WMT",
+        "LLY",
+        "TGT"
+      ],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "QUIET_COMPOUNDER",
+      "ctaId": "comment_genuine_question",
+      "angleId": "DIVIDEND_KINGS",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "TECH_HUD",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "BAR_CHART_HORIZONTAL",
+        "COMPARISON_TABLE",
+        "DONUT_CHART",
+        "GLOWING_QUOTE"
+      ],
+      "coverVisualStyle": "TECH_HUD",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "boomer_diy_investor"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F8F9FA",
+        "primaryText": "#111827",
+        "accent1": "#2563EB",
+        "accent2": "#4B5563"
+      }
     }
   ]
 }
