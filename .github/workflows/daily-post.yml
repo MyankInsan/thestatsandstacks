@@ -1,21 +1,41 @@
 name: Daily Instagram Post
 
+# 5 slots/day × PDT + PST = 10 cron lines.
+# Vancouver clock targets: 07:00, 10:00, 13:00, 16:30, 19:30 PT.
+# A Node step inside the job resolves which slot fires based on the cron's UTC hour
+# and current Vancouver DST state. workflow_dispatch requires slot_override input.
 on:
   schedule:
-    # Runs at possible UTC offsets for 7 AM, 9 AM, 11 AM, and 1 PM America/Vancouver (accounting for Daylight Saving Time changes).
-    - cron: '0 14 * * *'
-    - cron: '0 15 * * *'
-    - cron: '0 16 * * *'
-    - cron: '0 17 * * *'
-    - cron: '0 18 * * *'
-    - cron: '0 19 * * *'
-    - cron: '0 20 * * *'
-    - cron: '0 21 * * *'
+    - cron: '0 14 * * *'   # Slot 1 — 07:00 PDT (UTC-7)
+    - cron: '0 15 * * *'   # Slot 1 — 07:00 PST (UTC-8)
+    - cron: '0 17 * * *'   # Slot 2 — 10:00 PDT
+    - cron: '0 18 * * *'   # Slot 2 — 10:00 PST
+    - cron: '0 20 * * *'   # Slot 3 — 13:00 PDT
+    - cron: '0 21 * * *'   # Slot 3 — 13:00 PST
+    - cron: '30 23 * * *'  # Slot 4 — 16:30 PDT
+    - cron: '30 0 * * *'   # Slot 4 — 16:30 PST (next UTC day)
+    - cron: '30 2 * * *'   # Slot 5 — 19:30 PDT (next UTC day)
+    - cron: '30 3 * * *'   # Slot 5 — 19:30 PST (next UTC day)
   workflow_dispatch:
+    inputs:
+      slot_override:
+        description: 'Required slot index for manual dispatch (1-5)'
+        required: true
+        type: choice
+        options: ['1', '2', '3', '4', '5']
+      force_angle:
+        description: 'Optional: force a specific angle (e.g. REACTIVE_SENTIMENT)'
+        required: false
+        type: string
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
   NODE_OPTIONS: "--dns-result-order=ipv4first"
+
+# Serialize runs so concurrent slots cannot race on content-history.json git push.
+concurrency:
+  group: daily-post
+  cancel-in-progress: false
 
 jobs:
   generate-post:
@@ -27,25 +47,67 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Check Vancouver send window
-        id: send-window
+      - name: Resolve slot from cron / dispatch
+        id: slot
+        env:
+          GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
+          SLOT_OVERRIDE_INPUT: ${{ inputs.slot_override }}
         run: |
-          scheduled_hour="$(echo "${{ github.event.schedule }}" | awk '{print $2}')"
-          target_utc_hour_7am="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=7, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
-          target_utc_hour_9am="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=9, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
-          target_utc_hour_11am="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=11, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
-          target_utc_hour_1pm="$(python3 -c 'from datetime import datetime; from zoneinfo import ZoneInfo; local_send = datetime.now(ZoneInfo("America/Vancouver")).replace(hour=13, minute=0, second=0, microsecond=0); print(str(int(local_send.astimezone(ZoneInfo("UTC")).strftime("%H"))))')"
+          node - <<'EOF'
+          const fs = require('fs');
+          const isDispatch = process.env.GITHUB_EVENT_NAME === 'workflow_dispatch';
+          const slotOverride = process.env.SLOT_OVERRIDE_INPUT;
+          const schedule = process.env.GITHUB_EVENT_SCHEDULE || '';
 
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$scheduled_hour" = "$target_utc_hour_7am" ] || [ "$scheduled_hour" = "$target_utc_hour_9am" ] || [ "$scheduled_hour" = "$target_utc_hour_11am" ] || [ "$scheduled_hour" = "$target_utc_hour_1pm" ]; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "should_run=false" >> "$GITHUB_OUTPUT"
-            echo "Skipping because cron UTC hour $scheduled_hour does not match today's Vancouver UTC hours ($target_utc_hour_7am, $target_utc_hour_9am, $target_utc_hour_11am, or $target_utc_hour_1pm)."
-          fi
+          function isVancouverDst(now) {
+            const tz = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Vancouver', timeZoneName: 'short' }).format(now);
+            return tz.includes('PDT');
+          }
+
+          const PDT = { 14: 1, 17: 2, 20: 3, 23: 4, 2: 5 };
+          const PST = { 15: 1, 18: 2, 21: 3, 0: 4, 3: 5 };
+          const MIN = { 1: 0, 2: 0, 3: 0, 4: 30, 5: 30 };
+
+          let slot = null;
+          if (isDispatch) {
+            if (!slotOverride) {
+              console.error('workflow_dispatch requires slot_override input (1-5). Re-run with it set.');
+              process.exit(1);
+            }
+            const n = Number(slotOverride);
+            if (![1,2,3,4,5].includes(n)) {
+              console.error('Invalid slot_override=' + slotOverride + '. Must be 1-5.');
+              process.exit(1);
+            }
+            slot = n;
+            console.log('Manual dispatch slot=' + slot);
+          } else if (schedule) {
+            const parts = schedule.trim().split(/\s+/);
+            const cronMin = Number(parts[0]);
+            const cronHr = Number(parts[1]);
+            const dst = isVancouverDst(new Date());
+            const map = dst ? PDT : PST;
+            const candidate = map[cronHr];
+            if (candidate && MIN[candidate] === cronMin) {
+              slot = candidate;
+              console.log('Cron ' + schedule + ' maps to slot=' + slot + ' in ' + (dst ? 'PDT' : 'PST'));
+            } else {
+              console.log('Cron ' + schedule + ' does NOT map to any slot in ' + (dst ? 'PDT' : 'PST') + '. Skipping.');
+            }
+          } else {
+            console.error('Neither dispatch nor schedule context detected.');
+            process.exit(1);
+          }
+
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, 'should_run=' + (slot ? 'true' : 'false') + '\n');
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, 'slot_index=' + (slot ?? '') + '\n');
+          EOF
 
       - name: Setup Node.js
-        if: steps.send-window.outputs.should_run == 'true'
+        if: steps.slot.outputs.should_run == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -53,12 +115,23 @@ jobs:
           cache-dependency-path: platform/package-lock.json
 
       - name: Install dependencies
-        if: steps.send-window.outputs.should_run == 'true'
+        if: steps.slot.outputs.should_run == 'true'
         working-directory: platform
         run: npm ci
 
+      - name: Read HOT_TOPIC_WATCHLIST from JSON
+        if: steps.slot.outputs.should_run == 'true'
+        id: watchlist
+        run: |
+          tickers=$(jq -r '.tickers | join(",")' platform/data/hotTopicWatchlist.json)
+          if [ -z "$tickers" ]; then
+            echo "ERROR: hotTopicWatchlist.json produced empty ticker list"
+            exit 1
+          fi
+          echo "tickers=$tickers" >> "$GITHUB_OUTPUT"
+
       - name: Run Daily Pipeline
-        if: steps.send-window.outputs.should_run == 'true'
+        if: steps.slot.outputs.should_run == 'true'
         working-directory: platform
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -70,28 +143,49 @@ jobs:
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
           REDDIT_USER_AGENT: thestatsandstacks-content-research/1.0
-          HOT_TOPIC_WATCHLIST: SNDK,WDC,MU,NVDA,AVGO,AMD,PLTR,APP,HOOD,COIN,MSTR,SMCI,TSLA,SOFI,RKLB,IONQ
+          HOT_TOPIC_WATCHLIST: ${{ steps.watchlist.outputs.tickers }}
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           DELIVERY_EMAIL: ${{ secrets.DELIVERY_EMAIL }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SLOT_OVERRIDE: ${{ steps.slot.outputs.slot_index }}
+          FORCE_ANGLE: ${{ inputs.force_angle }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
         run: npm run daily
 
-      - name: Commit and push content history changes
-        if: steps.send-window.outputs.should_run == 'true' && success()
+      - name: Commit and push content history (with rebase + retry)
+        if: steps.slot.outputs.should_run == 'true' && success()
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git add platform/content-history.json
-          git commit -m "Update content history [skip ci]" || echo "No changes to commit"
-          git push
+          git add platform/content-history.json || true
+
+          if git diff --cached --quiet; then
+            echo "No content-history.json changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Update content history [skip ci]"
+
+          for attempt in 1 2 3; do
+            echo "Push attempt $attempt..."
+            if git pull --rebase origin main && git push; then
+              echo "Push succeeded on attempt $attempt"
+              exit 0
+            fi
+            sleep $((attempt * 2))
+          done
+
+          echo "Warning: history push failed after 3 retries; post was still delivered."
+          exit 0
 
       - name: Upload generated post package
-        if: steps.send-window.outputs.should_run == 'true' && always()
+        if: steps.slot.outputs.should_run == 'true' && always()
         uses: actions/upload-artifact@v4
         with:
-          name: thestatsandstacks-post-package-${{ github.run_id }}
+          name: thestatsandstacks-post-${{ steps.slot.outputs.slot_index }}-${{ github.run_id }}
           path: /tmp/thestatsandstacks/**
           if-no-files-found: ignore
           retention-days: 7

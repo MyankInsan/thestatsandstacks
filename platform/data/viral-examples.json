@@ -1,0 +1,4 @@
+{
+  "_comment": "Manual viral-examples library. User adds entries by screenshotting a viral finance Instagram post they admire, dropping the PNG into platform/data/viral-screenshots/, and adding a JSON entry below. ContentStrategyAgent reads top-N matching entries as 'premium reference patterns — extract structural lessons, do not copy.'",
+  "examples": []
+}

@@ -2,17 +2,22 @@ import type { CopyBundle } from '../agents/copywritingAgent';
 import type { StrategyDecision } from '../agents/contentStrategyAgent';
 import type { FormatDecision } from '../agents/formatStyleAgent';
 import type { ImagePromptSet } from '../agents/imagePromptAgent';
+import type { SlotConfig } from '../agents/slotConfig';
 import { getLocalDateKey } from './dateUtils';
 
 const TELEGRAM_RETRY_ATTEMPTS = 4;
 const TELEGRAM_TIMEOUT_MS = 30_000;
 
-export async function sendPromptsToTelegram(input: {
+export interface TelegramDeliveryInput {
   copy: CopyBundle;
   strategy: StrategyDecision;
   format: FormatDecision;
   promptSet: ImagePromptSet;
-}): Promise<void> {
+  slot?: SlotConfig;
+  varietyFallbackRatePct?: number;
+}
+
+export async function sendPromptsToTelegram(input: TelegramDeliveryInput): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) {
@@ -22,31 +27,48 @@ export async function sendPromptsToTelegram(input: {
 
   const today = getLocalDateKey(new Date());
   const formatLabel = input.format.formatType.replace(/_/g, ' ');
+  const slotLabel = input.slot ? `Post ${input.slot.index}/5 — ${input.slot.persona.replace(/_/g, ' ')}` : 'Post';
 
-  const intro = [
+  const introLines: string[] = [
     `🎬 TheStatsAndStacks — ${today}`,
     `━━━━━━━━━━━━━━━━━━━━`,
+    `${slotLabel}`,
     `FORMAT: ${formatLabel}`,
     `TOPIC: ${input.strategy.topic}`,
+    `HOOK: ${input.strategy.hook}`,
+    input.strategy.hookFormulaId ? `HOOK FORMULA: ${input.strategy.hookFormulaId}` : '',
+    input.strategy.ctaId ? `CTA STRATEGY: ${input.strategy.ctaId}` : '',
     `SLIDES: ${input.promptSet.slides.length}`,
     `━━━━━━━━━━━━━━━━━━━━`,
-    `Prompt package attached 👇`,
-  ].join('\n');
+    'Each prompt is tagged with the recommended image model (Seedance or ChatGPT image gen).',
+    'Slides flagged with ⚠️ may garble dense chart text — clean fallback data block is included for Canva overlay.',
+    'Prompt package attached 👇',
+  ].filter(Boolean);
 
-  await callTelegram(token, 'sendMessage', { chat_id: chatId, text: intro });
+  if (input.varietyFallbackRatePct !== undefined && input.varietyFallbackRatePct > 25) {
+    introLines.unshift(`⚠️ Variety enforcement stressed (${input.varietyFallbackRatePct.toFixed(0)}% fallback rate over 7d) — review may be needed`);
+  }
+
+  await callTelegram(token, 'sendMessage', { chat_id: chatId, text: introLines.join('\n') });
 
   const sep = '═'.repeat(52);
   const lines: string[] = [
-    `THESTATSANDSTACKS — ${today}`,
+    `THESTATSANDSTACKS — ${today}  |  ${slotLabel}`,
     `FORMAT: ${input.format.formatType}  |  TOPIC: ${input.strategy.topic}  |  ${input.promptSet.slides.length} SLIDES`,
     sep,
     '',
   ];
 
   for (const slide of input.promptSet.slides) {
-    lines.push(`SLIDE ${slide.slideNumber} — ${slide.slideTitle}`);
+    lines.push(`SLIDE ${slide.slideNumber} — ${slide.slideTitle}${slide.canvaFallbackSuggested ? ' ⚠️ Canva fallback may be needed' : ''}`);
+    lines.push(`(${slide.recommendedModelLabel})`);
     lines.push('─'.repeat(40));
     lines.push(slide.geminiPrompt);
+    if (slide.canvaFallbackSuggested && slide.canvaFallbackData) {
+      lines.push('');
+      lines.push('── If chart text garbles, regenerate visual-only and overlay this in Canva: ──');
+      lines.push(slide.canvaFallbackData);
+    }
     lines.push('');
     lines.push('');
   }
@@ -56,12 +78,12 @@ export async function sendPromptsToTelegram(input: {
   lines.push(sep, 'PINNED COMMENT', sep, input.copy.firstComment, '');
 
   const docContent = lines.join('\n');
-  const filename = `thestatsandstacks-${today}.txt`;
+  const filename = `thestatsandstacks-${today}${input.slot ? `-s${input.slot.index}` : ''}.txt`;
 
   await withTelegramRetry('sendDocument:prompts', async () => {
     const form = new FormData();
     form.append('chat_id', chatId);
-    form.append('caption', `📄 ${filename} — paste each prompt into Gemini Imagen`);
+    form.append('caption', `📄 ${filename} — paste each prompt into the model tagged on the slide`);
     form.append(
       'document',
       new Blob([docContent], { type: 'text/plain' }),
@@ -121,5 +143,5 @@ async function fetchWithTimeout(url: string, init: RequestInit): Promise<Respons
 }
 
 function delay(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

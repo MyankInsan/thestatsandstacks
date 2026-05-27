@@ -2,13 +2,15 @@ import { getGeminiClient, getGeminiTextModelName } from '../services/gemini';
 import type { StrategyDecision } from './contentStrategyAgent';
 import type { FormatDecision } from './formatStyleAgent';
 import type { ViralStyle } from './promptLibrary';
+import { ROTATION_ALLOWLIST } from './promptLibrary';
+import type { CarouselConstraints } from './carouselConstraintAgent';
 
 export interface HeadlineColor {
   text: string;
   color: 'primary' | 'accent1' | 'accent2';
 }
 
-export type SlideRole = 'cover' | 'shock_stat' | 'context' | 'breakdown' | 'data' | 'humor' | 'cta';
+export type SlideRole = 'cover' | 'shock_stat' | 'context' | 'breakdown' | 'data' | 'humor' | 'cta' | 'chart_data';
 
 export interface SlideSpec {
   slideNumber: number;
@@ -26,46 +28,80 @@ export interface SlideSpec {
 
 export interface SlideNarrative {
   slides: SlideSpec[];
+  hadConstraintViolation: boolean;
+}
+
+export interface SlideNarrativeInput {
+  strategy: StrategyDecision;
+  format: FormatDecision;
+  tickerSymbols: string[];
+  constraints?: CarouselConstraints;
 }
 
 export class SlideNarrativeAgent {
-  async execute(input: {
-    strategy: StrategyDecision;
-    format: FormatDecision;
-    tickerSymbols: string[];
-  }): Promise<SlideNarrative> {
-    console.log(`[SlideNarrativeAgent] Writing ${input.format.slideCount} slide specs...`);
+  async execute(input: SlideNarrativeInput): Promise<SlideNarrative> {
+    console.log(`[SlideNarrativeAgent] Writing ${input.format.slideCount} slide specs${input.constraints ? ' with constraints' : ''}...`);
 
-    const prompt = buildPrompt(input.strategy, input.format, input.tickerSymbols);
+    let parsed: SlideSpec[] | null = null;
+    let hadViolation = false;
+    let lastError: unknown;
 
-    try {
-      const genAI = getGeminiClient();
-      const model = genAI.getGenerativeModel({ model: getGeminiTextModelName() });
-      const result = await model.generateContent(prompt);
-      const text = result.response.text().replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      const parsed = JSON.parse(text) as { slides: SlideSpec[] };
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      const prompt = buildPrompt(input.strategy, input.format, input.tickerSymbols, input.constraints, attempt);
+      try {
+        const genAI = getGeminiClient();
+        const model = genAI.getGenerativeModel({ model: getGeminiTextModelName() });
+        const result = await model.generateContent(prompt);
+        const text = result.response.text().replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+        const json = JSON.parse(text) as { slides: SlideSpec[] };
 
-      if (!Array.isArray(parsed.slides) || parsed.slides.length === 0) {
-        return buildFallback(input.strategy, input.format);
+        if (!Array.isArray(json.slides) || json.slides.length === 0) {
+          throw new Error('Empty slides array from Gemini');
+        }
+
+        const candidate = json.slides.slice(0, input.format.slideCount).map((s, i) => ({
+          ...s,
+          slideNumber: i + 1,
+          headlineColorMap: Array.isArray(s.headlineColorMap) ? s.headlineColorMap : [{ text: s.headline, color: 'primary' as const }],
+          visualPosition: s.visualPosition || 'top',
+        }));
+
+        if (candidate.length > 0) candidate[candidate.length - 1].role = 'cta';
+
+        const violations = validateAgainstConstraints(candidate, input.constraints);
+        if (violations.length === 0) {
+          parsed = candidate;
+          break;
+        } else {
+          hadViolation = true;
+          console.warn(`[SlideNarrativeAgent] Attempt ${attempt} violated constraints: ${violations.join('; ')}. ${attempt < 2 ? 'Retrying with stricter prompt.' : 'Falling back.'}`);
+          if (attempt < 2) continue;
+        }
+      } catch (err) {
+        lastError = err;
+        console.warn(`[SlideNarrativeAgent] Attempt ${attempt} failed: ${err instanceof Error ? err.message : String(err)}`);
       }
-
-      const slides = parsed.slides.slice(0, input.format.slideCount).map((s, i) => ({
-        ...s,
-        slideNumber: i + 1,
-        headlineColorMap: Array.isArray(s.headlineColorMap) ? s.headlineColorMap : [{ text: s.headline, color: 'primary' as const }],
-        visualPosition: s.visualPosition || 'top',
-      }));
-
-      if (slides.length > 0) slides[slides.length - 1].role = 'cta';
-      return { slides };
-    } catch (err) {
-      console.warn('[SlideNarrativeAgent] Gemini failed, using fallback.', err instanceof Error ? err.message : String(err));
-      return buildFallback(input.strategy, input.format);
     }
+
+    if (parsed) {
+      return { slides: parsed, hadConstraintViolation: hadViolation };
+    }
+
+    void lastError;
+    return { slides: buildFallback(input.strategy, input.format, input.constraints), hadConstraintViolation: true };
   }
 }
 
-function buildPrompt(strategy: StrategyDecision, format: FormatDecision, tickers: string[]): string {
+function buildPrompt(
+  strategy: StrategyDecision,
+  format: FormatDecision,
+  tickers: string[],
+  constraints: CarouselConstraints | undefined,
+  attempt: number,
+): string {
+  const constraintsBlock = constraints ? buildConstraintsBlock(constraints, attempt) : '';
+  const allowedStyles = filterAllowedStyles(constraints);
+
   return `You are a viral finance Instagram content writer. Write the complete slide narrative for a ${format.slideCount}-slide carousel.
 
 TOPIC: ${strategy.topic}
@@ -75,23 +111,21 @@ VISUAL TONE: ${format.visualTone}
 TICKERS: ${tickers.join(', ') || 'none'}
 TARGET AUDIENCE: ${strategy.targetAudience}
 COLOR SCHEME: bg=${format.colorScheme.bg}, accent1=${format.colorScheme.accent1}, accent2=${format.colorScheme.accent2}
+${constraintsBlock}
 
 SLIDE NARRATIVE RULES:
 - Slide 1: Cover — highest energy hook, 4-7 word headline, eyebrow label
-- Slide 2: Agitator / Secondary Hook — deepen the problem or expand the hook.
-- Middle slides: Implement the PAS (Problem-Agitate-Solve) framework. EVERY middle slide MUST end with an "Open Loop" transition (e.g. "But here is the catch ->", "Which leads to the next step ->").
-- Penultimate Slide: The Summary/Cheat-sheet. A highly savable bulleted list.
-- Last slide: Always role "cta" — strong follow/save prompt for @thestatsandstacks. For this last slide, always assign the visualStyle "PREMIUM_CTA" or a highly premium cinematic style (like LUXURY_LIFESTYLE or VAULT_SECURITY) to ensure the call-to-action looks exceptionally high-end. Never use MINIMALIST_CHECKLIST for the CTA slide.
-- Each headline: max 8 words, bold and punchy
-- headlineColorMap: break headline into parts, assign each part a color (primary=white, accent1=neon, accent2=cyan/secondary)
-- visualStyle: YOU MUST ASSIGN A DIFFERENT VISUAL STYLE TO EACH SLIDE based on its role. Choose EXACTLY ONE from this list of keys:
-  Data: LINE_CHART, DONUT_CHART, BAR_CHART_HORIZONTAL, SANKEY_DIAGRAM, RADAR_CHART, AREA_CHART, CANDLESTICK_CHART, COMPARISON_TABLE, HEATMAP_GRID, CIRCULAR_PORTFOLIO_WHEEL
-  Metaphor: ANIMAL_METAPHOR, NATURE_METAPHOR, LUXURY_LIFESTYLE, TECH_HUD, CHESS_BOARD_STRATEGY, VAULT_SECURITY, SPORTS_RACING, SPACE_EXPLORATION, GAMING_LEVEL_UP, MILITARY_AEROSPACE_METAPHOR, CORPORATE_OFFICE_SPACE
-  Human: POP_CULTURE_PORTRAIT, CARICATURE_PORTRAIT, EXPERT_CUTOUT, TRADER_DESK_SILHOUETTE, CROWD_PANIC, EXECUTIVE_LINEUP, LEADER_LOGO_CUTOUTS
-  Layout: ARCHITECTURAL_OVERLAY, MINIMALIST_CHECKLIST, GLOWING_QUOTE, NEON_TERMINAL, MAGAZINE_COVER, BILLBOARD_HIGHWAY, FLUID_LIQUID_TEXT, GLASSMORPHISM_UI, GRUNGE_STREET_POSTER, PREMIUM_CTA
-  Mix it up! Do not use the same visualStyle twice in a row.
-- dataPoint: include only if there's a real number/stat to hero (e.g. "+18.2% EPS BEAT")
-- subtext: one short line of supporting context, max 12 words
+- Slide 2: Agitator / Secondary Hook — deepen the problem or expand the hook
+- Middle slides: PAS (Problem-Agitate-Solve) framework. Each middle slide ends with an "Open Loop" transition.
+- Penultimate Slide: Summary / Cheat-sheet (highly savable bulleted list).
+- Last slide: Always role "cta" — strong follow/save prompt. For the CTA slide, use visualStyle "PREMIUM_CTA" or another premium cinematic style (LUXURY_LIFESTYLE or VAULT_SECURITY). Never use MINIMALIST_CHECKLIST for CTA.
+- Each headline: max 8 words, bold and punchy.
+- headlineColorMap: break headline into parts, assign each part a color (primary=white, accent1=neon, accent2=cyan/secondary).
+- visualStyle: assign a DIFFERENT visualStyle to each slide based on its role. Choose EXACTLY ONE from this list of keys: ${allowedStyles.join(', ')}. Do not use the same visualStyle twice in a row.
+- For ANY slide where the dataPoint contains "$", "%", an OHLC pattern name, or a named institution, set role to "chart_data" and pick a Data-bucket visualStyle (CANDLESTICK_HERO, CAP_TABLE_GRID, EARNINGS_HEAT_TABLE, INSTITUTIONAL_FLOW_SANKEY, POSITION_CONCENTRATION_TREEMAP, PORTFOLIO_DOUGHNUT_PORTRAIT, MACRO_FLOW_DIAGRAM, PRICE_TIMELINE_ANNOTATED, PORTFOLIO_BAR_RACE, EARNINGS_CARD, TICKER_TAPE_HERO, COMPARISON_TABLE, LINE_CHART, DONUT_CHART, BAR_CHART_HORIZONTAL, HEATMAP_GRID).
+- dataPoint: include only if there's a real number/stat to hero (e.g. "+18.2% EPS BEAT").
+- subtext: one short line of supporting context, max 12 words.
+- narrativeNote: if the dataPoint is inferred (not directly from research), include the literal word "illustrative" in the note so the image pipeline knows to suppress specific-but-wrong claims.
 
 Return ONLY valid JSON matching this exact schema (no markdown):
 {
@@ -107,7 +141,7 @@ Return ONLY valid JSON matching this exact schema (no markdown):
       "eyebrow": "JUST IN:",
       "subtext": "Wall Street didn't see this coming",
       "dataPoint": null,
-      "visualStyle": "ANIMAL_METAPHOR",
+      "visualStyle": "ARCHITECTURAL_OVERLAY",
       "visualPosition": "top",
       "mood": "urgent, high-energy, breaking news",
       "narrativeNote": "Opens with the hook — sets up the big reveal in slide 2"
@@ -116,11 +150,66 @@ Return ONLY valid JSON matching this exact schema (no markdown):
 }`;
 }
 
+function buildConstraintsBlock(c: CarouselConstraints, attempt: number): string {
+  const lines: string[] = ['', 'HARD CONSTRAINTS (must satisfy):'];
+  if (c.excludedStyles.length > 0) {
+    lines.push(`- Do NOT use these visualStyles (recently used): ${c.excludedStyles.join(', ')}`);
+  }
+  lines.push(`- Max ${c.maxHumanSlides} Human-bucket slides in this carousel (portraits / cutouts).`);
+  lines.push(`- Max ${c.maxHumanInFirst3} Human-bucket slide in slides 1-3.`);
+  if (c.requiredChartSlideRole) {
+    lines.push(`- At least one middle slide must use role "${c.requiredChartSlideRole}" with a Data-bucket visualStyle (chart).`);
+  }
+  lines.push(`- narrativeArc: ${c.narrativeArc} (use the corresponding role sequence).`);
+  if (c.portraitSelection) {
+    lines.push(`- For any slide using a portrait-style visualStyle, the subject MUST be: "${c.portraitSelection.displayName}" (${c.portraitSelection.promptHint}). Do not substitute a different person.`);
+  }
+  if (c.chartHeroSuggestion) {
+    lines.push(`- SUGGESTED chart hero visualStyle: ${c.chartHeroSuggestion}. Use it for the data slide unless a different chart style is strictly better.`);
+  }
+  if (c.ctaId) {
+    lines.push(`- CTA shape (final slide must reinforce this): ${c.ctaId} — ${c.ctaCarouselImpactNote}`);
+  }
+  if (c.payoffSlideIndex !== undefined) {
+    lines.push(`- payoff slide index: ${c.payoffSlideIndex}. The cover headline should reference "Slide ${c.payoffSlideIndex}" payoff, and slide ${c.payoffSlideIndex} must deliver the hero data point.`);
+  }
+  if (attempt > 1) {
+    lines.push('- This is attempt #' + attempt + '. The previous output violated constraints. Be strict this time.');
+  }
+  return lines.join('\n');
+}
+
+function filterAllowedStyles(constraints: CarouselConstraints | undefined): ViralStyle[] {
+  const base = ROTATION_ALLOWLIST;
+  if (!constraints) return base;
+  return base.filter((s) => !constraints.excludedStyles.includes(s));
+}
+
+function validateAgainstConstraints(slides: SlideSpec[], constraints: CarouselConstraints | undefined): string[] {
+  if (!constraints) return [];
+  const violations: string[] = [];
+
+  for (const slide of slides) {
+    if (constraints.excludedStyles.includes(slide.visualStyle)) {
+      violations.push(`Slide ${slide.slideNumber} uses excluded style ${slide.visualStyle}`);
+    }
+  }
+
+  for (let i = 1; i < slides.length; i++) {
+    if (slides[i].visualStyle === slides[i - 1].visualStyle) {
+      violations.push(`Slides ${i} and ${i + 1} share visualStyle ${slides[i].visualStyle}`);
+    }
+  }
+
+  return violations;
+}
+
 const FALLBACK_EYEBROWS: Record<string, string> = {
   PHOTOREALISTIC_NEWS_FLASH:        'BREAKING:',
   PHOTOREALISTIC_LUXURY_LIFESTYLE:  'LIFESTYLE:',
   PHOTOREALISTIC_MARKET_UPDATE:     'MARKET:',
   PHOTOREALISTIC_EXPERT_SHOCK:      'INSIGHT:',
+  PHOTOREALISTIC_MINIMAL_TECH:      'NOTE:',
 };
 
 const FALLBACK_VISUAL_VARIANTS: Record<string, ViralStyle[]> = {
@@ -128,6 +217,7 @@ const FALLBACK_VISUAL_VARIANTS: Record<string, ViralStyle[]> = {
   PHOTOREALISTIC_LUXURY_LIFESTYLE:  ['LUXURY_LIFESTYLE', 'MAGAZINE_COVER'],
   PHOTOREALISTIC_MARKET_UPDATE:     ['TRADER_DESK_SILHOUETTE', 'LINE_CHART', 'CORPORATE_OFFICE_SPACE'],
   PHOTOREALISTIC_EXPERT_SHOCK:      ['EXPERT_CUTOUT', 'CARICATURE_PORTRAIT', 'EXECUTIVE_LINEUP', 'LEADER_LOGO_CUTOUTS'],
+  PHOTOREALISTIC_MINIMAL_TECH:      ['MINIMALIST_CHECKLIST', 'TYPOGRAPHIC_MEGA_NUMBER', 'COMPARISON_TABLE'],
 };
 
 function stripBreakdownPrefixes(text: string): string {
@@ -139,7 +229,7 @@ function stripBreakdownPrefixes(text: string): string {
 
 function parseBreakdown(breakdown: string): { headline: string; subtext: string } {
   const stripped = stripBreakdownPrefixes(breakdown);
-  const parts = stripped.split(' | ').map(p => p.trim()).filter(Boolean);
+  const parts = stripped.split(' | ').map((p) => p.trim()).filter(Boolean);
   const headlineRaw = (parts[0] ?? stripped).toUpperCase();
   const subtextRaw = parts[1] ?? '';
   return {
@@ -148,10 +238,13 @@ function parseBreakdown(breakdown: string): { headline: string; subtext: string 
   };
 }
 
-function buildFallback(strategy: StrategyDecision, format: FormatDecision): SlideNarrative {
+function buildFallback(strategy: StrategyDecision, format: FormatDecision, constraints: CarouselConstraints | undefined): SlideSpec[] {
   const count = format.slideCount;
   const eyebrow = FALLBACK_EYEBROWS[format.formatType] ?? 'KEY INSIGHT:';
-  const visualVariants = FALLBACK_VISUAL_VARIANTS[format.formatType] ?? FALLBACK_VISUAL_VARIANTS.PHOTOREALISTIC_NEWS_FLASH;
+  const baseVariants = FALLBACK_VISUAL_VARIANTS[format.formatType] ?? FALLBACK_VISUAL_VARIANTS.PHOTOREALISTIC_NEWS_FLASH;
+  const excluded = new Set(constraints?.excludedStyles ?? []);
+  const visualVariants = baseVariants.filter((v) => !excluded.has(v));
+  const variants = visualVariants.length > 0 ? visualVariants : baseVariants;
 
   const slides: SlideSpec[] = [];
 
@@ -167,7 +260,7 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision): Slid
     ],
     eyebrow,
     subtext: strategy.topic,
-    visualStyle: visualVariants[0],
+    visualStyle: variants[0],
     visualPosition: 'top',
     mood: format.visualTone,
     narrativeNote: 'Cover hook',
@@ -187,7 +280,7 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision): Slid
         { text: headlineWords.slice(headlineHalf).join(' '), color: 'primary' },
       ],
       subtext,
-      visualStyle: visualVariants[i % visualVariants.length],
+      visualStyle: variants[i % variants.length],
       visualPosition: 'top',
       mood: format.visualTone,
       narrativeNote: `Slide ${i} of the breakdown`,
@@ -209,5 +302,5 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision): Slid
     narrativeNote: 'CTA — drive follows and saves',
   });
 
-  return { slides };
+  return slides;
 }

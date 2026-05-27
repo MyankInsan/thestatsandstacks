@@ -1,6 +1,7 @@
 import { BaseAgent } from './interfaces';
 import { StrategyDecision } from './contentStrategyAgent';
 import { getGeminiClient, getGeminiTextModelName } from '../services/gemini';
+import { CTA_LIBRARY } from './ctaLibrary';
 
 export interface CopyBundle {
   caption: string;
@@ -241,11 +242,102 @@ function fallbackFirstComment(strategy: StrategyDecision): string {
 }
 
 function buildGrowthCta(value: string, strategy: StrategyDecision): string {
+  if (strategy.ctaId && CTA_LIBRARY[strategy.ctaId]) {
+    const spec = CTA_LIBRARY[strategy.ctaId];
+    const filled = fillCtaPattern(spec.pattern, strategy);
+    return truncateText(filled, 160);
+  }
+
   const cleaned = stripHashtags(value).replace(/\s+/g, ' ').trim() || fallbackCta(strategy);
   const followReason = getFollowerReason(strategy);
   if (/\bfollow\b/i.test(cleaned)) return truncateText(cleaned, 160);
   const combined = `${cleaned} ${followReason}`;
   return truncateText(combined.length <= 160 ? combined : followReason, 160);
+}
+
+function fillCtaPattern(pattern: string, strategy: StrategyDecision): string {
+  const topicLower = strategy.topic.toLowerCase();
+
+  const trigger = inferTrigger(topicLower);
+  const audience = inferAudience(topicLower);
+  const x = inferXEntity(topicLower);
+  const listOrScreen = inferListOrScreen(topicLower);
+  const payoff = inferPayoff(topicLower);
+  const payoffIdx = strategy.payoffSlideIndex ?? Math.max(3, Math.floor(strategy.slideCount / 2) + 1);
+  const timeBoundEvent = inferTimeBoundEvent(topicLower);
+
+  return pattern
+    .replace('{trigger}', trigger)
+    .replace('{audience}', audience)
+    .replace('{X}', x)
+    .replace('{list/screen}', listOrScreen)
+    .replace('{payoff}', payoff)
+    .replace('{payoffSlideIndex}', String(payoffIdx))
+    .replace('{time-bound event}', timeBoundEvent)
+    .replace('{option A}', 'TFSA first')
+    .replace('{option B}', 'RRSP first')
+    .replace('{KEYWORD}', inferKeyword(topicLower).toUpperCase())
+    .replace('{asset}', inferAssetName(topicLower));
+}
+
+function inferTrigger(topic: string): string {
+  if (/tfsa|rrsp|fhsa|contribution/.test(topic)) return 'contribution';
+  if (/tax/.test(topic)) return 'tax filing';
+  if (/earnings/.test(topic)) return 'earnings report';
+  if (/portfolio|holdings|owns/.test(topic)) return 'portfolio review';
+  if (/budget|leak|payday/.test(topic)) return 'payday';
+  return 'money decision';
+}
+
+function inferAudience(topic: string): string {
+  if (/tfsa|rrsp|fhsa|canadian|canada/.test(topic)) return 'Canadian';
+  if (/new investor|beginner|first/.test(topic)) return 'new-investor';
+  if (/housing|mortgage|home/.test(topic)) return 'homeowner';
+  if (/tax/.test(topic)) return 'tax-season';
+  return 'Canadian';
+}
+
+function inferXEntity(topic: string): string {
+  if (/etf|index/.test(topic)) return 'Canadian ETF';
+  if (/stock|ticker/.test(topic)) return 'stock';
+  if (/account|tfsa|rrsp|fhsa/.test(topic)) return 'account';
+  return 'pick';
+}
+
+function inferListOrScreen(topic: string): string {
+  if (/etf|stocks?|tickers?|watchlist/.test(topic)) return 'watchlist';
+  if (/budget|spending/.test(topic)) return 'category breakdown';
+  return 'screen';
+}
+
+function inferPayoff(topic: string): string {
+  if (/comparison|vs/.test(topic)) return 'winner reveal';
+  if (/myth/.test(topic)) return 'real number';
+  if (/checklist|framework|guide/.test(topic)) return 'key step';
+  return 'real number';
+}
+
+function inferTimeBoundEvent(topic: string): string {
+  if (/tax/.test(topic)) return 'tax season';
+  if (/rrsp/.test(topic)) return 'the RRSP deadline';
+  if (/tfsa/.test(topic)) return 'the next TFSA reset';
+  if (/earnings/.test(topic)) return 'next earnings week';
+  return 'your next money decision';
+}
+
+function inferKeyword(topic: string): string {
+  const m = topic.match(/\b([A-Z]{2,5})\b/);
+  if (m) return m[1];
+  if (/etf/.test(topic)) return 'ETF';
+  if (/tfsa/.test(topic)) return 'TFSA';
+  return 'GUIDE';
+}
+
+function inferAssetName(topic: string): string {
+  if (/checklist/.test(topic)) return 'checklist';
+  if (/watchlist/.test(topic)) return 'watchlist';
+  if (/framework/.test(topic)) return 'framework PDF';
+  return 'guide';
 }
 
 function getFollowerReason(strategy: StrategyDecision): string {

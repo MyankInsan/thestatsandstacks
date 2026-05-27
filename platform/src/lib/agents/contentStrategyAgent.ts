@@ -4,7 +4,16 @@ import {
   ContentHistoryEntry,
   isTooSimilarToRecent,
   noveltyPenalty,
+  parseEnumOrInfer,
+  type NarrativeArc,
 } from '../services/contentHistory';
+import type { SlotConfig } from './slotConfig';
+import type { MustAvoidSet } from './historyGuardAgent';
+import { HOOK_FORMULAS, type HookFormulaId, isHookFormulaId } from './hookFormulas';
+import { CTA_LIBRARY, selectCta, type CtaId, type CtaFeedbackEntry } from './ctaLibrary';
+import { HookQualityGate, getDeterministicFallbackHookFormula } from './hookQualityGate';
+import type { TopicCategory } from './portraitLibrary';
+import type { AngleId } from './topicAngleAgent';
 
 export interface StrategyDecision {
   topic: string;
@@ -16,6 +25,22 @@ export interface StrategyDecision {
   targetAudience: string;
   searchKeywords: string[];
   contentPillar?: string;
+
+  hookFormulaId?: HookFormulaId;
+  ctaId?: CtaId;
+  topicCategory?: TopicCategory;
+  angleId?: AngleId;
+  payoffSlideIndex?: number;
+}
+
+export interface ContentStrategyInput {
+  trends: TrendResearchResult;
+  contentHistory?: ContentHistoryEntry[];
+  slot?: SlotConfig;
+  mustAvoid?: MustAvoidSet;
+  ctaFeedback?: CtaFeedbackEntry[];
+  preferredAngleId?: AngleId;
+  recentCtasUsed?: CtaId[];
 }
 
 export class ContentStrategyAgent extends BaseAgent {
@@ -23,12 +48,21 @@ export class ContentStrategyAgent extends BaseAgent {
     super('ContentStrategyAgent');
   }
 
-  async execute(input: {
-    trends: TrendResearchResult,
-    contentHistory?: ContentHistoryEntry[],
-  }): Promise<StrategyDecision> {
-    console.log(`[${this.name}] 🧠 Deciding content strategy...`);
+  async execute(input: ContentStrategyInput): Promise<StrategyDecision> {
+    console.log(`[${this.name}] 🧠 Deciding content strategy${input.slot ? ` for slot ${input.slot.index} (${input.slot.persona})` : ''}...`);
     const contentHistory = input.contentHistory || [];
+
+    const hookFormulasBlock = input.slot
+      ? `\n\nPREFERRED HOOK FORMULAS (pick one and return its id verbatim as hookFormulaId):\n${input.slot.preferredHookFormulas.map((id) => `- ${id}: "${HOOK_FORMULAS[id].pattern}" (use when: ${HOOK_FORMULAS[id].whenToUse})`).join('\n')}`
+      : '';
+
+    const mustAvoidBlock = input.mustAvoid
+      ? `\n\nMUST AVOID (recent posts already used these — pick a different one):\n- hookFormulas: ${input.mustAvoid.hookFormulas.join(', ') || 'none'}\n- tickers as hero: ${input.mustAvoid.tickers.join(', ') || 'none'}\n- topicCategory: avoid 3 in a row from same category`
+      : '';
+
+    const slotPillarBlock = input.slot
+      ? `\n\nSLOT PERSONA: ${input.slot.persona} (${input.slot.description}). Pick a topic that fits this persona.`
+      : '';
 
     const prompt = `You are a senior Instagram content strategist for "TheStatsAndStacks", a premium Canadian finance brand.
 
@@ -39,42 +73,40 @@ CREATOR REFERENCE RULES:
 - Personal-finance mega accounts win by turning a common money pain into a beginner-safe decision rule. Market and investing pages win by putting one chart/stat/news object on screen, then explaining what matters and what to watch next.
 - TheStatsAndStacks should feel more premium and more trustworthy than hype pages: Canadian context, clean data visuals, risk notes, and practical next-step checklists.
 - Prioritize topics that can earn saves, shares, profile visits, and follows because the post gives a reusable framework.
-- If the hot-topic desk has live market candidates scoring 0.90 or higher, choose a WATCHLIST_EDUCATION hot-market idea unless it is too similar to recent history. The user wants the account to react to current investing-page topics, then make them smarter and safer.
 
 FORMAT DECISION RULES:
 - Use CAROUSEL (multiple slides) for educational breakdowns or comparisons.
 - CAROUSEL slides should be 5-8 slides.
 - Use WATCHLIST_EDUCATION for stock-market content. Never recommend buy/sell/hold or price targets.
 - SINGLE_IMAGE is allowed only for one-number stats or simple reminders.
-- For market-style content, use a high-density education structure: hook, what happened, chart/stat object, why it matters, what to watch, risk note. Keep it factual and useful, not hype.
+- For market-style content, use a high-density education structure: hook, what happened, chart/stat object, why it matters, what to watch, risk note.
 - Slide 1 must be a cover hook with 4-9 words, emotional specificity, and no cheap clickbait.
 - Slide 2 should create the "oh, I need this" moment: a mistake, overlooked risk, decision fork, or surprising-but-supported context.
 - The final slide must give a save/share/follow reason in plain language without sounding needy.
 - The output is picture-only. Do not choose, mention, or plan video/Reels/MP4/audio.
 - Every slide must feel educational on its own: one strong headline, one concrete decision/stat/risk idea, and 2-3 short supporting points.
 - Keep slide text compact enough for premium typography: headline under 11 words, supporting points under 12 words each, no paragraphs.
-- Avoid empty-space slides: each slide should justify the visual module with a chart, checklist, comparison, risk meter, account map, or decision framework.
 - Do not choose a topic that is similar to the last 10 posts unless the angle is meaningfully different.
-- Optimize for a daily mix: Macro-economic/political news, Trading psychology, Hypothetical 'What-If' scenarios, Investor protection, and occasional Canadian account explainers.
-- Stock content should feel useful to stock-curious followers. Hypothetical scenarios (e.g., "If you invested $10,000 in [Stock] 5 years ago") are highly encouraged for engagement, as long as they explicitly frame it as past education.
-- Never use "stocks to buy", "best stock to buy", "buy this stock", "sell this stock", price targets, or recommendation phrasing. For hypotheticals, you may estimate historical numbers if exact ones are unavailable, but keep them realistic.
-- Hot tickers such as SanDisk/SNDK are allowed when the angle is "what happened", "what to watch", or "hypothetical history". You may estimate historical returns for hypothetical posts if exact numbers aren't in the signals, but do not invent future earnings or performance metrics.
-- Do not use hype verbs in hooks or titles: explodes, moons, blasts off, skyrockets, must-buy, can't miss. Premium market education should sound calm even when the topic is hot.
+- Stock content should feel useful to stock-curious followers. Hypothetical scenarios are encouraged when explicitly framed as past education.
+- Never use "stocks to buy", "best stock to buy", "buy this stock", "sell this stock", price targets, or recommendation phrasing.
+- Hot tickers are allowed when the angle is "what happened", "what to watch", or "hypothetical history".
+- Do not use hype verbs in hooks or titles: explodes, moons, blasts off, skyrockets, must-buy, can't miss.
 - Do not put exact percentage moves in the cover hook. If a source window says 1Y/YTD/from 52-week low, never rewrite it as 1 day/today.
+${slotPillarBlock}${hookFormulasBlock}${mustAvoidBlock}
 
-Here are the top topics: ${JSON.stringify(input.trends.topics)}
+Here are the top topics: ${JSON.stringify(input.trends.topics.slice(0, 5))}
 
-Recent posts to avoid repeating: ${JSON.stringify(contentHistory.slice(-14))}
-
-Research signal briefs: ${JSON.stringify(input.trends.signalBriefs || [])}
+Recent posts to avoid repeating: ${JSON.stringify(contentHistory.slice(-14).map((e) => ({ date: e.date, topic: e.topic, slotIndex: e.slotIndex })))}
 
 Pick the best one. Output ONLY valid JSON (no markdown, no code fences):
 {
   "topic": "exact topic title",
-  "hook": "the hook text for slide 1",
-  "format": "CAROUSEL" or "SINGLE_IMAGE" or "WATCHLIST_EDUCATION",
+  "hook": "the hook text for slide 1 (4-11 words)",
+  "hookFormulaId": "${input.slot ? input.slot.preferredHookFormulas[0] : 'RECEIPT_DROP'}",
+  "topicCategory": "EARNINGS|MACRO|POLICY|TAX_ACCT|CRYPTO|COMMODITY|HOUSING|BEHAVIORAL|HOW_TO|CAP_TABLE",
+  "format": "CAROUSEL or SINGLE_IMAGE or WATCHLIST_EDUCATION",
   "slideCount": number,
-  "slideBreakdown": ["Slide 1: exact on-image headline | short supporting point | short supporting point", "Slide 2: exact on-image headline | short supporting point | short supporting point", ...],
+  "slideBreakdown": ["Slide 1: exact on-image headline | short supporting point | short supporting point", "Slide 2: ...", ...],
   "reasoning": "why this format and topic",
   "targetAudience": "who this is for",
   "searchKeywords": ["keyword1", "keyword2"],
@@ -87,17 +119,12 @@ Pick the best one. Output ONLY valid JSON (no markdown, no code fences):
       const result = await model.generateContent(prompt);
       const response = await result.response;
       const text = response.text().trim();
-
       const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      return normalizeStrategy(
-        JSON.parse(cleaned) as StrategyDecision,
-        input.trends,
-        contentHistory,
-      );
+      return normalizeStrategy(JSON.parse(cleaned) as StrategyDecision, input);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.warn(`[${this.name}] Gemini strategy failed; using cost-safe fallback strategy. ${message}`);
-      return getRotatingFallbackStrategy(input.trends, contentHistory);
+      return getRotatingFallbackStrategy(input);
     }
   }
 }
@@ -109,7 +136,7 @@ const fallbackStrategies: StrategyDecision[] = [
     format: 'CAROUSEL',
     slideCount: 6,
     slideBreakdown: [
-      'Slide 1: What $10k in SNDK looks like today | The power of holding a tech winner | Let\'s look at the math',
+      "Slide 1: What $10k in SNDK looks like today | The power of holding a tech winner | Let's look at the math",
       'Slide 2: The Initial Investment | $10,000 invested 5 years ago | Buying when the market was uncertain',
       'Slide 3: The Growth Journey | Through macro shocks and rate hikes | The stock continued its trajectory',
       'Slide 4: The Result Today | That $10,000 is now worth $XX,XXX | A massive X% return',
@@ -122,7 +149,7 @@ const fallbackStrategies: StrategyDecision[] = [
     contentPillar: 'Hypothetical "What If" investment scenarios',
   },
   {
-    topic: 'How President Trump\'s Policies Impact the Tech Sector',
+    topic: "How President Trump's Policies Impact the Tech Sector",
     hook: 'What the new policies mean for Tech.',
     format: 'WATCHLIST_EDUCATION',
     slideCount: 7,
@@ -139,65 +166,6 @@ const fallbackStrategies: StrategyDecision[] = [
     targetAudience: 'Active investors and traders trying to navigate political news and its market effects.',
     searchKeywords: ['Trump tech stocks', 'market news', 'macro economics', 'stock market update'],
     contentPillar: 'Global macro-economic news',
-  },
-  {
-    topic: 'SanDisk (SNDK) AI Storage Heat Check: What the Move Actually Means',
-    hook: 'SanDisk is a case study.',
-    format: 'WATCHLIST_EDUCATION',
-    slideCount: 8,
-    slideBreakdown: [
-      'Slide 1: SanDisk is a case study | A hot stock is not automatically a plan | Use the move to learn the process',
-      'Slide 2: What changed | AI data centers need storage | Memory pricing can change fast | Spin-off stories can reset expectations',
-      'Slide 3: Why traders cared | Revenue momentum gets attention | Margins tell the real story | Guidance can move the narrative',
-      'Slide 4: Risk 1: Expectations | A big move can price in good news | Great news can still disappoint later',
-      'Slide 5: Risk 2: Memory cycles | Storage demand can be powerful | Supply and pricing cycles still matter',
-      'Slide 6: Risk 3: Position size | Hot tickers can swing hard | One idea should not become the whole portfolio',
-      'Slide 7: What to watch next | Data-center demand | Contract quality | Margins | Balance sheet risk',
-      'Slide 8: Save this hot-stock filter | Catalyst first | Risk second | Decision last | Educational only',
-    ],
-    reasoning: 'SanDisk-style market heat can attract stock-curious followers while teaching a safer research process instead of giving a trade call.',
-    targetAudience: 'Stock-curious Canadian investors who see viral market moves and need a better filter',
-    searchKeywords: ['SNDK stock', 'SanDisk stock', 'AI storage stocks', 'hot stock risk checklist'],
-    contentPillar: 'Hot market education without recommendations',
-  },
-  {
-    topic: 'Stock Watchlist Rule: 5 Checks Before You Buy Any Stock',
-    hook: 'A stock is not a plan.',
-    format: 'WATCHLIST_EDUCATION',
-    slideCount: 8,
-    slideBreakdown: [
-      'Slide 1: A stock is not a plan | Before you buy, know why it belongs | Hype is not a thesis',
-      'Slide 2: Check 1: Revenue quality | Is growth durable? | One good quarter is not a full story',
-      'Slide 3: Check 2: Profit and cash flow | Sales are not enough | Watch whether the business can fund itself',
-      'Slide 4: Check 3: Balance sheet risk | Debt can amplify problems | Rates and refinancing matter',
-      'Slide 5: Check 4: Valuation | A great company can be a bad price | Compare expectations to reality',
-      'Slide 6: Check 5: Portfolio fit | Single stocks add concentration | Size the risk before the excitement',
-      'Slide 7: Red flags | Guaranteed-return language | Viral hype with no sources | Missing risk discussion',
-      'Slide 8: Save this watchlist rule | Research first | Position size second | This is education, not a recommendation',
-    ],
-    reasoning: 'Stock education can reach a broader audience while staying compliant and non-promotional.',
-    targetAudience: 'Canadians curious about stocks but vulnerable to hype',
-    searchKeywords: ['stock watchlist', 'how to evaluate stocks', 'investing risk'],
-    contentPillar: 'Stock education without recommendations',
-  },
-  {
-    topic: 'Before Chasing a Hot Stock, Check These 4 Risks',
-    hook: 'Hot stocks can cool off fast.',
-    format: 'WATCHLIST_EDUCATION',
-    slideCount: 7,
-    slideBreakdown: [
-      'Slide 1: Hot stocks can cool off fast | Before chasing momentum, check the risk | Popular is not the same as safe',
-      'Slide 2: Risk 1: Story risk | Is the thesis based on facts? | Or just social-media excitement?',
-      'Slide 3: Risk 2: Valuation risk | Good news may already be priced in | Expectations can become too high',
-      'Slide 4: Risk 3: Concentration risk | One stock can dominate your portfolio | Big upside can come with big drawdowns',
-      'Slide 5: Risk 4: Liquidity risk | Thinly traded names can move violently | Exits may be harder than entries',
-      'Slide 6: Better question | What would prove your thesis wrong? | Decide before emotions take over',
-      'Slide 7: Save before buying hype | No stock is guaranteed | This is education, not investment advice',
-    ],
-    reasoning: 'Risk-first stock content is engaging but avoids personalized recommendations.',
-    targetAudience: 'New investors attracted to trending stocks',
-    searchKeywords: ['hot stocks', 'stock risk checklist', 'investing mistakes'],
-    contentPillar: 'Risk management',
   },
   {
     topic: 'TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?',
@@ -236,44 +204,6 @@ const fallbackStrategies: StrategyDecision[] = [
     targetAudience: 'Canadians who earn okay money but feel stuck',
     searchKeywords: ['budgeting Canada', 'money leaks', 'personal finance Canada'],
     contentPillar: 'Money behavior and budgeting',
-  },
-  {
-    topic: '5 Money Leaks Canadians Can Fix This Week',
-    hook: 'One leak fixed is momentum.',
-    format: 'CAROUSEL',
-    slideCount: 6,
-    slideBreakdown: [
-      'Slide 1: One leak fixed is momentum | Start with the leak you can see | Then automate the fix',
-      'Slide 2: Leak 1: Subscription drift | Cancel one unused charge | Redirect it before it disappears',
-      'Slide 3: Leak 2: Minimum-payment autopilot | Interest can quietly win | Know the true payoff cost',
-      'Slide 4: Leak 3: No payday order | Money needs a route | Bills, buffer, debt, goals, then spending',
-      'Slide 5: Leak 4: Idle cash with no job | Emergency cash is good | Random cash needs a purpose',
-      'Slide 6: Save this weekly leak check | Pick one fix today | Educational only, not financial advice',
-    ],
-    reasoning: 'A tight carousel works well for fast sequential fixes while keeping the output picture-only and saveable.',
-    targetAudience: 'Canadians who want practical money fixes without a full budgeting overhaul',
-    searchKeywords: ['money leaks', 'budgeting Canada', 'payday routine'],
-    contentPillar: 'Money behavior and budgeting',
-  },
-  {
-    topic: 'The Canadian Payday Order of Operations',
-    hook: 'Do this before your money disappears.',
-    format: 'CAROUSEL',
-    slideCount: 8,
-    slideBreakdown: [
-      'Slide 1: Do this before your money disappears | Payday needs a system | Not another motivation quote',
-      'Slide 2: Step 1: Protect fixed bills | Rent, insurance, utilities, minimum payments | Remove the stress first',
-      'Slide 3: Step 2: Set emergency cash aside | Small buffer first | Bigger reserve after high-interest debt is controlled',
-      'Slide 4: Step 3: Attack expensive debt | High interest changes the math | Paying it down can be a guaranteed improvement',
-      'Slide 5: Step 4: Fund goal accounts | Match the account to the timeline | TFSA, RRSP, FHSA each have a job',
-      'Slide 6: Step 5: Spend what is left | Guilt-free spending works best after priorities | Not before',
-      'Slide 7: The simple rule | Automate the important parts | Make discipline less necessary',
-      'Slide 8: Save this payday checklist | Use it every payday | Adjust numbers to your situation | Educational only',
-    ],
-    reasoning: 'Checklist content gets saves because it becomes a repeatable tool.',
-    targetAudience: 'Canadian workers building a monthly money routine',
-    searchKeywords: ['payday routine', 'budget checklist', 'Canadian personal finance'],
-    contentPillar: 'Canadian money systems explained',
   },
   {
     topic: 'Credit Score Myths Canadians Still Believe',
@@ -315,49 +245,9 @@ const fallbackStrategies: StrategyDecision[] = [
     contentPillar: 'Saving and investing timeline',
   },
   {
-    topic: 'Canada/US Stock Watchlist: The 6-Point Research Screen',
-    hook: 'A watchlist is not a buy list.',
-    format: 'WATCHLIST_EDUCATION',
-    slideCount: 8,
-    slideBreakdown: [
-      'Slide 1: A watchlist is not a buy list | Use it to organize research | Not to chase a ticker',
-      'Slide 2: Screen 1: Business quality | What does the company actually sell? | Is demand durable or cyclical?',
-      'Slide 3: Screen 2: Numbers trend | Revenue, margins, cash flow | Look for direction, not one perfect metric',
-      'Slide 4: Screen 3: Balance sheet risk | Debt, cash, refinancing needs | Rates can change the story',
-      'Slide 5: Screen 4: Valuation context | Compare price to expectations | Great businesses can still be expensive',
-      'Slide 6: Screen 5: Catalyst map | Earnings, regulation, product cycles | Know what could change the thesis',
-      'Slide 7: Screen 6: Portfolio fit | Sector exposure and position size | One ticker should not become the whole plan',
-      'Slide 8: Save this research screen | Research first | Decide later | Educational only, not financial advice',
-    ],
-    reasoning: 'Provides stock-pick energy without giving buy/sell recommendations.',
-    targetAudience: 'Canadian and US stock-curious beginners who need a safer research process',
-    searchKeywords: ['Canada US stock watchlist', 'stock research checklist', 'how to research stocks'],
-    contentPillar: 'Canadian/US market watchlist education',
-  },
-  {
-    topic: 'Earnings Season Cheat Sheet: What Beginners Should Check First',
-    hook: 'Do not read earnings like a headline.',
-    format: 'CAROUSEL',
-    slideCount: 7,
-    slideBreakdown: [
-      'Slide 1: Do not read earnings like a headline | One beat or miss is not the full story | Start with the business trend',
-      'Slide 2: Check revenue quality | Is growth broad or one-time? | Compare the reason, not just the number',
-      'Slide 3: Check margins | Costs can hide under growth | Profit quality matters',
-      'Slide 4: Check cash flow | Accounting profit is not always cash | Watch what funds the business',
-      'Slide 5: Check guidance | Management expectations reset the story | The market reacts to the future',
-      'Slide 6: Check valuation reaction | Good news can be priced in | Bad news can already be expected',
-      'Slide 7: Save before earnings season | Learn the pattern | Avoid headline trades | Educational only',
-    ],
-    reasoning: 'Timely market literacy that helps followers handle popular stock news responsibly.',
-    targetAudience: 'Beginner investors learning how public companies report results',
-    searchKeywords: ['earnings report explained', 'stock earnings checklist', 'beginner investing'],
-    contentPillar: 'Market literacy',
-  },
-  {
     topic: 'Finfluencer Red Flags: 7 Phrases Investors Should Pause On',
     hook: 'Good finance content does not need pressure.',
     format: 'CAROUSEL',
-    
     slideCount: 7,
     slideBreakdown: [
       'Slide 1: Good finance content does not need pressure | Pause when advice sounds too certain | Risk deserves daylight',
@@ -377,7 +267,6 @@ const fallbackStrategies: StrategyDecision[] = [
     topic: 'Why the First $100K Feels So Slow for Canadian Investors',
     hook: 'The first $100K feels slow.',
     format: 'CAROUSEL',
-    
     slideCount: 7,
     slideBreakdown: [
       'Slide 1: The first $100K feels slow | Early wealth is mostly built by habits | The acceleration comes later',
@@ -393,35 +282,12 @@ const fallbackStrategies: StrategyDecision[] = [
     searchKeywords: ['first 100k investing', 'compound growth Canada', 'beginner investing Canada'],
     contentPillar: 'Canadian investing behavior',
   },
-  {
-    topic: 'The 10-Minute Portfolio Check Before Adding More Money',
-    hook: 'Check this before adding money.',
-    format: 'WATCHLIST_EDUCATION',
-    
-    slideCount: 8,
-    slideBreakdown: [
-      'Slide 1: Check this before adding money | A portfolio needs a quick inspection | More money is not always the fix',
-      'Slide 2: Check 1: Cash buffer | Investing feels easier when bills are protected | Do not invest emergency money',
-      'Slide 3: Check 2: Concentration | One position can quietly dominate risk | Know your biggest exposure',
-      'Slide 4: Check 3: Fees | Small costs compound too | Compare products before adding more',
-      'Slide 5: Check 4: Account fit | TFSA, RRSP, FHSA, taxable | Use the account that matches the goal',
-      'Slide 6: Check 5: Rebalancing | Winners can change your risk | Your mix may drift over time',
-      'Slide 7: Check 6: Thesis | Why are you adding money now? | A headline is not a plan',
-      'Slide 8: Save this portfolio check | Review risk first | Add money second | Educational only, not financial advice',
-    ],
-    reasoning: 'A quick diagnostic format is saveable and gives stock-curious followers a compliant action framework.',
-    targetAudience: 'Canadian investors who want structure before adding money to a portfolio',
-    searchKeywords: ['portfolio check', 'investing checklist', 'risk management'],
-    contentPillar: 'Risk management',
-  },
 ];
 
-function getRotatingFallbackStrategy(
-  trends: TrendResearchResult,
-  contentHistory: ContentHistoryEntry[] = []
-): StrategyDecision {
+function getRotatingFallbackStrategy(input: ContentStrategyInput): StrategyDecision {
+  const contentHistory = input.contentHistory ?? [];
   const dayIndex = Math.floor(Date.now() / 86_400_000) % fallbackStrategies.length;
-  const topTopic = [...trends.topics]
+  const topTopic = [...input.trends.topics]
     .sort((a, b) => (b.score - noveltyPenalty(b.title, contentHistory)) - (a.score - noveltyPenalty(a.title, contentHistory)))
     .find((topic) => !isTooSimilarToRecent(topic.title, contentHistory));
   const matchedStrategy = topTopic
@@ -432,32 +298,27 @@ function getRotatingFallbackStrategy(
     || eligibleFallbacks[dayIndex % Math.max(eligibleFallbacks.length, 1)]
     || fallbackStrategies[dayIndex];
 
-  if (!topTopic) return strategy;
-  return {
+  const base: StrategyDecision = topTopic ? {
     ...strategy,
     searchKeywords: topTopic.searchKeywords?.length ? topTopic.searchKeywords : strategy.searchKeywords,
     contentPillar: topTopic.contentPillar || strategy.contentPillar,
-  };
+  } : strategy;
+
+  return enrichWithSlotDecisions(base, input);
 }
 
-function normalizeStrategy(
-  strategy: StrategyDecision,
-  trends: TrendResearchResult,
-  contentHistory: ContentHistoryEntry[],
-): StrategyDecision {
+function normalizeStrategy(strategy: StrategyDecision, input: ContentStrategyInput): StrategyDecision {
   const validFormats: StrategyDecision['format'][] = ['CAROUSEL', 'SINGLE_IMAGE', 'WATCHLIST_EDUCATION'];
   if (!validFormats.includes(strategy.format)) {
-    return getRotatingFallbackStrategy(trends, contentHistory);
+    return getRotatingFallbackStrategy(input);
   }
 
-
-
   if (strategy.slideCount < 1 || strategy.slideCount > 9 || strategy.slideBreakdown.length !== strategy.slideCount) {
-    return getRotatingFallbackStrategy(trends, contentHistory);
+    return getRotatingFallbackStrategy(input);
   }
 
   if (containsBlockedRecommendationLanguage(strategy)) {
-    const safeFallback = getRotatingFallbackStrategy(trends, contentHistory);
+    const safeFallback = getRotatingFallbackStrategy(input);
     return {
       ...safeFallback,
       reasoning: `${safeFallback.reasoning} Chosen because the model-selected topic used buy/sell recommendation language.`,
@@ -465,35 +326,114 @@ function normalizeStrategy(
   }
 
   if (containsBlockedMarketHypeLanguage(strategy)) {
-    const safeFallback = getRotatingFallbackStrategy(trends, contentHistory);
+    const safeFallback = getRotatingFallbackStrategy(input);
     return {
       ...safeFallback,
       reasoning: `${safeFallback.reasoning} Chosen because the model-selected topic used hype language or an unsafe exact-performance claim.`,
     };
   }
 
-  if (isTooSimilarToRecent(strategy.topic, contentHistory)) {
-    const freshFallback = getRotatingFallbackStrategy(trends, contentHistory);
+  if (isTooSimilarToRecent(strategy.topic, input.contentHistory ?? [])) {
+    const freshFallback = getRotatingFallbackStrategy(input);
     return {
       ...freshFallback,
       reasoning: `${freshFallback.reasoning} Chosen because the model-selected topic was too similar to recent content.`,
     };
   }
 
+  const enriched = enrichWithSlotDecisions(
+    {
+      ...strategy,
+      slideBreakdown: strategy.slideBreakdown.map((slide, index) => (
+        slide.toLowerCase().startsWith(`slide ${index + 1}:`) ? slide : `Slide ${index + 1}: ${slide}`
+      )),
+    },
+    input,
+  );
+
+  const gate = new HookQualityGate();
+  const slotPreferred = input.slot?.preferredHookFormulas ?? [];
+  const gateResult = gate.check({
+    hook: enriched.hook,
+    slideBreakdown: enriched.slideBreakdown,
+    hookFormulaId: enriched.hookFormulaId,
+    slotPreferredFormulas: slotPreferred,
+  });
+
+  if (!gateResult.valid) {
+    console.warn(`[ContentStrategyAgent] HookQualityGate failed: ${gateResult.failures.join('; ')}. Using deterministic fallback formula.`);
+    const replacement = gateResult.suggestedReplacementFormulaId
+      ?? getDeterministicFallbackHookFormula(slotPreferred, Math.floor(Date.now() / 86_400_000));
+    return { ...enriched, hookFormulaId: replacement };
+  }
+
+  return enriched;
+}
+
+function enrichWithSlotDecisions(strategy: StrategyDecision, input: ContentStrategyInput): StrategyDecision {
+  const dayOfYear = Math.floor(Date.now() / 86_400_000);
+
+  const VALID_TOPIC_CATEGORIES: TopicCategory[] = ['EARNINGS', 'MACRO', 'POLICY', 'TAX_ACCT', 'CRYPTO', 'COMMODITY', 'HOUSING', 'BEHAVIORAL', 'HOW_TO', 'CAP_TABLE'];
+  const topicCategory = parseEnumOrInfer(strategy.topicCategory, VALID_TOPIC_CATEGORIES) ?? inferTopicCategoryFrom(strategy);
+
+  let hookFormulaId: HookFormulaId | undefined = isHookFormulaId(strategy.hookFormulaId) ? strategy.hookFormulaId : undefined;
+  if (!hookFormulaId) {
+    hookFormulaId = input.slot
+      ? getDeterministicFallbackHookFormula(input.slot.preferredHookFormulas, dayOfYear)
+      : 'RECEIPT_DROP';
+  }
+
+  let ctaId: CtaId;
+  if (input.slot) {
+    ctaId = selectCta({
+      slotIndex: input.slot.index,
+      preferredCtas: input.slot.preferredCtas,
+      recentCtasUsed: input.recentCtasUsed ?? [],
+      feedback: input.ctaFeedback,
+      dmAutomationEnabled: process.env.DM_AUTOMATION_ENABLED === 'true',
+      storyAutomationEnabled: process.env.STORY_AUTOMATION_ENABLED === 'true',
+      hasPayoffSlide: true,
+    });
+  } else {
+    ctaId = 'save_specific';
+  }
+
+  let payoffSlideIndex: number | undefined;
+  if (ctaId === 'swipe_promise') {
+    payoffSlideIndex = Math.max(3, Math.floor(strategy.slideCount / 2) + 1);
+  }
+
+  const angleId: AngleId | undefined = input.preferredAngleId;
+
+  void CTA_LIBRARY;
+
   return {
     ...strategy,
-    slideBreakdown: strategy.slideBreakdown.map((slide, index) => (
-      slide.toLowerCase().startsWith(`slide ${index + 1}:`) ? slide : `Slide ${index + 1}: ${slide}`
-    )),
+    hookFormulaId,
+    ctaId,
+    topicCategory,
+    angleId,
+    payoffSlideIndex,
   };
+}
+
+function inferTopicCategoryFrom(strategy: StrategyDecision): TopicCategory {
+  const text = `${strategy.topic} ${strategy.hook} ${strategy.searchKeywords.join(' ')}`.toLowerCase();
+  if (/earnings|eps|revenue|guidance|quarter/.test(text)) return 'EARNINGS';
+  if (/fed|rate|inflation|macro|recession|gdp/.test(text)) return 'MACRO';
+  if (/policy|tariff|trump|trudeau|government|election/.test(text)) return 'POLICY';
+  if (/tfsa|rrsp|fhsa|tax|account|cra/.test(text)) return 'TAX_ACCT';
+  if (/crypto|bitcoin|btc|eth|ethereum|coin/.test(text)) return 'CRYPTO';
+  if (/oil|gold|copper|commodity|natural gas/.test(text)) return 'COMMODITY';
+  if (/housing|mortgage|home|rent|real estate/.test(text)) return 'HOUSING';
+  if (/13f|holdings|portfolio|insider|cap table|owns/.test(text)) return 'CAP_TABLE';
+  if (/checklist|framework|guide|how to|steps/.test(text)) return 'HOW_TO';
+  return 'BEHAVIORAL';
 }
 
 function containsBlockedMarketHypeLanguage(strategy: StrategyDecision): boolean {
   const text = [
-    strategy.topic,
-    strategy.hook,
-    strategy.reasoning,
-    ...strategy.slideBreakdown,
+    strategy.topic, strategy.hook, strategy.reasoning, ...strategy.slideBreakdown,
   ].join('\n');
 
   return (
@@ -504,24 +444,17 @@ function containsBlockedMarketHypeLanguage(strategy: StrategyDecision): boolean 
 }
 
 function hasExtremeOneDayPerformanceClaim(text: string): boolean {
-  if (/if you invested|years ago|months ago/i.test(text)) {
-    return false;
-  }
-
+  if (/if you invested|years ago|months ago/i.test(text)) return false;
   const claims = [
     ...text.matchAll(/(?:1\s*day|1d|today)[^\n.%]{0,42}([+-]?\d+(?:,\d{3})*(?:\.\d+)?)%/gi),
     ...text.matchAll(/([+-]?\d+(?:,\d{3})*(?:\.\d+)?)%[^\n.]{0,42}(?:1\s*day|1d|today)/gi),
   ];
-
   return claims.some((claim) => Number(claim[1].replace(/,/g, '')) >= 250);
 }
 
 function containsBlockedRecommendationLanguage(strategy: StrategyDecision): boolean {
   const text = [
-    strategy.topic,
-    strategy.hook,
-    strategy.reasoning,
-    ...strategy.slideBreakdown,
+    strategy.topic, strategy.hook, strategy.reasoning, ...strategy.slideBreakdown,
   ].join('\n');
 
   return (

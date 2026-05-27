@@ -1,0 +1,4 @@
+{
+  "_comment": "Add 3-5 finance newsletter archive URLs that the viral-refresh workflow will scan weekly. The workflow is disabled by default; enable it in .github/workflows/viral-refresh.yml when ready.",
+  "sources": []
+}

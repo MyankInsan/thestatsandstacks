@@ -1,0 +1,23 @@
+name: Viral Examples Refresh (DISABLED)
+
+# Stub workflow — disabled by default. Enable by:
+#   1. Populate platform/data/newsletter-sources.json with 3-5 newsletter archive URLs.
+#   2. Uncomment the schedule block below.
+#   3. Implement the npm run viral-refresh script (not built today; future work).
+
+# on:
+#   schedule:
+#     - cron: '0 17 * * 1'  # Mondays 10am PT
+on:
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder
+        run: |
+          echo "Viral-refresh stub. To enable:"
+          echo "1. Populate platform/data/newsletter-sources.json."
+          echo "2. Build a Reddit + newsletter scraper that appends candidates to viral-candidates-staging.json."
+          echo "3. User manually promotes good candidates into viral-examples.json."

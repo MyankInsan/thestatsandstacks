@@ -1,15 +1,32 @@
-// platform/src/lib/agents/historyGuardAgent.ts
 import { BaseAgent } from './interfaces';
 import type { ContentHistoryEntry } from '../services/contentHistory';
+import type { SlotIndex } from './slotConfig';
+import type { ViralStyle } from './promptLibrary';
+import type { HookFormulaId } from './hookFormulas';
+import type { AngleId } from './topicAngleAgent';
+
+export interface MustAvoidSet {
+  visualStyles: ViralStyle[];
+  portraitSubjects: string[];
+  archetypes: string[];
+  hookFormulas: HookFormulaId[];
+  tickers: string[];
+  narrativeArcs: string[];
+  angles: AngleId[];
+  colorTriples: string[];
+}
 
 export interface HistoryGuardResult {
   block: boolean;
   conflictsWith?: string;
   conflictDate?: string;
   suggestedPivot?: string;
+  mustAvoid: MustAvoidSet;
+  warnings: string[];
 }
 
 const BLOCK_THRESHOLD = 0.52;
+const HARD_BLOCK_JACCARD = 0.72;
 const WINDOW_DAYS = 50;
 
 export class HistoryGuardAgent extends BaseAgent {
@@ -20,6 +37,8 @@ export class HistoryGuardAgent extends BaseAgent {
   async execute(input: {
     topic: string;
     contentHistory: ContentHistoryEntry[];
+    slotIndex?: SlotIndex;
+    todayDateKey?: string;
   }): Promise<HistoryGuardResult> {
     const cutoff = new Date();
     cutoff.setDate(cutoff.getDate() - WINDOW_DAYS);
@@ -27,22 +46,98 @@ export class HistoryGuardAgent extends BaseAgent {
       (e) => new Date(e.date) >= cutoff,
     );
 
+    const warnings: string[] = [];
+    const mustAvoid = computeMustAvoid(input.contentHistory, input.todayDateKey, warnings);
+
     const normalized = normalizeWords(input.topic);
     for (const entry of windowedHistory) {
       const entryNorm = normalizeWords(entry.topic);
       const topicSimilarity = jaccardSimilarity(normalized, entryNorm);
-      // Also compare against curated keywords for the entry — they capture core concepts more precisely
       const keywordSet = new Set((entry.keywords ?? []).map((k) => k.toLowerCase().trim()));
       const keywordSimilarity = jaccardSimilarity(normalized, keywordSet);
       const similarity = Math.max(topicSimilarity, keywordSimilarity);
+
+      if (similarity >= HARD_BLOCK_JACCARD) {
+        const pivot = buildPivotSuggestion(input.topic, entry.topic);
+        console.log(`[${this.name}] Hard block — "${input.topic}" too similar to "${entry.topic}" (score ${similarity.toFixed(2)}). Pivot: ${pivot}`);
+        return {
+          block: true,
+          conflictsWith: entry.topic,
+          conflictDate: entry.date,
+          suggestedPivot: pivot,
+          mustAvoid,
+          warnings,
+        };
+      }
       if (similarity >= BLOCK_THRESHOLD) {
         const pivot = buildPivotSuggestion(input.topic, entry.topic);
-        console.log(`[${this.name}] Blocked — "${input.topic}" too similar to "${entry.topic}" (score ${similarity.toFixed(2)}). Pivot: ${pivot}`);
-        return { block: true, conflictsWith: entry.topic, conflictDate: entry.date, suggestedPivot: pivot };
+        console.log(`[${this.name}] Soft block — "${input.topic}" similar to "${entry.topic}" (score ${similarity.toFixed(2)}). Pivot: ${pivot}`);
+        return {
+          block: true,
+          conflictsWith: entry.topic,
+          conflictDate: entry.date,
+          suggestedPivot: pivot,
+          mustAvoid,
+          warnings,
+        };
       }
     }
-    return { block: false };
+
+    return { block: false, mustAvoid, warnings };
   }
+}
+
+const MAX_EXCLUSION_RATIO = 0.6;
+
+function computeMustAvoid(
+  history: ContentHistoryEntry[],
+  _todayDateKey: string | undefined,
+  warnings: string[],
+): MustAvoidSet {
+  const last3 = history.slice(-3);
+  const last4 = history.slice(-4);
+  const last6 = history.slice(-6);
+  const last10 = history.slice(-10);
+  const last35 = history.slice(-35);
+
+  const visualStyles = unique(last6.flatMap((e) => (e.coverVisualStyle ? [e.coverVisualStyle] : []))) as ViralStyle[];
+  const portraitSubjects = unique(last10.flatMap((e) => e.portraitSubjects ?? []));
+  const archetypes = unique(last10.flatMap((e) => e.archetypesUsed ?? []));
+  const hookFormulas = unique(last3.flatMap((e) => (e.hookFormulaId ? [e.hookFormulaId] : []))) as HookFormulaId[];
+  const tickers = unique(last4.flatMap((e) => e.tickersFeatured ?? []));
+  const narrativeArcs = unique(last3.flatMap((e) => (e.narrativeArc ? [e.narrativeArc] : [])));
+  const colorTriples = unique(last4.flatMap((e) => (e.colorSchemeUsed ? [colorTripleKey(e.colorSchemeUsed)] : [])));
+
+  const reactiveCount = last35.filter((e) => e.angleId === 'REACTIVE_SENTIMENT').length;
+  const editorialCaricatureCount = history.slice(-5).filter((e) => e.coverVisualStyle === 'EDITORIAL_REACTION_CARICATURE').length;
+
+  const angles: AngleId[] = [];
+  if (reactiveCount >= 1) {
+    angles.push('REACTIVE_SENTIMENT');
+    warnings.push(`REACTIVE_SENTIMENT used ${reactiveCount}x in last 35 posts — capped at 1/7d.`);
+  }
+  if (editorialCaricatureCount >= 1) {
+    visualStyles.push('EDITORIAL_REACTION_CARICATURE');
+  }
+
+  return {
+    visualStyles,
+    portraitSubjects,
+    archetypes,
+    hookFormulas,
+    tickers,
+    narrativeArcs,
+    angles,
+    colorTriples,
+  };
+}
+
+function colorTripleKey(scheme: { bg: string; accent1: string; accent2: string }): string {
+  return `${scheme.bg}|${scheme.accent1}|${scheme.accent2}`;
+}
+
+function unique<T>(arr: T[]): T[] {
+  return Array.from(new Set(arr.filter(Boolean)));
 }
 
 function normalizeWords(text: string): Set<string> {
@@ -62,3 +157,5 @@ function jaccardSimilarity(a: Set<string>, b: Set<string>): number {
 function buildPivotSuggestion(topic: string, conflict: string): string {
   return `Try a different angle on this topic — for example, instead of comparing account types, focus on a single lesser-known rule or a case study. (Blocked by: "${conflict}")`;
 }
+
+void MAX_EXCLUSION_RATIO;

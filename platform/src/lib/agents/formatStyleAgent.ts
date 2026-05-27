@@ -1,6 +1,8 @@
 import { getGeminiClient, getGeminiTextModelName } from '../services/gemini';
 import type { ContentHistoryEntry } from '../services/contentHistory';
 import type { StrategyDecision } from './contentStrategyAgent';
+import type { SlotConfig } from './slotConfig';
+import { lruPick } from '../services/lruPicker';
 
 export type FormatType =
   | 'PHOTOREALISTIC_NEWS_FLASH'
@@ -10,11 +12,11 @@ export type FormatType =
   | 'PHOTOREALISTIC_MINIMAL_TECH';
 
 export const FORMAT_TYPES: FormatType[] = [
-  'PHOTOREALISTIC_NEWS_FLASH', 
-  'PHOTOREALISTIC_LUXURY_LIFESTYLE', 
-  'PHOTOREALISTIC_MARKET_UPDATE', 
+  'PHOTOREALISTIC_NEWS_FLASH',
+  'PHOTOREALISTIC_LUXURY_LIFESTYLE',
+  'PHOTOREALISTIC_MARKET_UPDATE',
   'PHOTOREALISTIC_EXPERT_SHOCK',
-  'PHOTOREALISTIC_MINIMAL_TECH'
+  'PHOTOREALISTIC_MINIMAL_TECH',
 ];
 
 export interface ColorScheme {
@@ -40,15 +42,17 @@ export const COLOR_SCHEMES: Record<FormatType, ColorScheme> = {
   PHOTOREALISTIC_MINIMAL_TECH:      { bg: '#F8F9FA', primaryText: '#111827', accent1: '#2563EB', accent2: '#4B5563' },
 };
 
-export class FormatStyleAgent {
-  async execute(input: {
-    strategy: StrategyDecision;
-    contentHistory: ContentHistoryEntry[];
-    tickerSymbols: string[];
-  }): Promise<FormatDecision> {
-    const dayOfYear = Math.floor(Date.now() / 86400000);
-    const assignedFormat = FORMAT_TYPES[dayOfYear % 5];
+export interface FormatStyleInput {
+  strategy: StrategyDecision;
+  contentHistory: ContentHistoryEntry[];
+  tickerSymbols: string[];
+  slot?: SlotConfig;
+  todayPriorEntries?: ContentHistoryEntry[];
+}
 
+export class FormatStyleAgent {
+  async execute(input: FormatStyleInput): Promise<FormatDecision> {
+    const assignedFormat = pickFormat(input);
     const prompt = buildPrompt(input.strategy, assignedFormat, input.tickerSymbols);
 
     try {
@@ -56,10 +60,7 @@ export class FormatStyleAgent {
       const model = genAI.getGenerativeModel({ model: getGeminiTextModelName() });
       const result = await model.generateContent(prompt);
       const text = result.response.text().replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      const parsed = JSON.parse(text) as {
-        visualTone: string;
-        reasoning: string;
-      };
+      const parsed = JSON.parse(text) as { visualTone: string; reasoning: string };
 
       return {
         formatType: assignedFormat,
@@ -74,20 +75,41 @@ export class FormatStyleAgent {
   }
 }
 
+function pickFormat(input: FormatStyleInput): FormatType {
+  const todayUsedFormats = (input.todayPriorEntries ?? [])
+    .map((e) => e.formatType as FormatType)
+    .filter((f): f is FormatType => FORMAT_TYPES.includes(f));
+
+  let candidates: FormatType[];
+  if (input.slot) {
+    candidates = input.slot.allowedFormats.filter((f) => !todayUsedFormats.includes(f));
+    if (candidates.length === 0) candidates = input.slot.allowedFormats;
+  } else {
+    candidates = FORMAT_TYPES.filter((f) => !todayUsedFormats.includes(f));
+    if (candidates.length === 0) candidates = [...FORMAT_TYPES];
+  }
+
+  const recentCovers = input.contentHistory
+    .slice(-10)
+    .map((e) => e.formatType as FormatType)
+    .filter((f): f is FormatType => FORMAT_TYPES.includes(f));
+
+  const picked = lruPick(candidates, recentCovers, 20);
+  return picked ?? candidates[0] ?? FORMAT_TYPES[0];
+}
+
 function buildPrompt(strategy: StrategyDecision, assignedFormat: string, tickers: string[]): string {
-  return `You are a viral finance Instagram content strategist. We are using a strictly rotating daily visual format.
+  return `You are a viral finance Instagram content strategist. We are using a slot-aware visual format selection.
 
 TODAY'S TOPIC: ${strategy.topic}
 HOOK: ${strategy.hook}
 TICKERS IN NEWS: ${tickers.join(', ') || 'none'}
 
-MANDATORY FORMAT FOR TODAY: ${assignedFormat}
-(Do not change this format. Just return it in your thought process).
-
-SLIDE COUNT: 6 (simple), 7-8 (multi-angle story), 9 (deep educational only)
+ASSIGNED FORMAT FOR THIS SLOT: ${assignedFormat}
+(Do not change this. Just return the visual tone and reasoning.)
 
 Return ONLY valid JSON, no markdown fences:
-{"visualTone":"urgent, hyper-realistic, breaking news","reasoning":"Trump news requires a dramatic photorealistic news flash format."}`;
+{"visualTone":"urgent, hyper-realistic, breaking news","reasoning":"NVDA earnings news warrants dramatic photorealistic news flash."}`;
 }
 
 function buildFallback(assignedFormat: FormatType, strategy: StrategyDecision): FormatDecision {

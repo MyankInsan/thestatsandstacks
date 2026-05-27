@@ -9,7 +9,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test __tests__/*.test.ts",
-    "daily": "tsx run-daily.ts"
+    "daily": "tsx run-daily.ts",
+    "migrate-history": "tsx scripts/migrate-history.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

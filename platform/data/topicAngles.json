@@ -1,0 +1,178 @@
+{
+  "_comment": "TopicAngle inventory — angle-led content templates beyond plain news+education. Each angle has a titlePattern, dataSource hint, slide skeleton, compliance footer, freshness TTL in days, optional eventTrigger (for manual-only angles).",
+  "angles": [
+    {
+      "id": "CAP_TABLE_INSTITUTIONAL",
+      "titlePattern": "Who actually owns {MegaCap}?",
+      "dataSourceHint": "SEC EDGAR 13F + DEF 14A; for Canadian companies use SEDAR+",
+      "slideSkeleton": ["cover: who owns it", "top 5 institutions with weights", "founder/insider stake", "what changed last quarter", "context: what concentration means", "cta"],
+      "complianceFooter": "Holdings shown as publicly disclosed. Educational, not a recommendation.",
+      "dataFreshnessTtlDays": 90,
+      "topicCategory": "CAP_TABLE"
+    },
+    {
+      "id": "F13_DELTA",
+      "titlePattern": "What {Investor} bought/sold last quarter",
+      "dataSourceHint": "SEC EDGAR 13F filings; Whalewisdom-style public summaries via web search",
+      "slideSkeleton": ["cover: investor + quarter", "biggest new buys", "biggest sells", "why it might matter", "what to watch next", "cta"],
+      "complianceFooter": "13F filings show holdings 45 days after quarter end. Educational, not a recommendation.",
+      "dataFreshnessTtlDays": 90,
+      "topicCategory": "CAP_TABLE"
+    },
+    {
+      "id": "SOVEREIGN_WEALTH",
+      "titlePattern": "What Norway's $1.7T fund owns in Canada",
+      "dataSourceHint": "Norges Bank Investment Management annual holdings CSV (public)",
+      "slideSkeleton": ["cover: scale of the fund", "top Canadian holdings", "sector mix", "vs CPPIB peer comparison", "what it tells Canadian investors", "cta"],
+      "complianceFooter": "Holdings as publicly disclosed. Educational, not a recommendation.",
+      "dataFreshnessTtlDays": 365,
+      "topicCategory": "CAP_TABLE"
+    },
+    {
+      "id": "US_GOV_HOLDINGS",
+      "titlePattern": "Stocks the US government effectively holds via {TSP/CalPERS}",
+      "dataSourceHint": "Public TSP fund factsheets; CalPERS annual investment reports",
+      "slideSkeleton": ["cover: hidden gov-pension exposure", "top equity holdings via TSP/CalPERS", "sector mix", "scale comparison", "what it implies for retail investors", "cta"],
+      "complianceFooter": "Holdings as publicly disclosed. Educational, not a recommendation.",
+      "dataFreshnessTtlDays": 180,
+      "topicCategory": "CAP_TABLE"
+    },
+    {
+      "id": "POLITICIAN_DISCLOSURES",
+      "titlePattern": "What {Senator} disclosed this month",
+      "dataSourceHint": "house.gov / senate.gov financial disclosure portals (STOCK Act, no auth)",
+      "slideSkeleton": ["cover: who + filing date", "recent trades", "biggest position", "timing notes", "what to watch", "cta"],
+      "complianceFooter": "Disclosures shown as publicly filed under the STOCK Act. Educational, not a recommendation.",
+      "dataFreshnessTtlDays": 14,
+      "topicCategory": "CAP_TABLE"
+    },
+    {
+      "id": "INSIDER_CLUSTERS",
+      "titlePattern": "5 insider buys worth watching",
+      "dataSourceHint": "SEC Form 4 RSS feed (no auth, public)",
+      "slideSkeleton": ["cover: insider buying signal", "5 recent buys", "context: why insider buys matter", "what to research", "limits of the signal", "cta"],
+      "complianceFooter": "Form 4 filings shown as publicly disclosed. Insider activity is one data point, not a recommendation.",
+      "dataFreshnessTtlDays": 7,
+      "topicCategory": "CAP_TABLE"
+    },
+    {
+      "id": "FOUNDER_CONCENTRATION",
+      "titlePattern": "How much of {Co} does the founder still own?",
+      "dataSourceHint": "SEC DEF 14A proxy filings",
+      "slideSkeleton": ["cover: surprising number", "founder's stake today", "how it changed over 5 years", "comparison to peers", "what concentration risk means", "cta"],
+      "complianceFooter": "Stakes shown as publicly disclosed. Educational, not a recommendation.",
+      "dataFreshnessTtlDays": 365,
+      "topicCategory": "CAP_TABLE"
+    },
+    {
+      "id": "CANADIAN_PENSION",
+      "titlePattern": "What CPPIB and CDPQ actually own publicly",
+      "dataSourceHint": "CPPIB / CDPQ annual reports (PDF, public)",
+      "slideSkeleton": ["cover: how big they are", "top equity exposures", "Canadian vs global mix", "long-term return profile", "implication for retail investors", "cta"],
+      "complianceFooter": "Holdings as publicly disclosed in annual reports. Educational.",
+      "dataFreshnessTtlDays": 365,
+      "topicCategory": "CAP_TABLE"
+    },
+    {
+      "id": "INDEX_REBALANCE",
+      "titlePattern": "Stocks being added/removed from {S&P/TSX}",
+      "dataSourceHint": "S&P DJI press releases; TMX announcements",
+      "slideSkeleton": ["cover: what's changing", "added names", "removed names", "why it matters (passive flow)", "what to watch", "cta"],
+      "complianceFooter": "Index changes shown as publicly announced. Educational.",
+      "dataFreshnessTtlDays": 90,
+      "topicCategory": "MACRO"
+    },
+    {
+      "id": "BUYBACK_SCOREBOARD",
+      "titlePattern": "Companies retiring the most shares this year",
+      "dataSourceHint": "Quarterly press releases + Yahoo Finance financials",
+      "slideSkeleton": ["cover: buyback leaders", "top 5 by dollars", "top 5 by % of float", "what buybacks signal (and don't)", "what to research", "cta"],
+      "complianceFooter": "Educational only — buybacks are not a buy signal in themselves.",
+      "dataFreshnessTtlDays": 90,
+      "topicCategory": "EARNINGS"
+    },
+    {
+      "id": "DIVIDEND_KINGS",
+      "titlePattern": "TSX dividend aristocrats: the 25-year list",
+      "dataSourceHint": "S&P Dividend Aristocrats index methodology + constituent list",
+      "slideSkeleton": ["cover: who qualifies", "criteria", "top 5 by yield", "top 5 by growth", "what aristocrat status guarantees (and doesn't)", "cta"],
+      "complianceFooter": "Educational only. Past dividend history doesn't guarantee future payments.",
+      "dataFreshnessTtlDays": 180,
+      "topicCategory": "BEHAVIORAL"
+    },
+    {
+      "id": "SECTOR_CAP_TABLE",
+      "titlePattern": "Who owns Canadian banks?",
+      "dataSourceHint": "SEDAR+ + bank annual reports + institutional 13Fs",
+      "slideSkeleton": ["cover: the surprise", "top institutional holders across the Big 5", "Canadian vs foreign split", "insider ownership", "what it tells you", "cta"],
+      "complianceFooter": "Holdings as publicly disclosed. Educational.",
+      "dataFreshnessTtlDays": 90,
+      "topicCategory": "CAP_TABLE"
+    },
+    {
+      "id": "ETF_XRAY",
+      "titlePattern": "What's actually inside {XEQT/VFV/etc}",
+      "dataSourceHint": "ETF issuer holdings pages (Vanguard / iShares / BMO)",
+      "slideSkeleton": ["cover: ETF name + scale", "top 10 holdings", "sector mix", "geographic mix", "MER + tracking quality", "cta"],
+      "complianceFooter": "Holdings as publicly disclosed by issuer. Educational, not a recommendation.",
+      "dataFreshnessTtlDays": 60,
+      "topicCategory": "HOW_TO"
+    },
+    {
+      "id": "HYPOTHETICAL_REVERSAL",
+      "titlePattern": "If you had skipped {hyped stock} and bought the index",
+      "dataSourceHint": "Yahoo Finance historical prices",
+      "slideSkeleton": ["cover: the alternate history", "the hyped stock's actual path", "the index's actual path", "what $10k turned into in each", "the lesson", "cta"],
+      "complianceFooter": "Hypothetical scenario for educational purposes only.",
+      "dataFreshnessTtlDays": 30,
+      "topicCategory": "BEHAVIORAL"
+    },
+    {
+      "id": "COMPARISON_LADDER",
+      "titlePattern": "{A} vs {B} in {year}: the real winner",
+      "dataSourceHint": "Issuer factsheets / Yahoo Finance",
+      "slideSkeleton": ["cover: the matchup", "criterion 1", "criterion 2", "criterion 3", "the winner under each lens", "cta"],
+      "complianceFooter": "Educational comparison only, not a recommendation.",
+      "dataFreshnessTtlDays": 30,
+      "topicCategory": "HOW_TO"
+    },
+    {
+      "id": "FEE_TEARDOWN",
+      "titlePattern": "How a 1% MER actually compounds over 30 years",
+      "dataSourceHint": "Math + standard return assumptions; no live data needed",
+      "slideSkeleton": ["cover: the surprise", "the math", "$100k example", "how to check your own MER", "Canadian-specific fee context", "cta"],
+      "complianceFooter": "Illustrative math, not investment advice.",
+      "dataFreshnessTtlDays": 365,
+      "topicCategory": "TAX_ACCT"
+    },
+    {
+      "id": "TAX_DRAG_MAP",
+      "titlePattern": "Same ETF, three accounts. Look what you keep",
+      "dataSourceHint": "CRA tax tables + standard distribution assumptions",
+      "slideSkeleton": ["cover: same ETF different result", "in a TFSA", "in an RRSP", "in a non-registered account", "the takeaway", "cta"],
+      "complianceFooter": "Illustrative tax scenarios. Consult a tax professional for personal advice.",
+      "dataFreshnessTtlDays": 365,
+      "topicCategory": "TAX_ACCT"
+    },
+    {
+      "id": "BEHAVIORAL_RECEIPT",
+      "titlePattern": "Average investor return vs the index they held",
+      "dataSourceHint": "DALBAR-style behavior gap research (cite source)",
+      "slideSkeleton": ["cover: the gap", "what DALBAR found", "the mechanics", "how to close the gap", "Canadian context", "cta"],
+      "complianceFooter": "Cited from public behavioral-finance research. Educational only.",
+      "dataFreshnessTtlDays": 180,
+      "topicCategory": "BEHAVIORAL"
+    },
+    {
+      "id": "REACTIVE_SENTIMENT",
+      "titlePattern": "{Event} just happened. Here is the playbook",
+      "dataSourceHint": "Manual trigger via FORCE_ANGLE env; uses current research signals",
+      "slideSkeleton": ["cover: the event", "what just changed", "what didn't change", "what the playbook calls for", "what to avoid", "cta"],
+      "complianceFooter": "Educational reaction to public news. Not a recommendation.",
+      "dataFreshnessTtlDays": 1,
+      "topicCategory": "MACRO",
+      "manualTriggerOnly": true,
+      "preferredVisualStyle": "EDITORIAL_REACTION_CARICATURE"
+    }
+  ]
+}
