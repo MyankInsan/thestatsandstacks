@@ -525,6 +525,69 @@
         "accent1": "#FFD700",
         "accent2": "#FFFFFF"
       }
+    },
+    {
+      "date": "2026-05-28",
+      "topic": "5 Money Leaks Quietly Keeping Canadians Broke",
+      "hook": "These small leaks do the most damage.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 7,
+      "keywords": [
+        "SMCI stock",
+        "Super Micro Computer stock",
+        "AI hardware investing",
+        "stock risk checklist",
+        "market catalyst explained"
+      ],
+      "visualSignature": "2026-05-28-26591214964",
+      "schemaVersion": 2,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-05-28T17:34:56.521Z",
+      "tickersFeatured": [
+        "CVS",
+        "LLY",
+        "BBY",
+        "KSS",
+        "JPM",
+        "BA",
+        "LULU",
+        "ANF",
+        "FL",
+        "DKS",
+        "AZO",
+        "AAL",
+        "SAVE",
+        "WMT",
+        "DIS",
+        "IMAX",
+        "STLA",
+        "AVB",
+        "EQR"
+      ],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "ANTI_FOMO",
+      "ctaId": "follow_authority",
+      "angleId": "INDEX_REBALANCE",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "MAGAZINE_COVER",
+        "CROWD_PANIC",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "TICKER_TAPE_HERO",
+        "MINIMALIST_CHECKLIST",
+        "COMPARISON_TABLE",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "MAGAZINE_COVER",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#39FF14",
+        "accent2": "#00CFFF"
+      }
     }
   ]
 }
