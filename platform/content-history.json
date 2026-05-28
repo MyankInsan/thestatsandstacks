@@ -588,6 +588,68 @@
         "accent1": "#39FF14",
         "accent2": "#00CFFF"
       }
+    },
+    {
+      "date": "2026-05-28",
+      "topic": "Who actually owns APP?",
+      "hook": "Who actually owns APP?",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 5,
+      "keywords": [
+        "AppLovin ownership",
+        "APP stock cap table",
+        "institutional investing Canada",
+        "stock ownership breakdown"
+      ],
+      "visualSignature": "2026-05-28-26597508232",
+      "schemaVersion": 2,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-05-28T19:35:46.714Z",
+      "tickersFeatured": [
+        "CVS",
+        "LLY",
+        "BBY",
+        "KSS",
+        "JPM",
+        "BA",
+        "LULU",
+        "ANF",
+        "FL",
+        "DKS",
+        "AZO",
+        "AAL",
+        "SAVE",
+        "DIS",
+        "AVB",
+        "EQR",
+        "IMAX",
+        "STLA",
+        "WMT"
+      ],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "CAP_TABLE",
+      "ctaId": "share_use_case",
+      "angleId": "F13_DELTA",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "TRADING_DESK_OVERLAY",
+        "POP_CULTURE_PORTRAIT",
+        "PORTFOLIO_DOUGHNUT_PORTRAIT",
+        "CAP_TABLE_GRID",
+        "VAULT_SECURITY"
+      ],
+      "coverVisualStyle": "TRADING_DESK_OVERLAY",
+      "portraitSubjects": [
+        "tim_cook"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
+      }
     }
   ]
 }
