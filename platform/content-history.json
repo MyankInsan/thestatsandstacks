@@ -650,6 +650,75 @@
         "accent1": "#FF3B30",
         "accent2": "#39FF14"
       }
+    },
+    {
+      "date": "2026-05-28",
+      "topic": "What's actually inside XEQT/VFV/etc",
+      "hook": "XEQT vs VFV in 2026: the real winner",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "XEQT vs VFV",
+        "Canadian Couch Potato",
+        "Vanguard S&P 500 Canada",
+        "iShares Core Equity ETF",
+        "Canadian ETF portfolio"
+      ],
+      "visualSignature": "2026-05-28-26604774259",
+      "schemaVersion": 2,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-05-28T22:01:34.486Z",
+      "tickersFeatured": [
+        "DIS",
+        "COST",
+        "GPS",
+        "AEO",
+        "CVS",
+        "LLY",
+        "BBY",
+        "PARA",
+        "KSS",
+        "JPM",
+        "BA",
+        "LULU",
+        "ANF",
+        "FL",
+        "DKS",
+        "AZO",
+        "AAL",
+        "SAVE",
+        "WMT",
+        "DIS",
+        "IMAX",
+        "STLA",
+        "AVB",
+        "EQR"
+      ],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "COMPARISON_LADDER",
+      "ctaId": "reference_save",
+      "angleId": "FEE_TEARDOWN",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "ARCHITECTURAL_OVERLAY",
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "HEATMAP_GRID",
+        "POSITION_CONCENTRATION_TREEMAP",
+        "GLOWING_QUOTE",
+        "NEON_TERMINAL"
+      ],
+      "coverVisualStyle": "ARCHITECTURAL_OVERLAY",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "millennial_dad_with_laptop"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F8F9FA",
+        "primaryText": "#111827",
+        "accent1": "#2563EB",
+        "accent2": "#4B5563"
+      }
     }
   ]
 }
