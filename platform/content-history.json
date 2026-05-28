@@ -399,6 +399,67 @@
         "accent1": "#2563EB",
         "accent2": "#4B5563"
       }
+    },
+    {
+      "date": "2026-05-27",
+      "topic": "If you had skipped Western Digital and bought the index",
+      "hook": "If you'd skipped WDC and bought the index",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "WDC stock",
+        "index investing Canada",
+        "cyclical stock risks",
+        "portfolio asset allocation",
+        "Western Digital performance"
+      ],
+      "visualSignature": "2026-05-27-26548742155",
+      "schemaVersion": 2,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-05-28T01:21:29.249Z",
+      "tickersFeatured": [
+        "BA",
+        "LULU",
+        "ANF",
+        "FL",
+        "DKS",
+        "AZO",
+        "AAL",
+        "SAVE",
+        "DIS",
+        "AVB",
+        "EQR",
+        "IMAX",
+        "STLA",
+        "WMT",
+        "LLY",
+        "TGT"
+      ],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "REVERSE_SURVIVORSHIP",
+      "ctaId": "question_open",
+      "angleId": "BEHAVIORAL_RECEIPT",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "CARICATURE_PORTRAIT",
+        "LEADER_LOGO_CUTOUTS",
+        "CARICATURE_PORTRAIT",
+        "EXECUTIVE_LINEUP",
+        "LEADER_LOGO_CUTOUTS",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "CARICATURE_PORTRAIT",
+      "portraitSubjects": [
+        "ray_dalio"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      }
     }
   ]
 }
