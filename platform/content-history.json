@@ -460,6 +460,71 @@
         "accent1": "#FF3B30",
         "accent2": "#FFD700"
       }
+    },
+    {
+      "date": "2026-05-27",
+      "topic": "What $10k in Rocket Lab (RKLB) 5 years ago looks like",
+      "hook": "What $10k in RKLB 5 years ago looks like",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 6,
+      "keywords": [
+        "RKLB historical return",
+        "growth stock volatility",
+        "behavioral finance Canada",
+        "index fund vs stock picking"
+      ],
+      "visualSignature": "2026-05-27-26558987180",
+      "schemaVersion": 2,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-05-28T06:38:23.621Z",
+      "tickersFeatured": [
+        "JPM",
+        "BA",
+        "LULU",
+        "ANF",
+        "FL",
+        "DKS",
+        "AZO",
+        "AAL",
+        "WMT",
+        "DIS",
+        "IMAX",
+        "STLA",
+        "AVB",
+        "EQR",
+        "IMAX",
+        "STLA",
+        "STLA",
+        "WMT",
+        "LLY",
+        "ELF",
+        "TGT"
+      ],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "TIME_CAPSULE",
+      "ctaId": "save_specific",
+      "angleId": "TAX_DRAG_MAP",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "LUXURY_LIFESTYLE",
+        "LUXURY_LIFESTYLE",
+        "MAGAZINE_COVER",
+        "LUXURY_LIFESTYLE",
+        "MAGAZINE_COVER",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "LUXURY_LIFESTYLE",
+      "portraitSubjects": [
+        "cathie_wood"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FFFFFF"
+      }
     }
   ]
 }
