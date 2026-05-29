@@ -790,6 +790,51 @@
         "accent1": "#FF3B30",
         "accent2": "#FFD700"
       }
+    },
+    {
+      "date": "2026-05-28",
+      "topic": "Credit Score Myths Canadians Still Believe",
+      "hook": "Some credit advice is just noise.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 7,
+      "keywords": [
+        "AMD stock",
+        "Advanced Micro Devices stock",
+        "AI chip stocks",
+        "stock risk checklist",
+        "market catalyst explained"
+      ],
+      "visualSignature": "2026-05-28-26622340783",
+      "schemaVersion": 2,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-05-29T06:39:57.179Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "COHORT_TRUTH",
+      "ctaId": "save_specific",
+      "angleId": "BEHAVIORAL_RECEIPT",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "LUXURY_LIFESTYLE",
+        "LUXURY_LIFESTYLE",
+        "MAGAZINE_COVER",
+        "LUXURY_LIFESTYLE",
+        "MAGAZINE_COVER",
+        "LUXURY_LIFESTYLE",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "LUXURY_LIFESTYLE",
+      "portraitSubjects": [
+        "buffett"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FFFFFF"
+      }
     }
   ]
 }
