@@ -905,6 +905,46 @@
         "accent1": "#39FF14",
         "accent2": "#00CFFF"
       }
+    },
+    {
+      "date": "2026-05-29",
+      "topic": "Who actually owns HOOD?",
+      "hook": "Who actually owns HOOD?",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 6,
+      "keywords": [
+        "Robinhood ownership structure",
+        "HOOD institutional shareholders",
+        "who owns Robinhood"
+      ],
+      "visualSignature": "2026-05-29-26657792126",
+      "schemaVersion": 2,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-05-29T19:31:19.569Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "BEHIND_THE_SCENES",
+      "ctaId": "share_use_case",
+      "angleId": "SOVEREIGN_WEALTH",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "TRADER_DESK_SILHOUETTE",
+        "CORPORATE_OFFICE_SPACE",
+        "TRADER_DESK_SILHOUETTE",
+        "LINE_CHART",
+        "CORPORATE_OFFICE_SPACE",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "TRADER_DESK_SILHOUETTE",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
+      }
     }
   ]
 }
