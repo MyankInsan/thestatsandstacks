@@ -835,6 +835,76 @@
         "accent1": "#FFD700",
         "accent2": "#FFFFFF"
       }
+    },
+    {
+      "date": "2026-05-29",
+      "topic": "AMD Risk Filter: What to Check Before Reacting",
+      "hook": "AMD is up this year. Should you care?",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 7,
+      "keywords": [
+        "AMD stock analysis",
+        "tech stock valuation",
+        "how to analyze momentum stocks",
+        "semiconductor catalysts"
+      ],
+      "visualSignature": "2026-05-29-26652146761",
+      "schemaVersion": 2,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-05-29T17:32:32.021Z",
+      "tickersFeatured": [
+        "REPL",
+        "DIS",
+        "DIS",
+        "COST",
+        "GAP",
+        "CVS",
+        "LLY",
+        "BBY",
+        "PARA",
+        "KSS",
+        "JPM",
+        "BA",
+        "LULU",
+        "ANF",
+        "FL",
+        "DKS",
+        "AZO",
+        "AAL",
+        "SAVE",
+        "WMT",
+        "IMAX",
+        "IMAX",
+        "STLA",
+        "AVB",
+        "EQR"
+      ],
+      "topicCategory": "EARNINGS",
+      "hookFormulaId": "CALENDAR_TRIGGER",
+      "ctaId": "swipe_promise",
+      "angleId": "BUYBACK_SCOREBOARD",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "TECH_HUD",
+        "POP_CULTURE_PORTRAIT",
+        "NEON_TERMINAL",
+        "PORTFOLIO_BAR_RACE",
+        "COMPARISON_TABLE",
+        "MINIMALIST_CHECKLIST",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "TECH_HUD",
+      "portraitSubjects": [
+        "mark_zuckerberg"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#39FF14",
+        "accent2": "#00CFFF"
+      }
     }
   ]
 }
