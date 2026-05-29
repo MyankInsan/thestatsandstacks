@@ -719,6 +719,77 @@
         "accent1": "#2563EB",
         "accent2": "#4B5563"
       }
+    },
+    {
+      "date": "2026-05-28",
+      "topic": "Super Micro Computer (SMCI) Case Study: Catalyst, Risk Map, and Watchlist Education",
+      "hook": "Everyone says SMCI is unstoppable. The disclosure disagrees.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "SMCI stock",
+        "Super Micro Computer stock",
+        "AI infrastructure",
+        "stock valuation checklist",
+        "market risk map"
+      ],
+      "visualSignature": "2026-05-28-26612524281",
+      "schemaVersion": 2,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-05-29T01:31:09.843Z",
+      "tickersFeatured": [
+        "DIS",
+        "COST",
+        "GPS",
+        "AEO",
+        "CVS",
+        "LLY",
+        "BBY",
+        "PARA",
+        "KSS",
+        "JPM",
+        "BA",
+        "LULU",
+        "ANF",
+        "FL",
+        "DKS",
+        "AZO",
+        "AAL",
+        "SAVE",
+        "WMT",
+        "DIS",
+        "IMAX",
+        "STLA",
+        "AVB",
+        "EQR",
+        "IMAX",
+        "STLA"
+      ],
+      "topicCategory": "EARNINGS",
+      "hookFormulaId": "PREMIUM_CONTRARIAN",
+      "ctaId": "comment_genuine_question",
+      "angleId": "HYPOTHETICAL_REVERSAL",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "EXPERT_CUTOUT",
+        "LEADER_LOGO_CUTOUTS",
+        "EXPERT_CUTOUT",
+        "EXECUTIVE_LINEUP",
+        "LEADER_LOGO_CUTOUTS",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "EXPERT_CUTOUT",
+      "portraitSubjects": [
+        "jensen_huang"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      }
     }
   ]
 }
