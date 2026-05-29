@@ -945,6 +945,49 @@
         "accent1": "#FF3B30",
         "accent2": "#39FF14"
       }
+    },
+    {
+      "date": "2026-05-29",
+      "topic": "CASH.TO vs GICs in 2026: the real winner",
+      "hook": "CASH.TO vs GICs in 2026: the real winner",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "CASH.TO ETF",
+        "Canadian GICs",
+        "high interest savings account Canada",
+        "TFSA cash strategy"
+      ],
+      "visualSignature": "2026-05-29-26664230728",
+      "schemaVersion": 2,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-05-29T21:56:45.969Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "COMPARISON_LADDER",
+      "ctaId": "reference_save",
+      "angleId": "COMPARISON_LADDER",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "MAGAZINE_COVER",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "PRICE_TIMELINE_ANNOTATED",
+        "CHESS_BOARD_STRATEGY",
+        "HEATMAP_GRID",
+        "VAULT_SECURITY"
+      ],
+      "coverVisualStyle": "MAGAZINE_COVER",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_quant_30s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F8F9FA",
+        "primaryText": "#111827",
+        "accent1": "#2563EB",
+        "accent2": "#4B5563"
+      }
     }
   ]
 }
