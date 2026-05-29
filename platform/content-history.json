@@ -991,29 +991,27 @@
     },
     {
       "date": "2026-05-29",
-      "topic": "TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?",
-      "hook": "Most Canadians pick the wrong account first.",
+      "topic": "HISA vs GIC vs ETF: Where Should Short-Term Money Go?",
+      "hook": "Do not invest money you need soon.",
       "format": "CAROUSEL",
       "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
-      "slideCount": 7,
+      "slideCount": 8,
       "keywords": [
-        "TSX record high",
-        "investing Canada",
-        "S&P TSX index",
-        "Canadian stock market"
+        "SP500 all time high",
+        "S&P 500 record"
       ],
-      "visualSignature": "2026-05-29-26665059943",
+      "visualSignature": "2026-05-29-26665224647",
       "schemaVersion": 2,
       "slotIndex": 5,
-      "postedAtUtc": "2026-05-29T22:19:23.404Z",
+      "postedAtUtc": "2026-05-29T22:23:59.160Z",
       "tickersFeatured": [
         "SAVE"
       ],
-      "topicCategory": "TAX_ACCT",
+      "topicCategory": "BEHAVIORAL",
       "hookFormulaId": "COHORT_TRUTH",
-      "ctaId": "save_specific",
-      "angleId": "DIVIDEND_KINGS",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "ctaId": "share_use_case",
+      "angleId": "HYPOTHETICAL_REVERSAL",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
       "visualStylesUsed": [
         "LUXURY_LIFESTYLE",
         "LUXURY_LIFESTYLE",
@@ -1021,11 +1019,12 @@
         "LUXURY_LIFESTYLE",
         "MAGAZINE_COVER",
         "LUXURY_LIFESTYLE",
+        "MAGAZINE_COVER",
         "PREMIUM_CTA"
       ],
       "coverVisualStyle": "LUXURY_LIFESTYLE",
       "portraitSubjects": [
-        "trudeau"
+        "howard_marks"
       ],
       "archetypesUsed": [],
       "colorSchemeUsed": {
