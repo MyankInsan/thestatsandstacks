@@ -1033,6 +1033,48 @@
         "accent1": "#FFD700",
         "accent2": "#FFFFFF"
       }
+    },
+    {
+      "date": "2026-05-29",
+      "topic": "TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?",
+      "hook": "Most Canadians pick the wrong account first.",
+      "format": "CAROUSEL",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 7,
+      "keywords": [
+        "SP500 all time high",
+        "S&P 500 record"
+      ],
+      "visualSignature": "2026-05-29-26665954545",
+      "schemaVersion": 2,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-05-29T22:43:57.049Z",
+      "tickersFeatured": [],
+      "topicCategory": "TAX_ACCT",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "question_open",
+      "angleId": "BEHAVIORAL_RECEIPT",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "EDITORIAL_REACTION_CARICATURE",
+        "SATIRICAL_METAPHOR",
+        "EDITORIAL_REACTION_CARICATURE",
+        "CARICATURE_PORTRAIT",
+        "SATIRICAL_METAPHOR",
+        "EDITORIAL_REACTION_CARICATURE",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "EDITORIAL_REACTION_CARICATURE",
+      "portraitSubjects": [
+        "trudeau"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#09090D",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FF2E93"
+      }
     }
   ]
 }
