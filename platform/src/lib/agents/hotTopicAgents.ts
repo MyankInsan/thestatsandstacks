@@ -66,6 +66,55 @@ const DEFAULT_MARKET_WATCHLIST: MarketSeed[] = [
 
 const FETCH_TIMEOUT_MS = 8_000;
 
+interface IndexHighStatus {
+  ticker: string;
+  companyName: string;
+  currentPrice: number;
+  isNearAllTimeHigh: boolean;
+  isAtAllTimeHigh: boolean;
+  allTimeHigh: number;
+  dayChangePercent: number;
+}
+
+const INDEX_SEEDS = [
+  { ticker: '^GSPC', companyName: 'S&P 500' },
+  { ticker: '^GSPTSE', companyName: 'S&P/TSX Composite' },
+];
+
+async function fetchIndexStatus(ticker: string, companyName: string): Promise<IndexHighStatus | null> {
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker)}?range=5y&interval=1d`;
+  try {
+    const response = await fetchWithTimeout(url);
+    if (!response.ok) return null;
+    const json = await response.json() as YahooChartResponse;
+    const result = json.chart?.result?.[0];
+    const quote = result?.indicators?.quote?.[0];
+    const closes = (quote?.close || []).filter((value): value is number => typeof value === 'number' && Number.isFinite(value));
+    if (!result || closes.length < 10) return null;
+
+    const currentPrice = result.meta?.regularMarketPrice || closes[closes.length - 1];
+    const previousClose = closes[closes.length - 2] ?? currentPrice;
+    const dayChangePercent = percentChange(currentPrice, previousClose) || 0;
+
+    const fiveYearHigh = Math.max(...closes, currentPrice);
+
+    const isAtAllTimeHigh = currentPrice >= fiveYearHigh * 0.995;
+    const isNearAllTimeHigh = currentPrice >= fiveYearHigh * 0.985;
+
+    return {
+      ticker,
+      companyName,
+      currentPrice,
+      isNearAllTimeHigh,
+      isAtAllTimeHigh,
+      allTimeHigh: fiveYearHigh,
+      dayChangePercent,
+    };
+  } catch {
+    return null;
+  }
+}
+
 export class HotTopicDeskAgent extends BaseAgent {
   constructor() {
     super('HotTopicDeskAgent');
@@ -121,7 +170,79 @@ export class MarketHeatAgent extends BaseAgent {
       .sort((a, b) => b.score - a.score)
       .slice(0, 8);
 
-    const candidates = liveCandidates.length ? liveCandidates : getMarketFallbackCandidates();
+    const indexStatuses: IndexHighStatus[] = [];
+    try {
+      const settledIndices = await Promise.allSettled(
+        INDEX_SEEDS.map((seed) => fetchIndexStatus(seed.ticker, seed.companyName))
+      );
+      for (const res of settledIndices) {
+        if (res.status === 'fulfilled' && res.value) {
+          indexStatuses.push(res.value);
+        }
+      }
+    } catch (err) {
+      console.warn(`[MarketHeatAgent] Failed to fetch index statuses:`, err);
+    }
+
+    const indexCandidates: TrendTopic[] = [];
+    const now = new Date();
+    const vancouverHour = Number(
+      new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/Vancouver',
+        hour: '2-digit',
+        hour12: false,
+      }).format(now),
+    );
+    const vancouverWeekday = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Vancouver',
+      weekday: 'long',
+    }).format(now);
+    const isWeekday = vancouverWeekday !== 'Saturday' && vancouverWeekday !== 'Sunday';
+
+    for (const snap of indexStatuses) {
+      const isUS = snap.ticker === '^GSPC';
+      
+      if (snap.isNearAllTimeHigh || snap.isAtAllTimeHigh) {
+        const title = isUS
+          ? `S&P 500 Hits All-Time High: 5 Portfolio Rules for Investors`
+          : `TSX Hits Record Highs: What Canadian Investors Should Do`;
+        indexCandidates.push({
+          title,
+          score: snap.isAtAllTimeHigh ? 0.98 : 0.95,
+          reasoning: `The ${snap.companyName} is trading at/near record highs (${snap.currentPrice.toFixed(0)} vs 5y high of ${snap.allTimeHigh.toFixed(0)}). High save intent topic on index rebalancing and retail FOMO.`,
+          suggestedFormat: 'CAROUSEL',
+          suggestedSlideCount: 7,
+          searchKeywords: isUS ? ['SP500 all time high', 'S&P 500 record'] : ['TSX record high', 'investing Canada'],
+          sourceUrls: [`https://finance.yahoo.com/quote/${snap.ticker}`],
+          contentPillar: 'Global macro-economic news and political impacts on markets',
+          freshnessSignal: `${snap.companyName} record high watch: ${snap.currentPrice.toFixed(0)}`,
+        });
+      }
+
+      if (isWeekday && (Math.abs(snap.dayChangePercent) >= 0.5 || vancouverHour >= 13)) {
+        const changeText = `${snap.dayChangePercent >= 0 ? '+' : ''}${snap.dayChangePercent.toFixed(2)}%`;
+        const title = isUS
+          ? `U.S. Market Close: How the S&P 500 Performed Today`
+          : `Canadian Market Close: How the TSX Performed Today`;
+        indexCandidates.push({
+          title,
+          score: 0.93 + (Math.abs(snap.dayChangePercent) >= 1.5 ? 0.04 : 0),
+          reasoning: `The ${snap.companyName} closed the day at ${snap.currentPrice.toFixed(0)} (${changeText}). Direct, timely post-market overview.`,
+          suggestedFormat: 'CAROUSEL',
+          suggestedSlideCount: 7,
+          searchKeywords: isUS ? ['S&P 500 close', 'market recap'] : ['TSX market close', 'Canadian market close'],
+          sourceUrls: [`https://finance.yahoo.com/quote/${snap.ticker}`],
+          contentPillar: 'Market-news explainers',
+          freshnessSignal: `${snap.companyName} change today: ${changeText}`,
+        });
+      }
+    }
+
+    const candidates = [
+      ...indexCandidates,
+      ...(liveCandidates.length ? liveCandidates : getMarketFallbackCandidates()),
+    ];
+
     const hottest = snapshots
       .sort((a, b) => getHeatScore(b) - getHeatScore(a))
       .slice(0, 5)
@@ -131,9 +252,9 @@ export class MarketHeatAgent extends BaseAgent {
       candidates,
       signalBrief: {
         source: 'market-heat-agent',
-        status: liveCandidates.length ? 'live' : 'fallback',
-        summary: liveCandidates.length
-          ? `Free quote scan found active market heat. Top signals: ${hottest.join('; ')}. Use these as educational case studies, not recommendations.`
+        status: (liveCandidates.length || indexCandidates.length) ? 'live' : 'fallback',
+        summary: (liveCandidates.length || indexCandidates.length)
+          ? `Free quote scan found active market heat. Indices: ${indexStatuses.map(s => `${s.companyName} ${s.dayChangePercent >= 0 ? '+' : ''}${s.dayChangePercent.toFixed(1)}%`).join(', ') || 'none'}. Top signals: ${hottest.join('; ')}.`
           : 'Free quote scan was unavailable; using safe fallback hot-market education ideas.',
         topicSeeds: candidates.map((candidate) => candidate.title),
         sourceUrls: unique(candidates.flatMap((candidate) => candidate.sourceUrls || [])).slice(0, 10),

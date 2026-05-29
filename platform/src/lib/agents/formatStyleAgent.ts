@@ -9,7 +9,8 @@ export type FormatType =
   | 'PHOTOREALISTIC_LUXURY_LIFESTYLE'
   | 'PHOTOREALISTIC_MARKET_UPDATE'
   | 'PHOTOREALISTIC_EXPERT_SHOCK'
-  | 'PHOTOREALISTIC_MINIMAL_TECH';
+  | 'PHOTOREALISTIC_MINIMAL_TECH'
+  | 'MEME_HUMOR';
 
 export const FORMAT_TYPES: FormatType[] = [
   'PHOTOREALISTIC_NEWS_FLASH',
@@ -17,6 +18,7 @@ export const FORMAT_TYPES: FormatType[] = [
   'PHOTOREALISTIC_MARKET_UPDATE',
   'PHOTOREALISTIC_EXPERT_SHOCK',
   'PHOTOREALISTIC_MINIMAL_TECH',
+  'MEME_HUMOR',
 ];
 
 export interface ColorScheme {
@@ -40,6 +42,7 @@ export const COLOR_SCHEMES: Record<FormatType, ColorScheme> = {
   PHOTOREALISTIC_MARKET_UPDATE:     { bg: '#050505', primaryText: '#FFFFFF', accent1: '#FF3B30', accent2: '#39FF14' },
   PHOTOREALISTIC_EXPERT_SHOCK:      { bg: '#000000', primaryText: '#FFFFFF', accent1: '#FF3B30', accent2: '#FFD700' },
   PHOTOREALISTIC_MINIMAL_TECH:      { bg: '#F8F9FA', primaryText: '#111827', accent1: '#2563EB', accent2: '#4B5563' },
+  MEME_HUMOR:                       { bg: '#09090D', primaryText: '#FFFFFF', accent1: '#FFD700', accent2: '#FF2E93' },
 };
 
 export interface FormatStyleInput {
@@ -117,7 +120,7 @@ function buildFallback(assignedFormat: FormatType, strategy: StrategyDecision): 
     formatType: assignedFormat,
     slideCount: strategy.slideCount,
     colorScheme: COLOR_SCHEMES[assignedFormat],
-    visualTone: 'dramatic, hyper-realistic, cinematic finance content',
+    visualTone: assignedFormat === 'MEME_HUMOR' ? 'satirical, humorous, high-contrast, eye-catching financial meme' : 'dramatic, hyper-realistic, cinematic finance content',
     reasoning: 'Fallback — Gemini unavailable',
   };
 }

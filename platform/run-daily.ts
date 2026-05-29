@@ -18,6 +18,7 @@ import { ImagePromptAgent } from './src/lib/agents/imagePromptAgent';
 import { CopywritingAgent } from './src/lib/agents/copywritingAgent';
 
 import { sendPromptsToTelegram } from './src/lib/services/telegramDelivery';
+import { TICKER_LOGO_MAP } from './src/lib/agents/tickerLogoAgent';
 import {
   appendContentHistory,
   loadContentHistory,
@@ -75,6 +76,7 @@ async function main() {
   // ── AGENT 2B: TREND RESEARCH ────────────────────────────────────────────────
   console.log('━━━ AGENT 2B: TREND RESEARCH ━━━');
   const trends = await new TrendResearchAgent().execute({ contentHistory });
+
   const researchBriefPath = path.join(outputDir, 'RESEARCH_BRIEF.md');
   fs.writeFileSync(researchBriefPath, buildResearchBrief(trends, contentHistory), 'utf-8');
   console.log(`   Research brief: ${researchBriefPath}`);
@@ -159,10 +161,13 @@ async function main() {
 
   // ── AGENT 6: FORMAT STYLE ───────────────────────────────────────────────────
   console.log('━━━ AGENT 6: FORMAT STYLE ━━━');
+  const activeTickers = tickerSymbols.filter((symbol) => isTickerActive(symbol, strategy));
+  console.log(`   Active Tickers (filtered for topic): ${activeTickers.join(', ') || 'none'}`);
+
   const format = await new FormatStyleAgent().execute({
     strategy,
     contentHistory,
-    tickerSymbols,
+    tickerSymbols: activeTickers,
     slot: slotContext.config,
     todayPriorEntries: slotContext.todayPriorEntries,
   });
@@ -176,7 +181,7 @@ async function main() {
   const isReactive = angleResult.angleCandidates[0]?.angleId === 'REACTIVE_SENTIMENT';
   const vizDecision = vizPicker.pickForAngle({
     angleId: angleResult.angleCandidates[0]?.angleId,
-    hasTickers: tickerSymbols.length > 0,
+    hasTickers: activeTickers.length > 0,
     isReactiveSentiment: isReactive,
     excludedStyles: historyGuard.mustAvoid.visualStyles,
     preferTested: true,
@@ -186,7 +191,9 @@ async function main() {
     ctaId: strategy.ctaId ?? 'save_specific',
     topicCategory: strategy.topicCategory ?? 'BEHAVIORAL',
     isReactiveSentiment: isReactive,
-    hasTickers: tickerSymbols.length > 0,
+    hasTickers: activeTickers.length > 0,
+    tickers: activeTickers,
+    topic: strategy.topic,
     recentHistory: contentHistory,
     todayDateKey: today,
     todayPriorEntries: slotContext.todayPriorEntries,
@@ -205,7 +212,7 @@ async function main() {
   const narrative = await new SlideNarrativeAgent().execute({
     strategy,
     format,
-    tickerSymbols,
+    tickerSymbols: activeTickers,
     constraints,
   });
   console.log(`   Wrote ${narrative.slides.length} slide specs${narrative.hadConstraintViolation ? ' (after constraint retries)' : ''}`);
@@ -227,7 +234,8 @@ async function main() {
     strategy,
     constraints,
     recentHistory: contentHistory,
-    tickerSymbols,
+    tickerSymbols: activeTickers,
+    dateKey: today,
   });
   console.log(`   Generated ${promptSet.slides.length} complete prompts`);
   const promptsText = promptSet.slides
@@ -274,7 +282,7 @@ async function main() {
     schemaVersion: CURRENT_SCHEMA_VERSION,
     slotIndex: slotContext.slotIndex,
     postedAtUtc: new Date().toISOString(),
-    tickersFeatured: tickerSymbols,
+    tickersFeatured: activeTickers,
     topicCategory: strategy.topicCategory,
     hookFormulaId: strategy.hookFormulaId,
     ctaId: strategy.ctaId,
@@ -294,7 +302,7 @@ async function main() {
   appendContentHistory(historyPath, entry);
 
   console.log('═══════════════════════════════════════════════════════');
-  console.log(`  ✅ DONE — ${elapsed}s  |  Slot ${slotContext.slotIndex}/5`);
+  console.log(`  ✅ DONE — ${elapsed}s  |  Slot ${slotContext.slotIndex}/6`);
   console.log('═══════════════════════════════════════════════════════');
   console.log('');
 }
@@ -340,3 +348,28 @@ main().catch((err) => {
   console.error('Pipeline failed:', err);
   process.exit(1);
 });
+
+export function isTickerActive(symbol: string, strategy: { topic: string; searchKeywords?: string[]; slideBreakdown?: string[] }): boolean {
+  const topicTextLower = `${strategy.topic} ${(strategy.searchKeywords ?? []).join(' ')} ${(strategy.slideBreakdown ?? []).join(' ')}`.toLowerCase();
+  const topicTextOriginal = `${strategy.topic} ${(strategy.searchKeywords ?? []).join(' ')} ${(strategy.slideBreakdown ?? []).join(' ')}`;
+
+  const cleanSymbol = symbol.replace(/\.[A-Z]+$/, '');
+  const entry = TICKER_LOGO_MAP[symbol];
+
+  const searchTerms: { term: string; caseSensitive: boolean }[] = [
+    { term: cleanSymbol, caseSensitive: cleanSymbol.length <= 2 }
+  ];
+  if (entry) {
+    searchTerms.push({ term: entry.companyName, caseSensitive: entry.companyName.length <= 2 });
+  }
+
+  for (const { term, caseSensitive } of searchTerms) {
+    const escaped = term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const regex = new RegExp(`\\b${escaped}\\b`, caseSensitive ? '' : 'i');
+    const textToSearch = caseSensitive ? topicTextOriginal : topicTextLower;
+    if (regex.test(textToSearch)) {
+      return true;
+    }
+  }
+  return false;
+}

@@ -5,6 +5,15 @@ import type { ViralStyle } from './promptLibrary';
 import { ROTATION_ALLOWLIST } from './promptLibrary';
 import type { CarouselConstraints } from './carouselConstraintAgent';
 
+const THEMATIC_STYLES_BY_FORMAT: Record<string, string[]> = {
+  PHOTOREALISTIC_NEWS_FLASH:        ['ARCHITECTURAL_OVERLAY', 'CROWD_PANIC', 'MILITARY_AEROSPACE_METAPHOR', 'NEON_TERMINAL', 'GLOWING_QUOTE', 'CANDLESTICK_CHART'],
+  PHOTOREALISTIC_LUXURY_LIFESTYLE:  ['LUXURY_LIFESTYLE', 'MAGAZINE_COVER', 'CHESS_BOARD_STRATEGY', 'VAULT_SECURITY', 'GLOWING_QUOTE', 'PREMIUM_CTA'],
+  PHOTOREALISTIC_MARKET_UPDATE:     ['TRADER_DESK_SILHOUETTE', 'LINE_CHART', 'CORPORATE_OFFICE_SPACE', 'AREA_CHART', 'SANKEY_DIAGRAM', 'DONUT_CHART', 'BAR_CHART_HORIZONTAL', 'CANDLESTICK_HERO', 'TICKER_TAPE_HERO', 'EARNINGS_HEAT_TABLE'],
+  PHOTOREALISTIC_EXPERT_SHOCK:      ['EXPERT_CUTOUT', 'CARICATURE_PORTRAIT', 'EXECUTIVE_LINEUP', 'LEADER_LOGO_CUTOUTS', 'EDITORIAL_REACTION_CARICATURE', 'POP_CULTURE_PORTRAIT', 'CIRCULAR_PORTFOLIO_WHEEL', 'PORTFOLIO_DOUGHNUT_PORTRAIT'],
+  PHOTOREALISTIC_MINIMAL_TECH:      ['MINIMALIST_CHECKLIST', 'TYPOGRAPHIC_MEGA_NUMBER', 'COMPARISON_TABLE', 'GLASSMORPHISM_UI', 'NEON_TERMINAL', 'CAP_TABLE_GRID', 'POSITION_CONCENTRATION_TREEMAP', 'MACRO_FLOW_DIAGRAM', 'PRICE_TIMELINE_ANNOTATED', 'PORTFOLIO_BAR_RACE', 'EDITORIAL_SPLIT_LAYOUT', 'EARNINGS_CARD', 'MAP_DATA_OVERLAY'],
+  MEME_HUMOR:                       ['EDITORIAL_REACTION_CARICATURE', 'CARICATURE_PORTRAIT', 'MEME_COMIC_PLATE', 'SATIRICAL_METAPHOR', 'FUNNY_COMPARISON', 'GLOWING_QUOTE', 'ANIMAL_METAPHOR'],
+};
+
 export interface HeadlineColor {
   text: string;
   color: 'primary' | 'accent1' | 'accent2';
@@ -109,6 +118,9 @@ function buildPrompt(
 ): string {
   const constraintsBlock = constraints ? buildConstraintsBlock(constraints, attempt, previousViolations) : '';
   const allowedStyles = filterAllowedStyles(constraints, previousOffendingStyles);
+  const formatThematic = THEMATIC_STYLES_BY_FORMAT[format.formatType] ?? [];
+  const primaryCandidates = formatThematic.filter(s => allowedStyles.includes(s as ViralStyle));
+  const otherAllowed = allowedStyles.filter(s => !primaryCandidates.includes(s));
 
   return `You are a viral finance Instagram content writer. Write the complete slide narrative for a ${format.slideCount}-slide carousel.
 
@@ -121,6 +133,9 @@ TARGET AUDIENCE: ${strategy.targetAudience}
 COLOR SCHEME: bg=${format.colorScheme.bg}, accent1=${format.colorScheme.accent1}, accent2=${format.colorScheme.accent2}
 ${constraintsBlock}
 
+- RECOMMENDED VISUAL STYLES FOR THIS FORMAT (${format.formatType}): ${primaryCandidates.join(', ')}. You should prioritize these to maintain a cohesive visual theme.
+- OTHER ALLOWED VISUAL STYLES: ${otherAllowed.join(', ')}. Use these only when needed for specific slide roles (like charts or CTAs).
+
 SLIDE NARRATIVE RULES:
 - Slide 1: Cover — highest energy hook, 4-7 word headline, eyebrow label
 - Slide 2: Agitator / Secondary Hook — deepen the problem or expand the hook
@@ -129,10 +144,9 @@ SLIDE NARRATIVE RULES:
 - Last slide: Always role "cta" — strong follow/save prompt. For the CTA slide, use visualStyle "PREMIUM_CTA" or another premium cinematic style (LUXURY_LIFESTYLE or VAULT_SECURITY). Never use MINIMALIST_CHECKLIST for CTA.
 - Each headline: max 8 words, bold and punchy.
 - headlineColorMap: break headline into parts, assign each part a color (primary=white, accent1=neon, accent2=cyan/secondary).
-- visualStyle: assign a DIFFERENT visualStyle to each slide based on its role. Choose EXACTLY ONE from this list of keys: ${allowedStyles.join(', ')}. Do not use the same visualStyle twice in a row.
+- visualStyle: assign a DIFFERENT visualStyle to each slide based on its role. Choose EXACTLY ONE from the RECOMMENDED VISUAL STYLES list where possible, and fallback to the OTHER ALLOWED VISUAL STYLES list only if necessary (e.g. for charts or CTAs). Do not use the same visualStyle twice in a row.
 - For ANY slide where the dataPoint contains "$", "%", an OHLC pattern name, or a named institution, set role to "chart_data" and pick a Data-bucket visualStyle (CANDLESTICK_HERO, CAP_TABLE_GRID, EARNINGS_HEAT_TABLE, INSTITUTIONAL_FLOW_SANKEY, POSITION_CONCENTRATION_TREEMAP, PORTFOLIO_DOUGHNUT_PORTRAIT, MACRO_FLOW_DIAGRAM, PRICE_TIMELINE_ANNOTATED, PORTFOLIO_BAR_RACE, EARNINGS_CARD, TICKER_TAPE_HERO, COMPARISON_TABLE, LINE_CHART, DONUT_CHART, BAR_CHART_HORIZONTAL, HEATMAP_GRID).
-- dataPoint: include only if there's a real number/stat to hero (e.g. "+18.2% EPS BEAT").
-- subtext: one short line of supporting context, max 12 words.
+- visualPosition: Vary the visualPosition property across slides. Do NOT default to 'top' for all slides. Choose 'left' or 'right' for split-column layout slides (like checklists, tables, or cards), 'center' for quotes or CTAs, 'background' for full-frame textures or charts, and 'top' only for covers or standard layouts. Ensure at least 3 different positions are used in the carousel to maximize visual layout variety.
 - narrativeNote: if the dataPoint is inferred (not directly from research), include the literal word "illustrative" in the note so the image pipeline knows to suppress specific-but-wrong claims.
 
 Return ONLY valid JSON matching this exact schema (no markdown):
@@ -237,6 +251,7 @@ const FALLBACK_EYEBROWS: Record<string, string> = {
   PHOTOREALISTIC_MARKET_UPDATE:     'MARKET:',
   PHOTOREALISTIC_EXPERT_SHOCK:      'INSIGHT:',
   PHOTOREALISTIC_MINIMAL_TECH:      'NOTE:',
+  MEME_HUMOR:                       'HOT TAKE:',
 };
 
 const FALLBACK_VISUAL_VARIANTS: Record<string, ViralStyle[]> = {
@@ -245,6 +260,7 @@ const FALLBACK_VISUAL_VARIANTS: Record<string, ViralStyle[]> = {
   PHOTOREALISTIC_MARKET_UPDATE:     ['TRADER_DESK_SILHOUETTE', 'LINE_CHART', 'CORPORATE_OFFICE_SPACE'],
   PHOTOREALISTIC_EXPERT_SHOCK:      ['EXPERT_CUTOUT', 'CARICATURE_PORTRAIT', 'EXECUTIVE_LINEUP', 'LEADER_LOGO_CUTOUTS'],
   PHOTOREALISTIC_MINIMAL_TECH:      ['MINIMALIST_CHECKLIST', 'TYPOGRAPHIC_MEGA_NUMBER', 'COMPARISON_TABLE'],
+  MEME_HUMOR:                       ['EDITORIAL_REACTION_CARICATURE', 'CARICATURE_PORTRAIT', 'SATIRICAL_METAPHOR'],
 };
 
 function stripBreakdownPrefixes(text: string): string {
@@ -293,6 +309,8 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision, const
     narrativeNote: 'Cover hook',
   });
 
+  const positions: SlideSpec['visualPosition'][] = ['left', 'right', 'background', 'top'];
+
   for (let i = 2; i < count; i++) {
     const rawBreakdown = strategy.slideBreakdown[i - 1] ?? `Point ${i - 1}`;
     const { headline, subtext } = parseBreakdown(rawBreakdown);
@@ -308,7 +326,7 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision, const
       ],
       subtext,
       visualStyle: variants[i % variants.length],
-      visualPosition: 'top',
+      visualPosition: positions[i % positions.length],
       mood: format.visualTone,
       narrativeNote: `Slide ${i} of the breakdown`,
     });

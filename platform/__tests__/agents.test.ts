@@ -273,3 +273,79 @@ function restoreCapturedEnv(values: Record<string, string | undefined>): void {
     restoreEnv(key, value);
   }
 }
+
+test('Slot 6 cron hour mapping under PDT and PST', () => {
+  const { resolveSlotFromCron } = require('../src/lib/agents/slotConfig');
+  assert.equal(resolveSlotFromCron('0 22 * * *', true), 6, 'PDT 3pm (22:00 UTC) must resolve to Slot 6');
+  assert.equal(resolveSlotFromCron('0 23 * * *', false), 6, 'PST 3pm (23:00 UTC) must resolve to Slot 6');
+});
+
+test('getTextLayoutDirective maps all 5 visual positions cleanly', () => {
+  const { getTextLayoutDirective } = require('../src/lib/agents/imagePromptAgent');
+  assert.match(getTextLayoutDirective('left'), /left side/i);
+  assert.match(getTextLayoutDirective('right'), /right side/i);
+  assert.match(getTextLayoutDirective('background'), /background texture/i);
+  assert.match(getTextLayoutDirective('center'), /center-aligned/i);
+  assert.match(getTextLayoutDirective('top'), /top-third/i);
+});
+
+test('MarketHeatAgent generates index candidates with boosted scores when at/near ATH', async () => {
+  const { MarketHeatAgent } = await import('../src/lib/agents/hotTopicAgents');
+  const agent = new MarketHeatAgent();
+
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url: string | URL | Request, init?: RequestInit) => {
+    const urlString = url.toString();
+    if (urlString.includes('%5EGSPC') || urlString.includes('GSPC')) {
+      return {
+        ok: true,
+        json: async () => ({
+          chart: {
+            result: [
+              {
+                meta: { regularMarketPrice: 5300 },
+                indicators: {
+                  quote: [
+                    {
+                      close: [5000, 5050, 5100, 5150, 5200, 5250, 5280, 5290, 5270, 5300],
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        }),
+      } as unknown as Response;
+    }
+    return { ok: false } as unknown as Response;
+  };
+
+  try {
+    const result = await agent.execute();
+    const gspcATH = result.candidates.find(c => c.title.includes('S&P 500 Hits All-Time High'));
+    assert.ok(gspcATH, 'Should generate S&P 500 ATH candidate');
+    assert.equal(gspcATH.score, 0.98, 'ATH score should be boosted to 0.98');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('timezone-safe weekday check resolves Friday night PT (Saturday UTC) as weekday', () => {
+  const dateSaturdayUTC = new Date('2026-05-30T04:00:00Z'); // Friday 9pm PDT (UTC-7)
+  
+  // UTC/GitHub Actions host check (where the bug occurs)
+  const utcIsWeekday = dateSaturdayUTC.getUTCDay() >= 1 && dateSaturdayUTC.getUTCDay() <= 5;
+  assert.equal(utcIsWeekday, false, 'UTC day is Saturday (6), so UTC-based check says weekend');
+
+  // Timezone-safe check
+  const vancouverWeekday = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Vancouver',
+    weekday: 'long',
+  }).format(dateSaturdayUTC);
+  const isWeekday = vancouverWeekday !== 'Saturday' && vancouverWeekday !== 'Sunday';
+  
+  assert.equal(isWeekday, true, 'Vancouver timezone-safe check correctly resolves to weekday (Friday)');
+});
+
+
+

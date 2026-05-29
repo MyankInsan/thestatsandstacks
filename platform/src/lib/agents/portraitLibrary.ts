@@ -91,6 +91,7 @@ export const ARCHETYPE_BY_SLUG: Record<string, ArchetypePortrait> = Object.fromE
 );
 
 import { lruRank } from '../services/lruPicker';
+import { TICKER_LOGO_MAP } from './tickerLogoAgent';
 
 export interface PortraitSelection {
   tier: 1 | 2;
@@ -105,12 +106,54 @@ export function pickPortrait(input: {
   recentPortraitSlugs: string[];
   recentArchetypeSlugs: string[];
   deterministicSeed: string;
+  tickers?: string[];
+  topicTitle?: string;
 }): PortraitSelection {
-  const namedAffinity = TIER_1_NAMED.filter((p) => p.topicAffinity.includes(input.topicCategory));
-  let namedCandidates = namedAffinity.filter((p) => !input.recentPortraitSlugs.includes(p.slug));
-  if (input.isCoverSlide) {
-    const highOnly = namedCandidates.filter((p) => p.likenessConfidence === 'high');
-    if (highOnly.length > 0) namedCandidates = highOnly;
+  const isCanadian = input.topicTitle && /canada|canadian|tsx|\.to\b|cppib|cdpq|tfsa|rrsp|fhsa/i.test(input.topicTitle);
+
+  // 1. Resolve ticker-mapped portraits
+  let tickerPortraitCandidates: NamedPortrait[] = [];
+  if (input.tickers && input.tickers.length > 0) {
+    const subjects = input.tickers
+      .map((t) => TICKER_LOGO_MAP[t]?.portraitSubject)
+      .filter((s): s is string => Boolean(s));
+    
+    tickerPortraitCandidates = Array.from(new Set(subjects))
+      .map((slug) => NAMED_BY_SLUG[slug])
+      .filter((p): p is NamedPortrait => Boolean(p));
+  }
+
+  // 2. Determine named candidates
+  let namedCandidates: NamedPortrait[] = [];
+  
+  if (tickerPortraitCandidates.length > 0) {
+    // Priority: Filter ticker-mapped portraits against recentPortraitSlugs to see if any are fresh.
+    const freshTickerCandidates = tickerPortraitCandidates.filter((p) => !input.recentPortraitSlugs.includes(p.slug));
+    // If we have mapped portraits, we MUST pick from them even if they are all in the avoid list (bypassing LRU if necessary).
+    namedCandidates = freshTickerCandidates.length > 0 ? freshTickerCandidates : tickerPortraitCandidates;
+  } else {
+    // Standard pool filtered by topic affinity
+    let namedPool = TIER_1_NAMED.filter((p) => p.topicAffinity.includes(input.topicCategory));
+    
+    // Apply Canadian preference to named portraits
+    if (isCanadian) {
+      const canadianPool = namedPool.filter((p) => p.category === 'CANADIAN');
+      if (canadianPool.length > 0) {
+        namedPool = canadianPool;
+      }
+    } else {
+      const nonCanadianPool = namedPool.filter((p) => p.category !== 'CANADIAN');
+      if (nonCanadianPool.length > 0) {
+        namedPool = nonCanadianPool;
+      }
+    }
+
+    namedCandidates = namedPool.filter((p) => !input.recentPortraitSlugs.includes(p.slug));
+    
+    if (input.isCoverSlide) {
+      const highOnly = namedCandidates.filter((p) => p.likenessConfidence === 'high');
+      if (highOnly.length > 0) namedCandidates = highOnly;
+    }
   }
 
   if (namedCandidates.length > 0) {
@@ -125,8 +168,30 @@ export function pickPortrait(input: {
     return { tier: 1, slug: chosen.slug, displayName: chosen.displayName, promptHint: chosen.promptHint };
   }
 
-  const archAffinity = TIER_2_ARCHETYPES.filter((a) => a.topicAffinity.includes(input.topicCategory));
-  const archPool = archAffinity.length > 0 ? archAffinity : TIER_2_ARCHETYPES;
+  // Fallback to Archetypes
+  let archPool = TIER_2_ARCHETYPES.filter((a) => a.topicAffinity.includes(input.topicCategory));
+  if (archPool.length === 0) archPool = TIER_2_ARCHETYPES;
+
+  // Apply Canadian preference to archetypes
+  if (isCanadian) {
+    const canadianArchs = archPool.filter((a) => 
+      a.slug === 'seasoned_canadian_banker' || 
+      a.slug === 'boomer_diy_investor' || 
+      a.slug === 'canadian_uni_grad_25'
+    );
+    if (canadianArchs.length > 0) {
+      archPool = canadianArchs;
+    }
+  } else {
+    const nonCanadianArchs = archPool.filter((a) => 
+      a.slug !== 'seasoned_canadian_banker' && 
+      a.slug !== 'canadian_uni_grad_25'
+    );
+    if (nonCanadianArchs.length > 0) {
+      archPool = nonCanadianArchs;
+    }
+  }
+
   const archCandidates = archPool.filter((a) => !input.recentArchetypeSlugs.includes(a.slug));
   const ranked = lruRank(
     (archCandidates.length > 0 ? archCandidates : archPool).map((a) => a.slug),

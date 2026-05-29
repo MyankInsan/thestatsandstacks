@@ -35,12 +35,12 @@ export class SlotContextAgent {
     if (eventName === 'workflow_dispatch') {
       if (!slotOverride) {
         throw new Error(
-          'Manual dispatch requires SLOT_OVERRIDE=1|2|3|4|5. Without it, the slot is ambiguous. Re-run with the env set.',
+          'Manual dispatch requires SLOT_OVERRIDE=1|2|3|4|5|6. Without it, the slot is ambiguous. Re-run with the env set.',
         );
       }
       const parsed = Number(slotOverride);
-      if (!Number.isInteger(parsed) || parsed < 1 || parsed > 5) {
-        throw new Error(`Invalid SLOT_OVERRIDE='${slotOverride}'. Must be 1-5.`);
+      if (!Number.isInteger(parsed) || parsed < 1 || parsed > 6) {
+        throw new Error(`Invalid SLOT_OVERRIDE='${slotOverride}'. Must be 1-6.`);
       }
       slotIndex = parsed as SlotIndex;
       triggerSource = 'workflow_dispatch_override';
@@ -53,7 +53,7 @@ export class SlotContextAgent {
       }
     } else if (slotOverride) {
       const parsed = Number(slotOverride);
-      if (Number.isInteger(parsed) && parsed >= 1 && parsed <= 5) {
+      if (Number.isInteger(parsed) && parsed >= 1 && parsed <= 6) {
         slotIndex = parsed as SlotIndex;
         triggerSource = 'workflow_dispatch_override';
       }
@@ -91,9 +91,10 @@ function nearestSlotByWallClock(now: Date): SlotIndex {
     }).format(now),
   );
 
-  if (vancouverHour < 9) return 1;
-  if (vancouverHour < 12) return 2;
-  if (vancouverHour < 15) return 3;
-  if (vancouverHour < 18) return 4;
-  return 5;
+  if (vancouverHour < 8) return 1;
+  if (vancouverHour < 10) return 2;
+  if (vancouverHour < 12) return 3;
+  if (vancouverHour < 14) return 4;
+  if (vancouverHour < 15) return 5;
+  return 6;
 }

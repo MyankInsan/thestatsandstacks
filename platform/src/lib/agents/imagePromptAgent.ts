@@ -30,6 +30,91 @@ const CANVA_FALLBACK_STYLES: ViralStyle[] = [
   'PORTFOLIO_BAR_RACE',
 ];
 
+/**
+ * Several PROMPT_LIBRARY templates describe a SPECIFIC scene (Gulfstream + Rolex,
+ * Wall Street building, tech corporate office). When the same template fires
+ * on multiple slides, image gen renders the same scene N times. The fix:
+ * for each "scene-literal" style, define N distinct scene variants and rotate
+ * deterministically per slide so the carousel feels varied even when the
+ * underlying style category repeats.
+ */
+const LUXURY_SCENE_VARIANTS = [
+  { setting: 'inside a Gulfstream private jet cabin with cream leather seats and a polished walnut table by the window', hero: 'a pristine Rolex Daytona watch resting on the dark walnut table', light: 'warm golden hour sunlight streaming through the porthole windows, volumetric light rays through cabin haze' },
+  { setting: 'on the teak deck of a Riva yacht at sunset, Italian coastline blurred behind', hero: 'a half-finished glass of Macallan 25 beside an open Wall Street Journal weighted against the breeze', light: 'low-angle Mediterranean golden hour, water reflections playing on the deck wood' },
+  { setting: 'in a mahogany-paneled private library with floor-to-ceiling shelves of leather-bound books', hero: 'a Mont Blanc Meisterstück fountain pen lying on an open leather ledger', light: 'a single brass desk lamp casting an amber pool of light, deep shadows in the corners' },
+  { setting: 'in a corner office on the top floor of a glass tower overlooking a glittering city skyline at twilight', hero: 'a single matte-black business card holder beside a Hermès leather portfolio on a slate desk', light: 'cool city-light blue mixing with warm tungsten of a single architect lamp' },
+  { setting: 'inside a walk-in watch vault with rosewood display cases lining the walls, museum lighting throughout', hero: 'a Patek Philippe Nautilus 5711 on a velvet pillow at the focal point', light: 'museum-style focused spot lighting on the central piece, indirect ambient elsewhere' },
+  { setting: 'in the back seat of a Bentley Mulsanne at twilight, beige leather and burr walnut interior everywhere', hero: 'a folded Financial Times on the burr walnut tray table beside a leather glasses case', light: 'reflected city light streaming through the windows, a warm interior reading lamp glow' },
+];
+
+const ARCHITECTURE_SCENE_VARIANTS = [
+  { setting: 'the NYSE building facade with its iconic Greek columns shot from a low angle at golden hour', mood: 'institutional gravitas, classic Wall Street' },
+  { setting: 'the Bay Street skyline of Toronto at dusk with RBC tower in focus, glass and steel reflecting orange clouds', mood: 'Canadian financial district, contemporary corporate' },
+  { setting: 'the Bank of Canada building in Ottawa, Brutalist concrete and stone facade with deep shadows', mood: 'central-bank authority, restrained modernism' },
+  { setting: 'a Manhattan glass skyscraper from street level looking up, dramatic vanishing-point perspective', mood: 'vertical ambition, post-modern finance' },
+  { setting: 'Brookfield Place atrium in Toronto with its arched glass roof, late-afternoon light pouring through', mood: 'high-end corporate, light-filled' },
+  { setting: 'the Federal Reserve facade in Washington DC, marble columns and stone steps shot in early morning light', mood: 'monetary policy gravitas, classical Americana' },
+];
+
+const OFFICE_SCENE_VARIANTS = [
+  { setting: 'a modern tech HQ open floor — concrete walls, exposed-beam ceilings, sleek monitor banks, smart-casual employees mid-stride', mood: 'Big Tech HQ' },
+  { setting: 'a quant fund trading floor — wall of curved monitors, dark carpets, headset-wearing analysts at every desk', mood: 'quantitative trading' },
+  { setting: 'a Canadian Big-5 bank executive floor — oak panels, deep navy carpet, brass fixtures, fitted bankers in dark suits', mood: 'Bay Street old guard' },
+  { setting: 'a hedge fund war room — dual-screen Bloomberg terminals everywhere, leather chairs, dim cinematic lighting', mood: 'macro hedge fund' },
+  { setting: 'a Shopify-style modern office — bright natural light, plants, exposed brick, casual founder-energy', mood: 'tech scale-up' },
+  { setting: 'a SoftBank-style VC partner office — minimalist white, single large abstract artwork, glass desk, single founder visitor seat', mood: 'global VC fund' },
+];
+
+function pickSceneVariant<T>(variants: T[], slideNumber: number, dateKey: string): T {
+  const hash = simpleHash(`${dateKey}-slide-${slideNumber}`) % variants.length;
+  return variants[hash];
+}
+
+function simpleHash(str: string): number {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h);
+}
+
+/**
+ * Returns a scene-variant-substituted version of the PROMPT_LIBRARY template
+ * for styles that ship with built-in scene variants. For other styles, returns
+ * null and the caller uses the original template.
+ */
+function getSceneVarySubstitutedTemplate(
+  style: ViralStyle,
+  slideNumber: number,
+  dateKey: string,
+  tickerSymbols?: string[],
+): string | null {
+  const tickerLogoAgent = new TickerLogoAgent();
+  const resolvedTicker = tickerSymbols && tickerSymbols.length > 0 ? tickerLogoAgent.resolve(tickerSymbols[0]) : undefined;
+
+  if (style === 'LUXURY_LIFESTYLE') {
+    const v = pickSceneVariant(LUXURY_SCENE_VARIANTS, slideNumber, dateKey);
+    return `A hyper-realistic, cinematic editorial photograph ${v.setting}. The hero of the composition: ${v.hero}. Lighting: ${v.light}. Shot on Hasselblad H6D-100c, f/2.8, shallow depth of field, premium color grading with deep rich shadows. Pure editorial photography, no AI artifacts.`;
+  }
+  if (style === 'ARCHITECTURAL_OVERLAY') {
+    const v = pickSceneVariant(ARCHITECTURE_SCENE_VARIANTS, slideNumber, dateKey);
+    let settingStr = v.setting;
+    if (resolvedTicker) {
+      settingStr = settingStr.replace(/a corporate headquarters/i, `the modern glass and steel corporate headquarters of ${resolvedTicker.companyName}`);
+    }
+    return `A cinematic, hyper-realistic, slightly desaturated photograph of ${settingStr}. Mood: ${v.mood}. Sharp architectural lines, premium editorial photography, shot on Phase One IQ4 with a tilt-shift lens. No people, no text overlays — pure architectural geometry.`;
+  }
+  if (style === 'CORPORATE_OFFICE_SPACE') {
+    const v = pickSceneVariant(OFFICE_SCENE_VARIANTS, slideNumber, dateKey);
+    let logoStr = 'a subtle corporate logo mark';
+    if (resolvedTicker) {
+      logoStr = `a subtle corporate logo mark of ${resolvedTicker.companyName} (${resolvedTicker.markStyle})`;
+    }
+    return `A premium, clean editorial photograph of ${v.setting}. Setting mood: ${v.mood}. A concrete wall displays ${logoStr} in the background. Moody studio side-lighting, shot with cinematic depth of field.`;
+  }
+  return null;
+}
+
 const PREMIUM_POLISH_KIT = `
 PREMIUM POLISH (always apply):
 - Lighting: pick one — Rembrandt rim (portraits), Kino softbox (product), hard rim + atmospheric smoke (action), golden-hour window light (lifestyle).
@@ -85,6 +170,7 @@ export class ImagePromptAgent extends BaseAgent {
     constraints?: CarouselConstraints;
     recentHistory?: ContentHistoryEntry[];
     tickerSymbols?: string[];
+    dateKey?: string;
   }): Promise<ImagePromptSet> {
     console.log(`[${this.name}] 🎨 Composing dynamic visual prompts for ${input.slides.length} slides...`);
 
@@ -117,10 +203,15 @@ export class ImagePromptAgent extends BaseAgent {
       );
     }
 
+    const dateKey = input.dateKey ?? new Date().toISOString().split('T')[0];
+
     const slides = input.slides.map((slide) => {
-      let visualDescription = generatedPromptsMap.get(slide.slideNumber);
+      let visualDescription = getSceneVarySubstitutedTemplate(slide.visualStyle, slide.slideNumber, dateKey, input.tickerSymbols);
       if (!visualDescription) {
-        visualDescription = buildFallbackVisualDescription(slide, input.format, input.constraints);
+        visualDescription = generatedPromptsMap.get(slide.slideNumber);
+      }
+      if (!visualDescription) {
+        visualDescription = buildFallbackVisualDescription(slide, input.format, input.constraints, dateKey, input.tickerSymbols);
       }
 
       const compiledPrompt = compilePromptString(slide, visualDescription, input.format, input.constraints);
@@ -156,7 +247,8 @@ function buildLlmPrompt(input: {
   const hook = input.strategy?.hook || '';
   const formatType = input.format.formatType;
   const tone = input.format.visualTone;
-  const colors = `bg=${input.format.colorScheme.bg}, accent1=${input.format.colorScheme.accent1}, accent2=${input.format.colorScheme.accent2}`;
+  const isLight = input.format.colorScheme.bg.toLowerCase() === '#f8f9fa';
+  const colors = `bg=${input.format.colorScheme.bg}, accent1=${input.format.colorScheme.accent1}, accent2=${input.format.colorScheme.accent2}${isLight ? ' (LIGHT MODE)' : ' (DARK MODE)'}`;
 
   const slidesJson = input.slides.map((s) => ({
     slideNumber: s.slideNumber,
@@ -219,6 +311,7 @@ PROMPT DESIGN RULES:
 5. NO IN-IMAGE TEXT OR LOGOS THAT THE CODE WILL ADD: do not describe overlapping text, random floating letters, headline labels, or watermarks in your visual descriptions. The compiler appends text-overlay instructions separately.
 6. ANTI-MIDJOURNEY RULE: Do NOT include Midjourney/SD CLI flags like --ar 4:5, --style raw, --v 6.0, --s 200. These break Seedance and ChatGPT image gen. They must not appear in your output.
 7. PREMIUM CTA SLIDE RULE: For the final slide (role: cta), construct a highly premium cinematic scene matching the CTA SHAPE above (executive boardroom for save_specific, story-poll display for story_vote, etc.). Never describe simple checklists or flat backgrounds for the CTA.
+8. LIGHT MODE ADAPTATION RULE: If the palette is LIGHT MODE (bg is light, e.g. #F8F9FA), you MUST adapt all templates and descriptions to fit a light, clean, bright aesthetic. Avoid phrases like "pitch-black", "dark room", "dark background", "dark navy", "black matte canvas", or "white text on dark". Instead, use "clean light background", "bright room", "light matte canvas", "dark text on light", etc. Ensure high contrast so elements are readable.
 
 ${PREMIUM_POLISH_KIT}
 
@@ -265,10 +358,41 @@ function buildTickerLogoSection(tickerSymbols: string[]): string {
   return `TICKER LOGOS (render exactly as described — do not invent alternate brand marks):\n${lines.join('\n')}`;
 }
 
-function buildFallbackVisualDescription(slide: SlideSpec, format: FormatDecision, constraints?: CarouselConstraints): string {
+function buildFallbackVisualDescription(
+  slide: SlideSpec,
+  format: FormatDecision,
+  constraints?: CarouselConstraints,
+  dateKey: string = new Date().toISOString().split('T')[0],
+  tickerSymbols?: string[],
+): string {
   const { colorScheme } = format;
   const templateKey = pickFallbackStyle(slide.visualStyle, constraints);
-  const template = PROMPT_LIBRARY[templateKey];
+  
+  let template = getSceneVarySubstitutedTemplate(templateKey, slide.slideNumber, dateKey, tickerSymbols);
+  if (!template) {
+    template = PROMPT_LIBRARY[templateKey];
+  }
+
+  const isLight = colorScheme.bg.toLowerCase() === '#f8f9fa';
+  if (isLight) {
+    template = template
+      .replace(/pitch-black\s+\[bg\]/gi, 'clean [bg]')
+      .replace(/dark matte navy background\. White text/gi, 'clean white background. Dark grey text')
+      .replace(/on a dark charcoal-textured background/gi, 'on a clean light-textured background')
+      .replace(/dark navy background/gi, 'clean light background')
+      .replace(/dark background/gi, 'light background')
+      .replace(/pitch-black matte canvas/gi, 'light matte canvas')
+      .replace(/pitch black background/gi, 'light background')
+      .replace(/deep charcoal/gi, 'light grey')
+      .replace(/dark room/gi, 'bright room')
+      .replace(/darkened room/gi, 'bright room')
+      .replace(/dark, smoky space/gi, 'bright, clean space')
+      .replace(/dark, moody forest/gi, 'sunlit open forest')
+      .replace(/body line in light grey/gi, 'body line in dark grey')
+      .replace(/outlines in white/gi, 'outlines in dark grey')
+      .replace(/soft dark card/gi, 'soft light card')
+      .replace(/Reflective black floor/gi, 'Reflective light floor');
+  }
 
   const portraitDescription = constraints?.portraitSelection?.promptHint ?? 'a sharp 50-something portfolio manager with silver hair, navy chalk-stripe suit, no tie';
   const stock = (slide.dataPoint && /[A-Z]{2,5}/.test(slide.dataPoint)) ? slide.dataPoint.match(/[A-Z]{2,5}/)![0] : 'a major company';
@@ -297,6 +421,22 @@ function pickFallbackStyle(suggested: ViralStyle, constraints?: CarouselConstrai
   return 'ARCHITECTURAL_OVERLAY';
 }
 
+export function getTextLayoutDirective(position: SlideSpec['visualPosition']): string {
+  switch (position) {
+    case 'background':
+      return 'Layout structure: The main visual element is a full-frame background texture or subtle abstract pattern serving as a clean back-drop. The text overlays must be rendered prominently directly on top, centered and highly legible against this background.';
+    case 'left':
+      return 'Layout structure: Clean vertical split-column layout. The main visual subject is positioned on the left side of the 1080x1350 frame, while the text overlays are aligned cleanly in a vertical column on the right 50% of the frame in spacious negative space.';
+    case 'right':
+      return 'Layout structure: Clean vertical split-column layout. The main visual subject is positioned on the right side of the 1080x1350 frame, while the text overlays are aligned cleanly in a vertical column on the left 50% of the frame in spacious negative space.';
+    case 'center':
+      return 'Layout structure: Center-aligned typographic overlay. The main visual subject is centered in the frame. The text overlays are centered and cleanly integrated, either above or below the main subject, maintaining perfect balance and legibility.';
+    case 'top':
+    default:
+      return 'Layout structure: Standard top-third layout. The text elements are positioned cleanly in the top 30% of the canvas in a stacked, centered block. The main visual scene is positioned below, occupying the lower 70% of the canvas.';
+  }
+}
+
 function compilePromptString(
   slide: SlideSpec,
   visualDescription: string,
@@ -320,7 +460,13 @@ function compilePromptString(
   const isChartData = ['chart_data', 'data', 'shock_stat'].includes(slide.role);
   const chartGuidance = isChartData ? `\n\n${FINANCIAL_TEXT_RENDERING}` : '';
 
-  const sceneDescription = `${visualDescription} The composition uses ${colorScheme.bg} as the dominant background hue with clean dark-mode gradients and cinematic studio lighting calibrated to the visual element above.`;
+  const isLight = colorScheme.bg.toLowerCase() === '#f8f9fa';
+  const lightingStyle = isLight
+    ? 'clean light-mode studio gradients and bright professional lighting'
+    : 'clean dark-mode gradients and cinematic studio lighting';
+  
+  const layoutDirective = getTextLayoutDirective(slide.visualPosition);
+  const sceneDescription = `${visualDescription} ${layoutDirective} The composition uses ${colorScheme.bg} as the dominant background hue with ${lightingStyle} calibrated to the visual element above.`;
 
   return [
     `Create a 1080x1350 portrait Instagram image for Seedance or ChatGPT image gen (NOT Midjourney — do not include --ar, --style, --v, or --s flags).`,

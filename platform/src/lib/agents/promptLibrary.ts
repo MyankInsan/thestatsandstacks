@@ -62,7 +62,11 @@ export type ViralStyle =
   | 'EARNINGS_CARD'
   | 'MAP_DATA_OVERLAY'
   | 'EDITORIAL_REACTION_CARICATURE'
-  | 'TYPOGRAPHIC_MEGA_NUMBER';
+  | 'TYPOGRAPHIC_MEGA_NUMBER'
+  // Meme / Satirical structures
+  | 'MEME_COMIC_PLATE'
+  | 'SATIRICAL_METAPHOR'
+  | 'FUNNY_COMPARISON';
 
 export const PROMPT_LIBRARY: Record<ViralStyle, string> = {
   // ── Data viz ─────────────────────────────────────────────────────────────
@@ -129,6 +133,9 @@ export const PROMPT_LIBRARY: Record<ViralStyle, string> = {
   MAP_DATA_OVERLAY: 'A clean editorial choropleth map of Canada (or a relevant region) on [bg]. Provincial outlines in white at low opacity; each province filled with a heat-color graduation from light to dark [accent1] proportional to a data value. Small white labels with the data value sit on each province. Top of canvas reads an eyebrow describing the metric. Cartographic gridlines extremely subtle. No coastlines, no extra geography, just clean province shapes.',
   EDITORIAL_REACTION_CARICATURE: 'A high-quality editorial caricature of [portraitDescription] in the New Yorker / Vanity Fair illustrated portrait tradition. Ink-and-watercolor treatment, slightly exaggerated features but elegant and dignified. The subject is reacting to a financial event with a specific, identifiable expression (concerned, amused, contemplative). [bg] background with a subtle [accent1] vignette. Avoid Reddit-meme style, WSB rocket-emoji aesthetic, exaggerated frat-bro humor, cartoon caricature, or generic Bitmoji treatment. Treatment is editorial print magazine illustration only. One subject, one expression, breathing room around the figure.',
   TYPOGRAPHIC_MEGA_NUMBER: 'A single massive numeric figure rendered as the entire composition — e.g. "+18.2%" or "$2.4B" filling 70% of the canvas in custom-cut ultra-condensed display serif, color [accent1], set against a flat [bg] background with a faint paper-grain texture. The numerals have sharp ink-trap detailing and slight optical kerning. A small editorial caption sits in the lower-third in 14pt sans-serif. Render the exact number, perfectly spelled, no extra digits, no duplicated numerals. Massimo Vignelli editorial typography reference.',
+  MEME_COMIC_PLATE: 'A high-end, 2-frame comic strip layout on [bg] with a hand-drawn ink and watercolor style. The left frame shows [portraitDescription] looking smugly at a chart that goes up. The right frame shows them sweating profusely as the chart crashes. Text balloons are empty and clean. Premium New Yorker editorial cartoon style.',
+  SATIRICAL_METAPHOR: 'A high-fidelity satirical concept illustration. A giant, clean corporate piggy bank wearing a silk top hat and monocle, greedily swallowing a tiny paper bag of groceries on [bg]. Moody rim lighting, high-contrast, humorous editorial print-cartoon style.',
+  FUNNY_COMPARISON: 'A high-contrast comparison scene on [bg]. On the left side, a sleek golden pedestal with a single, highly detailed, glowing golden coin representing a disciplined investor\'s portfolio. On the right side, a chaotic pile of lottery tickets, burning money, and a toy rocket ship representing a meme-stock trader\'s portfolio. Deep dark background, dramatic side-lighting.',
 };
 
 /**

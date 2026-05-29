@@ -31,6 +31,8 @@ export interface CarouselConstraintsInput {
   topicCategory: TopicCategory;
   isReactiveSentiment: boolean;
   hasTickers: boolean;
+  tickers?: string[];
+  topic?: string;
   recentHistory: ContentHistoryEntry[];
   todayDateKey: string;
   todayPriorEntries: ContentHistoryEntry[];
@@ -63,6 +65,8 @@ export class CarouselConstraintAgent {
         recentPortraitSlugs: recentSubjects,
         recentArchetypeSlugs: recentArchetypes,
         deterministicSeed: `${input.todayDateKey}-s${input.slot.index}`,
+        tickers: input.tickers,
+        topicTitle: input.topic,
       });
     }
 

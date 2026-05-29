@@ -3,14 +3,15 @@ import type { HookFormulaId } from './hookFormulas';
 import type { CtaId } from './ctaLibrary';
 import type { AngleId } from './topicAngleAgent';
 
-export type SlotIndex = 1 | 2 | 3 | 4 | 5;
+export type SlotIndex = 1 | 2 | 3 | 4 | 5 | 6;
 
 export type SlotPersona =
   | 'PRE_MARKET_NEWS'
   | 'PORTFOLIO_POWER_PLAYER'
   | 'DATA_EDUCATION'
   | 'CONTRARIAN_MYTH_BUST'
-  | 'LIFESTYLE_STORYTELLING';
+  | 'LIFESTYLE_STORYTELLING'
+  | 'MEME_HUMOR';
 
 export interface SlotConfig {
   index: SlotIndex;
@@ -41,7 +42,7 @@ export const SLOT_CONFIGS: Record<SlotIndex, SlotConfig> = {
   2: {
     index: 2,
     persona: 'PORTFOLIO_POWER_PLAYER',
-    ptHour: 10,
+    ptHour: 9,
     ptMinute: 0,
     allowedFormats: ['PHOTOREALISTIC_EXPERT_SHOCK', 'PHOTOREALISTIC_MARKET_UPDATE'],
     preferredAngles: [
@@ -56,7 +57,7 @@ export const SLOT_CONFIGS: Record<SlotIndex, SlotConfig> = {
   3: {
     index: 3,
     persona: 'DATA_EDUCATION',
-    ptHour: 13,
+    ptHour: 11,
     ptMinute: 0,
     allowedFormats: ['PHOTOREALISTIC_MARKET_UPDATE', 'PHOTOREALISTIC_MINIMAL_TECH'],
     preferredAngles: [
@@ -69,8 +70,8 @@ export const SLOT_CONFIGS: Record<SlotIndex, SlotConfig> = {
   4: {
     index: 4,
     persona: 'CONTRARIAN_MYTH_BUST',
-    ptHour: 16,
-    ptMinute: 30,
+    ptHour: 13,
+    ptMinute: 0,
     allowedFormats: ['PHOTOREALISTIC_MINIMAL_TECH', 'PHOTOREALISTIC_EXPERT_SHOCK'],
     preferredAngles: [
       'REACTIVE_SENTIMENT', 'HYPOTHETICAL_REVERSAL', 'BEHAVIORAL_RECEIPT',
@@ -82,15 +83,26 @@ export const SLOT_CONFIGS: Record<SlotIndex, SlotConfig> = {
   5: {
     index: 5,
     persona: 'LIFESTYLE_STORYTELLING',
-    ptHour: 19,
-    ptMinute: 30,
+    ptHour: 14,
+    ptMinute: 0,
     allowedFormats: ['PHOTOREALISTIC_LUXURY_LIFESTYLE'],
     preferredAngles: [
-      'HYPOTHETICAL_REVERSAL', 'BEHAVIORAL_RECEIPT', 'TAX_DRAG_MAP',
+      'HYPOTHETICAL_REVERSAL', 'BEHAVIORAL_RECEIPT', 'DIVIDEND_KINGS',
     ],
     preferredHookFormulas: ['TIME_CAPSULE', 'COHORT_TRUTH', 'QUIET_COMPOUNDER'],
     preferredCtas: ['save_specific', 'share_use_case', 'reference_save'],
     description: 'Lifestyle / storytelling — time-capsule, wealth psychology',
+  },
+  6: {
+    index: 6,
+    persona: 'MEME_HUMOR',
+    ptHour: 15,
+    ptMinute: 0,
+    allowedFormats: ['MEME_HUMOR'],
+    preferredAngles: ['HYPOTHETICAL_REVERSAL', 'BEHAVIORAL_RECEIPT', 'COMPARISON_LADDER'],
+    preferredHookFormulas: ['REVERSE_SURVIVORSHIP', 'MYTH_STRIKE', 'PREMIUM_CONTRARIAN'],
+    preferredCtas: ['share_use_case', 'question_open', 'comment_genuine_question'],
+    description: 'Meme / financial humor — lighthearted, funny, eye-catching satire',
   },
 };
 
@@ -99,14 +111,14 @@ export function getSlotConfig(index: SlotIndex): SlotConfig {
 }
 
 const UTC_HOUR_MAP_PDT: Record<number, SlotIndex> = {
-  14: 1, 17: 2, 20: 3, 23: 4, 2: 5,
+  14: 1, 16: 2, 18: 3, 20: 4, 21: 5, 22: 6,
 };
 const UTC_HOUR_MAP_PST: Record<number, SlotIndex> = {
-  15: 1, 18: 2, 21: 3, 0: 4, 3: 5,
+  15: 1, 17: 2, 19: 3, 21: 4, 22: 5, 23: 6,
 };
 
 const SLOT_MINUTES: Record<SlotIndex, number> = {
-  1: 0, 2: 0, 3: 0, 4: 30, 5: 30,
+  1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0,
 };
 
 /**
