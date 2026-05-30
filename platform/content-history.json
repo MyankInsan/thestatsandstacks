@@ -1078,49 +1078,6 @@
     },
     {
       "date": "2026-05-30",
-      "topic": "IonQ, Inc. (IONQ) Heat Check: What the Move Actually Means",
-      "hook": "Everyone says quantum is ready. The disclosure says otherwise.",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "MEME_HUMOR",
-      "slideCount": 6,
-      "keywords": [
-        "IONQ stock",
-        "IonQ Inc stock",
-        "speculative growth risks",
-        "quantum computing stocks"
-      ],
-      "visualSignature": "2026-05-30-26677738473",
-      "schemaVersion": 2,
-      "slotIndex": 6,
-      "postedAtUtc": "2026-05-30T07:13:09.821Z",
-      "tickersFeatured": [],
-      "topicCategory": "BEHAVIORAL",
-      "hookFormulaId": "PREMIUM_CONTRARIAN",
-      "ctaId": "comment_genuine_question",
-      "angleId": "COMPARISON_LADDER",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "MEME_COMIC_PLATE",
-        "CARICATURE_PORTRAIT",
-        "SATIRICAL_METAPHOR",
-        "COMPARISON_TABLE",
-        "FUNNY_COMPARISON",
-        "PREMIUM_CTA"
-      ],
-      "coverVisualStyle": "MEME_COMIC_PLATE",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "young_retail_trader"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#09090D",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FF2E93"
-      }
-    },
-    {
-      "date": "2026-05-30",
       "topic": "Broadcom Inc. (AVGO) Heat Check: What to Watch on Your Watchlist",
       "hook": "AVGO is up this year. Should you care?",
       "format": "WATCHLIST_EDUCATION",
@@ -1330,6 +1287,50 @@
         "primaryText": "#FFFFFF",
         "accent1": "#FFD700",
         "accent2": "#FFFFFF"
+      }
+    },
+    {
+      "date": "2026-05-30",
+      "topic": "Rocket Lab (RKLB) Heat Check: How to Analyze Speculative Growth",
+      "hook": "If you skipped RKLB and bought the index",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 6,
+      "keywords": [
+        "RKLB stock",
+        "speculative growth risks",
+        "how to analyze momentum stocks",
+        "Rocket Lab",
+        "investor psychology"
+      ],
+      "visualSignature": "2026-05-30-26697190539",
+      "schemaVersion": 2,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-05-30T23:05:32.365Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "REVERSE_SURVIVORSHIP",
+      "ctaId": "comment_genuine_question",
+      "angleId": "COMPARISON_LADDER",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "EDITORIAL_REACTION_CARICATURE",
+        "BAR_CHART_HORIZONTAL",
+        "NATURE_METAPHOR",
+        "CHESS_BOARD_STRATEGY",
+        "VAULT_SECURITY",
+        "LUXURY_LIFESTYLE"
+      ],
+      "coverVisualStyle": "EDITORIAL_REACTION_CARICATURE",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "retiree_with_charts"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#09090D",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FF2E93"
       }
     }
   ]
