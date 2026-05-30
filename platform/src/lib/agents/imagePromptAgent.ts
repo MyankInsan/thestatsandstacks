@@ -143,7 +143,7 @@ COVER SLIDE PREMIUM PLAYBOOK (apply to role === 'cover'):
 - 7:1 contrast minimum, light-on-dark preferred for feed thumb-stop.
 `.trim();
 
-const WATERMARK_LINE = '';
+const WATERMARK_LINE = 'At the very bottom center of the canvas, render a tiny, elegant, low-profile watermark that reads "@thestatsandstacks" in a clean, modern sans-serif font with wide letter-spacing, integrated subtly into the background so it serves as a sophisticated, non-distracting brand signature.';
 
 const FINANCIAL_TEXT_RENDERING = `
 FINANCIAL TEXT RENDERING (apply when slide contains numbers or chart):
@@ -306,7 +306,7 @@ CRITICAL VISUAL DESIGN DIRECTIVES (MUST FOLLOW):
 4. SPECIFY COMPLEX LIGHTING & ATMOSPHERE: Describe premium lighting setups: volumetric light rays, warm golden-hour window light, cool twilight mixing with warm desk glow, or Rembrandt rim lighting.
 5. SPECIFY HIGH-END CAMERAS & PRIME LENSES: Explicitly write camera settings: "Shot on Hasselblad H6D-100c, f/2.8, shallow depth of field" (for portraits/archetypes), "Phase One IQ4, crisp focus, tilt-shift lens" (for products/infographics), or "ARRI Alexa 65 anamorphic, cinematic color grading, 35mm lens" (for cinematic/metaphors).
 6. SEQUENCE-AWARE VARIETY: Alternately rotate camera angles, compositions, and subject classes across slides. No two adjacent slides should share a visualStyle or share the same dominant subject class (portrait, chart, building, metaphor, typography). Ensure the slides look like a cohesive yet diverse set of premium slides.
-7. INTEGRATE SEMANTIC TEXT WHEN RELEVANT: If the slide style includes speech bubbles, signs, labels, chart axes, or scoreboard numbers, explicitly describe the exact text that should be rendered inside them (e.g. what a character is saying in a comic strip balloon, or what label is on a folder). Do not use blank templates or empty speech bubbles. (Only avoid describing the main overhead headline and sub-headline overlay which are compiled separately).
+7. INTEGRATE SEMANTIC TEXT WHEN RELEVANT: If the slide style includes speech bubbles, signs, labels, chart axes, or scoreboard numbers, explicitly describe the exact text that should be rendered inside them (e.g. what a character is saying in a comic strip balloon, or what label is on a folder). Do not use blank templates or empty speech bubbles. (Only avoid describing the main overhead headline, sub-headline overlay, and the bottom "@thestatsandstacks" watermark, which are compiled separately).
 8. LIGHT MODE ADAPTATION RULE: If the palette is LIGHT MODE (bg is light, e.g. #F8F9FA), you MUST adapt all templates and descriptions to fit a light, clean, bright aesthetic. Avoid phrases like "pitch-black", "dark room", "dark background", "dark navy", "black matte canvas", or "white text on dark". Instead, use "clean light background", "bright room", "light matte canvas", "dark text on light", etc. Ensure high contrast so elements are readable.
 
 ${PREMIUM_POLISH_KIT}
