@@ -1121,49 +1121,6 @@
     },
     {
       "date": "2026-05-30",
-      "topic": "The Compounding Snowball: How Dividend Reinvestment (DRIP) Actually Works",
-      "hook": "1% sounds small. Here is the 30-year math",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
-      "slideCount": 6,
-      "keywords": [
-        "DRIP investing Canada",
-        "dividend compound interest",
-        "Canadian dividend stocks",
-        "dividend reinvestment plan"
-      ],
-      "visualSignature": "2026-05-30-26678491389",
-      "schemaVersion": 2,
-      "slotIndex": 5,
-      "postedAtUtc": "2026-05-30T07:51:39.873Z",
-      "tickersFeatured": [],
-      "topicCategory": "HOW_TO",
-      "hookFormulaId": "QUIET_COMPOUNDER",
-      "ctaId": "save_specific",
-      "angleId": "DIVIDEND_KINGS",
-      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
-      "visualStylesUsed": [
-        "CHESS_BOARD_STRATEGY",
-        "GLOWING_QUOTE",
-        "BAR_CHART_HORIZONTAL",
-        "PORTFOLIO_DOUGHNUT_PORTRAIT",
-        "MINIMALIST_CHECKLIST",
-        "VAULT_SECURITY"
-      ],
-      "coverVisualStyle": "CHESS_BOARD_STRATEGY",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "retiree_with_charts"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0A0A0A",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FFFFFF"
-      }
-    },
-    {
-      "date": "2026-05-30",
       "topic": "Broadcom Inc. (AVGO) Heat Check: What to Watch on Your Watchlist",
       "hook": "AVGO is up this year. Should you care?",
       "format": "WATCHLIST_EDUCATION",
@@ -1330,6 +1287,49 @@
         "primaryText": "#111827",
         "accent1": "#2563EB",
         "accent2": "#4B5563"
+      }
+    },
+    {
+      "date": "2026-05-30",
+      "topic": "S&P 500 Record High: The 5-Question Risk Filter for Canadian Investors",
+      "hook": "Average investor vs the index they held",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 6,
+      "keywords": [
+        "S&P 500 record high",
+        "investor psychology",
+        "index fund investing",
+        "currency drag Canada"
+      ],
+      "visualSignature": "2026-05-30-26695793888",
+      "schemaVersion": 2,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-05-30T21:54:24.485Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "COHORT_TRUTH",
+      "ctaId": "save_specific",
+      "angleId": "BEHAVIORAL_RECEIPT",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "MAGAZINE_COVER",
+        "AREA_CHART",
+        "HEATMAP_GRID",
+        "CIRCULAR_PORTFOLIO_WHEEL",
+        "ANIMAL_METAPHOR",
+        "LUXURY_LIFESTYLE"
+      ],
+      "coverVisualStyle": "MAGAZINE_COVER",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "boomer_diy_investor"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FFFFFF"
       }
     }
   ]
