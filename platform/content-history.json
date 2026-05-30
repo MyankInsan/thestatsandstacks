@@ -1161,6 +1161,48 @@
         "accent1": "#FFD700",
         "accent2": "#FFFFFF"
       }
+    },
+    {
+      "date": "2026-05-30",
+      "topic": "Broadcom Inc. (AVGO) Heat Check: What to Watch on Your Watchlist",
+      "hook": "AVGO is up this year. Should you care?",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 7,
+      "keywords": [
+        "AVGO stock analysis",
+        "Broadcom news",
+        "AI hardware stocks",
+        "stock watchlist"
+      ],
+      "visualSignature": "2026-05-30-26687041184",
+      "schemaVersion": 2,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-05-30T15:03:26.370Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "QUIET_NUMBER",
+      "ctaId": "follow_authority",
+      "angleId": "INDEX_REBALANCE",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "ARCHITECTURAL_OVERLAY",
+        "CROWD_PANIC",
+        "MILITARY_AEROSPACE_METAPHOR",
+        "CANDLESTICK_CHART",
+        "TICKER_TAPE_HERO",
+        "NEON_TERMINAL",
+        "EDITORIAL_SPLIT_LAYOUT"
+      ],
+      "coverVisualStyle": "ARCHITECTURAL_OVERLAY",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#39FF14",
+        "accent2": "#00CFFF"
+      }
     }
   ]
 }
