@@ -1246,6 +1246,48 @@
         "accent1": "#FF3B30",
         "accent2": "#FFD700"
       }
+    },
+    {
+      "date": "2026-05-30",
+      "topic": "TSX Record High: What Smart Investors Check Before Reacting",
+      "hook": "If you invest in Canadian stocks, do this first",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 7,
+      "keywords": [
+        "TSX record high",
+        "investing Canada",
+        "Canadian index high",
+        "portfolio rebalancing"
+      ],
+      "visualSignature": "2026-05-30-26692761258",
+      "schemaVersion": 2,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-05-30T19:29:49.692Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "IF_THEN_LADDER",
+      "ctaId": "reference_save",
+      "angleId": "ETF_XRAY",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "TRADER_DESK_SILHOUETTE",
+        "CORPORATE_OFFICE_SPACE",
+        "RADAR_CHART",
+        "AREA_CHART",
+        "HEATMAP_GRID",
+        "CIRCULAR_PORTFOLIO_WHEEL",
+        "LUXURY_LIFESTYLE"
+      ],
+      "coverVisualStyle": "TRADER_DESK_SILHOUETTE",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
+      }
     }
   ]
 }
