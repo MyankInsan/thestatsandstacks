@@ -1075,6 +1075,49 @@
         "accent1": "#FFD700",
         "accent2": "#FF2E93"
       }
+    },
+    {
+      "date": "2026-05-30",
+      "topic": "IonQ, Inc. (IONQ) Heat Check: What the Move Actually Means",
+      "hook": "Everyone says quantum is ready. The disclosure says otherwise.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 6,
+      "keywords": [
+        "IONQ stock",
+        "IonQ Inc stock",
+        "speculative growth risks",
+        "quantum computing stocks"
+      ],
+      "visualSignature": "2026-05-30-26677738473",
+      "schemaVersion": 2,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-05-30T07:13:09.821Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "PREMIUM_CONTRARIAN",
+      "ctaId": "comment_genuine_question",
+      "angleId": "COMPARISON_LADDER",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "MEME_COMIC_PLATE",
+        "CARICATURE_PORTRAIT",
+        "SATIRICAL_METAPHOR",
+        "COMPARISON_TABLE",
+        "FUNNY_COMPARISON",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "MEME_COMIC_PLATE",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "young_retail_trader"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#09090D",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FF2E93"
+      }
     }
   ]
 }
