@@ -131,12 +131,12 @@ Pick the best one. Output ONLY valid JSON (no markdown, no code fences):
 
 const fallbackStrategies: StrategyDecision[] = [
   {
-    topic: 'If You Invested $10,000 in SanDisk 5 Years Ago',
-    hook: 'What $10k in SNDK looks like today.',
+    topic: 'If You Invested $10,000 in NVIDIA 5 Years Ago',
+    hook: 'What $10k in NVDA looks like today.',
     format: 'CAROUSEL',
     slideCount: 6,
     slideBreakdown: [
-      "Slide 1: What $10k in SNDK looks like today | The power of holding a tech winner | Let's look at the math",
+      "Slide 1: What $10k in NVDA looks like today | The power of holding a tech winner | Let's look at the math",
       'Slide 2: The Initial Investment | $10,000 invested 5 years ago | Buying when the market was uncertain',
       'Slide 3: The Growth Journey | Through macro shocks and rate hikes | The stock continued its trajectory',
       'Slide 4: The Result Today | That $10,000 is now worth $XX,XXX | A massive X% return',
@@ -145,7 +145,7 @@ const fallbackStrategies: StrategyDecision[] = [
     ],
     reasoning: 'Hypothetical "What If" scenarios are incredibly viral and drive massive engagement through FOMO and educational realization.',
     targetAudience: 'Investors and traders who want to see the power of long-term holding in popular stocks.',
-    searchKeywords: ['SanDisk stock', 'if you invested', 'compound growth', 'tech stocks'],
+    searchKeywords: ['NVIDIA stock', 'if you invested', 'compound growth', 'tech stocks'],
     contentPillar: 'Hypothetical "What If" investment scenarios',
   },
   {

@@ -52,14 +52,26 @@ export class HistoryGuardAgent extends BaseAgent {
     const normalized = normalizeWords(input.topic);
     for (const entry of windowedHistory) {
       const entryNorm = normalizeWords(entry.topic);
+      const intersectionTopic = new Set([...normalized].filter((x) => entryNorm.has(x)));
       const topicSimilarity = jaccardSimilarity(normalized, entryNorm);
-      const keywordSet = new Set((entry.keywords ?? []).map((k) => k.toLowerCase().trim()));
-      const keywordSimilarity = jaccardSimilarity(normalized, keywordSet);
-      const similarity = Math.max(topicSimilarity, keywordSimilarity);
+      
+      const keywordWords = new Set<string>();
+      for (const k of entry.keywords ?? []) {
+        for (const w of normalizeWords(k)) {
+          keywordWords.add(w);
+        }
+      }
+      const intersectionKeyword = new Set([...normalized].filter((x) => keywordWords.has(x)));
+      const keywordSimilarity = jaccardSimilarity(normalized, keywordWords);
+
+      const topicOverlap = normalized.size > 0 ? intersectionTopic.size / normalized.size : 0;
+      const keywordOverlap = normalized.size > 0 ? intersectionKeyword.size / normalized.size : 0;
+      
+      const similarity = Math.max(topicSimilarity, keywordSimilarity, topicOverlap, keywordOverlap);
 
       if (similarity >= HARD_BLOCK_JACCARD) {
         const pivot = buildPivotSuggestion(input.topic, entry.topic);
-        console.log(`[${this.name}] Hard block — "${input.topic}" too similar to "${entry.topic}" (score ${similarity.toFixed(2)}). Pivot: ${pivot}`);
+        console.log(`[${this.name}] Hard block — "${input.topic}" too similar to "${entry.topic}" (score ${similarity.toFixed(2)}, overlap ${Math.max(topicOverlap, keywordOverlap).toFixed(2)}). Pivot: ${pivot}`);
         return {
           block: true,
           conflictsWith: entry.topic,
@@ -71,7 +83,7 @@ export class HistoryGuardAgent extends BaseAgent {
       }
       if (similarity >= BLOCK_THRESHOLD) {
         const pivot = buildPivotSuggestion(input.topic, entry.topic);
-        console.log(`[${this.name}] Soft block — "${input.topic}" similar to "${entry.topic}" (score ${similarity.toFixed(2)}). Pivot: ${pivot}`);
+        console.log(`[${this.name}] Soft block — "${input.topic}" similar to "${entry.topic}" (score ${similarity.toFixed(2)}, overlap ${Math.max(topicOverlap, keywordOverlap).toFixed(2)}). Pivot: ${pivot}`);
         return {
           block: true,
           conflictsWith: entry.topic,
@@ -140,10 +152,25 @@ function unique<T>(arr: T[]): T[] {
   return Array.from(new Set(arr.filter(Boolean)));
 }
 
+function stem(word: string): string {
+  if (word.length > 3 && word.endsWith('s')) {
+    if (word.endsWith('ies')) return word.slice(0, -3) + 'y';
+    if (word.endsWith('es') && !word.endsWith('aes') && !word.endsWith('ees') && !word.endsWith('oes')) {
+      return word.slice(0, -2);
+    }
+    return word.slice(0, -1);
+  }
+  return word;
+}
+
 function normalizeWords(text: string): Set<string> {
   const STOP_WORDS = new Set(['a', 'an', 'the', 'and', 'or', 'is', 'are', 'to', 'of', 'in', 'for', 'on', 'with', 'how', 'vs', 'versus', 'which', 'better', 'best', 'what', 'why', 'when', 'where', 'who']);
   return new Set(
-    text.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter((w) => w.length > 2 && !STOP_WORDS.has(w)),
+    text.toLowerCase()
+      .replace(/[^a-z0-9 ]/g, ' ')
+      .split(/\s+/)
+      .filter((w) => w.length > 2 && !STOP_WORDS.has(w))
+      .map(stem),
   );
 }
 

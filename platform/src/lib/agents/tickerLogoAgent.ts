@@ -25,6 +25,7 @@ export const TICKER_LOGO_MAP: Record<string, TickerLogoEntry> = {
   SMCI: { brandColorHex: '#005EB8', markStyle: 'blue Super Micro mark', companyName: 'Super Micro Computer' },
   SNDK: { brandColorHex: '#E10025', markStyle: 'red SanDisk wordmark', companyName: 'SanDisk' },
   WDC: { brandColorHex: '#FFD200', markStyle: 'gold Western Digital W mark', companyName: 'Western Digital' },
+  PSTG: { brandColorHex: '#FF6600', markStyle: 'orange Pure Storage P logo', companyName: 'Pure Storage' },
 
   // Fintech / crypto
   PLTR: { brandColorHex: '#101113', markStyle: 'black Palantir wordmark', companyName: 'Palantir Technologies' },

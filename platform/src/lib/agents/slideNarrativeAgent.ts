@@ -236,10 +236,12 @@ function validateAgainstConstraints(slides: SlideSpec[], constraints: CarouselCo
     }
   }
 
-  for (let i = 1; i < slides.length; i++) {
-    if (slides[i].visualStyle === slides[i - 1].visualStyle) {
-      violations.push(`Slides ${i} and ${i + 1} share visualStyle ${slides[i].visualStyle}`);
+  const seenStyles = new Set<string>();
+  for (const slide of slides) {
+    if (seenStyles.has(slide.visualStyle)) {
+      violations.push(`Slide ${slide.slideNumber} repeats visualStyle ${slide.visualStyle} which is already used in this carousel`);
     }
+    seenStyles.add(slide.visualStyle);
   }
 
   return violations;
@@ -281,16 +283,87 @@ function parseBreakdown(breakdown: string): { headline: string; subtext: string 
   };
 }
 
+function getNaturalPositionForStyle(style: ViralStyle): SlideSpec['visualPosition'] {
+  if (['PREMIUM_CTA', 'GLOWING_QUOTE', 'TYPOGRAPHIC_MEGA_NUMBER', 'GLASSMORPHISM_UI', 'EARNINGS_CARD'].includes(style)) {
+    return 'center';
+  }
+  if (['MINIMALIST_CHECKLIST', 'COMPARISON_TABLE', 'CAP_TABLE_GRID', 'EDITORIAL_SPLIT_LAYOUT', 'EXPERT_CUTOUT'].includes(style)) {
+    return 'left';
+  }
+  if (
+    [
+      'LINE_CHART',
+      'DONUT_CHART',
+      'BAR_CHART_HORIZONTAL',
+      'SANKEY_DIAGRAM',
+      'RADAR_CHART',
+      'AREA_CHART',
+      'CANDLESTICK_CHART',
+      'HEATMAP_GRID',
+      'CANDLESTICK_HERO',
+      'CANDLESTICK_PATTERN_ANNOTATED',
+      'POSITION_CONCENTRATION_TREEMAP',
+      'MAP_DATA_OVERLAY',
+      'EARNINGS_HEAT_TABLE',
+      'PORTFOLIO_BAR_RACE',
+      'INSTITUTIONAL_FLOW_SANKEY',
+    ].includes(style)
+  ) {
+    return 'background';
+  }
+  return 'top';
+}
+
 function buildFallback(strategy: StrategyDecision, format: FormatDecision, constraints: CarouselConstraints | undefined): SlideSpec[] {
   const count = format.slideCount;
   const eyebrow = FALLBACK_EYEBROWS[format.formatType] ?? 'KEY INSIGHT:';
   const baseVariants = FALLBACK_VISUAL_VARIANTS[format.formatType] ?? FALLBACK_VISUAL_VARIANTS.PHOTOREALISTIC_NEWS_FLASH;
   const excluded = new Set(constraints?.excludedStyles ?? []);
-  const visualVariants = baseVariants.filter((v) => !excluded.has(v));
-  const variants = visualVariants.length > 0 ? visualVariants : baseVariants;
+
+  const HUMAN_STYLES = new Set<ViralStyle>([
+    'POP_CULTURE_PORTRAIT',
+    'CARICATURE_PORTRAIT',
+    'EXPERT_CUTOUT',
+    'TRADER_DESK_SILHOUETTE',
+    'EXECUTIVE_LINEUP',
+    'LEADER_LOGO_CUTOUTS',
+    'EDITORIAL_REACTION_CARICATURE',
+    'CIRCULAR_PORTFOLIO_WHEEL',
+    'PORTFOLIO_DOUGHNUT_PORTRAIT',
+  ]);
+
+  const maxHuman = constraints?.maxHumanSlides ?? 2;
+  const maxHumanFirst3 = constraints?.maxHumanInFirst3 ?? 1;
+
+  let humanCount = 0;
+  let humanInFirst3 = 0;
+
+  const chosenStyles: ViralStyle[] = [];
+
+  const isValidChoice = (style: ViralStyle, isFirst3: boolean): boolean => {
+    if (chosenStyles.includes(style)) return false;
+    if (excluded.has(style)) return false;
+
+    const isHuman = HUMAN_STYLES.has(style);
+    if (isHuman) {
+      if (humanCount >= maxHuman) return false;
+      if (isFirst3 && humanInFirst3 >= maxHumanFirst3) return false;
+    }
+    return true;
+  };
+
+  // 1. Choose Cover Style
+  let coverStyle: ViralStyle = baseVariants[0] ?? 'ARCHITECTURAL_OVERLAY';
+  if (excluded.has(coverStyle)) {
+    coverStyle = (baseVariants.find((v) => !excluded.has(v)) || 'ARCHITECTURAL_OVERLAY') as ViralStyle;
+  }
+  chosenStyles.push(coverStyle);
+  if (HUMAN_STYLES.has(coverStyle)) {
+    humanCount++;
+    humanInFirst3++;
+  }
 
   const slides: SlideSpec[] = [];
-
   const coverWords = strategy.hook.toUpperCase().split(' ').slice(0, 8);
   const half = Math.ceil(coverWords.length / 2);
   slides.push({
@@ -303,15 +376,35 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision, const
     ],
     eyebrow,
     subtext: strategy.topic,
-    visualStyle: variants[0],
-    visualPosition: 'top',
+    visualStyle: coverStyle,
+    visualPosition: getNaturalPositionForStyle(coverStyle),
     mood: format.visualTone,
     narrativeNote: 'Cover hook',
   });
 
-  const positions: SlideSpec['visualPosition'][] = ['left', 'right', 'background', 'top'];
-
+  // 2. Choose Middle Styles
   for (let i = 2; i < count; i++) {
+    const isFirst3 = i <= 3;
+    let style = baseVariants.find((v) => isValidChoice(v, isFirst3));
+
+    if (!style) {
+      style = ROTATION_ALLOWLIST.find((v) => isValidChoice(v, isFirst3));
+    }
+
+    if (!style) {
+      style = ROTATION_ALLOWLIST.find((v) => !chosenStyles.includes(v) && !excluded.has(v));
+    }
+
+    if (!style) {
+      style = 'ARCHITECTURAL_OVERLAY';
+    }
+
+    chosenStyles.push(style);
+    if (HUMAN_STYLES.has(style)) {
+      humanCount++;
+      if (isFirst3) humanInFirst3++;
+    }
+
     const rawBreakdown = strategy.slideBreakdown[i - 1] ?? `Point ${i - 1}`;
     const { headline, subtext } = parseBreakdown(rawBreakdown);
     const headlineWords = headline.split(' ');
@@ -325,12 +418,21 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision, const
         { text: headlineWords.slice(headlineHalf).join(' '), color: 'primary' },
       ],
       subtext,
-      visualStyle: variants[i % variants.length],
-      visualPosition: positions[i % positions.length],
+      visualStyle: style,
+      visualPosition: getNaturalPositionForStyle(style),
       mood: format.visualTone,
       narrativeNote: `Slide ${i} of the breakdown`,
     });
   }
+
+  // 3. Choose CTA Style
+  let ctaStyle: ViralStyle = 'PREMIUM_CTA';
+  if (excluded.has(ctaStyle) || chosenStyles.includes(ctaStyle)) {
+    ctaStyle = (ROTATION_ALLOWLIST.find(
+      (v) => ['LUXURY_LIFESTYLE', 'VAULT_SECURITY', 'ARCHITECTURAL_OVERLAY'].includes(v) && !chosenStyles.includes(v),
+    ) || 'PREMIUM_CTA') as ViralStyle;
+  }
+  chosenStyles.push(ctaStyle);
 
   slides.push({
     slideNumber: count,
@@ -341,8 +443,8 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision, const
       { text: 'DAILY INSIGHTS', color: 'accent1' },
     ],
     subtext: 'Canadian finance, no hype — @thestatsandstacks',
-    visualStyle: 'PREMIUM_CTA',
-    visualPosition: 'center',
+    visualStyle: ctaStyle,
+    visualPosition: getNaturalPositionForStyle(ctaStyle),
     mood: 'confident and inviting',
     narrativeNote: 'CTA — drive follows and saves',
   });

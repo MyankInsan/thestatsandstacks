@@ -46,7 +46,7 @@ interface NewsItem {
 }
 
 const DEFAULT_MARKET_WATCHLIST: MarketSeed[] = [
-  { ticker: 'SNDK', companyName: 'SanDisk', theme: 'AI storage and NAND memory' },
+  { ticker: 'PSTG', companyName: 'Pure Storage', theme: 'AI storage and all-flash data centers' },
   { ticker: 'WDC', companyName: 'Western Digital', theme: 'AI data storage' },
   { ticker: 'MU', companyName: 'Micron', theme: 'memory cycle and AI infrastructure' },
   { ticker: 'NVDA', companyName: 'Nvidia', theme: 'AI chips and market leadership' },
@@ -399,9 +399,9 @@ async function fetchWithTimeout(url: string): Promise<Response> {
 }
 
 function buildMarketHeatCandidate(snapshot: MarketSnapshot): TrendTopic {
-  const isSandisk = snapshot.ticker.toUpperCase() === 'SNDK' || /sandisk/i.test(snapshot.companyName);
-  const title = isSandisk
-    ? 'SanDisk (SNDK) AI Storage Heat Check: What the Move Actually Means'
+  const isPureStorage = snapshot.ticker.toUpperCase() === 'PSTG' || /pure storage/i.test(snapshot.companyName);
+  const title = isPureStorage
+    ? 'Pure Storage (PSTG) AI Storage Heat Check: What the Move Actually Means'
     : `${snapshot.companyName} (${snapshot.ticker}) Heat Check: What the Move Actually Means`;
 
   return {
@@ -409,7 +409,7 @@ function buildMarketHeatCandidate(snapshot: MarketSnapshot): TrendTopic {
     score: clampScore(getHeatScore(snapshot)),
     reasoning: `${snapshot.companyName} is showing current market heat (${buildMomentumLine(snapshot)}). The post should use the attention as a case study: what happened, why the market cares, what to watch, and what risks can cool the story.`,
     suggestedFormat: 'WATCHLIST_EDUCATION',
-    suggestedSlideCount: isSandisk ? 8 : 7,
+    suggestedSlideCount: isPureStorage ? 8 : 7,
     searchKeywords: [
       `${snapshot.ticker} stock`,
       `${snapshot.companyName} stock`,
@@ -471,13 +471,13 @@ function buildViralFormatCandidate(topic: TrendTopic, index: number): TrendTopic
 function getMarketFallbackCandidates(): TrendTopic[] {
   return [
     {
-      title: 'SanDisk (SNDK) AI Storage Heat Check: What the Move Actually Means',
+      title: 'Pure Storage (PSTG) AI Storage Heat Check: What the Move Actually Means',
       score: 0.91,
-      reasoning: 'SanDisk has been a high-attention market story around AI data-center storage and memory pricing. Use it as a research case study, not a recommendation.',
+      reasoning: 'Pure Storage has been a high-attention market story around AI data-center storage and memory pricing. Use it as a research case study, not a recommendation.',
       suggestedFormat: 'WATCHLIST_EDUCATION',
       suggestedSlideCount: 8,
-      searchKeywords: ['SNDK stock', 'SanDisk stock', 'AI storage stocks', 'hot stock risk checklist'],
-      sourceUrls: ['https://finance.yahoo.com/quote/SNDK'],
+      searchKeywords: ['PSTG stock', 'Pure Storage stock', 'AI storage stocks', 'hot stock risk checklist'],
+      sourceUrls: ['https://finance.yahoo.com/quote/PSTG'],
       contentPillar: 'Hot market education without recommendations',
       freshnessSignal: 'Fallback seed: verify live price and catalyst details before using exact performance numbers.',
     },

@@ -63,8 +63,22 @@ jobs:
           const schedule = process.env.GITHUB_EVENT_SCHEDULE || '';
 
           function isVancouverDst(now) {
-            const tz = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Vancouver', timeZoneName: 'short' }).format(now);
-            return tz.includes('PDT');
+            try {
+              const tz = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Vancouver', timeZoneName: 'short' }).format(now);
+              if (tz.includes('PDT')) return true;
+              if (tz.includes('PST')) return false;
+            } catch (e) {}
+            try {
+              const vParts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Vancouver', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false }).formatToParts(now);
+              const uParts = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false }).formatToParts(now);
+              const getVal = (parts, type) => Number(parts.find(p => p.type === type).value);
+              const vDate = new Date(Date.UTC(getVal(vParts, 'year'), getVal(vParts, 'month') - 1, getVal(vParts, 'day'), getVal(vParts, 'hour'), getVal(vParts, 'minute'), getVal(vParts, 'second')));
+              const uDate = new Date(Date.UTC(getVal(uParts, 'year'), getVal(uParts, 'month') - 1, getVal(uParts, 'day'), getVal(uParts, 'hour'), getVal(uParts, 'minute'), getVal(uParts, 'second')));
+              return Math.round((vDate.getTime() - uDate.getTime()) / 3600000) === -7;
+            } catch (e) {
+              const m = now.getUTCMonth();
+              return m > 2 && m < 10;
+            }
           }
 
           const PDT = { 14: 1, 16: 2, 18: 3, 20: 4, 21: 5, 22: 6 };

@@ -143,9 +143,57 @@ export function resolveSlotFromCron(scheduleStr: string, isVancouverDst: boolean
 
 /** Vancouver is in DST (PDT, UTC-7) roughly mid-March through early November. */
 export function isVancouverInDst(now: Date = new Date()): boolean {
-  const tzName = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Vancouver',
-    timeZoneName: 'short',
-  }).format(now);
-  return tzName.includes('PDT');
+  try {
+    const tzName = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Vancouver',
+      timeZoneName: 'short',
+    }).format(now);
+    if (tzName.includes('PDT')) return true;
+    if (tzName.includes('PST')) return false;
+  } catch (e) {}
+
+  // Fallback to robust offset calculation if timeZoneName is not PDT/PST (e.g., GMT-7 or GMT-8)
+  try {
+    const vancouverParts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Vancouver',
+      year: 'numeric', month: 'numeric', day: 'numeric',
+      hour: 'numeric', minute: 'numeric', second: 'numeric',
+      hour12: false
+    }).formatToParts(now);
+
+    const utcParts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'UTC',
+      year: 'numeric', month: 'numeric', day: 'numeric',
+      hour: 'numeric', minute: 'numeric', second: 'numeric',
+      hour12: false
+    }).formatToParts(now);
+
+    const getVal = (parts: Intl.DateTimeFormatPart[], type: string) => Number(parts.find(p => p.type === type)!.value);
+
+    const vancouverDate = new Date(Date.UTC(
+      getVal(vancouverParts, 'year'),
+      getVal(vancouverParts, 'month') - 1,
+      getVal(vancouverParts, 'day'),
+      getVal(vancouverParts, 'hour'),
+      getVal(vancouverParts, 'minute'),
+      getVal(vancouverParts, 'second')
+    ));
+
+    const utcDate = new Date(Date.UTC(
+      getVal(utcParts, 'year'),
+      getVal(utcParts, 'month') - 1,
+      getVal(utcParts, 'day'),
+      getVal(utcParts, 'hour'),
+      getVal(utcParts, 'minute'),
+      getVal(utcParts, 'second')
+    ));
+
+    const diffHours = Math.round((vancouverDate.getTime() - utcDate.getTime()) / (1000 * 60 * 60));
+    return diffHours === -7;
+  } catch (e) {
+    // Default fallback to PDT (summer time) if formatting fails
+    const month = now.getUTCMonth();
+    return month > 2 && month < 10;
+  }
 }
+

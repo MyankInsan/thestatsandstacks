@@ -143,7 +143,7 @@ COVER SLIDE PREMIUM PLAYBOOK (apply to role === 'cover'):
 - 7:1 contrast minimum, light-on-dark preferred for feed thumb-stop.
 `.trim();
 
-const WATERMARK_LINE = 'Lower-edge brand mark: along the bottom 60 pixels of the canvas, left-aligned with 48px padding, render the single line "@thestatsandstacks" in clean modern geometric sans-serif, all lowercase, 28pt, white at 90% opacity. No icon, no logo glyph, no border above or below. Pure typography only. Spelling must be exact.';
+const WATERMARK_LINE = '';
 
 const FINANCIAL_TEXT_RENDERING = `
 FINANCIAL TEXT RENDERING (apply when slide contains numbers or chart):
@@ -299,25 +299,21 @@ ${JSON.stringify(slidesJson, null, 2)}
 YOUR MISSION:
 Write a unique, context-specific visual description for the main visual of each slide. Each description must be directly tailored to the slide's headline, role, and the overall daily topic.
 
-PROMPT DESIGN RULES:
-1. PORTRAIT SUBSTITUTION RULE: Every PROMPT_LIBRARY template that mentions a real person (e.g., "Cathie Wood", "Donald Trump", "Elon Musk", "Jensen Huang", etc.) is illustrative ONLY. Replace ANY named person in the templates with the portrait subject given in the PORTRAIT section above. Never reuse a named person from the template examples.
-2. CUSTOMIZE SUBJECTS & LOGOS:
-   - For office scenes, describe the target company's logo from the TICKER LOGO section.
-   - For executive portraits, use the portrait section's subject description.
-   - For aerospace/defense topics, describe specific assets (sleek hypersonic cruise missile flying with cinematic heat trails).
-   - For political/macro topics, the portrait section names who to render.
-3. INCORPORATE SUGGESTED STYLES from the style reference list, mapping each slide's suggestedStyle to its template, then customize. Replace [accent1]/[accent2]/[bg] with the palette hex codes. Replace [portraitSubject]/[portraitDescription] with the portrait section description. Replace [stock]/[price]/[pct] from slide data.
-4. SEQUENCE-AWARE VARIETY: alternately rotate camera angles, compositions, and subject classes across slides. No two adjacent slides should share a visualStyle or share the same dominant subject class (portrait, chart, building, metaphor, typography).
-5. NO IN-IMAGE TEXT OR LOGOS THAT THE CODE WILL ADD: do not describe overlapping text, random floating letters, headline labels, or watermarks in your visual descriptions. The compiler appends text-overlay instructions separately.
-6. ANTI-MIDJOURNEY RULE: Do NOT include Midjourney/SD CLI flags like --ar 4:5, --style raw, --v 6.0, --s 200. These break Seedance and ChatGPT image gen. They must not appear in your output.
-7. PREMIUM CTA SLIDE RULE: For the final slide (role: cta), construct a highly premium cinematic scene matching the CTA SHAPE above (executive boardroom for save_specific, story-poll display for story_vote, etc.). Never describe simple checklists or flat backgrounds for the CTA.
+CRITICAL VISUAL DESIGN DIRECTIVES (MUST FOLLOW):
+1. NO SIMPLE COPY-PASTE: Do NOT simply copy-paste the templates from the STYLE REFERENCE list and fill in brackets. The templates are ONLY compositional and stylistic references. You must write a completely custom, highly detailed, descriptive paragraph (75-150 words) outlining the core subject, exact setting, complex lighting, tactile textures, and precise layout for EACH slide.
+2. PORTRAIT SUBSTITUTION RULE: Every PROMPT_LIBRARY template that mentions a real person (e.g., "Cathie Wood", "Donald Trump", "Elon Musk", "Jensen Huang", etc.) is illustrative ONLY. Replace ANY named person in the templates with the portrait subject given in the PORTRAIT section above. Never reuse a named person from the template examples.
+3. SPECIFY MATTE & LUXURY MATERIALS: Explicitly name premium materials in your descriptions: brushed titanium, polished Calacatta marble, oxidized brass, raw concrete, smoked oak, polished walnut, or matte paper with visible cotton grain.
+4. SPECIFY COMPLEX LIGHTING & ATMOSPHERE: Describe premium lighting setups: volumetric light rays, warm golden-hour window light, cool twilight mixing with warm desk glow, or Rembrandt rim lighting.
+5. SPECIFY HIGH-END CAMERAS & PRIME LENSES: Explicitly write camera settings: "Shot on Hasselblad H6D-100c, f/2.8, shallow depth of field" (for portraits/archetypes), "Phase One IQ4, crisp focus, tilt-shift lens" (for products/infographics), or "ARRI Alexa 65 anamorphic, cinematic color grading, 35mm lens" (for cinematic/metaphors).
+6. SEQUENCE-AWARE VARIETY: Alternately rotate camera angles, compositions, and subject classes across slides. No two adjacent slides should share a visualStyle or share the same dominant subject class (portrait, chart, building, metaphor, typography). Ensure the slides look like a cohesive yet diverse set of premium slides.
+7. NO IN-IMAGE TEXT OR LOGOS THAT THE CODE WILL ADD: Do not describe overlapping text, random floating letters, headline labels, or watermarks in your visual descriptions. The compiler appends text-overlay instructions separately.
 8. LIGHT MODE ADAPTATION RULE: If the palette is LIGHT MODE (bg is light, e.g. #F8F9FA), you MUST adapt all templates and descriptions to fit a light, clean, bright aesthetic. Avoid phrases like "pitch-black", "dark room", "dark background", "dark navy", "black matte canvas", or "white text on dark". Instead, use "clean light background", "bright room", "light matte canvas", "dark text on light", etc. Ensure high contrast so elements are readable.
 
 ${PREMIUM_POLISH_KIT}
 
 ${FINANCIAL_TEXT_RENDERING}
 
-STYLE REFERENCE (use as guides, customize per slide; never copy named subjects from these — substitute the PORTRAIT section's subject):
+STYLE REFERENCE (use as composition/style guides, customize per slide; never copy named subjects from these — substitute the PORTRAIT section's subject):
 ${styleReference}
 
 Return ONLY valid JSON matching this exact schema (no markdown, no code fences):
@@ -356,6 +352,63 @@ function buildTickerLogoSection(tickerSymbols: string[]): string {
   if (resolved.length === 0) return 'TICKER LOGOS: none in static map.';
   const lines = resolved.map((r) => `- ${r.ticker} (${r.entry!.companyName}): ${r.entry!.markStyle} in brand color ${r.entry!.brandColorHex}`);
   return `TICKER LOGOS (render exactly as described — do not invent alternate brand marks):\n${lines.join('\n')}`;
+}
+
+function getSatiricalConcept(headline: string, subtext: string): string {
+  const text = `${headline} ${subtext}`.toLowerCase();
+  if (text.includes('tax') || text.includes('cra') || text.includes('audit')) {
+    return 'A magnificent, ornate vintage cast-iron tax stamp press with polished brass gears and intricate gold leaf filigree, dramatically crushing a thick, lustrous 24k gold coin into glittering dust on a dark slate surface. Tiny, delicate vintage tax forms with fine copperplate script flutter through the air. Low-key dramatic lighting, sharp focus on the metallic textures, shot on Phase One IQ4, tilt-shift lens, premium editorial aesthetic';
+  }
+  if (text.includes('housing') || text.includes('house') || text.includes('rent') || text.includes('mortgage')) {
+    return 'An exquisite, architecturally complex birdhouse constructed entirely from meticulously stacked, gleaming Canadian Gold Maple Leaf coins, featuring a polished walnut roof and brass perches. The birdhouse sits on a perfectly manicured velvet moss turf under a focused studio spotlight. The background is a soft, dark forest green gradient. Shot on Hasselblad H6D-100c, f/4, crisp details of coin engravings, ultra-premium editorial print style';
+  }
+  if (text.includes('saving') || text.includes('hisa') || text.includes('gic') || text.includes('cash')) {
+    return 'A heavy, monolithic safe crafted from polished black obsidian with a brushed platinum dial and hinges, its door slightly ajar to reveal a single, delicate green seed sprouting a detailed, glowing 24k gold leaf in the center. Volumetric lighting casts a soft amber glow from inside the safe. Smoked oak floor, high contrast, clean minimalist layout, shot on Phase One IQ4, tilt-shift lens';
+  }
+  if (text.includes('inflation') || text.includes('price') || text.includes('cost')) {
+    return 'A highly detailed vintage brass scale where a single pristine coffee bean balances perfectly against a heavy, towering stack of crisp paper bills. The scale is set on a dark, polished mahogany table, with soft morning window light creating long, elegant shadows. Shallow depth of field, warm key light, shot on Hasselblad H6D-100c, f/2.8';
+  }
+  if (text.includes('debt') || text.includes('credit') || text.includes('loan')) {
+    return 'A sleek, minimalist designer hourglass filled with flowing gold dust, where the bottom chamber is slowly turning into a dark, rough-textured concrete block. The hourglass is positioned on a brushed titanium surface under cool studio rim lighting. Cinematic desaturated tones, shot on ARRI Alexa 65 anamorphic, 35mm lens';
+  }
+  return 'A giant, hand-carved white marble piggy bank wearing a silk top hat and a polished gold monocle, greedily swallowing a tiny, beautifully detailed paper bag of groceries. The piggy bank sits on a sleek obsidian desk with a dark, moody background. Low-key studio side-lighting, high contrast, Vanity Fair caricature style, Phase One IQ4';
+}
+
+function getAnimalMetaphor(headline: string, subtext: string): string {
+  const text = `${headline} ${subtext}`.toLowerCase();
+  if (text.includes('bull') || text.includes('grow') || text.includes('rise') || text.includes('gain')) {
+    return 'A majestic, muscular charging bull sculpted entirely from raw, polished green emerald, with its hooves kicking up a fine, shimmering jade dust. The bull charges forward through a dark, smoky studio space with a single glowing green line chart reflecting off its crystalline body. Dramatic rim lighting, high contrast, shot on ARRI Alexa 65, cinematic color grading';
+  }
+  if (text.includes('bear') || text.includes('fall') || text.includes('drop') || text.includes('crash')) {
+    return 'A fierce, roaring grizzly bear sculpted from rough, charcoal-textured volcanic stone with glowing red lava-like veins running across its body. The background is a dark, desaturated space with a single desaturated red line chart fading into the shadows. Intense rim lighting, dramatic high-contrast composition, shot on ARRI Alexa 65 anamorphic';
+  }
+  if (text.includes('speed') || text.includes('fast') || text.includes('momentum')) {
+    return 'A sleek, aerodynamic cheetah crafted from polished black obsidian with glowing 24k gold accents, captured mid-sprint across a dark synthwave grid. Shimmering gold particles streak behind its body, implying high speed. High-speed action, cinematic rim lighting, premium retro-futurist aesthetic, shot on ARRI Alexa 65';
+  }
+  if (text.includes('safe') || text.includes('protect') || text.includes('secure')) {
+    return 'A powerful golden lion resting its paw protectively over a glowing, intricate holographic shield on a dark marble floor. Warm golden-hour light catches the lion\'s mane and reflects off the sleek blue holographic shield. Museum-style spotlighting, deep shadows, Phase One IQ4';
+  }
+  return 'A majestic white falcon with silver-tipped feathers and sharp brass talons, soaring high above a geometric, desaturated cityscape at sunrise. The soft morning light catches the falcon\'s wings, creating a warm, elegant rim glow. Clean minimalist composition, generous negative space, shot on Phase One IQ4';
+}
+
+function getFunnyComparison(headline: string, subtext: string): { left: string; right: string } {
+  const text = `${headline} ${subtext}`.toLowerCase();
+  if (text.includes('tfsa') || text.includes('rrsp') || text.includes('fhsa')) {
+    return {
+      left: 'a sleek golden pedestal with a single, highly detailed, glowing golden coin representing a disciplined investor\'s tax-free account. The coin is beautifully engraved with a geometric pattern of compounding lines',
+      right: 'a chaotic, burning pile of lottery tickets, crumpled paper, and a tiny plastic toy rocket ship representing a speculative investor\'s reckless portfolio, with smoke rising in the background'
+    };
+  }
+  if (text.includes('hisa') || text.includes('gic')) {
+    return {
+      left: 'a modern, clean glass vault showing neatly stacked bundles of cash, perfectly protected and organized, lit by a cool blue light',
+      right: 'a leaky, water-damaged paper bag filled with rusty coins resting in a puddle of water, representing cash losing value to inflation, lit by a harsh, yellow light'
+    };
+  }
+  return {
+    left: 'a sleek golden pedestal with a single, highly detailed, glowing golden coin representing a disciplined investor\'s portfolio, beautifully shot in warm key light',
+    right: 'a chaotic, burning pile of lottery tickets, crumpled paper, and a tiny plastic toy rocket ship representing a speculative investor\'s reckless portfolio, shot in cool side-lighting'
+  };
 }
 
 function buildFallbackVisualDescription(
@@ -397,6 +450,10 @@ function buildFallbackVisualDescription(
   const portraitDescription = constraints?.portraitSelection?.promptHint ?? 'a sharp 50-something portfolio manager with silver hair, navy chalk-stripe suit, no tie';
   const stock = (slide.dataPoint && /[A-Z]{2,5}/.test(slide.dataPoint)) ? slide.dataPoint.match(/[A-Z]{2,5}/)![0] : 'a major company';
 
+  const satiricalConcept = getSatiricalConcept(slide.headline, slide.subtext ?? '');
+  const animalMetaphor = getAnimalMetaphor(slide.headline, slide.subtext ?? '');
+  const funnyComparison = getFunnyComparison(slide.headline, slide.subtext ?? '');
+
   return template
     .replace(/\[accent1\]/g, colorScheme.accent1)
     .replace(/\[accent2\]/g, colorScheme.accent2)
@@ -406,17 +463,14 @@ function buildFallbackVisualDescription(
     .replace(/\[stock\]/g, stock)
     .replace(/\[price\]/g, slide.dataPoint ?? 'price')
     .replace(/\[pct\]/g, slide.dataPoint ?? 'change')
-    .replace(/\[text\]/g, slide.headline);
+    .replace(/\[text\]/g, slide.headline)
+    .replace(/\[satiricalConcept\]/g, satiricalConcept)
+    .replace(/\[animalMetaphor\]/g, animalMetaphor)
+    .replace(/\[comparisonLeft\]/g, funnyComparison.left)
+    .replace(/\[comparisonRight\]/g, funnyComparison.right);
 }
 
 function pickFallbackStyle(suggested: ViralStyle, constraints?: CarouselConstraints): ViralStyle {
-  if (constraints?.excludedStyles.includes(suggested)) {
-    const alt = constraints.chartHeroSuggestion && !constraints.excludedStyles.includes(constraints.chartHeroSuggestion)
-      ? constraints.chartHeroSuggestion
-      : constraints.chartSupportingSuggestions.find((s) => !constraints.excludedStyles.includes(s));
-    if (alt) return alt;
-    return 'ARCHITECTURAL_OVERLAY';
-  }
   if (PROMPT_LIBRARY[suggested]) return suggested;
   return 'ARCHITECTURAL_OVERLAY';
 }

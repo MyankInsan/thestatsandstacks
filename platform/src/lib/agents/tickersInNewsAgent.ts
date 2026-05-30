@@ -16,8 +16,8 @@ export interface TickersInNewsResult {
 }
 
 const RSS_FEEDS = [
-  'https://feeds.reuters.com/reuters/businessNews',
-  'https://www.cnbc.com/id/10001147/device/rss/rss.html',
+  'https://www.cnbc.com/id/10000664/device/rss/rss.html', // CNBC Finance
+  'https://www.marketwatch.com/rss/topstories',          // MarketWatch Top Stories
 ];
 
 const MAX_ARTICLES = 30;
@@ -60,7 +60,7 @@ Rules:
 - Do NOT include buy/sell/hold recommendations.
 - If no tickers have clear events, return an empty array.
 
-Return a JSON object: { "tickers": [ { "symbol": "SNDK", "name": "SanDisk Corp.", "headline": "...", "source": "Reuters", "publishedAt": "...", "sentiment": 1 } ] }`;
+Return a JSON object: { "tickers": [ { "symbol": "NVDA", "name": "NVIDIA Corp.", "headline": "...", "source": "CNBC", "publishedAt": "...", "sentiment": 1 } ] }`;
 
     try {
       const result = await model.generateContent(prompt);
@@ -87,18 +87,39 @@ async function fetchRssHeadlines(): Promise<Array<{ title: string; source: strin
   const results: Array<{ title: string; source: string; pubDate: string }> = [];
   for (const url of RSS_FEEDS) {
     try {
-      const resp = await fetch(url, { signal: AbortSignal.timeout(8000) });
+      const resp = await fetch(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        },
+        signal: AbortSignal.timeout(8000),
+      });
       if (!resp.ok) continue;
       const xml = await resp.text();
       const source = new URL(url).hostname.replace('www.', '');
-      const titleMatches = xml.matchAll(/<title><!\[CDATA\[([^\]]+)]]><\/title>|<title>([^<]+)<\/title>/g);
-      const pubDateMatches = xml.matchAll(/<pubDate>([^<]+)<\/pubDate>/g);
-      const titles = [...titleMatches].map((m) => (m[1] ?? m[2]).trim()).filter(Boolean).slice(1);
-      const dates = [...pubDateMatches].map((m) => m[1].trim());
-      titles.forEach((t, i) => results.push({ title: t, source, pubDate: dates[i] ?? new Date().toISOString() }));
+      
+      const items = xml.split(/<item>/gi);
+      // Skip the channel header (first split block)
+      for (let i = 1; i < items.length; i++) {
+        const itemStr = items[i];
+        
+        const titleMatch = itemStr.match(/<title><!\[CDATA\[([^\]]+)]]><\/title>|<title>([^<]+)<\/title>/i);
+        const title = titleMatch ? (titleMatch[1] ?? titleMatch[2]).trim() : '';
+        
+        const pubDateMatch = itemStr.match(/<pubDate>([^<]+)<\/pubDate>/i);
+        const pubDate = pubDateMatch ? pubDateMatch[1].trim() : new Date().toISOString();
+        
+        if (title) {
+          results.push({
+            title: title.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>'),
+            source,
+            pubDate,
+          });
+        }
+      }
     } catch {
       // network errors are non-fatal
     }
   }
   return results;
 }
+

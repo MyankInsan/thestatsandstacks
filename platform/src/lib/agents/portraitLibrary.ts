@@ -132,27 +132,30 @@ export function pickPortrait(input: {
     // If we have mapped portraits, we MUST pick from them even if they are all in the avoid list (bypassing LRU if necessary).
     namedCandidates = freshTickerCandidates.length > 0 ? freshTickerCandidates : tickerPortraitCandidates;
   } else {
-    // Standard pool filtered by topic affinity
-    let namedPool = TIER_1_NAMED.filter((p) => p.topicAffinity.includes(input.topicCategory));
-    
-    // Apply Canadian preference to named portraits
-    if (isCanadian) {
-      const canadianPool = namedPool.filter((p) => p.category === 'CANADIAN');
-      if (canadianPool.length > 0) {
-        namedPool = canadianPool;
-      }
-    } else {
-      const nonCanadianPool = namedPool.filter((p) => p.category !== 'CANADIAN');
-      if (nonCanadianPool.length > 0) {
-        namedPool = nonCanadianPool;
-      }
-    }
+    // Standard pool: only allow Tier 1 named portraits if the topicTitle explicitly mentions the person's name.
+    // This maintains the "faceless, data-first" brand identity for generic topics.
+    const mentionsNamedPerson = input.topicTitle && TIER_1_NAMED.some((p) => {
+      const names = p.displayName.toLowerCase().split(/\s+/);
+      return input.topicTitle!.toLowerCase().includes(p.displayName.toLowerCase()) ||
+             names.some(name => name.length > 3 && input.topicTitle!.toLowerCase().includes(name));
+    });
 
-    namedCandidates = namedPool.filter((p) => !input.recentPortraitSlugs.includes(p.slug));
-    
-    if (input.isCoverSlide) {
-      const highOnly = namedCandidates.filter((p) => p.likenessConfidence === 'high');
-      if (highOnly.length > 0) namedCandidates = highOnly;
+    if (mentionsNamedPerson) {
+      let namedPool = TIER_1_NAMED.filter((p) => p.topicAffinity.includes(input.topicCategory));
+      
+      // Filter pool down to only the mentioned figure(s)
+      namedPool = namedPool.filter((p) => {
+        const names = p.displayName.toLowerCase().split(/\s+/);
+        return input.topicTitle!.toLowerCase().includes(p.displayName.toLowerCase()) ||
+               names.some(name => name.length > 3 && input.topicTitle!.toLowerCase().includes(name));
+      });
+
+      namedCandidates = namedPool.filter((p) => !input.recentPortraitSlugs.includes(p.slug));
+      
+      if (input.isCoverSlide) {
+        const highOnly = namedCandidates.filter((p) => p.likenessConfidence === 'high');
+        if (highOnly.length > 0) namedCandidates = highOnly;
+      }
     }
   }
 

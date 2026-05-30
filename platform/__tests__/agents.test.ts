@@ -55,21 +55,21 @@ test('CopywritingAgent normalization adds a follow reason to short captions', ()
 
 test('CopywritingAgent normalization cleans hot-stock prompt artifacts', () => {
   const copy = normalizeCopyBundle({
-    caption: 'SanDisk is a useful case study for the `market catalyst explained` framework. Save this filter and follow @TheStatsAndStacks for calm investing education. This works beyond any single company like `AMD stock` or `Advanced Micro Devices stock`.',
-    hashtags: '#SanDisk #AIstorage #ChipStocks',
+    caption: 'Pure Storage is a useful case study for the `market catalyst explained` framework. Save this filter and follow @TheStatsAndStacks for calm investing education. This works beyond any single company like `AMD stock` or `Advanced Micro Devices stock`.',
+    hashtags: '#PureStorage #AIstorage #ChipStocks',
     cta: 'Save this framework to your investing checklist. Follow TheStatsAndStacks for calm investing frameworks without hype.',
     firstComment: 'Do you check `margins` first?',
-    altText: 'SanDisk `risk filter` carousel.',
+    altText: 'Pure Storage `risk filter` carousel.',
   }, {
-    topic: 'SanDisk (SNDK) AI Storage Heat Check: What the Move Actually Means',
-    hook: 'SanDisk is a case study.',
+    topic: 'Pure Storage (PSTG) AI Storage Heat Check: What the Move Actually Means',
+    hook: 'Pure Storage is a case study.',
     format: 'WATCHLIST_EDUCATION',
     
     slideCount: 8,
     slideBreakdown: [],
     reasoning: 'test',
     targetAudience: 'Canadian investors',
-    searchKeywords: ['SNDK stock', 'AI storage stocks'],
+    searchKeywords: ['PSTG stock', 'AI storage stocks'],
   });
 
   assert.doesNotMatch(copy.caption, /`|AMD|Advanced Micro Devices/);
@@ -345,6 +345,55 @@ test('timezone-safe weekday check resolves Friday night PT (Saturday UTC) as wee
   const isWeekday = vancouverWeekday !== 'Saturday' && vancouverWeekday !== 'Sunday';
   
   assert.equal(isWeekday, true, 'Vancouver timezone-safe check correctly resolves to weekday (Friday)');
+});
+
+test('HistoryGuardAgent blocks diluted keywords using overlap ratio and stems plurals', async () => {
+  const { HistoryGuardAgent } = await import('../src/lib/agents/historyGuardAgent');
+  const agent = new HistoryGuardAgent();
+  
+  // History entry with many keywords (diluting Jaccard similarity)
+  const history = [{
+    date: '2026-05-24',
+    topic: 'The Payday Order of Operations: Where to Route Your Next $500 in Canada',
+    hook: 'Where to put your money',
+    format: 'CAROUSEL',
+    slideCount: 7,
+    keywords: [
+      'TFSA vs RRSP',
+      'FHSA Canada rules',
+      'Canadian personal finance',
+      'where to invest money',
+      'payday checklist Canada'
+    ]
+  }];
+  
+  // Candidate topic shares "TFSA vs RRSP vs FHSA" which matches keywords.
+  // Traditional Jaccard similarity would be ~0.25 (not blocked).
+  // Overlap ratio should be 1.0 (blocked).
+  const result = await agent.execute({
+    topic: 'TFSA vs RRSP vs FHSA',
+    contentHistory: history
+  });
+  
+  assert.equal(result.block, true, 'Should block due to high keyword overlap ratio');
+  assert.match(result.suggestedPivot!, /Blocked by: "The Payday Order of Operations: Where to Route Your Next \$500 in Canada"/);
+
+  // Plurals stemming test: "accounts" should stem to "account" and match.
+  const historyPlurals = [{
+    date: '2026-05-24',
+    topic: 'Saving Account Guide',
+    hook: '',
+    format: 'CAROUSEL',
+    slideCount: 6,
+    keywords: ['saving account']
+  }];
+
+  const resultPlurals = await agent.execute({
+    topic: 'Saving Accounts', // plural
+    contentHistory: historyPlurals
+  });
+
+  assert.equal(resultPlurals.block, true, 'Should match plural "Accounts" to singular "Account" via stemming');
 });
 
 

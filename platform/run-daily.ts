@@ -116,21 +116,39 @@ async function main() {
 
   // ── AGENT 4: HISTORY GUARD ──────────────────────────────────────────────────
   console.log('━━━ AGENT 4: HISTORY GUARD ━━━');
-  const topTopic = trends.topics[0]?.title ?? '';
-  const historyGuard = await new HistoryGuardAgent().execute({
-    topic: topTopic,
-    contentHistory,
-    slotIndex: slotContext.slotIndex,
-    todayDateKey: today,
-  });
-  if (historyGuard.block) {
-    console.warn(`   ⛔ Blocked "${topTopic}". Pivot: ${historyGuard.suggestedPivot}`);
-    if (trends.topics.length > 1) {
-      const [blocked, ...rest] = trends.topics;
-      trends.topics = [...rest, { ...blocked, score: (blocked.score ?? 0) * 0.3 }];
-      console.log(`   Using: "${trends.topics[0]?.title}"`);
+  let historyGuard = {
+    block: true,
+    mustAvoid: { visualStyles: [], portraitSubjects: [], archetypes: [], hookFormulas: [], tickers: [], narrativeArcs: [], angles: [], colorTriples: [] },
+    warnings: [] as string[]
+  } as any;
+
+  const originalCount = trends.topics.length;
+  let attempts = 0;
+
+  while (trends.topics.length > 0 && attempts < originalCount) {
+    const candidate = trends.topics[0]?.title ?? '';
+    historyGuard = await new HistoryGuardAgent().execute({
+      topic: candidate,
+      contentHistory,
+      slotIndex: slotContext.slotIndex,
+      todayDateKey: today,
+    });
+
+    if (!historyGuard.block) {
+      console.log(`   ✅ Selected Topic: "${candidate}"`);
+      break;
     }
+
+    console.warn(`   ⛔ Blocked "${candidate}". Pivot: ${historyGuard.suggestedPivot}`);
+    const blocked = trends.topics.shift()!;
+    trends.topics.push({ ...blocked, score: (blocked.score ?? 0) * 0.3 });
+    attempts++;
   }
+
+  if (historyGuard.block && trends.topics.length > 0) {
+    console.warn(`   ⚠️ Warning: All available topics were blocked by HistoryGuard. Proceeding with fallback: "${trends.topics[0]?.title}"`);
+  }
+
   if (historyGuard.warnings.length > 0) {
     for (const w of historyGuard.warnings) console.log(`   ⚠️ ${w}`);
   }

@@ -1,7 +1,7 @@
 {
   "_comment": "Single source of truth for the HOT_TOPIC_WATCHLIST. Workflow yaml reads tickers from here; tickerLogoAgent.test.ts validates every entry has a logo map. Adding a ticker forces adding a tickerLogoAgent entry in the same PR.",
   "tickers": [
-    "SNDK", "WDC", "MU", "NVDA", "AVGO", "AMD",
+    "PSTG", "WDC", "MU", "NVDA", "AVGO", "AMD",
     "PLTR", "APP", "HOOD", "COIN", "MSTR", "SMCI",
     "TSLA", "SOFI", "RKLB", "IONQ", "AAPL", "MSFT",
     "GOOGL", "META", "AMZN", "NFLX", "BRK.B", "JPM",
