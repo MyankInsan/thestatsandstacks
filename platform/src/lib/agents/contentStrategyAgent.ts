@@ -31,6 +31,8 @@ export interface StrategyDecision {
   topicCategory?: TopicCategory;
   angleId?: AngleId;
   payoffSlideIndex?: number;
+  freshnessSignal?: string;
+  sourceUrls?: string[];
 }
 
 export interface ContentStrategyInput {
@@ -64,14 +66,14 @@ export class ContentStrategyAgent extends BaseAgent {
       ? `\n\nSLOT PERSONA: ${input.slot.persona} (${input.slot.description}). Pick a topic that fits this persona.`
       : '';
 
-    const prompt = `You are a senior Instagram content strategist for "TheStatsAndStacks", a premium Canadian finance brand.
+    const prompt = `You are a senior Instagram content strategist for "TheStatsAndStacks", a premium North American (US & Canadian) finance and market-literacy brand.
 
 Given these trending topics, pick the SINGLE BEST one and decide the exact execution plan.
 
 CREATOR REFERENCE RULES:
 - Use million-follower finance accounts only as pattern references: simple language, strong first frame, one concrete framework, clear follow reason, and original designed assets. Do not copy a hook, layout, screenshot, color system, or creator persona.
 - Personal-finance mega accounts win by turning a common money pain into a beginner-safe decision rule. Market and investing pages win by putting one chart/stat/news object on screen, then explaining what matters and what to watch next.
-- TheStatsAndStacks should feel more premium and more trustworthy than hype pages: Canadian context, clean data visuals, risk notes, and practical next-step checklists.
+- TheStatsAndStacks should feel more premium and more trustworthy than hype pages: context matching the topic region: use U.S. financial references for U.S. topics (e.g. S&P 500, Nasdaq, 401k, Roth IRA) and Canadian references for Canadian topics (e.g. TSX, TFSA, RRSP), clean data visuals, risk notes, and practical next-step checklists.
 - Prioritize topics that can earn saves, shares, profile visits, and follows because the post gives a reusable framework.
 
 FORMAT DECISION RULES:
@@ -282,6 +284,25 @@ const fallbackStrategies: StrategyDecision[] = [
     searchKeywords: ['first 100k investing', 'compound growth Canada', 'beginner investing Canada'],
     contentPillar: 'Canadian investing behavior',
   },
+  {
+    topic: '401k vs Roth IRA: Which Account Should Americans Use First?',
+    hook: 'Most Americans pick the wrong account first.',
+    format: 'CAROUSEL',
+    slideCount: 7,
+    slideBreakdown: [
+      'Slide 1: Most Americans pick the wrong account first | The order matters more than people think | Start with the account that matches your next real goal',
+      'Slide 2: The quick decision tree | Get the match first | Then compare tax brackets | Flex vs lock-in tradeoffs',
+      'Slide 3: Step 1: The Employer Match | If your company matches contributions, start here | It is literally free money on day one',
+      'Slide 4: Step 2: The Roth IRA | Best for flexibility and tax-free growth | Withdraw contributions tax-free anytime if needed',
+      'Slide 5: Step 3: Back to the Traditional 401k | Best if you are in a high tax bracket today | Reduce your taxable income now',
+      'Slide 6: Common mistakes to avoid | Leaving match money on the table | Ignoring income limit rules | Not investing the cash inside the account',
+      'Slide 7: Save this contribution guide | Match the sequence to the goal | Verify limits before contributing | Educational only',
+    ],
+    reasoning: 'US account order comparison is highly saveable and educational.',
+    targetAudience: 'US earners deciding how to sequence their retirement accounts',
+    searchKeywords: ['401k vs Roth IRA', 'retirement sequencing', 'US investing'],
+    contentPillar: 'US account selection',
+  },
 ];
 
 function getRotatingFallbackStrategy(input: ContentStrategyInput): StrategyDecision {
@@ -302,6 +323,8 @@ function getRotatingFallbackStrategy(input: ContentStrategyInput): StrategyDecis
     ...strategy,
     searchKeywords: topTopic.searchKeywords?.length ? topTopic.searchKeywords : strategy.searchKeywords,
     contentPillar: topTopic.contentPillar || strategy.contentPillar,
+    freshnessSignal: topTopic.freshnessSignal || strategy.freshnessSignal,
+    sourceUrls: topTopic.sourceUrls || strategy.sourceUrls,
   } : strategy;
 
   return enrichWithSlotDecisions(base, input);
@@ -341,9 +364,18 @@ function normalizeStrategy(strategy: StrategyDecision, input: ContentStrategyInp
     };
   }
 
+  const matchingTopic = input.trends.topics.find(
+    (t) => t.title.toLowerCase() === strategy.topic.toLowerCase()
+  );
+  const strategyWithSignals = {
+    ...strategy,
+    freshnessSignal: matchingTopic?.freshnessSignal || strategy.freshnessSignal,
+    sourceUrls: matchingTopic?.sourceUrls || strategy.sourceUrls,
+  };
+
   const enriched = enrichWithSlotDecisions(
     {
-      ...strategy,
+      ...strategyWithSignals,
       slideBreakdown: strategy.slideBreakdown.map((slide, index) => (
         slide.toLowerCase().startsWith(`slide ${index + 1}:`) ? slide : `Slide ${index + 1}: ${slide}`
       )),

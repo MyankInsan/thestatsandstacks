@@ -396,5 +396,175 @@ test('HistoryGuardAgent blocks diluted keywords using overlap ratio and stems pl
   assert.equal(resultPlurals.block, true, 'Should match plural "Accounts" to singular "Account" via stemming');
 });
 
+test('Test Case 1: US copywriting uses US hashtags and follower CTAs', () => {
+  const copy = normalizeCopyBundle({
+    caption: 'A checklist of money leaks for Americans.',
+    hashtags: '',
+    cta: '',
+    firstComment: '',
+    altText: '',
+  }, {
+    topic: '5 Money Leaks Keeping Americans Broke',
+    hook: 'These leaks do the most damage.',
+    format: 'CAROUSEL',
+    slideCount: 7,
+    slideBreakdown: [],
+    reasoning: 'test',
+    targetAudience: 'US investors',
+    searchKeywords: ['money leaks'],
+  });
+
+  assert.match(copy.hashtags, /#USInvesting/);
+  assert.match(copy.hashtags, /#SP500/);
+  assert.match(copy.caption, /one clear money framework a day/);
+  assert.doesNotMatch(copy.caption, /Canadian/);
+});
+
+test('Test Case 2: extractTickerSeeds matches caret indices', async () => {
+  const { extractTickerSeeds } = await import('../src/lib/agents/hotTopicAgents');
+  const seeds = extractTickerSeeds([
+    { title: 'S&P 500 (^GSPC) Hits Record High', score: 0.9, reasoning: '', searchKeywords: [] },
+    { title: 'NVIDIA (NVDA) Earnings Check', score: 0.9, reasoning: '', searchKeywords: [] },
+  ]);
+  assert.equal(seeds.length, 2);
+  assert.equal(seeds[0].ticker, '^GSPC');
+  assert.equal(seeds[1].ticker, 'NVDA');
+});
+
+test('Test Case 3: MarketHeatAgent generates swing candidates for daily GSPC swings >= 1.0% or <= -1.0%', async () => {
+  const { MarketHeatAgent } = await import('../src/lib/agents/hotTopicAgents');
+  const agent = new MarketHeatAgent();
+
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url: string | URL | Request, init?: RequestInit) => {
+    const urlString = url.toString();
+    if (urlString.includes('%5EGSPC') || urlString.includes('GSPC')) {
+      return {
+        ok: true,
+        json: async () => ({
+          chart: {
+            result: [
+              {
+                meta: { regularMarketPrice: 5300 },
+                indicators: {
+                  quote: [
+                    {
+                      close: [5000, 5050, 5100, 5150, 5200, 5250, 5280, 5290, 5400, 5300],
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        }),
+      } as unknown as Response;
+    }
+    return { ok: false } as unknown as Response;
+  };
+
+  const OriginalDateTimeFormat = globalThis.Intl.DateTimeFormat;
+  // @ts-ignore
+  globalThis.Intl.DateTimeFormat = function(locales?: any, options?: any) {
+    const instance = new OriginalDateTimeFormat(locales, options);
+    const orig = instance.format;
+    const customFormat = function(date?: any) {
+      if (options && options.weekday) return 'Wednesday';
+      if (options && options.hour) return '14';
+      return orig(date);
+    };
+    Object.defineProperty(instance, 'format', {
+      value: customFormat,
+      configurable: true,
+      writable: true,
+    });
+    return instance;
+  } as any;
+  globalThis.Intl.DateTimeFormat.prototype = OriginalDateTimeFormat.prototype;
+
+  try {
+    const result = await agent.execute();
+    const dropCandidate = result.candidates.find(c => c.title.includes('S&P 500 (^GSPC) Drops'));
+    assert.ok(dropCandidate, 'Should generate S&P 500 Drops candidate when change is <= -1.0%');
+    assert.equal(dropCandidate.score, 0.98, 'Swing drop score should be 0.98');
+  } finally {
+    globalThis.fetch = originalFetch;
+    globalThis.Intl.DateTimeFormat = OriginalDateTimeFormat;
+  }
+});
+
+test('Test Case 4: ImagePromptAgent fallback placeholder replacement works', async () => {
+  const { ImagePromptAgent } = await import('../src/lib/agents/imagePromptAgent');
+  const agent = new ImagePromptAgent();
+  
+  const result = await agent.execute({
+    slides: [
+      {
+        slideNumber: 1,
+        role: 'breakdown',
+        headline: 'Reddit Post screenshot',
+        visualStyle: 'REDDIT_POST_SCREENSHOT' as any,
+        visualPosition: 'center',
+        mood: 'calm',
+        narrativeNote: 'test note',
+        subtext: 'order filled for 150 shares costing $15,000 | stats details',
+        dataPoint: 'AAPL',
+      },
+      {
+        slideNumber: 2,
+        role: 'breakdown',
+        headline: 'Twitter Post split',
+        visualStyle: 'TWEET_STOCK_CHART_SPLIT' as any,
+        visualPosition: 'background',
+        mood: 'calm',
+        narrativeNote: 'test note',
+        subtext: 'tweet text here',
+        dataPoint: 'AAPL',
+      },
+      {
+        slideNumber: 3,
+        role: 'breakdown',
+        headline: 'Editorial Card',
+        visualStyle: 'EDITORIAL_STAT_CARD' as any,
+        visualPosition: 'left',
+        mood: 'calm',
+        narrativeNote: 'test note',
+        subtext: 'Return: +45% | YTD: +20%',
+        dataPoint: 'AAPL',
+      }
+    ],
+    format: {
+      formatType: 'PHOTOREALISTIC_MARKET_UPDATE',
+      slideCount: 3,
+      visualTone: 'calm',
+      colorScheme: {
+        bg: '#000000',
+        primaryText: '#ffffff',
+        accent1: '#00ff00',
+        accent2: '#00ffff'
+      }
+    },
+    tickerSymbols: ['AAPL'],
+  });
+
+  assert.equal(result.slides.length, 3);
+  
+  for (const s of result.slides) {
+    const prompt = s.geminiPrompt;
+    assert.doesNotMatch(prompt, /\[shares\]/);
+    assert.doesNotMatch(prompt, /\[total\]/);
+    assert.doesNotMatch(prompt, /\[tweetText\]/);
+    assert.doesNotMatch(prompt, /\[stats\]/);
+    assert.doesNotMatch(prompt, /\[subjectCard\]/);
+  }
+
+  // Verify that the computed values actually exist in the prompt
+  assert.match(result.slides[0].geminiPrompt, /150 shares/);
+  assert.match(result.slides[0].geminiPrompt, /\$15,000/);
+  assert.match(result.slides[1].geminiPrompt, /tweet text here/);
+  assert.match(result.slides[2].geminiPrompt, /Return: \+45%/);
+  assert.match(result.slides[2].geminiPrompt, /YTD: \+20%/);
+  assert.match(result.slides[2].geminiPrompt, /Apple/); // TickerLogoAgent resolves AAPL to Apple
+});
+
 
 

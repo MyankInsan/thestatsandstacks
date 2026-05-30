@@ -28,6 +28,9 @@ const CANVA_FALLBACK_STYLES: ViralStyle[] = [
   'EARNINGS_HEAT_TABLE',
   'INSTITUTIONAL_FLOW_SANKEY',
   'PORTFOLIO_BAR_RACE',
+  'REDDIT_POST_SCREENSHOT',
+  'TWEET_STOCK_CHART_SPLIT',
+  'EDITORIAL_STAT_CARD',
 ];
 
 /**
@@ -48,21 +51,21 @@ const LUXURY_SCENE_VARIANTS = [
 ];
 
 const ARCHITECTURE_SCENE_VARIANTS = [
-  { setting: 'the NYSE building facade with its iconic Greek columns shot from a low angle at golden hour', mood: 'institutional gravitas, classic Wall Street' },
-  { setting: 'the Bay Street skyline of Toronto at dusk with RBC tower in focus, glass and steel reflecting orange clouds', mood: 'Canadian financial district, contemporary corporate' },
-  { setting: 'the Bank of Canada building in Ottawa, Brutalist concrete and stone facade with deep shadows', mood: 'central-bank authority, restrained modernism' },
-  { setting: 'a Manhattan glass skyscraper from street level looking up, dramatic vanishing-point perspective', mood: 'vertical ambition, post-modern finance' },
-  { setting: 'Brookfield Place atrium in Toronto with its arched glass roof, late-afternoon light pouring through', mood: 'high-end corporate, light-filled' },
-  { setting: 'the Federal Reserve facade in Washington DC, marble columns and stone steps shot in early morning light', mood: 'monetary policy gravitas, classical Americana' },
+  { setting: 'the NYSE building facade with its iconic Greek columns shot from a low angle at golden hour', mood: 'institutional gravitas, classic Wall Street', region: 'US' },
+  { setting: 'the Bay Street skyline of Toronto at dusk with RBC tower in focus, glass and steel reflecting orange clouds', mood: 'Canadian financial district, contemporary corporate', region: 'CA' },
+  { setting: 'the Bank of Canada building in Ottawa, Brutalist concrete and stone facade with deep shadows', mood: 'central-bank authority, restrained modernism', region: 'CA' },
+  { setting: 'a Manhattan glass skyscraper from street level looking up, dramatic vanishing-point perspective', mood: 'vertical ambition, post-modern finance', region: 'neutral' },
+  { setting: 'Brookfield Place atrium in Toronto with its arched glass roof, late-afternoon light pouring through', mood: 'high-end corporate, light-filled', region: 'CA' },
+  { setting: 'the Federal Reserve facade in Washington DC, marble columns and stone steps shot in early morning light', mood: 'monetary policy gravitas, classical Americana', region: 'US' },
 ];
 
 const OFFICE_SCENE_VARIANTS = [
-  { setting: 'a modern tech HQ open floor — concrete walls, exposed-beam ceilings, sleek monitor banks, smart-casual employees mid-stride', mood: 'Big Tech HQ' },
-  { setting: 'a quant fund trading floor — wall of curved monitors, dark carpets, headset-wearing analysts at every desk', mood: 'quantitative trading' },
-  { setting: 'a Canadian Big-5 bank executive floor — oak panels, deep navy carpet, brass fixtures, fitted bankers in dark suits', mood: 'Bay Street old guard' },
-  { setting: 'a hedge fund war room — dual-screen Bloomberg terminals everywhere, leather chairs, dim cinematic lighting', mood: 'macro hedge fund' },
-  { setting: 'a Shopify-style modern office — bright natural light, plants, exposed brick, casual founder-energy', mood: 'tech scale-up' },
-  { setting: 'a SoftBank-style VC partner office — minimalist white, single large abstract artwork, glass desk, single founder visitor seat', mood: 'global VC fund' },
+  { setting: 'a modern tech HQ open floor — concrete walls, exposed-beam ceilings, sleek monitor banks, smart-casual employees mid-stride', mood: 'Big Tech HQ', region: 'neutral' },
+  { setting: 'a quant fund trading floor — wall of curved monitors, dark carpets, headset-wearing analysts at every desk', mood: 'quantitative trading', region: 'neutral' },
+  { setting: 'a Canadian Big-5 bank executive floor — oak panels, deep navy carpet, brass fixtures, fitted bankers in dark suits', mood: 'Bay Street old guard', region: 'CA' },
+  { setting: 'a hedge fund war room — dual-screen Bloomberg terminals everywhere, leather chairs, dim cinematic lighting', mood: 'macro hedge fund', region: 'neutral' },
+  { setting: 'a Shopify-style modern office — bright natural light, plants, exposed brick, casual founder-energy', mood: 'tech scale-up', region: 'neutral' },
+  { setting: 'a SoftBank-style VC partner office — minimalist white, single large abstract artwork, glass desk, single founder visitor seat', mood: 'global VC fund', region: 'neutral' },
 ];
 
 function pickSceneVariant<T>(variants: T[], slideNumber: number, dateKey: string): T {
@@ -88,16 +91,22 @@ function getSceneVarySubstitutedTemplate(
   slideNumber: number,
   dateKey: string,
   tickerSymbols?: string[],
+  strategyTopic?: string,
 ): string | null {
   const tickerLogoAgent = new TickerLogoAgent();
   const resolvedTicker = tickerSymbols && tickerSymbols.length > 0 ? tickerLogoAgent.resolve(tickerSymbols[0]) : undefined;
+
+  const isCanadian = strategyTopic ? /canada|canadian|tsx|bay street|\.to\b|cppib|cdpq|tfsa|rrsp|fhsa|cra\b/i.test(strategyTopic) : false;
 
   if (style === 'LUXURY_LIFESTYLE') {
     const v = pickSceneVariant(LUXURY_SCENE_VARIANTS, slideNumber, dateKey);
     return `A hyper-realistic, cinematic editorial photograph ${v.setting}. The hero of the composition: ${v.hero}. Lighting: ${v.light}. Shot on Hasselblad H6D-100c, f/2.8, shallow depth of field, premium color grading with deep rich shadows. Pure editorial photography, no AI artifacts.`;
   }
   if (style === 'ARCHITECTURAL_OVERLAY') {
-    const v = pickSceneVariant(ARCHITECTURE_SCENE_VARIANTS, slideNumber, dateKey);
+    const pool = isCanadian 
+      ? ARCHITECTURE_SCENE_VARIANTS 
+      : ARCHITECTURE_SCENE_VARIANTS.filter(v => v.region !== 'CA');
+    const v = pickSceneVariant(pool, slideNumber, dateKey);
     let settingStr = v.setting;
     if (resolvedTicker) {
       settingStr = settingStr.replace(/a corporate headquarters/i, `the modern glass and steel corporate headquarters of ${resolvedTicker.companyName}`);
@@ -105,7 +114,10 @@ function getSceneVarySubstitutedTemplate(
     return `A cinematic, hyper-realistic, slightly desaturated photograph of ${settingStr}. Mood: ${v.mood}. Sharp architectural lines, premium editorial photography, shot on Phase One IQ4 with a tilt-shift lens. No people, no text overlays — pure architectural geometry.`;
   }
   if (style === 'CORPORATE_OFFICE_SPACE') {
-    const v = pickSceneVariant(OFFICE_SCENE_VARIANTS, slideNumber, dateKey);
+    const pool = isCanadian 
+      ? OFFICE_SCENE_VARIANTS 
+      : OFFICE_SCENE_VARIANTS.filter(v => v.region !== 'CA');
+    const v = pickSceneVariant(pool, slideNumber, dateKey);
     let logoStr = 'a subtle corporate logo mark';
     if (resolvedTicker) {
       logoStr = `a subtle corporate logo mark of ${resolvedTicker.companyName} (${resolvedTicker.markStyle})`;
@@ -206,7 +218,7 @@ export class ImagePromptAgent extends BaseAgent {
     const dateKey = input.dateKey ?? new Date().toISOString().split('T')[0];
 
     const slides = input.slides.map((slide) => {
-      let visualDescription = getSceneVarySubstitutedTemplate(slide.visualStyle, slide.slideNumber, dateKey, input.tickerSymbols);
+      let visualDescription = getSceneVarySubstitutedTemplate(slide.visualStyle, slide.slideNumber, dateKey, input.tickerSymbols, input.strategy?.topic);
       if (!visualDescription) {
         visualDescription = generatedPromptsMap.get(slide.slideNumber);
       }
@@ -307,7 +319,14 @@ CRITICAL VISUAL DESIGN DIRECTIVES (MUST FOLLOW):
 5. SPECIFY HIGH-END CAMERAS & PRIME LENSES: Explicitly write camera settings: "Shot on Hasselblad H6D-100c, f/2.8, shallow depth of field" (for portraits/archetypes), "Phase One IQ4, crisp focus, tilt-shift lens" (for products/infographics), or "ARRI Alexa 65 anamorphic, cinematic color grading, 35mm lens" (for cinematic/metaphors).
 6. SEQUENCE-AWARE VARIETY: Alternately rotate camera angles, compositions, and subject classes across slides. No two adjacent slides should share a visualStyle or share the same dominant subject class (portrait, chart, building, metaphor, typography). Ensure the slides look like a cohesive yet diverse set of premium slides.
 7. INTEGRATE SEMANTIC TEXT WHEN RELEVANT: If the slide style includes speech bubbles, signs, labels, chart axes, or scoreboard numbers, explicitly describe the exact text that should be rendered inside them (e.g. what a character is saying in a comic strip balloon, or what label is on a folder). Do not use blank templates or empty speech bubbles. (Only avoid describing the main overhead headline, sub-headline overlay, and the bottom "@thestatsandstacks" watermark, which are compiled separately).
-8. LIGHT MODE ADAPTATION RULE: If the palette is LIGHT MODE (bg is light, e.g. #F8F9FA), you MUST adapt all templates and descriptions to fit a light, clean, bright aesthetic. Avoid phrases like "pitch-black", "dark room", "dark background", "dark navy", "black matte canvas", or "white text on dark". Instead, use "clean light background", "bright room", "light matte canvas", "dark text on light", etc. Ensure high contrast so elements are readable.
+8. LIGHT MODE ADAPTATION RULE: If the palette is LIGHT MODE (bg is light, e.g. #F8F9FA), you MUST adapt all templates and descriptions to fit a light, clean, bright aesthetic. Avoid phrases like "pitch-black", "dark room", "dark background", "dark navy", "black matte canvas", or "white text on light". Instead, use "clean light background", "bright room", "light matte canvas", "dark text on light", etc. Ensure high contrast so elements are readable.
+9. ZERO-LIMITS ASSUMPTION: Never assume the AI image generation model has limitations or cannot render complex graphics, detailed charts, candlestick patterns, tables, or heavy text. The image generation models (Seedance, DALL-E 3) are extremely capable of rendering precise, high-fidelity graphics, patterns, and text, provided the visual description is of supreme quality, highly detailed, and explicitly structured. Write rich, premium, and sophisticated prompts without simplifying the visuals.
+10. LAYOUT & TEXT ALIGNMENT: Closely match the visual scene's composition to the slide's visualPosition property:
+    - If visualPosition is 'left', place the main graphic/portrait subject on the left 50% of the canvas, leaving the right 50% as empty negative space for text overlays.
+    - If visualPosition is 'right', place the main graphic/portrait subject on the right 50% of the canvas, leaving the left 50% as empty negative space for text overlays.
+    - If visualPosition is 'center', center the visual subject and describe how text elements should wrap around or integrate below/above it.
+    - If visualPosition is 'background', design the scene as a full-bleed texture or backdrop, ensuring there is high contrast and clear legibility for text overlays rendered on top.
+    - If visualPosition is 'top', keep the top 30% of the canvas clear and uncluttered for headline text, placing the main visual subject in the lower 70%.
 
 ${PREMIUM_POLISH_KIT}
 
@@ -474,12 +493,34 @@ function buildFallbackVisualDescription(
   }
 
   const portraitDescription = constraints?.portraitSelection?.promptHint ?? 'a sharp 50-something portfolio manager with silver hair, navy chalk-stripe suit, no tie';
-  const stock = (slide.dataPoint && /[A-Z]{2,5}/.test(slide.dataPoint)) ? slide.dataPoint.match(/[A-Z]{2,5}/)![0] : 'a major company';
+  const stock = (slide.dataPoint && /[A-Z0-9\-\.\^]{2,8}/.test(slide.dataPoint)) ? slide.dataPoint.match(/[A-Z0-9\-\.\^]{2,8}/)![0] : 'a major company';
 
   const satiricalConcept = getSatiricalConcept(slide.headline, slide.subtext ?? '');
   const animalMetaphor = getAnimalMetaphor(slide.headline, slide.subtext ?? '');
   const funnyComparison = getFunnyComparison(slide.headline, slide.subtext ?? '');
   const memeText = getMemeSpeechText(slide.headline, slide.subtext ?? '');
+
+  const sharesMatch = (slide.subtext || slide.headline).match(/\b\d+[\d,]*\s*shares\b/i);
+  const shares = sharesMatch ? sharesMatch[0] : '150 shares';
+
+  const totalMatch = (slide.subtext || slide.headline).match(/\$\d+[\d,kKmM]*/);
+  const total = totalMatch ? totalMatch[0] : '$15,000';
+
+  const tweetText = slide.subtext || slide.headline;
+
+  const statsList = (slide.subtext || '')
+    .split('|')
+    .map(s => s.trim())
+    .filter(Boolean);
+  const stats = statsList.length > 0 
+    ? statsList.map(s => `- ${s}`).join('\n') 
+    : `- ${slide.subtext || 'compounding returns'}`;
+
+  const tickerLogoAgent = new TickerLogoAgent();
+  const resolvedTicker = tickerSymbols && tickerSymbols.length > 0 ? tickerLogoAgent.resolve(tickerSymbols[0]) : undefined;
+  const subjectCard = resolvedTicker 
+    ? `corporate logo card for ${resolvedTicker.companyName} (${resolvedTicker.markStyle})`
+    : `portrait description card for ${portraitDescription}`;
 
   return template
     .replace(/\[accent1\]/g, colorScheme.accent1)
@@ -496,7 +537,12 @@ function buildFallbackVisualDescription(
     .replace(/\[comparisonLeft\]/g, funnyComparison.left)
     .replace(/\[comparisonRight\]/g, funnyComparison.right)
     .replace(/\[leftText\]/g, memeText.left)
-    .replace(/\[rightText\]/g, memeText.right);
+    .replace(/\[rightText\]/g, memeText.right)
+    .replace(/\[shares\]/g, shares)
+    .replace(/\[total\]/g, total)
+    .replace(/\[tweetText\]/g, tweetText)
+    .replace(/\[stats\]/g, stats)
+    .replace(/\[subjectCard\]/g, subjectCard);
 }
 
 function pickFallbackStyle(suggested: ViralStyle, constraints?: CarouselConstraints): ViralStyle {
@@ -507,7 +553,7 @@ function pickFallbackStyle(suggested: ViralStyle, constraints?: CarouselConstrai
 export function getTextLayoutDirective(position: SlideSpec['visualPosition']): string {
   switch (position) {
     case 'background':
-      return 'Layout structure: The main visual element is a full-frame background texture or subtle abstract pattern serving as a clean back-drop. The text overlays must be rendered prominently directly on top, centered and highly legible against this background.';
+      return 'Layout structure: Modern print-infographic layout. The main visual chart or graphic spans the frame with ample breathing room. The accompanying text overlays are aligned cleanly in a compact, left-aligned editorial block in the top-left quadrant, keeping the rest of the space clear.';
     case 'left':
       return 'Layout structure: Clean vertical split-column layout. The main visual subject is positioned on the left side of the 1080x1350 frame, while the text overlays are aligned cleanly in a vertical column on the right 50% of the frame in spacious negative space.';
     case 'right':
@@ -527,14 +573,85 @@ function compilePromptString(
   constraints?: CarouselConstraints,
 ): string {
   const { colorScheme } = format;
-  const textElements: string[] = [];
-  if (slide.eyebrow) textElements.push(`a small uppercase eyebrow label reading "${slide.eyebrow}"`);
-  if (slide.headline) textElements.push(`a massive headline reading "${slide.headline}"`);
-  if (slide.subtext) textElements.push(`a clean supporting line reading "${slide.subtext}"`);
-  if (slide.dataPoint) textElements.push(`a hero data figure reading "${slide.dataPoint}"`);
+  
+  const isCover = slide.role === 'cover';
+  const textItems: string[] = [];
+  
+  if (slide.eyebrow) {
+    textItems.push(`a small uppercase eyebrow label reading "${slide.eyebrow}"`);
+  }
+  
+  if (slide.headline) {
+    if (isCover) {
+      textItems.push(`a massive bold headline reading "${slide.headline}"`);
+    } else {
+      switch (slide.visualPosition) {
+        case 'left':
+        case 'right':
+          textItems.push(`a prominent, left-aligned bold title reading "${slide.headline}"`);
+          break;
+        case 'center':
+          textItems.push(`a centered bold title reading "${slide.headline}"`);
+          break;
+        case 'background':
+          textItems.push(`a clean, left-aligned title reading "${slide.headline}"`);
+          break;
+        case 'top':
+        default:
+          textItems.push(`a bold headline reading "${slide.headline}"`);
+          break;
+      }
+    }
+  }
 
-  const textProse = textElements.length > 0
-    ? `Render the following exact text, perfectly spelled with no extra characters: ${textElements.join('; ')}.`
+  if (slide.subtext) {
+    switch (slide.visualPosition) {
+      case 'left':
+      case 'right':
+        textItems.push(`a clean supporting subtext paragraph reading "${slide.subtext}"`);
+        break;
+      case 'center':
+        textItems.push(`a centered supporting line reading "${slide.subtext}"`);
+        break;
+      case 'background':
+        textItems.push(`a small, clean supporting caption line reading "${slide.subtext}"`);
+        break;
+      case 'top':
+      default:
+        textItems.push(`a clean supporting line reading "${slide.subtext}"`);
+        break;
+    }
+  }
+
+  if (slide.dataPoint) {
+    textItems.push(`a hero data figure reading "${slide.dataPoint}"`);
+  }
+
+  let positionPrefix = '';
+  switch (slide.visualPosition) {
+    case 'left':
+      // The visual subject is on the left, so the text overlays should occupy the right side
+      positionPrefix = 'Aligned cleanly in a vertical column on the right side of the frame (occupying the right 45% of the canvas), render the following exact text, perfectly spelled with no extra characters:';
+      break;
+    case 'right':
+      // The visual subject is on the right, so the text overlays should occupy the left side
+      positionPrefix = 'Aligned cleanly in a vertical column on the left side of the frame (occupying the left 45% of the canvas), render the following exact text, perfectly spelled with no extra characters:';
+      break;
+    case 'center':
+      positionPrefix = 'Centered perfectly in the middle of the frame with generous negative space, render the following exact text, perfectly spelled with no extra characters:';
+      break;
+    case 'background':
+      // Overlaid on top of the background graphic, positioned in a neat corner block to avoid top-heavy look
+      positionPrefix = 'Aligned cleanly in a modern, compact editorial block in the top-left quadrant of the frame (leaving the rest of the canvas open for the background viz), render the following exact text elements, perfectly spelled with no extra characters:';
+      break;
+    case 'top':
+    default:
+      positionPrefix = 'Positioned cleanly in the top-third of the frame in a stacked block, render the following exact text, perfectly spelled with no extra characters:';
+      break;
+  }
+
+  const textProse = textItems.length > 0
+    ? `${positionPrefix} ${textItems.join('; ')}.`
     : '';
 
   const isCoverSlide = slide.role === 'cover';

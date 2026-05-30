@@ -203,7 +203,24 @@ export function pickPortrait(input: {
   );
   const seedOffset = simpleHash(input.deterministicSeed) % Math.max(1, Math.min(ranked.length, 3));
   const chosen = ARCHETYPE_BY_SLUG[ranked[seedOffset]];
-  return { tier: 2, slug: chosen.slug, displayName: chosen.displayName, promptHint: chosen.promptDescription };
+  let promptHint = chosen.promptDescription;
+  let displayName = chosen.displayName;
+  if (!isCanadian) {
+    promptHint = promptHint
+      .replace(/\bcanadian\b/gi, '')
+      .replace(/\bbay street\b/gi, '')
+      .replace(/\btoronto\b/gi, '')
+      .replace(/\btfsa\b/gi, 'retirement')
+      .replace(/\s+/g, ' ')
+      .trim();
+    
+    displayName = displayName
+      .replace(/\bcanadian\b/gi, '')
+      .replace(/\bbay street\b/gi, 'Wall Street')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+  return { tier: 2, slug: chosen.slug, displayName, promptHint };
 }
 
 function simpleHash(str: string): number {

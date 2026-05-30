@@ -16,6 +16,9 @@ const MAX_HASHTAGS = 5;
 const MAX_FIRST_COMMENT_CHARS = 220;
 const BRAND_FOLLOW_NAME = 'TheStatsAndStacks';
 
+const isCanadianTopic = (topic: string) => /canada|canadian|tsx|bay street|\.to\b|cppib|cdpq|tfsa|rrsp|fhsa|cra\b/i.test(topic);
+const isUSTopic = (topic: string) => /us\b|usa\b|american|s&p 500|\bspy\b|\bqqq\b|nyse|nasdaq|\bsec\b|fed\b|\bira\b|\b401k\b|roth|hsa|wall street|white house|congress|pelosi|buffett|powell/i.test(topic);
+
 export class CopywritingAgent extends BaseAgent {
   constructor() {
     super('CopywritingAgent');
@@ -24,9 +27,13 @@ export class CopywritingAgent extends BaseAgent {
   async execute(input: { strategy: StrategyDecision }): Promise<CopyBundle> {
     console.log(`[${this.name}] ✍️  Writing copy...`);
 
+    const freshnessSignalBlock = input.strategy.freshnessSignal
+      ? `\nFreshness Signal/News Catalyst: ${input.strategy.freshnessSignal}\n`
+      : '';
+
     const prompt = `Write Instagram copy for "TheStatsAndStacks".
     
-Topic: ${input.strategy.topic}
+Topic: ${input.strategy.topic}${freshnessSignalBlock}
 Slide breakdown:
 ${input.strategy.slideBreakdown.join('\n')}
 
@@ -39,7 +46,7 @@ Rules:
 - Use "educational only, not financial advice" language.
 - Write for saves, shares, and follows: clear first line, useful framework, no cheap engagement bait.
 - Caption structure: one sharp first line, then 2-4 short paragraphs or tight lines. Make it skim-friendly on mobile.
-- Include a concrete follow reason once, e.g. daily Canadian money frameworks, calm investing education, or no-hype finance systems.
+- Include a concrete follow reason once, e.g. daily Canadian money frameworks (for Canadian topics), calm investing education, or no-hype finance systems.
 - Caption must be under ${MAX_CAPTION_CHARS} characters. The first line must work before Instagram's "more" truncation.
 - Use 3-5 focused hashtags, never more than ${MAX_HASHTAGS}.
 - Naturally include search terms from: ${input.strategy.searchKeywords.join(', ')}
@@ -70,15 +77,26 @@ Output ONLY valid JSON:
       const message = error instanceof Error ? error.message : String(error);
       console.warn(`[${this.name}] Gemini copywriting failed; using fallback copy. ${message}`);
       const isStockEducation = isStockEducationTopic(input.strategy);
+      const isCand = isCanadianTopic(input.strategy.topic);
+      const isU = isUSTopic(input.strategy.topic);
+      
+      const hashtags = isCand
+        ? '#CanadianFinance #InvestingCanada #StockMarketEducation #RiskManagement #PersonalFinanceCanada'
+        : isU
+        ? '#USInvesting #StockMarket #SP500 #Nasdaq #PersonalFinance'
+        : '#Investing #StockMarket #FinancialLiteracy #PersonalFinance #MoneyTips';
+
+      const firstComment = isStockEducation
+        ? 'What do you check first: business quality, valuation, or risk?'
+        : isCand
+        ? 'Which account are you comparing right now: TFSA, RRSP, or FHSA?'
+        : 'Which account are you comparing right now: 401k, Roth IRA, or HSA?';
+
       return normalizeCopyBundle({
         caption: `${input.strategy.topic}\n\nUse this as a research framework, not a shortcut.\n\nThe goal is not to chase a headline. The goal is to ask better questions before money is at risk.\n\nEducational general information only, not personalized financial advice.`,
-        hashtags: isStockEducation
-          ? '#CanadianFinance #InvestingCanada #StockMarketEducation #RiskManagement #PersonalFinanceCanada'
-          : '#CanadianFinance #PersonalFinanceCanada #MoneyTips #InvestingCanada #FinancialLiteracy',
+        hashtags,
         cta: isStockEducation ? 'Save this before researching your next ticker.' : 'Save this before your next money decision.',
-        firstComment: isStockEducation
-          ? 'What do you check first: business quality, valuation, or risk?'
-          : 'Which account are you comparing right now: TFSA, RRSP, or FHSA?',
+        firstComment,
         altText: `TheStatsAndStacks carousel about ${input.strategy.topic}.`,
       }, input.strategy);
     }
@@ -134,32 +152,31 @@ function buildHashtagString(value: string, strategy: StrategyDecision): string {
 }
 
 function getDefaultHashtags(strategy: StrategyDecision): string[] {
-  if (isStockEducationTopic(strategy)) {
+  const topic = strategy.topic;
+  if (isUSTopic(topic)) {
+    return [
+      '#USInvesting',
+      '#StockMarket',
+      '#SP500',
+      '#Nasdaq',
+      '#PersonalFinance'
+    ];
+  }
+  if (isCanadianTopic(topic)) {
     return [
       '#CanadianFinance',
       '#InvestingCanada',
       '#StockMarketEducation',
       '#RiskManagement',
-      '#PersonalFinanceCanada',
+      '#PersonalFinanceCanada'
     ];
   }
-
-  if (/tfsa|rrsp|fhsa|account/i.test(strategy.topic)) {
-    return [
-      '#CanadianFinance',
-      '#PersonalFinanceCanada',
-      '#InvestingCanada',
-      '#FinancialLiteracy',
-      '#MoneyTips',
-    ];
-  }
-
   return [
-    '#CanadianFinance',
-    '#PersonalFinanceCanada',
-    '#MoneyTips',
+    '#Investing',
+    '#StockMarket',
     '#FinancialLiteracy',
-    '#InvestingCanada',
+    '#PersonalFinance',
+    '#MoneyTips'
   ];
 }
 
@@ -183,7 +200,7 @@ function cleanCopyArtifacts(value: string): string {
 }
 
 function removeUnrelatedTickerLeak(value: string, strategy: StrategyDecision): string {
-  const allowedTickers = new Set((strategy.topic.match(/\(([A-Z]{1,6})\)/g) || [])
+  const allowedTickers = new Set((strategy.topic.match(/\((\^?[A-Z0-9\-\.\=]{1,8})\)/g) || [])
     .map((ticker) => ticker.replace(/[()]/g, '')));
   if (allowedTickers.size === 0) return value;
 
@@ -290,15 +307,18 @@ function inferTrigger(topic: string): string {
 }
 
 function inferAudience(topic: string): string {
-  if (/tfsa|rrsp|fhsa|canadian|canada/.test(topic)) return 'Canadian';
+  if (isCanadianTopic(topic)) return 'Canadian';
+  if (isUSTopic(topic)) return 'U.S. investor';
   if (/new investor|beginner|first/.test(topic)) return 'new-investor';
   if (/housing|mortgage|home/.test(topic)) return 'homeowner';
   if (/tax/.test(topic)) return 'tax-season';
-  return 'Canadian';
+  return 'investor';
 }
 
 function inferXEntity(topic: string): string {
-  if (/etf|index/.test(topic)) return 'Canadian ETF';
+  if (/etf|index/.test(topic)) {
+    return isCanadianTopic(topic) ? 'Canadian ETF' : 'ETF';
+  }
   if (/stock|ticker/.test(topic)) return 'stock';
   if (/account|tfsa|rrsp|fhsa/.test(topic)) return 'account';
   return 'pick';
@@ -345,7 +365,11 @@ function getFollowerReason(strategy: StrategyDecision): string {
     return `Follow ${BRAND_FOLLOW_NAME} for calm investing frameworks without hype.`;
   }
 
-  return `Follow ${BRAND_FOLLOW_NAME} for one clear Canadian money framework a day.`;
+  if (isCanadianTopic(strategy.topic)) {
+    return `Follow ${BRAND_FOLLOW_NAME} for one clear Canadian money framework a day.`;
+  }
+
+  return `Follow ${BRAND_FOLLOW_NAME} for one clear money framework a day.`;
 }
 
 function isStockEducationTopic(strategy: StrategyDecision): boolean {
@@ -357,7 +381,7 @@ function isStockEducationTopic(strategy: StrategyDecision): boolean {
 
   return (
     strategy.format === 'WATCHLIST_EDUCATION'
-    || /\([A-Z]{1,6}\)/.test(strategy.topic)
+    || /\(\^?[A-Z0-9\-\.\=]{1,8}\)/.test(strategy.topic)
     || /stock|watchlist|invest|earnings|market|etf|ticker|valuation|portfolio|semiconductor|data storage|ai storage|sandisk|micron|western digital|super micro|amd|nvidia|broadcom/i.test(text)
   );
 }

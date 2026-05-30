@@ -66,7 +66,10 @@ export type ViralStyle =
   // Meme / Satirical structures
   | 'MEME_COMIC_PLATE'
   | 'SATIRICAL_METAPHOR'
-  | 'FUNNY_COMPARISON';
+  | 'FUNNY_COMPARISON'
+  | 'REDDIT_POST_SCREENSHOT'
+  | 'TWEET_STOCK_CHART_SPLIT'
+  | 'EDITORIAL_STAT_CARD';
 
 export const PROMPT_LIBRARY: Record<ViralStyle, string> = {
   // ── Data viz ─────────────────────────────────────────────────────────────
@@ -136,6 +139,9 @@ export const PROMPT_LIBRARY: Record<ViralStyle, string> = {
   MEME_COMIC_PLATE: 'A high-end, 2-frame comic strip layout on [bg] with a hand-drawn ink and watercolor style. The left frame shows [portraitDescription] looking smugly at a chart that goes up, with a speech balloon showing [leftText]. The right frame shows them sweating profusely as the chart crashes, with a speech balloon showing [rightText]. Premium New Yorker editorial cartoon style.',
   SATIRICAL_METAPHOR: 'A high-fidelity satirical concept illustration in the style of a modern editorial publication. [satiricalConcept] on [bg]. Shot with Phase One IQ4, crisp focus, clean layout, generous negative space, moody rim lighting, high-contrast, professional editorial print-cartoon style.',
   FUNNY_COMPARISON: 'A high-contrast comparison scene on [bg]. On the left side, [comparisonLeft]. On the right side, [comparisonRight]. Shot with Phase One IQ4, dramatic side-lighting, clean split composition, generous breathing room, premium editorial feel.',
+  REDDIT_POST_SCREENSHOT: 'A high-fidelity screenshot of a Reddit post in dark mode (background #0b1416). At the top, the subreddit r/wallstreetbets is shown with its mascot logo. The poster\'s username and a "2h ago" tag are clearly rendered in a clean system sans-serif font. The post title, "[text]", is written in large bold white text. Embedded in the post is a mock brokerage order confirmation card showing: "Order filled" in green, "Market Buy" of "[stock]" ticker, "[shares]" and "[total]" cost. Spacing is clean and identical to the actual Reddit app UI. At the bottom, standard Reddit buttons (upvote arrow, orange upvote count, downvote, share, comment) are neatly aligned. No deformed logos, no garbled letters, crisp pixel-perfect digital screen rendering.',
+  TWEET_STOCK_CHART_SPLIT: 'A high-fidelity horizontal split-layout screenshot of a Twitter/X post on a clean matte dark grey background (#15202b). The top half shows a tweet from @thestatsandstacks with a verified blue checkmark, display name, and the text "[tweetText]" in white Roboto sans-serif font. The bottom half shows an embedded Google Finance style stock widget for [stock] with: the ticker [stock] in massive bold white, the current price [price] and daily change percentage "[pct]" in green, and a single clean glowing green line chart indicating a sharp rise. Faint horizontal gridlines are drawn behind the line. Standard tweet engagement numbers (views, reposts, likes) sit at the bottom. Crisp vector rendering, no blurry text, no generic bird logo, no double checkmarks.',
+  EDITORIAL_STAT_CARD: 'A premium magazine-style statistical card layout on [bg]. The top 60% of the canvas contains a bold, large typographic header "[text]" in Didot serif, followed by a high-contrast list of bulleted statistics: [stats]. The lower 40% contains a separate rectangular card featuring a high-fidelity [subjectCard] with sharp borders and clean drop shadows. Material detail: cards have a matte cotton paper texture with a subtle drop shadow on a brushed titanium surface. Clean grid alignment, generous negative space, luxury editorial print feel.',
 };
 
 /**

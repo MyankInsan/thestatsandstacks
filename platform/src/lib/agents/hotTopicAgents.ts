@@ -204,8 +204,8 @@ export class MarketHeatAgent extends BaseAgent {
       
       if (snap.isNearAllTimeHigh || snap.isAtAllTimeHigh) {
         const title = isUS
-          ? `S&P 500 Hits All-Time High: 5 Portfolio Rules for Investors`
-          : `TSX Hits Record Highs: What Canadian Investors Should Do`;
+          ? `S&P 500 Hits All-Time High: 5 Portfolio Rules for Investors (${snap.ticker})`
+          : `TSX Hits Record Highs: What Canadian Investors Should Do (${snap.ticker})`;
         indexCandidates.push({
           title,
           score: snap.isAtAllTimeHigh ? 0.98 : 0.95,
@@ -219,11 +219,41 @@ export class MarketHeatAgent extends BaseAgent {
         });
       }
 
+      // Specific swing-change checks for S&P 500 (GSPC)
+      if (isUS && isWeekday) {
+        const absChange = Math.abs(snap.dayChangePercent);
+        if (snap.dayChangePercent <= -1.0) {
+          indexCandidates.push({
+            title: `S&P 500 (${snap.ticker}) Drops ${absChange.toFixed(1)}%: What is Triggering the Market Today`,
+            score: 0.98,
+            reasoning: `The S&P 500 dropped ${absChange.toFixed(1)}% today. High priority reactive sentiment news topic on the market selloff.`,
+            suggestedFormat: 'WATCHLIST_EDUCATION',
+            suggestedSlideCount: 7,
+            searchKeywords: ['S&P 500 drop', 'market selloff', 'why is market down'],
+            sourceUrls: [`https://finance.yahoo.com/quote/${snap.ticker}`],
+            contentPillar: 'Market-news explainers',
+            freshnessSignal: `S&P 500 dropped ${absChange.toFixed(1)}%`,
+          });
+        } else if (snap.dayChangePercent >= 1.0) {
+          indexCandidates.push({
+            title: `S&P 500 (${snap.ticker}) Surges ${absChange.toFixed(1)}%: What is Triggering the Market Today`,
+            score: 0.96,
+            reasoning: `The S&P 500 surged ${absChange.toFixed(1)}% today. High priority reactive sentiment news topic on the market rally.`,
+            suggestedFormat: 'WATCHLIST_EDUCATION',
+            suggestedSlideCount: 7,
+            searchKeywords: ['S&P 500 surge', 'market rally', 'why is market up'],
+            sourceUrls: [`https://finance.yahoo.com/quote/${snap.ticker}`],
+            contentPillar: 'Market-news explainers',
+            freshnessSignal: `S&P 500 surged ${absChange.toFixed(1)}%`,
+          });
+        }
+      }
+
       if (isWeekday && (Math.abs(snap.dayChangePercent) >= 0.5 || vancouverHour >= 13)) {
         const changeText = `${snap.dayChangePercent >= 0 ? '+' : ''}${snap.dayChangePercent.toFixed(2)}%`;
         const title = isUS
-          ? `U.S. Market Close: How the S&P 500 Performed Today`
-          : `Canadian Market Close: How the TSX Performed Today`;
+          ? `U.S. Market Close: How the S&P 500 (${snap.ticker}) Performed Today`
+          : `Canadian Market Close: How the TSX (${snap.ticker}) Performed Today`;
         indexCandidates.push({
           title,
           score: 0.93 + (Math.abs(snap.dayChangePercent) >= 1.5 ? 0.04 : 0),
@@ -511,10 +541,10 @@ function getMarketWatchlist(): MarketSeed[] {
   });
 }
 
-function extractTickerSeeds(candidates: TrendTopic[]): MarketSeed[] {
+export function extractTickerSeeds(candidates: TrendTopic[]): MarketSeed[] {
   const seeds: MarketSeed[] = [];
   for (const candidate of candidates) {
-    const match = candidate.title.match(/\(([A-Z]{1,6})\)/);
+    const match = candidate.title.match(/\((\^?[A-Z0-9\-\.\=]{1,8})\)/);
     if (!match) continue;
     const ticker = match[1];
     seeds.push({

@@ -50,6 +50,9 @@ const CHATGPT_PREFERRED: ViralStyle[] = [
   'GLOWING_QUOTE',
   'NEON_TERMINAL',
   'MAGAZINE_COVER',
+  'REDDIT_POST_SCREENSHOT',
+  'TWEET_STOCK_CHART_SPLIT',
+  'EDITORIAL_STAT_CARD',
 ];
 
 export function recommendModelForStyle(style: ViralStyle): RecommendedModel {

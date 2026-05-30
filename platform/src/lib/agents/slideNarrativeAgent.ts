@@ -8,10 +8,10 @@ import type { CarouselConstraints } from './carouselConstraintAgent';
 const THEMATIC_STYLES_BY_FORMAT: Record<string, string[]> = {
   PHOTOREALISTIC_NEWS_FLASH:        ['ARCHITECTURAL_OVERLAY', 'CROWD_PANIC', 'MILITARY_AEROSPACE_METAPHOR', 'NEON_TERMINAL', 'GLOWING_QUOTE', 'CANDLESTICK_CHART'],
   PHOTOREALISTIC_LUXURY_LIFESTYLE:  ['LUXURY_LIFESTYLE', 'MAGAZINE_COVER', 'CHESS_BOARD_STRATEGY', 'VAULT_SECURITY', 'GLOWING_QUOTE', 'PREMIUM_CTA'],
-  PHOTOREALISTIC_MARKET_UPDATE:     ['TRADER_DESK_SILHOUETTE', 'LINE_CHART', 'CORPORATE_OFFICE_SPACE', 'AREA_CHART', 'SANKEY_DIAGRAM', 'DONUT_CHART', 'BAR_CHART_HORIZONTAL', 'CANDLESTICK_HERO', 'TICKER_TAPE_HERO', 'EARNINGS_HEAT_TABLE'],
+  PHOTOREALISTIC_MARKET_UPDATE:     ['TRADER_DESK_SILHOUETTE', 'LINE_CHART', 'CORPORATE_OFFICE_SPACE', 'AREA_CHART', 'SANKEY_DIAGRAM', 'DONUT_CHART', 'BAR_CHART_HORIZONTAL', 'CANDLESTICK_HERO', 'TICKER_TAPE_HERO', 'EARNINGS_HEAT_TABLE', 'REDDIT_POST_SCREENSHOT', 'TWEET_STOCK_CHART_SPLIT', 'EDITORIAL_STAT_CARD'],
   PHOTOREALISTIC_EXPERT_SHOCK:      ['EXPERT_CUTOUT', 'CARICATURE_PORTRAIT', 'EXECUTIVE_LINEUP', 'LEADER_LOGO_CUTOUTS', 'EDITORIAL_REACTION_CARICATURE', 'POP_CULTURE_PORTRAIT', 'CIRCULAR_PORTFOLIO_WHEEL', 'PORTFOLIO_DOUGHNUT_PORTRAIT'],
-  PHOTOREALISTIC_MINIMAL_TECH:      ['MINIMALIST_CHECKLIST', 'TYPOGRAPHIC_MEGA_NUMBER', 'COMPARISON_TABLE', 'GLASSMORPHISM_UI', 'NEON_TERMINAL', 'CAP_TABLE_GRID', 'POSITION_CONCENTRATION_TREEMAP', 'MACRO_FLOW_DIAGRAM', 'PRICE_TIMELINE_ANNOTATED', 'PORTFOLIO_BAR_RACE', 'EDITORIAL_SPLIT_LAYOUT', 'EARNINGS_CARD', 'MAP_DATA_OVERLAY'],
-  MEME_HUMOR:                       ['EDITORIAL_REACTION_CARICATURE', 'CARICATURE_PORTRAIT', 'MEME_COMIC_PLATE', 'SATIRICAL_METAPHOR', 'FUNNY_COMPARISON', 'GLOWING_QUOTE', 'ANIMAL_METAPHOR'],
+  PHOTOREALISTIC_MINIMAL_TECH:      ['MINIMALIST_CHECKLIST', 'TYPOGRAPHIC_MEGA_NUMBER', 'COMPARISON_TABLE', 'GLASSMORPHISM_UI', 'NEON_TERMINAL', 'CAP_TABLE_GRID', 'POSITION_CONCENTRATION_TREEMAP', 'MACRO_FLOW_DIAGRAM', 'PRICE_TIMELINE_ANNOTATED', 'PORTFOLIO_BAR_RACE', 'EDITORIAL_SPLIT_LAYOUT', 'EARNINGS_CARD', 'MAP_DATA_OVERLAY', 'EDITORIAL_STAT_CARD'],
+  MEME_HUMOR:                       ['EDITORIAL_REACTION_CARICATURE', 'CARICATURE_PORTRAIT', 'MEME_COMIC_PLATE', 'SATIRICAL_METAPHOR', 'FUNNY_COMPARISON', 'GLOWING_QUOTE', 'ANIMAL_METAPHOR', 'REDDIT_POST_SCREENSHOT', 'TWEET_STOCK_CHART_SPLIT'],
 };
 
 export interface HeadlineColor {
@@ -284,10 +284,10 @@ function parseBreakdown(breakdown: string): { headline: string; subtext: string 
 }
 
 function getNaturalPositionForStyle(style: ViralStyle): SlideSpec['visualPosition'] {
-  if (['PREMIUM_CTA', 'GLOWING_QUOTE', 'TYPOGRAPHIC_MEGA_NUMBER', 'GLASSMORPHISM_UI', 'EARNINGS_CARD'].includes(style)) {
+  if (['PREMIUM_CTA', 'GLOWING_QUOTE', 'TYPOGRAPHIC_MEGA_NUMBER', 'GLASSMORPHISM_UI', 'EARNINGS_CARD', 'REDDIT_POST_SCREENSHOT'].includes(style)) {
     return 'center';
   }
-  if (['MINIMALIST_CHECKLIST', 'COMPARISON_TABLE', 'CAP_TABLE_GRID', 'EDITORIAL_SPLIT_LAYOUT', 'EXPERT_CUTOUT'].includes(style)) {
+  if (['MINIMALIST_CHECKLIST', 'COMPARISON_TABLE', 'CAP_TABLE_GRID', 'EDITORIAL_SPLIT_LAYOUT', 'EXPERT_CUTOUT', 'EDITORIAL_STAT_CARD'].includes(style)) {
     return 'left';
   }
   if (
@@ -307,6 +307,7 @@ function getNaturalPositionForStyle(style: ViralStyle): SlideSpec['visualPositio
       'EARNINGS_HEAT_TABLE',
       'PORTFOLIO_BAR_RACE',
       'INSTITUTIONAL_FLOW_SANKEY',
+      'TWEET_STOCK_CHART_SPLIT',
     ].includes(style)
   ) {
     return 'background';
@@ -434,6 +435,11 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision, const
   }
   chosenStyles.push(ctaStyle);
 
+  const isCand = /canada|canadian|tsx|bay street|\.to\b|cppib|cdpq|tfsa|rrsp|fhsa|cra\b/i.test(strategy.topic);
+  const ctaSubtext = isCand
+    ? 'Canadian finance, no hype — @thestatsandstacks'
+    : 'Wealth frameworks, no hype — @thestatsandstacks';
+
   slides.push({
     slideNumber: count,
     role: 'cta',
@@ -442,7 +448,7 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision, const
       { text: 'FOLLOW FOR', color: 'primary' },
       { text: 'DAILY INSIGHTS', color: 'accent1' },
     ],
-    subtext: 'Canadian finance, no hype — @thestatsandstacks',
+    subtext: ctaSubtext,
     visualStyle: ctaStyle,
     visualPosition: getNaturalPositionForStyle(ctaStyle),
     mood: 'confident and inviting',

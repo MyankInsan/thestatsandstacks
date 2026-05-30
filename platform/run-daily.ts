@@ -61,7 +61,7 @@ async function main() {
   console.log(`   Today already posted: ${slotContext.todayPriorEntries.length} entries`);
   if (slotContext.forceAngleId) console.log(`   FORCE_ANGLE=${slotContext.forceAngleId}`);
 
-  const outputDir = path.join('/tmp', 'thestatsandstacks', `${today}-s${slotContext.slotIndex}`);
+  const outputDir = path.join(process.cwd(), 'tmp', 'thestatsandstacks', `${today}-s${slotContext.slotIndex}`);
   process.env.CONTENT_RUN_SLUG = `${today}-s${slotContext.slotIndex}`;
   fs.mkdirSync(outputDir, { recursive: true });
   console.log('');
@@ -147,6 +147,11 @@ async function main() {
 
   if (historyGuard.block && trends.topics.length > 0) {
     console.warn(`   ⚠️ Warning: All available topics were blocked by HistoryGuard. Proceeding with fallback: "${trends.topics[0]?.title}"`);
+  }
+
+  // Pass only the verified first candidate to prevent ContentStrategyAgent from picking a blocked topic
+  if (trends.topics.length > 0) {
+    trends.topics = [trends.topics[0]];
   }
 
   if (historyGuard.warnings.length > 0) {

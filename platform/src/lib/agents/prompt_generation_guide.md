@@ -55,7 +55,13 @@ To avoid generic AI slop, explicitly forbid:
 - Emoji decorations or cartoon icons.
 - Midjourney CLI flags (e.g., `--ar 4:5`, `--style raw`) as they break Seedance.
 
----
-
 ## 4. Visual Rotation Allowlist
 Ensure the prompt templates rotation stays within the ~50 high-end templates. Keep untested or low-quality styles (like `GLASSMORPHISM_UI`, `BILLBOARD_HIGHWAY`, or `GRUNGE_STREET_POSTER`) out of the normal rotation pool.
+
+---
+
+## 5. Zero-Limits Assumption
+Our prompt generation agents and visual designers must strictly operate under the **Zero-Limits Assumption**. Never assume that AI image generation models (such as Seedance or DALL-E 3) have limitations that prevent them from rendering complex details or specific assets:
+- **No Simplification**: Do not simplify, prune, or dumb down visual descriptions or text overlays out of fear that the model cannot render them.
+- **Complex Capabilities**: The models can absolutely render rich graphic details, detailed tables, intricate charts, candlestick patterns, custom UI cards, annotations, and heavy text overlays.
+- **Write Supreme Quality Prompts**: Always write highly descriptive, rich, structured, and sophisticated prompts to leverage the maximum capabilities of the image generation models. If the prompt quality is supreme, the output will render perfectly.

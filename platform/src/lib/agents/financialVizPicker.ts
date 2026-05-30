@@ -34,6 +34,7 @@ export const STYLE_BUCKETS: Record<string, Bucket> = {
   FLUID_LIQUID_TEXT: 'Layout', GLASSMORPHISM_UI: 'Layout',
   GRUNGE_STREET_POSTER: 'Layout', PREMIUM_CTA: 'Layout',
   TYPOGRAPHIC_MEGA_NUMBER: 'Layout', EDITORIAL_SPLIT_LAYOUT: 'Layout',
+  REDDIT_POST_SCREENSHOT: 'Layout', TWEET_STOCK_CHART_SPLIT: 'Data', EDITORIAL_STAT_CARD: 'Layout',
 };
 
 export const UNTESTED_STYLES = new Set<ViralStyle>([
@@ -73,8 +74,8 @@ const ANGLE_VIZ_MAP: Partial<Record<AngleId, AngleVizMapping>> = {
   FEE_TEARDOWN: { hero: 'TYPOGRAPHIC_MEGA_NUMBER' as ViralStyle, supporting: ['LINE_CHART', 'AREA_CHART', 'COMPARISON_TABLE'] },
   TAX_DRAG_MAP: { hero: 'COMPARISON_TABLE', supporting: ['MAP_DATA_OVERLAY' as ViralStyle, 'BAR_CHART_HORIZONTAL', 'MINIMALIST_CHECKLIST'] },
   BEHAVIORAL_RECEIPT: { hero: 'AREA_CHART', supporting: ['LINE_CHART', 'COMPARISON_TABLE', 'GLOWING_QUOTE'] },
-  REACTIVE_SENTIMENT: { hero: 'EDITORIAL_REACTION_CARICATURE' as ViralStyle, supporting: ['MACRO_FLOW_DIAGRAM' as ViralStyle, 'GLOWING_QUOTE', 'MINIMALIST_CHECKLIST'] },
-  CATALYST_NEWS: { hero: 'ARCHITECTURAL_OVERLAY', supporting: ['LINE_CHART', 'COMPARISON_TABLE', 'TICKER_TAPE_HERO' as ViralStyle] },
+  REACTIVE_SENTIMENT: { hero: 'EDITORIAL_REACTION_CARICATURE' as ViralStyle, supporting: ['MACRO_FLOW_DIAGRAM' as ViralStyle, 'GLOWING_QUOTE', 'MINIMALIST_CHECKLIST', 'REDDIT_POST_SCREENSHOT' as ViralStyle, 'TWEET_STOCK_CHART_SPLIT' as ViralStyle] },
+  CATALYST_NEWS: { hero: 'ARCHITECTURAL_OVERLAY', supporting: ['LINE_CHART', 'COMPARISON_TABLE', 'TICKER_TAPE_HERO' as ViralStyle, 'REDDIT_POST_SCREENSHOT' as ViralStyle, 'TWEET_STOCK_CHART_SPLIT' as ViralStyle] },
 };
 
 export class FinancialVizPicker {
@@ -88,7 +89,13 @@ export class FinancialVizPicker {
     if (input.isReactiveSentiment) {
       return {
         hero: 'EDITORIAL_REACTION_CARICATURE' as ViralStyle,
-        supporting: ['MACRO_FLOW_DIAGRAM' as ViralStyle, 'GLOWING_QUOTE', 'MINIMALIST_CHECKLIST'],
+        supporting: [
+          'MACRO_FLOW_DIAGRAM' as ViralStyle,
+          'GLOWING_QUOTE',
+          'MINIMALIST_CHECKLIST',
+          'REDDIT_POST_SCREENSHOT' as ViralStyle,
+          'TWEET_STOCK_CHART_SPLIT' as ViralStyle
+        ].filter((s) => !input.excludedStyles.includes(s)),
         usedFallback: false,
       };
     }
