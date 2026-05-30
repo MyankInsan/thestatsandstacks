@@ -1203,6 +1203,49 @@
         "accent1": "#39FF14",
         "accent2": "#00CFFF"
       }
+    },
+    {
+      "date": "2026-05-30",
+      "topic": "Stocks the US government effectively holds via TSP/CalPERS",
+      "hook": "I pulled CalPERS' latest filing. Here's what's in it",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "CalPERS 13F filing",
+        "institutional portfolio holdings",
+        "public pension fund stocks",
+        "pension asset allocation"
+      ],
+      "visualSignature": "2026-05-30-26689427278",
+      "schemaVersion": 2,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-05-30T16:53:56.284Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "RECEIPT_DROP",
+      "ctaId": "share_use_case",
+      "angleId": "US_GOV_HOLDINGS",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "EXPERT_CUTOUT",
+        "LINE_CHART",
+        "DONUT_CHART",
+        "EXECUTIVE_LINEUP",
+        "SANKEY_DIAGRAM",
+        "LUXURY_LIFESTYLE"
+      ],
+      "coverVisualStyle": "EXPERT_CUTOUT",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "silver_haired_pm"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      }
     }
   ]
 }
