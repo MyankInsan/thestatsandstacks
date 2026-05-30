@@ -306,7 +306,7 @@ CRITICAL VISUAL DESIGN DIRECTIVES (MUST FOLLOW):
 4. SPECIFY COMPLEX LIGHTING & ATMOSPHERE: Describe premium lighting setups: volumetric light rays, warm golden-hour window light, cool twilight mixing with warm desk glow, or Rembrandt rim lighting.
 5. SPECIFY HIGH-END CAMERAS & PRIME LENSES: Explicitly write camera settings: "Shot on Hasselblad H6D-100c, f/2.8, shallow depth of field" (for portraits/archetypes), "Phase One IQ4, crisp focus, tilt-shift lens" (for products/infographics), or "ARRI Alexa 65 anamorphic, cinematic color grading, 35mm lens" (for cinematic/metaphors).
 6. SEQUENCE-AWARE VARIETY: Alternately rotate camera angles, compositions, and subject classes across slides. No two adjacent slides should share a visualStyle or share the same dominant subject class (portrait, chart, building, metaphor, typography). Ensure the slides look like a cohesive yet diverse set of premium slides.
-7. NO IN-IMAGE TEXT OR LOGOS THAT THE CODE WILL ADD: Do not describe overlapping text, random floating letters, headline labels, or watermarks in your visual descriptions. The compiler appends text-overlay instructions separately.
+7. INTEGRATE SEMANTIC TEXT WHEN RELEVANT: If the slide style includes speech bubbles, signs, labels, chart axes, or scoreboard numbers, explicitly describe the exact text that should be rendered inside them (e.g. what a character is saying in a comic strip balloon, or what label is on a folder). Do not use blank templates or empty speech bubbles. (Only avoid describing the main overhead headline and sub-headline overlay which are compiled separately).
 8. LIGHT MODE ADAPTATION RULE: If the palette is LIGHT MODE (bg is light, e.g. #F8F9FA), you MUST adapt all templates and descriptions to fit a light, clean, bright aesthetic. Avoid phrases like "pitch-black", "dark room", "dark background", "dark navy", "black matte canvas", or "white text on dark". Instead, use "clean light background", "bright room", "light matte canvas", "dark text on light", etc. Ensure high contrast so elements are readable.
 
 ${PREMIUM_POLISH_KIT}
@@ -411,13 +411,39 @@ function getFunnyComparison(headline: string, subtext: string): { left: string; 
   };
 }
 
+function getMemeSpeechText(headline: string, subtext: string): { left: string; right: string } {
+  const text = `${headline} ${subtext}`.toLowerCase();
+  if (text.includes('quantum') || text.includes('ionq')) {
+    return {
+      left: '"Quantum is ready, it is the future!"',
+      right: '"Wait, what is Note 18 in the risk disclosures?"'
+    };
+  }
+  if (text.includes('tfsa') || text.includes('rrsp') || text.includes('fhsa')) {
+    return {
+      left: '"I will just pick the one with the highest contribution limit!"',
+      right: '"Wait, I paid tax on my tax-free account?!"'
+    };
+  }
+  if (text.includes('stock') || text.includes('watchlist') || text.includes('invest')) {
+    return {
+      left: '"This ticker only goes up, I am going all in!"',
+      right: '"Wait, what do you mean by downside risk?!"'
+    };
+  }
+  return {
+    left: '"This is a guaranteed winner, no research needed!"',
+    right: '"Wait, where did the returns go?"'
+  };
+}
+
 function buildFallbackVisualDescription(
   slide: SlideSpec,
   format: FormatDecision,
   constraints?: CarouselConstraints,
   dateKey: string = new Date().toISOString().split('T')[0],
   tickerSymbols?: string[],
-): string {
+ ): string {
   const { colorScheme } = format;
   const templateKey = pickFallbackStyle(slide.visualStyle, constraints);
   
@@ -453,6 +479,7 @@ function buildFallbackVisualDescription(
   const satiricalConcept = getSatiricalConcept(slide.headline, slide.subtext ?? '');
   const animalMetaphor = getAnimalMetaphor(slide.headline, slide.subtext ?? '');
   const funnyComparison = getFunnyComparison(slide.headline, slide.subtext ?? '');
+  const memeText = getMemeSpeechText(slide.headline, slide.subtext ?? '');
 
   return template
     .replace(/\[accent1\]/g, colorScheme.accent1)
@@ -467,7 +494,9 @@ function buildFallbackVisualDescription(
     .replace(/\[satiricalConcept\]/g, satiricalConcept)
     .replace(/\[animalMetaphor\]/g, animalMetaphor)
     .replace(/\[comparisonLeft\]/g, funnyComparison.left)
-    .replace(/\[comparisonRight\]/g, funnyComparison.right);
+    .replace(/\[comparisonRight\]/g, funnyComparison.right)
+    .replace(/\[leftText\]/g, memeText.left)
+    .replace(/\[rightText\]/g, memeText.right);
 }
 
 function pickFallbackStyle(suggested: ViralStyle, constraints?: CarouselConstraints): ViralStyle {

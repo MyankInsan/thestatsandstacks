@@ -232,72 +232,84 @@ test('isTickerActive matches short tickers strictly with word boundaries and cas
 });
 
 test('ImagePromptAgent adapts prompts correctly for light mode backgrounds', async () => {
-  const agent = new ImagePromptAgent();
-  const lightSlides: SlideSpec[] = [
-    {
-      slideNumber: 1,
-      role: 'cover',
-      headline: 'LIGHT THEME',
-      headlineColorMap: [{ text: 'LIGHT THEME', color: 'primary' }],
-      visualStyle: 'MINIMALIST_CHECKLIST', // Fallback will adapt this template
-      visualPosition: 'top',
-      mood: 'clean',
-      narrativeNote: 'test',
-    },
-  ];
-
-  const result = await agent.execute({
-    slides: lightSlides,
-    format: {
-      formatType: 'PHOTOREALISTIC_MINIMAL_TECH',
-      slideCount: 1,
-      colorScheme: {
-        bg: '#F8F9FA', // Light bg
-        primaryText: '#111827',
-        accent1: '#2563EB',
-        accent2: '#4B5563',
+  const originalKey = process.env.GEMINI_API_KEY;
+  delete process.env.GEMINI_API_KEY;
+  try {
+    const agent = new ImagePromptAgent();
+    const lightSlides: SlideSpec[] = [
+      {
+        slideNumber: 1,
+        role: 'cover',
+        headline: 'LIGHT THEME',
+        headlineColorMap: [{ text: 'LIGHT THEME', color: 'primary' }],
+        visualStyle: 'MINIMALIST_CHECKLIST', // Fallback will adapt this template
+        visualPosition: 'top',
+        mood: 'clean',
+        narrativeNote: 'test',
       },
-      visualTone: 'clean tech',
-      reasoning: 'test',
-    },
-  });
+    ];
 
-  const prompt = result.slides[0].geminiPrompt;
+    const result = await agent.execute({
+      slides: lightSlides,
+      format: {
+        formatType: 'PHOTOREALISTIC_MINIMAL_TECH',
+        slideCount: 1,
+        colorScheme: {
+          bg: '#F8F9FA', // Light bg
+          primaryText: '#111827',
+          accent1: '#2563EB',
+          accent2: '#4B5563',
+        },
+        visualTone: 'clean tech',
+        reasoning: 'test',
+      },
+    });
 
-  // The MINIMALIST_CHECKLIST template in promptLibrary has "dark matte navy background. White text"
-  // In light mode, this should be replaced with "clean white background. Dark grey text"
-  assert.ok(prompt.includes('clean white background. Dark grey text'), 'Must adapt background description for light mode');
-  // It should also use the light-mode lighting descriptor
-  assert.ok(prompt.includes('clean light-mode studio gradients and bright professional lighting'), 'Must adapt lighting description for light mode');
+    const prompt = result.slides[0].geminiPrompt;
+
+    // The MINIMALIST_CHECKLIST template in promptLibrary has "dark matte navy background. White text"
+    // In light mode, this should be replaced with "clean white background. Dark grey text"
+    assert.ok(prompt.includes('clean white background. Dark grey text'), 'Must adapt background description for light mode');
+    // It should also use the light-mode lighting descriptor
+    assert.ok(prompt.includes('clean light-mode studio gradients and bright professional lighting'), 'Must adapt lighting description for light mode');
+  } finally {
+    process.env.GEMINI_API_KEY = originalKey;
+  }
 });
 
 test('ImagePromptAgent incorporates layout structure positioning directives based on slide.visualPosition', async () => {
-  const agent = new ImagePromptAgent();
-  const slides: SlideSpec[] = [
-    {
-      slideNumber: 1,
-      role: 'cover',
-      headline: 'TEST SPLIT LEFT',
-      headlineColorMap: [{ text: 'TEST SPLIT LEFT', color: 'primary' }],
-      visualStyle: 'ARCHITECTURAL_OVERLAY',
-      visualPosition: 'left',
-      mood: 'test',
-      narrativeNote: 'test',
-    },
-  ];
+  const originalKey = process.env.GEMINI_API_KEY;
+  delete process.env.GEMINI_API_KEY;
+  try {
+    const agent = new ImagePromptAgent();
+    const slides: SlideSpec[] = [
+      {
+        slideNumber: 1,
+        role: 'cover',
+        headline: 'TEST SPLIT LEFT',
+        headlineColorMap: [{ text: 'TEST SPLIT LEFT', color: 'primary' }],
+        visualStyle: 'ARCHITECTURAL_OVERLAY',
+        visualPosition: 'left',
+        mood: 'test',
+        narrativeNote: 'test',
+      },
+    ];
 
-  const result = await agent.execute({
-    slides,
-    format: {
-      formatType: 'PHOTOREALISTIC_NEWS_FLASH',
-      slideCount: 1,
-      colorScheme: { bg: '#050505', primaryText: '#FFFFFF', accent1: '#39FF14', accent2: '#00CFFF' },
-      visualTone: 'test',
-      reasoning: 'test',
-    },
-  });
+    const result = await agent.execute({
+      slides,
+      format: {
+        formatType: 'PHOTOREALISTIC_NEWS_FLASH',
+        slideCount: 1,
+        colorScheme: { bg: '#050505', primaryText: '#FFFFFF', accent1: '#39FF14', accent2: '#00CFFF' },
+        visualTone: 'test',
+        reasoning: 'test',
+      },
+    });
 
-  const prompt = result.slides[0].geminiPrompt;
-  assert.ok(prompt.includes('split-column layout') && prompt.includes('left side'), 'Must include left-aligned split layout directive in compiled prompt');
+    const prompt = result.slides[0].geminiPrompt;
+    assert.ok(prompt.includes('split-column layout') && prompt.includes('left side'), 'Must include left-aligned split layout directive in compiled prompt');
+  } finally {
+    process.env.GEMINI_API_KEY = originalKey;
+  }
 });
 
