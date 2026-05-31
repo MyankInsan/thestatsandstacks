@@ -1546,6 +1546,51 @@
         "accent1": "#FFD700",
         "accent2": "#FFFFFF"
       }
+    },
+    {
+      "date": "2026-05-31",
+      "topic": "HISA vs GIC vs ETF: Where Should Short-Term Money Go?",
+      "hook": "Do not invest money you need soon.",
+      "format": "CAROUSEL",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 8,
+      "keywords": [
+        "dividend investing Canada",
+        "compound interest calculator",
+        "passive income stocks",
+        "dividend growth strategy"
+      ],
+      "visualSignature": "2026-05-31-26726985611",
+      "schemaVersion": 2,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-05-31T23:08:46.172Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "REVERSE_SURVIVORSHIP",
+      "ctaId": "share_use_case",
+      "angleId": "COMPARISON_LADDER",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "SATIRICAL_METAPHOR",
+        "REDDIT_POST_SCREENSHOT",
+        "FUNNY_COMPARISON",
+        "PRICE_TIMELINE_ANNOTATED",
+        "CARICATURE_PORTRAIT",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "EDITORIAL_REACTION_CARICATURE",
+        "CHESS_BOARD_STRATEGY"
+      ],
+      "coverVisualStyle": "SATIRICAL_METAPHOR",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_cfo_50s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#09090D",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FF2E93"
+      }
     }
   ]
 }
