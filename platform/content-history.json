@@ -1331,6 +1331,49 @@
         "accent1": "#FFD700",
         "accent2": "#FF2E93"
       }
+    },
+    {
+      "date": "2026-05-31",
+      "topic": "Stocks being added/removed from S&P 500",
+      "hook": "S&P additions are up YTD. Should you care?",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 6,
+      "keywords": [
+        "S&P 500 index rebalancing",
+        "index addition effect",
+        "stock market liquidity",
+        "passive investing trends"
+      ],
+      "visualSignature": "2026-05-31-26716367800",
+      "schemaVersion": 2,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-05-31T15:18:03.791Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "ANTI_FOMO",
+      "ctaId": "swipe_promise",
+      "angleId": "BUYBACK_SCOREBOARD",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "NEON_TERMINAL",
+        "GLOWING_QUOTE",
+        "CANDLESTICK_CHART",
+        "PORTFOLIO_BAR_RACE",
+        "TICKER_TAPE_HERO",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "NEON_TERMINAL",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_cfo_50s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#39FF14",
+        "accent2": "#00CFFF"
+      }
     }
   ]
 }
