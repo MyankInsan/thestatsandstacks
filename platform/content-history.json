@@ -1504,6 +1504,48 @@
         "accent1": "#2563EB",
         "accent2": "#4B5563"
       }
+    },
+    {
+      "date": "2026-05-31",
+      "topic": "5 Money Leaks Quietly Keeping Canadians Broke",
+      "hook": "These small leaks do the most damage.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 7,
+      "keywords": [
+        "SP500 all time high",
+        "S&P 500 record"
+      ],
+      "visualSignature": "2026-05-31-26725371062",
+      "schemaVersion": 2,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-05-31T21:53:24.344Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "TIME_CAPSULE",
+      "ctaId": "save_specific",
+      "angleId": "HYPOTHETICAL_REVERSAL",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "ARCHITECTURAL_OVERLAY",
+        "AREA_CHART",
+        "HEATMAP_GRID",
+        "CIRCULAR_PORTFOLIO_WHEEL",
+        "ANIMAL_METAPHOR",
+        "NATURE_METAPHOR",
+        "LUXURY_LIFESTYLE"
+      ],
+      "coverVisualStyle": "ARCHITECTURAL_OVERLAY",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "boomer_diy_investor"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FFFFFF"
+      }
     }
   ]
 }
