@@ -1460,6 +1460,50 @@
         "accent1": "#FF3B30",
         "accent2": "#39FF14"
       }
+    },
+    {
+      "date": "2026-05-31",
+      "topic": "Credit Score Myths Canadians Still Believe",
+      "hook": "Some credit advice is just noise.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 7,
+      "keywords": [
+        "SMCI stock",
+        "Super Micro Computer stock",
+        "hot stock risk checklist",
+        "AI server market catalyst"
+      ],
+      "visualSignature": "2026-05-31-26724469439",
+      "schemaVersion": 2,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-05-31T21:14:12.316Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "question_open",
+      "angleId": "BEHAVIORAL_RECEIPT",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "COMPARISON_TABLE",
+        "LINE_CHART",
+        "DONUT_CHART",
+        "SANKEY_DIAGRAM",
+        "RADAR_CHART",
+        "LUXURY_LIFESTYLE"
+      ],
+      "coverVisualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "canadian_uni_grad_25"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F8F9FA",
+        "primaryText": "#111827",
+        "accent1": "#2563EB",
+        "accent2": "#4B5563"
+      }
     }
   ]
 }
