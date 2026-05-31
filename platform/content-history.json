@@ -1374,6 +1374,49 @@
         "accent1": "#39FF14",
         "accent2": "#00CFFF"
       }
+    },
+    {
+      "date": "2026-05-31",
+      "topic": "What Michael Burry (Scion) bought and sold last quarter",
+      "hook": "I pulled Michael Burry's 13F. Here's what's in it",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "Michael Burry 13F",
+        "Scion Asset Management portfolio",
+        "institutional stock holdings",
+        "13F filing analysis"
+      ],
+      "visualSignature": "2026-05-31-26718621091",
+      "schemaVersion": 2,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-05-31T16:53:42.316Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "RECEIPT_DROP",
+      "ctaId": "comment_genuine_question",
+      "angleId": "CAP_TABLE_INSTITUTIONAL",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "VAULT_SECURITY",
+        "POP_CULTURE_PORTRAIT",
+        "BAR_CHART_HORIZONTAL",
+        "CAP_TABLE_GRID",
+        "PORTFOLIO_DOUGHNUT_PORTRAIT",
+        "LUXURY_LIFESTYLE"
+      ],
+      "coverVisualStyle": "VAULT_SECURITY",
+      "portraitSubjects": [
+        "michael_burry"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      }
     }
   ]
 }
