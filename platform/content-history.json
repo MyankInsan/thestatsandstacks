@@ -1291,40 +1291,39 @@
     },
     {
       "date": "2026-05-30",
-      "topic": "Rocket Lab (RKLB) Heat Check: How to Analyze Speculative Growth",
-      "hook": "If you skipped RKLB and bought the index",
-      "format": "WATCHLIST_EDUCATION",
+      "topic": "Bank of Canada vs. Federal Reserve: The Diverging Rate Risk Map",
+      "hook": "Everyone says CAD is fine. The central bank disclosure says otherwise.",
+      "format": "CAROUSEL",
       "formatType": "MEME_HUMOR",
       "slideCount": 6,
       "keywords": [
-        "RKLB stock",
-        "speculative growth risks",
-        "how to analyze momentum stocks",
-        "Rocket Lab",
-        "investor psychology"
+        "Bank of Canada interest rate",
+        "Fed vs BoC rates",
+        "US dollar to Canadian dollar",
+        "VFV vs VSP"
       ],
-      "visualSignature": "2026-05-30-26697190539",
+      "visualSignature": "2026-05-30-26699288094",
       "schemaVersion": 2,
       "slotIndex": 6,
-      "postedAtUtc": "2026-05-30T23:05:32.365Z",
+      "postedAtUtc": "2026-05-31T00:54:39.038Z",
       "tickersFeatured": [],
-      "topicCategory": "BEHAVIORAL",
-      "hookFormulaId": "REVERSE_SURVIVORSHIP",
-      "ctaId": "comment_genuine_question",
-      "angleId": "COMPARISON_LADDER",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "topicCategory": "MACRO",
+      "hookFormulaId": "PREMIUM_CONTRARIAN",
+      "ctaId": "share_use_case",
+      "angleId": "HYPOTHETICAL_REVERSAL",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
       "visualStylesUsed": [
-        "EDITORIAL_REACTION_CARICATURE",
-        "BAR_CHART_HORIZONTAL",
-        "NATURE_METAPHOR",
-        "CHESS_BOARD_STRATEGY",
-        "VAULT_SECURITY",
-        "LUXURY_LIFESTYLE"
+        "MEME_COMIC_PLATE",
+        "TWEET_STOCK_CHART_SPLIT",
+        "CARICATURE_PORTRAIT",
+        "COMPARISON_TABLE",
+        "FUNNY_COMPARISON",
+        "PREMIUM_CTA"
       ],
-      "coverVisualStyle": "EDITORIAL_REACTION_CARICATURE",
+      "coverVisualStyle": "MEME_COMIC_PLATE",
       "portraitSubjects": [],
       "archetypesUsed": [
-        "retiree_with_charts"
+        "seasoned_canadian_banker"
       ],
       "colorSchemeUsed": {
         "bg": "#09090D",
