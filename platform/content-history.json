@@ -1417,6 +1417,49 @@
         "accent1": "#FF3B30",
         "accent2": "#FFD700"
       }
+    },
+    {
+      "date": "2026-05-31",
+      "topic": "Western Digital (WDC) Heat Check: The 5-Point Watchlist Checklist",
+      "hook": "If you track tech stocks, do this 1 thing first",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 6,
+      "keywords": [
+        "WDC stock",
+        "Western Digital Corporation stock",
+        "semiconductor risk map",
+        "flash memory stock catalyst"
+      ],
+      "visualSignature": "2026-05-31-26722138028",
+      "schemaVersion": 2,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-05-31T19:26:50.214Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "IF_THEN_LADDER",
+      "ctaId": "reference_save",
+      "angleId": "DIVIDEND_KINGS",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "EDITORIAL_STAT_CARD",
+        "EXPERT_CUTOUT",
+        "CORPORATE_OFFICE_SPACE",
+        "EARNINGS_HEAT_TABLE",
+        "MINIMALIST_CHECKLIST",
+        "TRADING_DESK_OVERLAY"
+      ],
+      "coverVisualStyle": "EDITORIAL_STAT_CARD",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "millennial_dad_with_laptop"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
+      }
     }
   ]
 }
