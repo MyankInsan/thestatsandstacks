@@ -1591,6 +1591,48 @@
         "accent1": "#FFD700",
         "accent2": "#FF2E93"
       }
+    },
+    {
+      "date": "2026-06-01",
+      "topic": "Companies retiring the most shares this year",
+      "hook": "The number nobody mentions about share buybacks",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 6,
+      "keywords": [
+        "share buybacks",
+        "capital allocation",
+        "earnings per share inflation",
+        "shareholder yield",
+        "outstanding shares"
+      ],
+      "visualSignature": "2026-06-01-26766306502",
+      "schemaVersion": 2,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-06-01T16:03:27.627Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "QUIET_NUMBER",
+      "ctaId": "follow_authority",
+      "angleId": "INDEX_REBALANCE",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "CROWD_PANIC",
+        "GLOWING_QUOTE",
+        "CANDLESTICK_CHART",
+        "TICKER_TAPE_HERO",
+        "MINIMALIST_CHECKLIST",
+        "PREMIUM_CTA"
+      ],
+      "coverVisualStyle": "CROWD_PANIC",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#39FF14",
+        "accent2": "#00CFFF"
+      }
     }
   ]
 }
