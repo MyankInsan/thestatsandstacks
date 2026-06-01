@@ -1594,50 +1594,6 @@
     },
     {
       "date": "2026-06-01",
-      "topic": "401k vs Roth IRA: Which Account Should Americans Use First?",
-      "hook": "Most Americans pick the wrong account first.",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
-      "slideCount": 7,
-      "keywords": [
-        "timing the market vs time in market",
-        "S&P 500 historical returns",
-        "portfolio compounding math",
-        "staying invested strategy"
-      ],
-      "visualSignature": "2026-06-01-26775891050",
-      "schemaVersion": 2,
-      "slotIndex": 4,
-      "postedAtUtc": "2026-06-01T19:16:08.112Z",
-      "tickersFeatured": [],
-      "topicCategory": "MACRO",
-      "hookFormulaId": "PREMIUM_CONTRARIAN",
-      "ctaId": "question_open",
-      "angleId": "BEHAVIORAL_RECEIPT",
-      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
-      "visualStylesUsed": [
-        "COMPARISON_TABLE",
-        "AREA_CHART",
-        "HEATMAP_GRID",
-        "CIRCULAR_PORTFOLIO_WHEEL",
-        "ANIMAL_METAPHOR",
-        "TECH_HUD",
-        "LUXURY_LIFESTYLE"
-      ],
-      "coverVisualStyle": "COMPARISON_TABLE",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "silver_haired_pm"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#F8F9FA",
-        "primaryText": "#111827",
-        "accent1": "#2563EB",
-        "accent2": "#4B5563"
-      }
-    },
-    {
-      "date": "2026-06-01",
       "topic": "If You Invested $10,000 in NVIDIA 5 Years Ago",
       "hook": "What $10k in NVDA looks like today.",
       "format": "CAROUSEL",
@@ -1797,6 +1753,48 @@
         "primaryText": "#FFFFFF",
         "accent1": "#FF3B30",
         "accent2": "#39FF14"
+      }
+    },
+    {
+      "date": "2026-06-01",
+      "topic": "Why the First $100K Feels So Slow for Canadian Investors",
+      "hook": "The first $100K feels slow.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 7,
+      "keywords": [
+        "AVGO stock",
+        "Broadcom Inc stock",
+        "AI chips valuation",
+        "fundamental analysis tools"
+      ],
+      "visualSignature": "2026-06-01-26786140566",
+      "schemaVersion": 2,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-06-01T22:43:14.785Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "PREMIUM_CONTRARIAN",
+      "ctaId": "question_open",
+      "angleId": "HYPOTHETICAL_REVERSAL",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "DONUT_CHART",
+        "BAR_CHART_HORIZONTAL",
+        "SANKEY_DIAGRAM",
+        "RADAR_CHART",
+        "TRADER_DESK_SILHOUETTE",
+        "LUXURY_LIFESTYLE"
+      ],
+      "coverVisualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#F8F9FA",
+        "primaryText": "#111827",
+        "accent1": "#2563EB",
+        "accent2": "#4B5563"
       }
     }
   ]
