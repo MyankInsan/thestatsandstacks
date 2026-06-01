@@ -1679,6 +1679,50 @@
         "accent1": "#FF3B30",
         "accent2": "#FFD700"
       }
+    },
+    {
+      "date": "2026-06-01",
+      "topic": "Why the First $100K Feels So Slow for Canadian Investors",
+      "hook": "The first $100K feels slow.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 7,
+      "keywords": [
+        "opportunity cost investing",
+        "hypothetical investment scenario",
+        "S&P 500 returns",
+        "portfolio compounding"
+      ],
+      "visualSignature": "2026-06-01-26769752149",
+      "schemaVersion": 2,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-06-01T17:15:40.466Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "DECISION_FORK",
+      "ctaId": "reference_save",
+      "angleId": "FEE_TEARDOWN",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "TRADER_DESK_SILHOUETTE",
+        "CORPORATE_OFFICE_SPACE",
+        "DONUT_CHART",
+        "BAR_CHART_HORIZONTAL",
+        "SANKEY_DIAGRAM",
+        "RADAR_CHART",
+        "LUXURY_LIFESTYLE"
+      ],
+      "coverVisualStyle": "TRADER_DESK_SILHOUETTE",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "seasoned_canadian_banker"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
+      }
     }
   ]
 }
