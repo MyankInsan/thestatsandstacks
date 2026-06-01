@@ -1761,6 +1761,46 @@
         "accent1": "#FF3B30",
         "accent2": "#FFD700"
       }
+    },
+    {
+      "date": "2026-06-01",
+      "topic": "How President Trump's Policies Impact the Tech Sector",
+      "hook": "What the new policies mean for Tech.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 7,
+      "keywords": [
+        "SP500 all time high",
+        "S&P 500 record"
+      ],
+      "visualSignature": "2026-06-01-26780122472",
+      "schemaVersion": 2,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-06-01T20:37:23.047Z",
+      "tickersFeatured": [],
+      "topicCategory": "POLICY",
+      "hookFormulaId": "COHORT_TRUTH",
+      "ctaId": "share_use_case",
+      "angleId": "DIVIDEND_KINGS",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "MAGAZINE_COVER",
+        "LINE_CHART",
+        "NATURE_METAPHOR",
+        "CHESS_BOARD_STRATEGY",
+        "POP_CULTURE_PORTRAIT",
+        "EXPERT_CUTOUT",
+        "LUXURY_LIFESTYLE"
+      ],
+      "coverVisualStyle": "MAGAZINE_COVER",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FFFFFF"
+      }
     }
   ]
 }
