@@ -1594,50 +1594,6 @@
     },
     {
       "date": "2026-06-01",
-      "topic": "Why the First $100K Feels So Slow for Canadian Investors",
-      "hook": "The first $100K feels slow.",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
-      "slideCount": 7,
-      "keywords": [
-        "opportunity cost investing",
-        "hypothetical investment scenario",
-        "S&P 500 returns",
-        "portfolio compounding"
-      ],
-      "visualSignature": "2026-06-01-26769752149",
-      "schemaVersion": 2,
-      "slotIndex": 3,
-      "postedAtUtc": "2026-06-01T17:15:40.466Z",
-      "tickersFeatured": [],
-      "topicCategory": "CAP_TABLE",
-      "hookFormulaId": "DECISION_FORK",
-      "ctaId": "reference_save",
-      "angleId": "FEE_TEARDOWN",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "TRADER_DESK_SILHOUETTE",
-        "CORPORATE_OFFICE_SPACE",
-        "DONUT_CHART",
-        "BAR_CHART_HORIZONTAL",
-        "SANKEY_DIAGRAM",
-        "RADAR_CHART",
-        "LUXURY_LIFESTYLE"
-      ],
-      "coverVisualStyle": "TRADER_DESK_SILHOUETTE",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "seasoned_canadian_banker"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#050505",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF3B30",
-        "accent2": "#39FF14"
-      }
-    },
-    {
-      "date": "2026-06-01",
       "topic": "401k vs Roth IRA: Which Account Should Americans Use First?",
       "hook": "Most Americans pick the wrong account first.",
       "format": "CAROUSEL",
@@ -1800,6 +1756,47 @@
         "primaryText": "#FFFFFF",
         "accent1": "#FFD700",
         "accent2": "#FFFFFF"
+      }
+    },
+    {
+      "date": "2026-06-01",
+      "topic": "Finfluencer Red Flags: 7 Phrases Investors Should Pause On",
+      "hook": "Good finance content does not need pressure.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 7,
+      "keywords": [
+        "finfluencer red flags",
+        "investment scams social media",
+        "investing risk"
+      ],
+      "visualSignature": "2026-06-01-26783608152",
+      "schemaVersion": 2,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-06-01T21:45:22.688Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "DECISION_FORK",
+      "ctaId": "comment_genuine_question",
+      "angleId": "TAX_DRAG_MAP",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "ARCHITECTURAL_OVERLAY",
+        "LEADER_LOGO_CUTOUTS",
+        "NEON_TERMINAL",
+        "CANDLESTICK_HERO",
+        "CANDLESTICK_PATTERN_ANNOTATED",
+        "TRADING_DESK_OVERLAY",
+        "LUXURY_LIFESTYLE"
+      ],
+      "coverVisualStyle": "ARCHITECTURAL_OVERLAY",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
       }
     }
   ]
