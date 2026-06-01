@@ -1633,6 +1633,52 @@
         "accent1": "#39FF14",
         "accent2": "#00CFFF"
       }
+    },
+    {
+      "date": "2026-06-01",
+      "topic": "The Dividend Snowball: How Warren Buffett Compounds Wealth",
+      "hook": "I pulled Buffett's latest 13F. Here's what's in it",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 7,
+      "keywords": [
+        "dividend growth investing",
+        "Warren Buffett 13F",
+        "passive income portfolio",
+        "dividend reinvestment plan"
+      ],
+      "visualSignature": "2026-06-01-26766577380",
+      "schemaVersion": 2,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-06-01T16:06:44.532Z",
+      "tickersFeatured": [
+        "BRK.B"
+      ],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "CAP_TABLE",
+      "ctaId": "comment_genuine_question",
+      "angleId": "F13_DELTA",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "EXPERT_CUTOUT",
+        "TRADING_DESK_OVERLAY",
+        "PORTFOLIO_DOUGHNUT_PORTRAIT",
+        "NATURE_METAPHOR",
+        "LINE_CHART",
+        "CHESS_BOARD_STRATEGY",
+        "LUXURY_LIFESTYLE"
+      ],
+      "coverVisualStyle": "EXPERT_CUTOUT",
+      "portraitSubjects": [
+        "buffett"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      }
     }
   ]
 }
