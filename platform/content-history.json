@@ -1968,6 +1968,132 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-02",
+      "topic": "TSX Near 5-Year Highs: What Canadian Investors Should Do",
+      "hook": "I pulled CPPIB's latest disclosure. Here's what's in it",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "TSX multi-year high",
+        "investing Canada",
+        "CPPIB asset allocation",
+        "portfolio rebalancing Canada"
+      ],
+      "visualSignature": "2026-06-02-26843293041",
+      "schemaVersion": 3,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-06-02T19:36:02.146Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "RECEIPT_DROP",
+      "ctaId": "save_specific",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "EXECUTIVE_LINEUP",
+        "COMPARISON_TABLE",
+        "MINIMALIST_CHECKLIST",
+        "LEADER_LOGO_CUTOUTS",
+        "LINE_CHART",
+        "LUXURY_LIFESTYLE"
+      ],
+      "coverVisualStyle": "EXECUTIVE_LINEUP",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "seasoned_canadian_banker"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "PORTRAIT",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:EDITORIAL_PORTRAIT:874367728",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "EDITORIAL_PORTRAIT",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:EXECUTIVE_LINEUP:top",
+          "HUMAN_EDITORIAL:COMPARISON_TABLE:left",
+          "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left",
+          "HUMAN_EDITORIAL:LEADER_LOGO_CUTOUTS:top",
+          "HUMAN_EDITORIAL:LINE_CHART:background",
+          "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top"
+        ],
+        "ctaConceptId": "save_specific:LUXURY_LIFESTYLE",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "hero-top",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EXECUTIVE_LINEUP",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "sceneConceptId": "HUMAN_EDITORIAL:EXECUTIVE_LINEUP:top",
+            "promptFingerprint": "pf_8xwdeu"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "HUMAN_EDITORIAL:COMPARISON_TABLE:left",
+            "promptFingerprint": "pf_s6q7se"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "checklist",
+            "visualStyle": "MINIMALIST_CHECKLIST",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "sceneConceptId": "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left",
+            "promptFingerprint": "pf_h5i7l3"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "LEADER_LOGO_CUTOUTS",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "sceneConceptId": "HUMAN_EDITORIAL:LEADER_LOGO_CUTOUTS:top",
+            "promptFingerprint": "pf_v1qwza"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "line",
+            "visualStyle": "LINE_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "HUMAN_EDITORIAL:LINE_CHART:background",
+            "promptFingerprint": "pf_ivj01c"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "sceneConceptId": "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top",
+            "promptFingerprint": "pf_ottpxj"
+          }
+        ]
+      }
     }
   ]
 }
