@@ -2359,6 +2359,156 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-02",
+      "topic": "HISA vs GIC vs ETF: Where Should Short-Term Money Go?",
+      "hook": "Do not invest money you need soon.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 8,
+      "keywords": [
+        "SP500 5 year high",
+        "S&P 500 level"
+      ],
+      "visualSignature": "2026-06-02-26852829717",
+      "schemaVersion": 3,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-06-02T23:01:04.304Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "QUIET_COMPOUNDER",
+      "ctaId": "reference_save",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "CHESS_BOARD_STRATEGY",
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "BAR_CHART_HORIZONTAL",
+        "SPACE_EXPLORATION",
+        "SANKEY_DIAGRAM",
+        "GAMING_LEVEL_UP",
+        "AREA_CHART",
+        "POP_CULTURE_PORTRAIT"
+      ],
+      "coverVisualStyle": "CHESS_BOARD_STRATEGY",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "young_retail_trader"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FFFFFF"
+      },
+      "dominantSubjectClass": "METAPHOR_OBJECT",
+      "visualPlan": {
+        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:CINEMATIC_SCENE:837561167",
+        "structureFamily": "PREMIUM_LIFESTYLE",
+        "coverMechanism": "CINEMATIC_SCENE",
+        "sceneConceptIds": [
+          "PREMIUM_LIFESTYLE:CHESS_BOARD_STRATEGY:top",
+          "PREMIUM_LIFESTYLE:TYPOGRAPHIC_MEGA_NUMBER:center",
+          "PREMIUM_LIFESTYLE:BAR_CHART_HORIZONTAL:background",
+          "PREMIUM_LIFESTYLE:SPACE_EXPLORATION:top",
+          "PREMIUM_LIFESTYLE:SANKEY_DIAGRAM:background",
+          "PREMIUM_LIFESTYLE:GAMING_LEVEL_UP:top",
+          "PREMIUM_LIFESTYLE:AREA_CHART:background",
+          "PREMIUM_LIFESTYLE:POP_CULTURE_PORTRAIT:top"
+        ],
+        "ctaConceptId": "reference_save:POP_CULTURE_PORTRAIT",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "hero-top",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "CHESS_BOARD_STRATEGY",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:CHESS_BOARD_STRATEGY:top",
+            "promptFingerprint": "pf_gitzuf"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "mega-number",
+            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:TYPOGRAPHIC_MEGA_NUMBER:center",
+            "promptFingerprint": "pf_yhw0m8"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "bar",
+            "visualStyle": "BAR_CHART_HORIZONTAL",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:BAR_CHART_HORIZONTAL:background",
+            "promptFingerprint": "pf_sfxsu8"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "SPACE_EXPLORATION",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:SPACE_EXPLORATION:top",
+            "promptFingerprint": "pf_8k2bi5"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:SANKEY_DIAGRAM:background",
+            "promptFingerprint": "pf_16k20c"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "GAMING_LEVEL_UP",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:GAMING_LEVEL_UP:top",
+            "promptFingerprint": "pf_w0vow7"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "area",
+            "visualStyle": "AREA_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:AREA_CHART:background",
+            "promptFingerprint": "pf_m2th65"
+          },
+          {
+            "slideNumber": 8,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "POP_CULTURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:POP_CULTURE_PORTRAIT:top",
+            "promptFingerprint": "pf_rc7iq8"
+          }
+        ]
+      }
     }
   ]
 }
