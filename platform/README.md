@@ -10,6 +10,17 @@ npm run daily
 
 Use `env.example` as the non-secret reference for local and GitHub Actions variables.
 
+### Carousel storyboard & visual plan (v3)
+
+The pipeline produces **6 zero-incremental-cost prompt packets per day** (one per slot) and renders nothing itself — each packet is a set of labeled prompts you paste into **ChatGPT Images 2.0** (primary) or **Seedream** (cinematic alternate). Key pieces:
+
+- **`VisualPlanAgent`** (deterministic) locks the slide-by-slide visual grammar — style, position, role, bucket, dominant subject class, layout archetype, scene concept, and a `compositionSignature` — plus a `StoryboardContinuity` (premise, anchor, shared invariants, progression/resolution rules) *before* any copy is written.
+- **`SlideNarrativeAgent`** then writes copy only; it cannot change the locked grammar (drift is rejected, then a deterministic copy fallback fills the plan).
+- Each prompt is a labeled packet (`DELIVERABLE → STORYBOARD CONTINUITY → MUST KEEP → CHANGE ONLY → … → NEGATIVE CONSTRAINTS`) so you generate slide 1 as the anchor, then keep working in the same ChatGPT conversation, changing only the requested slide content.
+- **Ten-day variety contract** (`varietyContract.ts`) hard-blocks repeating a composition within the trailing 60 packets and reuses within the same day; history schema **v3** persists the full per-slide grammar to enforce it. If variety pressure is high, Telegram shows a warning.
+- **Research evidence gate** (`researchEvidenceGate.ts`) flags record-high / politician-disclosure / multi-year-return / anomaly / secondary-only claims for manual review, keeps unsupported exact figures out of the image prompts (rendered as "illustrative"), and names Yahoo's 5-year window a 5-year high — never an all-time high.
+- Gemini text generation is pinned to a stable model (**`gemini-3.5-flash`** by default); `CostGuardAgent` fails closed on `latest`/preview/experimental/image/audio models in zero-cost mode.
+
 By default, image generation is free and local: the pipeline creates branded PNG carousel slides with SVG + Sharp, saves a `MANUAL_IMAGE_PROMPTS.md` packet for optional manual refinement, and does not call a paid image API. The GitHub Actions workflow is scheduled for 8:00 AM Vancouver time and can also be manually dispatched.
 
 `ZERO_COST_MODE=true` is enabled by default. If someone accidentally turns on paid image/video generation env vars, the pipeline stops before generating assets instead of risking a charge.

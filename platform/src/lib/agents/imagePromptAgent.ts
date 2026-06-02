@@ -8,6 +8,7 @@ import type { ContentHistoryEntry } from '../services/contentHistory';
 import { PROMPT_LIBRARY, type ViralStyle } from './promptLibrary';
 import { recommendModelForStyle, modelRecommendationLabel } from './modelRecommendation';
 import { TickerLogoAgent } from './tickerLogoAgent';
+import type { StoryboardContinuity } from './visualPlanAgent';
 
 export interface SlideImagePrompt {
   slideNumber: number;
@@ -18,6 +19,14 @@ export interface SlideImagePrompt {
   recommendedModelLabel: string;
   canvaFallbackSuggested: boolean;
   canvaFallbackData?: string;
+  /** Stable fingerprint of the compiled prompt — used for same-day reuse guards. */
+  promptFingerprint: string;
+}
+
+export function promptFingerprint(prompt: string): string {
+  let h = 0;
+  for (let i = 0; i < prompt.length; i++) h = ((h << 5) - h + prompt.charCodeAt(i)) | 0;
+  return `pf_${Math.abs(h).toString(36)}`;
 }
 
 export interface ImagePromptSet {
@@ -68,8 +77,11 @@ const OFFICE_SCENE_VARIANTS = [
   { setting: 'a SoftBank-style VC partner office — minimalist white, single large abstract artwork, glass desk, single founder visitor seat', mood: 'global VC fund', region: 'neutral' },
 ];
 
-function pickSceneVariant<T>(variants: T[], slideNumber: number, dateKey: string): T {
-  const hash = simpleHash(`${dateKey}-slide-${slideNumber}`) % variants.length;
+function pickSceneVariant<T>(variants: T[], slideNumber: number, varietySeed: string): T {
+  // varietySeed includes the slot so same-day slots don't all collapse onto the
+  // same scene (the old hash used only date + slide number, which made three
+  // same-day packets end on the identical Gulfstream + Rolex CTA scene).
+  const hash = simpleHash(`${varietySeed}-slide-${slideNumber}`) % variants.length;
   return variants[hash];
 }
 
@@ -89,7 +101,7 @@ function simpleHash(str: string): number {
 function getSceneVarySubstitutedTemplate(
   style: ViralStyle,
   slideNumber: number,
-  dateKey: string,
+  varietySeed: string,
   tickerSymbols?: string[],
   strategyTopic?: string,
 ): string | null {
@@ -99,14 +111,14 @@ function getSceneVarySubstitutedTemplate(
   const isCanadian = strategyTopic ? /canada|canadian|tsx|bay street|\.to\b|cppib|cdpq|tfsa|rrsp|fhsa|cra\b/i.test(strategyTopic) : false;
 
   if (style === 'LUXURY_LIFESTYLE') {
-    const v = pickSceneVariant(LUXURY_SCENE_VARIANTS, slideNumber, dateKey);
+    const v = pickSceneVariant(LUXURY_SCENE_VARIANTS, slideNumber, varietySeed);
     return `A hyper-realistic, cinematic editorial photograph ${v.setting}. The hero of the composition: ${v.hero}. Lighting: ${v.light}. Shot on Hasselblad H6D-100c, f/2.8, shallow depth of field, premium color grading with deep rich shadows. Pure editorial photography, no AI artifacts.`;
   }
   if (style === 'ARCHITECTURAL_OVERLAY') {
     const pool = isCanadian 
       ? ARCHITECTURE_SCENE_VARIANTS 
       : ARCHITECTURE_SCENE_VARIANTS.filter(v => v.region !== 'CA');
-    const v = pickSceneVariant(pool, slideNumber, dateKey);
+    const v = pickSceneVariant(pool, slideNumber, varietySeed);
     let settingStr = v.setting;
     if (resolvedTicker) {
       settingStr = settingStr.replace(/a corporate headquarters/i, `the modern glass and steel corporate headquarters of ${resolvedTicker.companyName}`);
@@ -117,7 +129,7 @@ function getSceneVarySubstitutedTemplate(
     const pool = isCanadian 
       ? OFFICE_SCENE_VARIANTS 
       : OFFICE_SCENE_VARIANTS.filter(v => v.region !== 'CA');
-    const v = pickSceneVariant(pool, slideNumber, dateKey);
+    const v = pickSceneVariant(pool, slideNumber, varietySeed);
     let logoStr = 'a subtle corporate logo mark';
     if (resolvedTicker) {
       logoStr = `a subtle corporate logo mark of ${resolvedTicker.companyName} (${resolvedTicker.markStyle})`;
@@ -142,7 +154,7 @@ NEGATIVE PROMPT (avoid in every render):
 - No AI-hand artifacts (deformed fingers).
 - No floating geometric blobs.
 - No emoji decoration.
-- No Midjourney or Stable Diffusion CLI flags (--ar, --style, --v, --s) — they break Seedance and ChatGPT image gen.
+- No Midjourney or Stable Diffusion CLI flags (--ar, --style, --v, --s) — they break ChatGPT Images 2.0 and Seedream.
 `.trim();
 
 const COVER_PREMIUM_PLAYBOOK = `
@@ -183,6 +195,8 @@ export class ImagePromptAgent extends BaseAgent {
     recentHistory?: ContentHistoryEntry[];
     tickerSymbols?: string[];
     dateKey?: string;
+    slotIndex?: number;
+    storyboard?: StoryboardContinuity;
   }): Promise<ImagePromptSet> {
     console.log(`[${this.name}] 🎨 Composing dynamic visual prompts for ${input.slides.length} slides...`);
 
@@ -216,17 +230,19 @@ export class ImagePromptAgent extends BaseAgent {
     }
 
     const dateKey = input.dateKey ?? new Date().toISOString().split('T')[0];
+    // Slot-aware seed so same-day slots don't render the identical scene.
+    const varietySeed = `${dateKey}-s${input.slotIndex ?? 0}`;
 
     const slides = input.slides.map((slide) => {
-      let visualDescription = getSceneVarySubstitutedTemplate(slide.visualStyle, slide.slideNumber, dateKey, input.tickerSymbols, input.strategy?.topic);
+      let visualDescription = getSceneVarySubstitutedTemplate(slide.visualStyle, slide.slideNumber, varietySeed, input.tickerSymbols, input.strategy?.topic);
       if (!visualDescription) {
-        visualDescription = generatedPromptsMap.get(slide.slideNumber);
+        visualDescription = generatedPromptsMap.get(slide.slideNumber) ?? null;
       }
       if (!visualDescription) {
-        visualDescription = buildFallbackVisualDescription(slide, input.format, input.constraints, dateKey, input.tickerSymbols);
+        visualDescription = buildFallbackVisualDescription(slide, input.format, input.constraints, varietySeed, input.tickerSymbols);
       }
 
-      const compiledPrompt = compilePromptString(slide, visualDescription, input.format, input.constraints);
+      const compiledPrompt = compilePromptString(slide, visualDescription, input.format, input.constraints, input.storyboard);
       const recommended = recommendModelForStyle(slide.visualStyle);
       const canvaFallback = CANVA_FALLBACK_STYLES.includes(slide.visualStyle);
       const canvaFallbackData = canvaFallback ? buildCanvaFallbackData(slide, input.tickerSymbols ?? []) : undefined;
@@ -240,6 +256,7 @@ export class ImagePromptAgent extends BaseAgent {
         recommendedModelLabel: modelRecommendationLabel(recommended),
         canvaFallbackSuggested: canvaFallback,
         canvaFallbackData,
+        promptFingerprint: promptFingerprint(compiledPrompt),
       };
     });
 
@@ -288,7 +305,7 @@ function buildLlmPrompt(input: {
     .map(([style, desc]) => `- ${style}: ${desc}`)
     .join('\n');
 
-  return `You are a world-class creative director and AI image prompt expert for "TheStatsAndStacks", a premium Canadian personal finance brand on Instagram. The user pastes these prompts into Seedance and ChatGPT image gen (NOT Midjourney, NOT Stable Diffusion).
+  return `You are a world-class creative director and AI image prompt expert for "TheStatsAndStacks", a premium Canadian personal finance brand on Instagram. The user pastes these prompts into ChatGPT Images 2.0 (primary) or Seedream (cinematic alternate) — NOT Midjourney, NOT Stable Diffusion.
 
 TODAY'S POST CONTEXT:
 - TOPIC: ${topic}
@@ -320,7 +337,7 @@ CRITICAL VISUAL DESIGN DIRECTIVES (MUST FOLLOW):
 6. SEQUENCE-AWARE VARIETY: Alternately rotate camera angles, compositions, and subject classes across slides. No two adjacent slides should share a visualStyle or share the same dominant subject class (portrait, chart, building, metaphor, typography). Ensure the slides look like a cohesive yet diverse set of premium slides.
 7. INTEGRATE SEMANTIC TEXT WHEN RELEVANT: If the slide style includes speech bubbles, signs, labels, chart axes, or scoreboard numbers, explicitly describe the exact text that should be rendered inside them (e.g. what a character is saying in a comic strip balloon, or what label is on a folder). Do not use blank templates or empty speech bubbles. (Only avoid describing the main overhead headline, sub-headline overlay, and the bottom "@thestatsandstacks" watermark, which are compiled separately).
 8. LIGHT MODE ADAPTATION RULE: If the palette is LIGHT MODE (bg is light, e.g. #F8F9FA), you MUST adapt all templates and descriptions to fit a light, clean, bright aesthetic. Avoid phrases like "pitch-black", "dark room", "dark background", "dark navy", "black matte canvas", or "white text on light". Instead, use "clean light background", "bright room", "light matte canvas", "dark text on light", etc. Ensure high contrast so elements are readable.
-9. ZERO-LIMITS ASSUMPTION: Never assume the AI image generation model has limitations or cannot render complex graphics, detailed charts, candlestick patterns, tables, or heavy text. The image generation models (Seedance, DALL-E 3) are extremely capable of rendering precise, high-fidelity graphics, patterns, and text, provided the visual description is of supreme quality, highly detailed, and explicitly structured. Write rich, premium, and sophisticated prompts without simplifying the visuals.
+9. ZERO-LIMITS ASSUMPTION: Never assume the AI image generation model has limitations or cannot render complex graphics, detailed charts, candlestick patterns, tables, or heavy text. The image generation models (ChatGPT Images 2.0, Seedream) are extremely capable of rendering precise, high-fidelity graphics, patterns, and text, provided the visual description is of supreme quality, highly detailed, and explicitly structured. Write rich, premium, and sophisticated prompts without simplifying the visuals.
 10. LAYOUT & TEXT ALIGNMENT: Closely match the visual scene's composition to the slide's visualPosition property:
     - If visualPosition is 'left', place the main graphic/portrait subject on the left 50% of the canvas, leaving the right 50% as empty negative space for text overlays.
     - If visualPosition is 'right', place the main graphic/portrait subject on the right 50% of the canvas, leaving the left 50% as empty negative space for text overlays.
@@ -340,7 +357,7 @@ Return ONLY valid JSON matching this exact schema (no markdown, no code fences):
   "slides": [
     {
       "slideNumber": number,
-      "visualDescription": "The complete, highly detailed prompt starting with the main subject, written for Seedance or ChatGPT image gen. No Midjourney flags."
+      "visualDescription": "The complete, highly detailed prompt starting with the main subject, written for ChatGPT Images 2.0 or Seedream. No Midjourney flags."
     }
   ]
 }`;
@@ -553,7 +570,7 @@ function pickFallbackStyle(suggested: ViralStyle, constraints?: CarouselConstrai
 export function getTextLayoutDirective(position: SlideSpec['visualPosition']): string {
   switch (position) {
     case 'background':
-      return 'Layout structure: Modern print-infographic layout. The main visual chart or graphic spans the frame with ample breathing room. The accompanying text overlays are aligned cleanly in a compact, left-aligned editorial block in the top-left quadrant, keeping the rest of the space clear.';
+      return 'Layout structure: Modern print-infographic layout where the main visual reads as a full-bleed background texture. The main visual chart or graphic spans the frame with ample breathing room. The accompanying text overlays are aligned cleanly in a compact, left-aligned editorial block in the top-left quadrant, keeping the rest of the space clear.';
     case 'left':
       return 'Layout structure: Clean vertical split-column layout. The main visual subject is positioned on the left side of the 1080x1350 frame, while the text overlays are aligned cleanly in a vertical column on the right 50% of the frame in spacious negative space.';
     case 'right':
@@ -571,12 +588,17 @@ function compilePromptString(
   visualDescription: string,
   format: FormatDecision,
   constraints?: CarouselConstraints,
+  storyboard?: StoryboardContinuity,
 ): string {
   const { colorScheme } = format;
-  
+
   const isCover = slide.role === 'cover';
+  // Suppress unsupported exact figures: if the narrative flagged the data point
+  // as "illustrative" (inferred, not evidence-backed), do not render a precise
+  // unverified number — keep the magnitude visual but label it illustrative.
+  const suppressExactFigure = /illustrative/i.test(slide.narrativeNote ?? '');
   const textItems: string[] = [];
-  
+
   if (slide.eyebrow) {
     textItems.push(`a small uppercase eyebrow label reading "${slide.eyebrow}"`);
   }
@@ -624,7 +646,11 @@ function compilePromptString(
   }
 
   if (slide.dataPoint) {
-    textItems.push(`a hero data figure reading "${slide.dataPoint}"`);
+    textItems.push(
+      suppressExactFigure
+        ? `an illustrative magnitude indicator (do NOT render the exact unverified figure "${slide.dataPoint}" as a precise number — show it as clearly illustrative)`
+        : `a hero data figure reading "${slide.dataPoint}"`,
+    );
   }
 
   let positionPrefix = '';
@@ -655,28 +681,42 @@ function compilePromptString(
     : '';
 
   const isCoverSlide = slide.role === 'cover';
-  const coverDirective = isCoverSlide ? `\n\n${COVER_PREMIUM_PLAYBOOK}` : '';
-
   const isChartData = ['chart_data', 'data', 'shock_stat'].includes(slide.role);
-  const chartGuidance = isChartData ? `\n\n${FINANCIAL_TEXT_RENDERING}` : '';
 
   const isLight = colorScheme.bg.toLowerCase() === '#f8f9fa';
   const lightingStyle = isLight
     ? 'clean light-mode studio gradients and bright professional lighting'
     : 'clean dark-mode gradients and cinematic studio lighting';
-  
+
   const layoutDirective = getTextLayoutDirective(slide.visualPosition);
   const sceneDescription = `${visualDescription} ${layoutDirective} The composition uses ${colorScheme.bg} as the dominant background hue with ${lightingStyle} calibrated to the visual element above.`;
 
-  return [
-    `Create a 1080x1350 portrait Instagram image for Seedance or ChatGPT image gen (NOT Midjourney — do not include --ar, --style, --v, or --s flags).`,
-    `Visual element: ${sceneDescription}`,
-    textProse,
-    WATERMARK_LINE,
-    `Constraints: High-end professional rendering, perfect spelling, legible typography, no overlapping letters, no extra borders or watermarks beyond the lower-edge brand mark.`,
-    coverDirective,
-    chartGuidance,
-  ].filter((line) => line && line.trim().length > 0).join('\n\n');
+  // Labeled-section prompt packet for ChatGPT Images 2.0 (primary manual target).
+  const sections: string[] = [];
+  sections.push(`DELIVERABLE\nCreate a 1080x1350 portrait Instagram carousel slide for ChatGPT Images 2.0 (primary) or Seedream for cinematic image-first scenes. Do NOT use Midjourney/Stable Diffusion CLI flags (--ar, --style, --v, --s).`);
+
+  if (storyboard) {
+    sections.push(
+      `STORYBOARD CONTINUITY\nPremise: ${storyboard.premise}\nThis slide's beat: ${slide.storyboardBeat ?? '—'}\nProgression: ${storyboard.progressionRule}\n` +
+      (isCoverSlide
+        ? 'This is the ANCHOR slide — generate it FIRST in the conversation; later slides reference this image.'
+        : 'Stay coherent with the slide-1 anchor image and the MUST KEEP invariants below.'),
+    );
+    sections.push(`MUST KEEP (identical across every slide)\n${storyboard.sharedVisualInvariants.map((s) => `- ${s}`).join('\n')}`);
+    sections.push(`CHANGE ONLY\n- This slide's subject/scene, data graphic, and the EXACT TEXT below. Keep palette logic, type system, and the brand watermark identical to the anchor.`);
+  }
+
+  sections.push(`PURPOSE\n${slide.role.toUpperCase().replace(/_/g, ' ')} slide${slide.narrativeNote ? ` — ${slide.narrativeNote}` : ''}`);
+  sections.push(`INFORMATION ARCHITECTURE\n${layoutDirective}`);
+  sections.push(`SUBJECT AND SCENE\n${sceneDescription}`);
+  if (isCoverSlide) sections.push(`COMPOSITION\n${COVER_PREMIUM_PLAYBOOK}`);
+  if (textProse) sections.push(`EXACT TEXT\n${textProse}`);
+  sections.push(`WATERMARK\n${WATERMARK_LINE}`);
+  if (isChartData) sections.push(`DATA GRAPHIC SPECIFICATION\n${FINANCIAL_TEXT_RENDERING}`);
+  sections.push(`STYLE AND MATERIALS\nPremium editorial rendering: ${lightingStyle}; named materials (brushed titanium, polished marble, oxidized brass, raw concrete, smoked oak) over generic surfaces.`);
+  sections.push(`NEGATIVE CONSTRAINTS\nHigh-end professional rendering, perfect spelling, legible typography, no overlapping letters, no extra borders, no extra digits or duplicated numerals, no AI-hand artifacts, no watermarks beyond the lower-edge brand mark.${suppressExactFigure ? ' Do NOT print the exact unverified figure as a precise number.' : ''}`);
+
+  return sections.filter((line) => line && line.trim().length > 0).join('\n\n');
 }
 
 function buildCanvaFallbackData(slide: SlideSpec, tickerSymbols: string[]): string {

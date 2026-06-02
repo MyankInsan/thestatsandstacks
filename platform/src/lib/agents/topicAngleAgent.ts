@@ -77,6 +77,9 @@ export interface TopicAngleAgentOutput {
     rationale: string;
     seededFromTrend?: string;
     sourceUrls: string[];
+    /** The angle's authored slide skeleton — preserved end-to-end so the
+     * narrative/visual plan can follow its beat order. */
+    angleSlideSkeleton: string[];
     triggerSource: 'angle';
   }>;
 }
@@ -96,6 +99,7 @@ export class TopicAngleAgent {
             rationale: `Manual override via FORCE_ANGLE=${forced.id}.`,
             seededFromTrend: seed?.title,
             sourceUrls: seed?.sourceUrls ?? [],
+            angleSlideSkeleton: forced.slideSkeleton ?? [],
             triggerSource: 'angle',
           }],
         };
@@ -126,6 +130,7 @@ export class TopicAngleAgent {
           rationale: i === 0 ? 'Top-ranked angle for this slot (LRU-fresh)' : 'Backup angle candidate',
           seededFromTrend: seed?.title,
           sourceUrls: seed?.sourceUrls ?? [],
+          angleSlideSkeleton: angle.slideSkeleton ?? [],
           triggerSource: 'angle',
         };
       }),

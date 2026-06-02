@@ -14,6 +14,8 @@ import { CTA_LIBRARY, selectCta, type CtaId, type CtaFeedbackEntry } from './cta
 import { HookQualityGate, getDeterministicFallbackHookFormula } from './hookQualityGate';
 import type { TopicCategory } from './portraitLibrary';
 import type { AngleId } from './topicAngleAgent';
+import type { SelectedTopicDecision } from './topicSelection';
+import type { ResearchReviewFlag } from './researchEvidenceGate';
 
 export interface StrategyDecision {
   topic: string;
@@ -30,9 +32,12 @@ export interface StrategyDecision {
   ctaId?: CtaId;
   topicCategory?: TopicCategory;
   angleId?: AngleId;
+  /** The selected angle's authored slide skeleton (beat order), if any. */
+  angleSlideSkeleton?: string[];
   payoffSlideIndex?: number;
   freshnessSignal?: string;
   sourceUrls?: string[];
+  reviewFlags?: ResearchReviewFlag[];
 }
 
 export interface ContentStrategyInput {
@@ -42,6 +47,9 @@ export interface ContentStrategyInput {
   mustAvoid?: MustAvoidSet;
   ctaFeedback?: CtaFeedbackEntry[];
   preferredAngleId?: AngleId;
+  /** Selected angle/topic object (preferred over preferredAngleId). Its angleId
+   * and authored slide skeleton are preserved into the strategy. */
+  selectedTopic?: SelectedTopicDecision;
   recentCtasUsed?: CtaId[];
 }
 
@@ -64,6 +72,11 @@ export class ContentStrategyAgent extends BaseAgent {
 
     const slotPillarBlock = input.slot
       ? `\n\nSLOT PERSONA: ${input.slot.persona} (${input.slot.description}). Pick a topic that fits this persona.`
+      : '';
+
+    const angleSkeleton = input.selectedTopic?.angleSlideSkeleton ?? [];
+    const skeletonBlock = angleSkeleton.length > 0
+      ? `\n\nPREFERRED SLIDE SKELETON (follow this beat order; keep slideBreakdown in the same sequence, one entry per beat):\n${angleSkeleton.map((beat, i) => `  ${i + 1}. ${beat}`).join('\n')}`
       : '';
 
     const prompt = `You are a senior Instagram content strategist for "TheStatsAndStacks", a premium North American (US & Canadian) finance and market-literacy brand.
@@ -94,7 +107,7 @@ FORMAT DECISION RULES:
 - Hot tickers are allowed when the angle is "what happened", "what to watch", or "hypothetical history".
 - Do not use hype verbs in hooks or titles: explodes, moons, blasts off, skyrockets, must-buy, can't miss.
 - Do not put exact percentage moves in the cover hook. If a source window says 1Y/YTD/from 52-week low, never rewrite it as 1 day/today.
-${slotPillarBlock}${hookFormulasBlock}${mustAvoidBlock}
+${slotPillarBlock}${hookFormulasBlock}${mustAvoidBlock}${skeletonBlock}
 
 Here are the top topics: ${JSON.stringify(input.trends.topics.slice(0, 5))}
 
@@ -435,7 +448,11 @@ function enrichWithSlotDecisions(strategy: StrategyDecision, input: ContentStrat
     payoffSlideIndex = Math.max(3, Math.floor(strategy.slideCount / 2) + 1);
   }
 
-  const angleId: AngleId | undefined = input.preferredAngleId;
+  // Prefer the selected topic's angle so the strategy never diverges from the
+  // surviving topic after a HistoryGuard pivot.
+  const angleId: AngleId | undefined = input.selectedTopic?.angleId ?? input.preferredAngleId;
+  const angleSlideSkeleton = input.selectedTopic?.angleSlideSkeleton;
+  const reviewFlags = input.selectedTopic?.reviewFlags;
 
   void CTA_LIBRARY;
 
@@ -445,7 +462,9 @@ function enrichWithSlotDecisions(strategy: StrategyDecision, input: ContentStrat
     ctaId,
     topicCategory,
     angleId,
+    angleSlideSkeleton,
     payoffSlideIndex,
+    reviewFlags,
   };
 }
 

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { ImagePromptAgent } from '../src/lib/agents/imagePromptAgent';
 import { pickPortrait } from '../src/lib/agents/portraitLibrary';
-import { isTickerActive } from '../run-daily';
+import { isTickerActive } from '../src/lib/agents/tickerMatch';
 import type { SlideSpec } from '../src/lib/agents/slideNarrativeAgent';
 import type { FormatDecision } from '../src/lib/agents/formatStyleAgent';
 import type { ViralStyle } from '../src/lib/agents/promptLibrary';

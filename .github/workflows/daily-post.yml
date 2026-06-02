@@ -149,7 +149,10 @@ jobs:
         working-directory: platform
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_TEXT_MODEL: gemini-flash-latest
+          # Pinned stable model. CostGuardAgent fails closed on `*-latest`/preview
+          # aliases in zero-cost mode, so this must stay on the stable allowlist
+          # (see STABLE_GEMINI_TEXT_MODELS in src/lib/services/gemini.ts).
+          GEMINI_TEXT_MODEL: gemini-3.5-flash
           WORKFLOW_TIME_ZONE: America/Vancouver
           CONTENT_HISTORY_PATH: content-history.json
           ZERO_COST_MODE: "true"

@@ -1,4 +1,5 @@
 import { BaseAgent } from './interfaces';
+import { checkTextModelSafety, getGeminiTextModelName, STABLE_GEMINI_TEXT_MODELS } from '../services/gemini';
 
 export interface CostGuardReport {
   zeroCostMode: boolean;
@@ -19,6 +20,29 @@ export class CostGuardAgent extends BaseAgent {
     const notes: string[] = [];
 
     if (zeroCostMode) {
+      // Gemini text model must be an explicit stable free-tier model — never a
+      // floating `latest`/preview/experimental alias or a billable modality.
+      const textModel = getGeminiTextModelName();
+      const modelCheck = checkTextModelSafety(textModel);
+      if (!modelCheck.safe) {
+        for (const failure of modelCheck.failures) failures.push(failure);
+      }
+
+      // Defensive flags: any Gemini path that can introduce per-call cost or
+      // pull in floating/grounded/batched behavior must stay disabled in $0 mode.
+      if (process.env.GEMINI_GROUNDING_ENABLED === 'true') {
+        failures.push('GEMINI_GROUNDING_ENABLED is true; Google Search grounding is a billable Gemini path.');
+      }
+      if (process.env.GEMINI_BATCH_ENABLED === 'true') {
+        failures.push('GEMINI_BATCH_ENABLED is true; batch mode is not part of the zero-cost text path.');
+      }
+      if (process.env.GEMINI_CONTEXT_CACHING_ENABLED === 'true') {
+        failures.push('GEMINI_CONTEXT_CACHING_ENABLED is true; context caching can incur storage charges.');
+      }
+      if (process.env.GEMINI_LIVE_API_ENABLED === 'true') {
+        failures.push('GEMINI_LIVE_API_ENABLED is true; the Live API is not a zero-cost text path.');
+      }
+
       if (process.env.ALLOW_PAID_IMAGE_GENERATION === 'true') {
         failures.push('ALLOW_PAID_IMAGE_GENERATION is true.');
       }
@@ -55,6 +79,7 @@ export class CostGuardAgent extends BaseAgent {
       }
     }
 
+    notes.push(`Gemini text model pinned to '${getGeminiTextModelName()}' (stable free-tier allowlist: ${STABLE_GEMINI_TEXT_MODELS.join(', ')}).`);
     notes.push('Image-only mode: the daily pipeline generates PNG carousel slides and sends pictures only.');
     notes.push('Gemini/Nano Banana image generation is disabled in $0 mode; local Sharp generation remains the fallback path.');
     notes.push('Optional Cloudflare Workers AI backgrounds are allowed only with the low-cost/free-allocation Flux Schnell model and a hard per-run cap.');

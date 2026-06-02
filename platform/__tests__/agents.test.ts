@@ -322,9 +322,9 @@ test('MarketHeatAgent generates index candidates with boosted scores when at/nea
 
   try {
     const result = await agent.execute();
-    const gspcATH = result.candidates.find(c => c.title.includes('S&P 500 Hits All-Time High'));
-    assert.ok(gspcATH, 'Should generate S&P 500 ATH candidate');
-    assert.equal(gspcATH.score, 0.98, 'ATH score should be boosted to 0.98');
+    const gspcHigh = result.candidates.find(c => c.title.includes('S&P 500 Near a 5-Year High'));
+    assert.ok(gspcHigh, 'Should generate S&P 500 5-year-high candidate (never described as all-time high)');
+    assert.equal(gspcHigh.score, 0.98, '5-year-high score should be boosted to 0.98');
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -479,7 +479,7 @@ test('Test Case 3: MarketHeatAgent generates swing candidates for daily GSPC swi
     });
     return instance;
   } as any;
-  globalThis.Intl.DateTimeFormat.prototype = OriginalDateTimeFormat.prototype;
+  (globalThis.Intl.DateTimeFormat as any).prototype = OriginalDateTimeFormat.prototype;
 
   try {
     const result = await agent.execute();
@@ -502,6 +502,7 @@ test('Test Case 4: ImagePromptAgent fallback placeholder replacement works', asy
         slideNumber: 1,
         role: 'breakdown',
         headline: 'Reddit Post screenshot',
+        headlineColorMap: [],
         visualStyle: 'REDDIT_POST_SCREENSHOT' as any,
         visualPosition: 'center',
         mood: 'calm',
@@ -513,6 +514,7 @@ test('Test Case 4: ImagePromptAgent fallback placeholder replacement works', asy
         slideNumber: 2,
         role: 'breakdown',
         headline: 'Twitter Post split',
+        headlineColorMap: [],
         visualStyle: 'TWEET_STOCK_CHART_SPLIT' as any,
         visualPosition: 'background',
         mood: 'calm',
@@ -524,6 +526,7 @@ test('Test Case 4: ImagePromptAgent fallback placeholder replacement works', asy
         slideNumber: 3,
         role: 'breakdown',
         headline: 'Editorial Card',
+        headlineColorMap: [],
         visualStyle: 'EDITORIAL_STAT_CARD' as any,
         visualPosition: 'left',
         mood: 'calm',
@@ -541,7 +544,8 @@ test('Test Case 4: ImagePromptAgent fallback placeholder replacement works', asy
         primaryText: '#ffffff',
         accent1: '#00ff00',
         accent2: '#00ffff'
-      }
+      },
+      reasoning: 'test'
     },
     tickerSymbols: ['AAPL'],
   });

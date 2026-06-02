@@ -8,6 +8,9 @@ import { getLocalDateKey } from './dateUtils';
 const TELEGRAM_RETRY_ATTEMPTS = 4;
 const TELEGRAM_TIMEOUT_MS = 30_000;
 
+/** Total daily slots. Telegram labels read "Post x/6". */
+export const TOTAL_DAILY_SLOTS = 6;
+
 export interface TelegramDeliveryInput {
   copy: CopyBundle;
   strategy: StrategyDecision;
@@ -15,19 +18,29 @@ export interface TelegramDeliveryInput {
   promptSet: ImagePromptSet;
   slot?: SlotConfig;
   varietyFallbackRatePct?: number;
+  /** Optional human-verification block (evidence review flags). */
+  reviewBlock?: string;
+  /** Optional storyboard premise / composition signature surfaced in the intro. */
+  storyboardPremise?: string;
+  compositionSignature?: string;
 }
 
-export async function sendPromptsToTelegram(input: TelegramDeliveryInput): Promise<void> {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) {
-    console.log('[TelegramDelivery] Skipped — TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set.');
-    return;
-  }
+export interface TelegramPacket {
+  intro: string;
+  document: string;
+  filename: string;
+}
 
-  const today = getLocalDateKey(new Date());
+/**
+ * Pure formatter: turns a delivery input into the intro message + document body
+ * + filename WITHOUT any network I/O. Extracted so the packet format is unit
+ * testable and so local formatting failures surface before any send attempt.
+ */
+export function formatTelegramPacket(input: TelegramDeliveryInput, today: string): TelegramPacket {
   const formatLabel = input.format.formatType.replace(/_/g, ' ');
-  const slotLabel = input.slot ? `Post ${input.slot.index}/5 — ${input.slot.persona.replace(/_/g, ' ')}` : 'Post';
+  const slotLabel = input.slot
+    ? `Post ${input.slot.index}/${TOTAL_DAILY_SLOTS} — ${input.slot.persona.replace(/_/g, ' ')}`
+    : 'Post';
 
   const introLines: string[] = [
     `🎬 TheStatsAndStacks — ${today}`,
@@ -38,26 +51,53 @@ export async function sendPromptsToTelegram(input: TelegramDeliveryInput): Promi
     `HOOK: ${input.strategy.hook}`,
     input.strategy.hookFormulaId ? `HOOK FORMULA: ${input.strategy.hookFormulaId}` : '',
     input.strategy.ctaId ? `CTA STRATEGY: ${input.strategy.ctaId}` : '',
+    input.storyboardPremise ? `STORYBOARD: ${input.storyboardPremise}` : '',
+    input.compositionSignature ? `COMPOSITION SIGNATURE: ${input.compositionSignature}` : '',
     `SLIDES: ${input.promptSet.slides.length}`,
     `━━━━━━━━━━━━━━━━━━━━`,
-    'Each prompt is tagged with the recommended image model (Seedance or ChatGPT image gen).',
-    'Slides flagged with ⚠️ may garble dense chart text — clean fallback data block is included for Canva overlay.',
+    'Primary render target: ChatGPT Images 2.0 (paste the anchor prompt, generate slide 1, then continue in the SAME conversation).',
+    'Alternate: Seedream for cinematic image-first scenes.',
+    'Slides flagged ⚠️ may garble dense chart text — a clean Canva overlay fallback block is included.',
     'Prompt package attached 👇',
   ].filter(Boolean);
+
+  if (input.reviewBlock) {
+    introLines.splice(1, 0, '⚠️ HUMAN REVIEW REQUIRED — see review block in the attached document.');
+  }
 
   if (input.varietyFallbackRatePct !== undefined && input.varietyFallbackRatePct > 25) {
     introLines.unshift(`⚠️ Variety enforcement stressed (${input.varietyFallbackRatePct.toFixed(0)}% fallback rate over 7d) — review may be needed`);
   }
 
-  await callTelegram(token, 'sendMessage', { chat_id: chatId, text: introLines.join('\n') });
-
   const sep = '═'.repeat(52);
   const lines: string[] = [
     `THESTATSANDSTACKS — ${today}  |  ${slotLabel}`,
     `FORMAT: ${input.format.formatType}  |  TOPIC: ${input.strategy.topic}  |  ${input.promptSet.slides.length} SLIDES`,
+    'PRIMARY: ChatGPT Images 2.0   |   ALTERNATE: Seedream (cinematic image-first scenes)',
     sep,
-    '',
   ];
+
+  if (input.storyboardPremise) {
+    lines.push('', `STORYBOARD PREMISE: ${input.storyboardPremise}`);
+  }
+  if (input.compositionSignature) {
+    lines.push(`COMPOSITION SIGNATURE: ${input.compositionSignature}`);
+  }
+
+  if (input.reviewBlock) {
+    lines.push('', sep, '⚠️ HUMAN REVIEW REQUIRED', sep, input.reviewBlock);
+  }
+
+  lines.push('', sep, '');
+  lines.push(
+    'CHATGPT IMAGES 2.0 WORKFLOW:',
+    '1. Paste the packet-level anchor prompt (Slide 1) into a new ChatGPT conversation.',
+    '2. Generate slide 1 first.',
+    '3. Keep working in the SAME conversation for slides 2..N.',
+    '4. For each later slide paste its prompt and use the prior image as reference when useful.',
+    '5. Preserve the MUST KEEP list and change ONLY the requested slide content.',
+    '',
+  );
 
   for (const slide of input.promptSet.slides) {
     lines.push(`SLIDE ${slide.slideNumber} — ${slide.slideTitle}${slide.canvaFallbackSuggested ? ' ⚠️ Canva fallback may be needed' : ''}`);
@@ -77,17 +117,37 @@ export async function sendPromptsToTelegram(input: TelegramDeliveryInput): Promi
   lines.push(sep, 'HASHTAGS', sep, input.copy.hashtags, '');
   lines.push(sep, 'PINNED COMMENT', sep, input.copy.firstComment, '');
 
-  const docContent = lines.join('\n');
   const filename = `thestatsandstacks-${today}${input.slot ? `-s${input.slot.index}` : ''}.txt`;
+
+  return {
+    intro: introLines.join('\n'),
+    document: lines.join('\n'),
+    filename,
+  };
+}
+
+export async function sendPromptsToTelegram(input: TelegramDeliveryInput): Promise<void> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) {
+    console.log('[TelegramDelivery] Skipped — TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set.');
+    return;
+  }
+
+  const today = getLocalDateKey(new Date());
+  // Format locally first so any formatting bug surfaces before we hit the API.
+  const packet = formatTelegramPacket(input, today);
+
+  await callTelegram(token, 'sendMessage', { chat_id: chatId, text: packet.intro });
 
   await withTelegramRetry('sendDocument:prompts', async () => {
     const form = new FormData();
     form.append('chat_id', chatId);
-    form.append('caption', `📄 ${filename} — paste each prompt into the model tagged on the slide`);
+    form.append('caption', `📄 ${packet.filename} — paste each prompt into the model tagged on the slide`);
     form.append(
       'document',
-      new Blob([docContent], { type: 'text/plain' }),
-      filename,
+      new Blob([packet.document], { type: 'text/plain' }),
+      packet.filename,
     );
     const response = await fetchWithTimeout(
       `https://api.telegram.org/bot${token}/sendDocument`,
@@ -98,7 +158,7 @@ export async function sendPromptsToTelegram(input: TelegramDeliveryInput): Promi
     }
   });
 
-  console.log(`[TelegramDelivery] ✅ Sent intro + ${filename} (${input.promptSet.slides.length} slides).`);
+  console.log(`[TelegramDelivery] ✅ Sent intro + ${packet.filename} (${input.promptSet.slides.length} slides).`);
 }
 
 async function callTelegram(token: string, method: string, body: Record<string, unknown>): Promise<void> {

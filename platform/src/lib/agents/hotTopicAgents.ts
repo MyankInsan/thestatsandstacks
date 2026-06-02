@@ -70,9 +70,12 @@ interface IndexHighStatus {
   ticker: string;
   companyName: string;
   currentPrice: number;
-  isNearAllTimeHigh: boolean;
-  isAtAllTimeHigh: boolean;
-  allTimeHigh: number;
+  // Named explicitly as a FIVE-YEAR window high. Yahoo's 5y chart cannot prove
+  // an all-time high (and raw closes are corporate-action-sensitive), so we must
+  // never describe this as a record/all-time high in a published graphic.
+  isNearFiveYearHigh: boolean;
+  isAtFiveYearHigh: boolean;
+  fiveYearHigh: number;
   dayChangePercent: number;
 }
 
@@ -98,16 +101,16 @@ async function fetchIndexStatus(ticker: string, companyName: string): Promise<In
 
     const fiveYearHigh = Math.max(...closes, currentPrice);
 
-    const isAtAllTimeHigh = currentPrice >= fiveYearHigh * 0.995;
-    const isNearAllTimeHigh = currentPrice >= fiveYearHigh * 0.985;
+    const isAtFiveYearHigh = currentPrice >= fiveYearHigh * 0.995;
+    const isNearFiveYearHigh = currentPrice >= fiveYearHigh * 0.985;
 
     return {
       ticker,
       companyName,
       currentPrice,
-      isNearAllTimeHigh,
-      isAtAllTimeHigh,
-      allTimeHigh: fiveYearHigh,
+      isNearFiveYearHigh,
+      isAtFiveYearHigh,
+      fiveYearHigh,
       dayChangePercent,
     };
   } catch {
@@ -202,20 +205,20 @@ export class MarketHeatAgent extends BaseAgent {
     for (const snap of indexStatuses) {
       const isUS = snap.ticker === '^GSPC';
       
-      if (snap.isNearAllTimeHigh || snap.isAtAllTimeHigh) {
+      if (snap.isNearFiveYearHigh || snap.isAtFiveYearHigh) {
         const title = isUS
-          ? `S&P 500 Hits All-Time High: 5 Portfolio Rules for Investors (${snap.ticker})`
-          : `TSX Hits Record Highs: What Canadian Investors Should Do (${snap.ticker})`;
+          ? `S&P 500 Near a 5-Year High: 5 Portfolio Rules for Investors (${snap.ticker})`
+          : `TSX Near 5-Year Highs: What Canadian Investors Should Do (${snap.ticker})`;
         indexCandidates.push({
           title,
-          score: snap.isAtAllTimeHigh ? 0.98 : 0.95,
-          reasoning: `The ${snap.companyName} is trading at/near record highs (${snap.currentPrice.toFixed(0)} vs 5y high of ${snap.allTimeHigh.toFixed(0)}). High save intent topic on index rebalancing and retail FOMO.`,
+          score: snap.isAtFiveYearHigh ? 0.98 : 0.95,
+          reasoning: `The ${snap.companyName} is trading at/near a 5-year high (${snap.currentPrice.toFixed(0)} vs 5y high of ${snap.fiveYearHigh.toFixed(0)}). Verify against an official index source before publishing any "record/all-time high" wording. High save intent topic on index levels and retail FOMO.`,
           suggestedFormat: 'CAROUSEL',
           suggestedSlideCount: 7,
-          searchKeywords: isUS ? ['SP500 all time high', 'S&P 500 record'] : ['TSX record high', 'investing Canada'],
+          searchKeywords: isUS ? ['SP500 5 year high', 'S&P 500 level'] : ['TSX multi-year high', 'investing Canada'],
           sourceUrls: [`https://finance.yahoo.com/quote/${snap.ticker}`],
           contentPillar: 'Global macro-economic news and political impacts on markets',
-          freshnessSignal: `${snap.companyName} record high watch: ${snap.currentPrice.toFixed(0)}`,
+          freshnessSignal: `${snap.companyName} 5-year high watch: ${snap.currentPrice.toFixed(0)}`,
         });
       }
 

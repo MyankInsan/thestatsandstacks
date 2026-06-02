@@ -6,7 +6,7 @@ import type { CtaId } from '../agents/ctaLibrary';
 import type { AngleId } from '../agents/topicAngleAgent';
 import type { SlotIndex } from '../agents/slotConfig';
 
-export const CURRENT_SCHEMA_VERSION = 2;
+export const CURRENT_SCHEMA_VERSION = 3;
 
 export type NarrativeArc =
   | 'HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA'
@@ -23,6 +23,34 @@ export type DominantSubjectClass =
   | 'BUILDING'
   | 'TYPOGRAPHY'
   | 'CROWD';
+
+/**
+ * Slide-level visual grammar persisted in schema v3. Stored as plain strings
+ * (structureFamily/coverMechanism/bucket/visualPosition) so this low-level
+ * service has no dependency on the agent layer. DominantSubjectClass is local.
+ */
+export interface PersistedVisualPlanSlide {
+  slideNumber: number;
+  layoutArchetype: string;
+  primaryEncoding: string;
+  visualStyle: string;
+  bucket: string;
+  visualPosition: string;
+  dominantSubjectClass: DominantSubjectClass;
+  sceneConceptId: string;
+  promptFingerprint?: string;
+}
+
+export interface PersistedVisualPlan {
+  compositionSignature: string;
+  structureFamily: string;
+  coverMechanism?: string;
+  sceneConceptIds: string[];
+  ctaConceptId?: string;
+  /** True when the plan was produced under variety/adjacency fallback pressure. */
+  usedFallback?: boolean;
+  slides: PersistedVisualPlanSlide[];
+}
 
 export interface ContentHistoryEntry {
   date: string;
@@ -49,6 +77,8 @@ export interface ContentHistoryEntry {
   archetypesUsed?: string[];
   colorSchemeUsed?: { bg: string; primaryText?: string; accent1: string; accent2: string };
   dominantSubjectClass?: DominantSubjectClass;
+  /** Schema v3: full slide-level visual grammar for the ten-day variety contract. */
+  visualPlan?: PersistedVisualPlan;
   seed?: boolean;
 }
 
@@ -68,9 +98,9 @@ export function loadContentHistory(historyPath: string): ContentHistoryEntry[] {
     const entries = normalizeShape(parsed);
     const validated = entries.filter(isHistoryEntry);
 
-    const needsMigration = !isShapeV2(parsed) || validated.some((e) => (e.schemaVersion ?? 1) < CURRENT_SCHEMA_VERSION);
+    const needsMigration = !isShapeCurrent(parsed) || validated.some((e) => (e.schemaVersion ?? 1) < CURRENT_SCHEMA_VERSION);
     if (needsMigration) {
-      const migrated = migrateToV2(validated);
+      const migrated = migrateToCurrent(validated);
       try {
         writeWithSchema(historyPath, migrated);
         if (!MIGRATION_LOGGED) {
@@ -100,12 +130,18 @@ function normalizeShape(parsed: unknown): ContentHistoryEntry[] {
   return [];
 }
 
-function isShapeV2(parsed: unknown): boolean {
+function isShapeCurrent(parsed: unknown): boolean {
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return false;
   return (parsed as ContentHistoryFile).schemaVersion === CURRENT_SCHEMA_VERSION;
 }
 
-function migrateToV2(entries: ContentHistoryEntry[]): ContentHistoryEntry[] {
+/**
+ * Non-destructive upgrade to the current schema version. Pre-v3 entries simply
+ * gain the new schemaVersion; missing visual-plan grammar is left absent (never
+ * invented). History guards read v3 plans when present and fall back to the
+ * legacy cover fields otherwise.
+ */
+function migrateToCurrent(entries: ContentHistoryEntry[]): ContentHistoryEntry[] {
   return entries.map((e) => ({ ...e, schemaVersion: CURRENT_SCHEMA_VERSION }));
 }
 

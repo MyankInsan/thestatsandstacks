@@ -63,8 +63,10 @@ export function recommendModelForStyle(style: ViralStyle): RecommendedModel {
 
 export function modelRecommendationLabel(model: RecommendedModel): string {
   switch (model) {
-    case 'seedance': return 'Best: Seedance';
-    case 'chatgpt_image': return 'Best: ChatGPT image gen';
-    case 'either': return 'Either model works';
+    // ChatGPT Images 2.0 is the primary manual render target; Seedream is the
+    // cinematic image-first alternate (formerly mislabeled "Seedance").
+    case 'seedance': return 'Alternate: Seedream (cinematic)';
+    case 'chatgpt_image': return 'Best: ChatGPT Images 2.0';
+    case 'either': return 'ChatGPT Images 2.0 (or Seedream for cinematic scenes)';
   }
 }

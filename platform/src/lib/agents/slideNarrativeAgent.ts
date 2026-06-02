@@ -4,6 +4,7 @@ import type { FormatDecision } from './formatStyleAgent';
 import type { ViralStyle } from './promptLibrary';
 import { ROTATION_ALLOWLIST } from './promptLibrary';
 import type { CarouselConstraints } from './carouselConstraintAgent';
+import type { VisualPlan } from './visualPlanAgent';
 
 const THEMATIC_STYLES_BY_FORMAT: Record<string, string[]> = {
   PHOTOREALISTIC_NEWS_FLASH:        ['ARCHITECTURAL_OVERLAY', 'CROWD_PANIC', 'MILITARY_AEROSPACE_METAPHOR', 'NEON_TERMINAL', 'GLOWING_QUOTE', 'CANDLESTICK_CHART'],
@@ -21,6 +22,8 @@ export interface HeadlineColor {
 
 export type SlideRole = 'cover' | 'shock_stat' | 'context' | 'breakdown' | 'data' | 'humor' | 'cta' | 'chart_data';
 
+export type VisualPosition = 'top' | 'background' | 'left' | 'right' | 'center';
+
 export interface SlideSpec {
   slideNumber: number;
   role: SlideRole;
@@ -30,9 +33,12 @@ export interface SlideSpec {
   eyebrow?: string;
   dataPoint?: string;
   visualStyle: ViralStyle;
-  visualPosition: 'top' | 'background' | 'left' | 'right' | 'center';
+  visualPosition: VisualPosition;
   mood: string;
   narrativeNote: string;
+  /** The storyboard beat this slide advances (filled into the locked visual
+   * plan; copy-only narrative output). */
+  storyboardBeat?: string;
 }
 
 export interface SlideNarrative {
@@ -45,10 +51,63 @@ export interface SlideNarrativeInput {
   format: FormatDecision;
   tickerSymbols: string[];
   constraints?: CarouselConstraints;
+  /** When provided, the narrative fills copy into this LOCKED visual plan and
+   * does NOT choose styles/positions/roles itself. */
+  visualPlan?: VisualPlan;
 }
 
 export class SlideNarrativeAgent {
   async execute(input: SlideNarrativeInput): Promise<SlideNarrative> {
+    if (input.visualPlan) {
+      return this.executeWithPlan(input, input.visualPlan);
+    }
+    return this.executeLegacy(input);
+  }
+
+  /**
+   * Copy-only path: the visual grammar (style, position, role, beat) is locked
+   * by VisualPlanAgent. Gemini only writes the words. Output that tries to
+   * change locked grammar is treated as drift → retry once → deterministic copy.
+   */
+  private async executeWithPlan(input: SlideNarrativeInput, plan: VisualPlan): Promise<SlideNarrative> {
+    console.log(`[SlideNarrativeAgent] Filling copy into locked visual plan (${plan.slides.length} slides, sig ${plan.compositionSignature})...`);
+    let hadViolation = false;
+    let previousDrift: string[] = [];
+
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const genAI = getGeminiClient();
+        const model = genAI.getGenerativeModel({ model: getGeminiTextModelName() });
+        const prompt = buildCopyOnlyPrompt(input.strategy, input.format, input.tickerSymbols, plan, attempt, previousDrift);
+        const result = await model.generateContent(prompt);
+        const text = result.response.text().replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+        const json = JSON.parse(text) as { slides: Array<Record<string, unknown>> };
+        if (!Array.isArray(json.slides) || json.slides.length === 0) throw new Error('Empty slides array');
+
+        const copyByNumber = new Map<number, Record<string, unknown>>();
+        for (const item of json.slides) {
+          const n = Number(item.slideNumber);
+          if (Number.isInteger(n)) copyByNumber.set(n, item);
+        }
+
+        const drift = detectGrammarDrift(plan, copyByNumber);
+        const slides = buildLockedSlides(plan, copyByNumber, input.strategy, input.format);
+
+        if (drift.length === 0) {
+          return { slides, hadConstraintViolation: hadViolation };
+        }
+        hadViolation = true;
+        previousDrift = drift;
+        console.warn(`[SlideNarrativeAgent] Attempt ${attempt} narrative drift: ${drift.join('; ')}. ${attempt < 2 ? 'Retrying.' : 'Using deterministic copy fallback.'}`);
+      } catch (err) {
+        console.warn(`[SlideNarrativeAgent] Attempt ${attempt} failed: ${err instanceof Error ? err.message : String(err)}`);
+      }
+    }
+
+    return { slides: buildLockedSlides(plan, new Map(), input.strategy, input.format), hadConstraintViolation: true };
+  }
+
+  private async executeLegacy(input: SlideNarrativeInput): Promise<SlideNarrative> {
     console.log(`[SlideNarrativeAgent] Writing ${input.format.slideCount} slide specs${input.constraints ? ' with constraints' : ''}...`);
 
     let parsed: SlideSpec[] | null = null;
@@ -105,6 +164,155 @@ export class SlideNarrativeAgent {
     void lastError;
     return { slides: buildFallback(input.strategy, input.format, input.constraints), hadConstraintViolation: true };
   }
+}
+
+// ── Locked-grammar (copy-only) path ─────────────────────────────────────────
+
+function buildCopyOnlyPrompt(
+  strategy: StrategyDecision,
+  format: FormatDecision,
+  tickers: string[],
+  plan: VisualPlan,
+  attempt: number,
+  previousDrift: string[],
+): string {
+  const lockedSlides = plan.slides.map((g) => ({
+    slideNumber: g.slideNumber,
+    role: g.intendedRole,
+    visualStyle: g.visualStyle,
+    visualPosition: g.visualPosition,
+    storyboardBeat: g.storyboardBeat,
+  }));
+
+  const driftBlock = attempt > 1 && previousDrift.length > 0
+    ? `\n\nATTEMPT #${attempt}: your previous output changed locked grammar. You MUST echo the EXACT visualStyle/visualPosition/role given for each slide. Do not change them:\n${previousDrift.map((d) => `  • ${d}`).join('\n')}`
+    : '';
+
+  return `You are the copywriter for a premium North American finance Instagram carousel. The VISUAL GRAMMAR IS ALREADY LOCKED. Your ONLY job is to write the words for each slide. You MUST NOT change any slide's visualStyle, visualPosition, or role — echo them back exactly.
+
+TOPIC: ${strategy.topic}
+HOOK: ${strategy.hook}
+FORMAT: ${format.formatType}
+TICKERS: ${tickers.join(', ') || 'none'}
+TARGET AUDIENCE: ${strategy.targetAudience}
+
+STORYBOARD PREMISE: ${plan.storyboard.premise}
+PROGRESSION RULE: ${plan.storyboard.progressionRule}
+RESOLUTION RULE: ${plan.storyboard.resolutionRule}
+
+LOCKED SLIDE PLAN (write copy for each; advance the storyboardBeat; keep grammar identical):
+${JSON.stringify(lockedSlides, null, 2)}
+
+COPY RULES:
+- Slide 1 (cover): the highest-energy hook, 4-8 word headline, plus an eyebrow label.
+- Each middle slide advances exactly ONE new point named in its storyboardBeat.
+- Last slide (cta): a strong save/follow reason in plain language — never needy, never hype.
+- headline: max 8 words, bold and punchy.
+- headlineColorMap: split the headline into parts and assign each part a color (primary, accent1, or accent2).
+- If the slide's storyboardBeat or your copy uses an exact $ or % figure that is NOT directly supported by the topic/research, put the literal word "illustrative" in narrativeNote so the image pipeline suppresses an unsupported-but-precise number.
+- Do NOT use hype verbs (explodes, moons, skyrockets, must-buy). No buy/sell/price-target language.${driftBlock}
+
+Return ONLY valid JSON (no markdown):
+{
+  "slides": [
+    {
+      "slideNumber": 1,
+      "role": "<echo exactly>",
+      "visualStyle": "<echo exactly>",
+      "visualPosition": "<echo exactly>",
+      "eyebrow": "JUST IN:",
+      "headline": "NVIDIA JUST BROKE",
+      "headlineColorMap": [{"text": "NVIDIA", "color": "accent2"}, {"text": "JUST BROKE", "color": "primary"}],
+      "subtext": "Wall Street didn't see this coming",
+      "dataPoint": null,
+      "mood": "urgent, high-energy",
+      "narrativeNote": "Opens the hook",
+      "storyboardBeat": "<echo the locked beat or refine it>"
+    }
+  ]
+}`;
+}
+
+function detectGrammarDrift(plan: VisualPlan, copyByNumber: Map<number, Record<string, unknown>>): string[] {
+  const drift: string[] = [];
+  for (const g of plan.slides) {
+    const copy = copyByNumber.get(g.slideNumber);
+    if (!copy) continue;
+    if (typeof copy.visualStyle === 'string' && copy.visualStyle !== g.visualStyle) {
+      drift.push(`slide ${g.slideNumber} changed visualStyle to ${copy.visualStyle} (locked: ${g.visualStyle})`);
+    }
+    if (typeof copy.visualPosition === 'string' && copy.visualPosition !== g.visualPosition) {
+      drift.push(`slide ${g.slideNumber} changed visualPosition to ${copy.visualPosition} (locked: ${g.visualPosition})`);
+    }
+    if (typeof copy.role === 'string' && copy.role !== g.intendedRole) {
+      drift.push(`slide ${g.slideNumber} changed role to ${copy.role} (locked: ${g.intendedRole})`);
+    }
+  }
+  return drift;
+}
+
+function buildLockedSlides(
+  plan: VisualPlan,
+  copyByNumber: Map<number, Record<string, unknown>>,
+  strategy: StrategyDecision,
+  format: FormatDecision,
+): SlideSpec[] {
+  return plan.slides.map((g) => {
+    const copy = copyByNumber.get(g.slideNumber) ?? {};
+    const fallback = deterministicCopyForSlide(g, strategy, format);
+
+    const headline = nonEmptyString(copy.headline) ?? fallback.headline;
+    const headlineColorMap = Array.isArray(copy.headlineColorMap) && copy.headlineColorMap.length > 0
+      ? (copy.headlineColorMap as HeadlineColor[])
+      : [{ text: headline, color: 'primary' as const }];
+
+    return {
+      slideNumber: g.slideNumber,
+      role: g.intendedRole, // LOCKED
+      visualStyle: g.visualStyle, // LOCKED
+      visualPosition: g.visualPosition, // LOCKED
+      headline,
+      headlineColorMap,
+      eyebrow: nonEmptyString(copy.eyebrow) ?? fallback.eyebrow,
+      subtext: nonEmptyString(copy.subtext) ?? fallback.subtext,
+      dataPoint: nonEmptyString(copy.dataPoint) ?? fallback.dataPoint,
+      mood: nonEmptyString(copy.mood) ?? format.visualTone,
+      narrativeNote: nonEmptyString(copy.narrativeNote) ?? fallback.narrativeNote,
+      storyboardBeat: nonEmptyString(copy.storyboardBeat) ?? g.storyboardBeat,
+    };
+  });
+}
+
+function deterministicCopyForSlide(
+  g: VisualPlan['slides'][number],
+  strategy: StrategyDecision,
+  format: FormatDecision,
+): { headline: string; eyebrow: string; subtext?: string; dataPoint?: string; narrativeNote: string } {
+  const eyebrow = FALLBACK_EYEBROWS[format.formatType] ?? 'KEY INSIGHT:';
+  if (g.intendedRole === 'cover') {
+    return {
+      headline: strategy.hook.toUpperCase().split(' ').slice(0, 8).join(' '),
+      eyebrow,
+      subtext: strategy.topic,
+      narrativeNote: 'Cover hook',
+    };
+  }
+  if (g.intendedRole === 'cta') {
+    const isCand = /canada|canadian|tsx|bay street|\.to\b|cppib|cdpq|tfsa|rrsp|fhsa|cra\b/i.test(strategy.topic);
+    return {
+      headline: 'FOLLOW FOR DAILY INSIGHTS',
+      eyebrow,
+      subtext: isCand ? 'Canadian finance, no hype — @thestatsandstacks' : 'Wealth frameworks, no hype — @thestatsandstacks',
+      narrativeNote: 'CTA — drive follows and saves',
+    };
+  }
+  const raw = strategy.slideBreakdown[g.slideNumber - 1] ?? g.storyboardBeat;
+  const { headline, subtext } = parseBreakdown(raw);
+  return { headline: headline || g.storyboardBeat.toUpperCase(), eyebrow, subtext, narrativeNote: g.storyboardBeat };
+}
+
+function nonEmptyString(value: unknown): string | undefined {
+  return typeof value === 'string' && value.trim().length > 0 ? value : undefined;
 }
 
 function buildPrompt(

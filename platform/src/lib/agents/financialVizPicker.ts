@@ -87,15 +87,16 @@ export class FinancialVizPicker {
     preferTested?: boolean;
   }): { hero: ViralStyle; supporting: ViralStyle[]; usedFallback: boolean } {
     if (input.isReactiveSentiment) {
+      const reactiveSupporting: ViralStyle[] = [
+        'MACRO_FLOW_DIAGRAM' as ViralStyle,
+        'GLOWING_QUOTE',
+        'MINIMALIST_CHECKLIST',
+        'REDDIT_POST_SCREENSHOT' as ViralStyle,
+        'TWEET_STOCK_CHART_SPLIT' as ViralStyle,
+      ];
       return {
         hero: 'EDITORIAL_REACTION_CARICATURE' as ViralStyle,
-        supporting: [
-          'MACRO_FLOW_DIAGRAM' as ViralStyle,
-          'GLOWING_QUOTE',
-          'MINIMALIST_CHECKLIST',
-          'REDDIT_POST_SCREENSHOT' as ViralStyle,
-          'TWEET_STOCK_CHART_SPLIT' as ViralStyle
-        ].filter((s) => !input.excludedStyles.includes(s)),
+        supporting: reactiveSupporting.filter((s) => !input.excludedStyles.includes(s)),
         usedFallback: false,
       };
     }

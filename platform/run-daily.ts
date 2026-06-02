@@ -12,13 +12,22 @@ import { ContentStrategyAgent } from './src/lib/agents/contentStrategyAgent';
 import { FormatStyleAgent } from './src/lib/agents/formatStyleAgent';
 import { CarouselConstraintAgent } from './src/lib/agents/carouselConstraintAgent';
 import { FinancialVizPicker } from './src/lib/agents/financialVizPicker';
+import { VisualPlanAgent } from './src/lib/agents/visualPlanAgent';
 import { SlideNarrativeAgent } from './src/lib/agents/slideNarrativeAgent';
 import { ComplianceQAAgent } from './src/lib/agents/complianceQAAgent';
 import { ImagePromptAgent } from './src/lib/agents/imagePromptAgent';
 import { CopywritingAgent } from './src/lib/agents/copywritingAgent';
 
 import { sendPromptsToTelegram } from './src/lib/services/telegramDelivery';
-import { TICKER_LOGO_MAP } from './src/lib/agents/tickerLogoAgent';
+import { isTickerActive } from './src/lib/agents/tickerMatch';
+import {
+  buildCandidateTopics,
+  selectTopicWithHistoryGuard,
+  toSelectedTopicDecision,
+} from './src/lib/agents/topicSelection';
+import type { MustAvoidSet } from './src/lib/agents/historyGuardAgent';
+import { toPersistedVisualPlan, computeVarietyFallbackRatePct } from './src/lib/agents/varietyContract';
+import { computeReviewFlags, mergeReviewFlags, buildReviewBlock } from './src/lib/agents/researchEvidenceGate';
 import {
   appendContentHistory,
   loadContentHistory,
@@ -99,64 +108,65 @@ async function main() {
   });
   if (angleResult.angleCandidates.length > 0) {
     console.log(`   Angle candidates: ${angleResult.angleCandidates.map((a) => a.angleId).join(', ')}`);
-    for (const c of angleResult.angleCandidates.slice(0, 3)) {
-      trends.topics.unshift({
-        title: c.title,
-        score: 0.95,
-        reasoning: c.rationale,
-        searchKeywords: [],
-        sourceUrls: c.sourceUrls,
-        contentPillar: c.angleId,
-      });
-    }
   } else {
     console.log(`   No angle candidates injected; using standard trend topics.`);
   }
+
+  // Preserve angle ranking (the old loop used unshift() and reversed it) AND
+  // keep each topic's angleId + slideSkeleton associated with it so the
+  // surviving topic carries the correct angle after a HistoryGuard pivot.
+  const candidateTopics = buildCandidateTopics(angleResult.angleCandidates.slice(0, 3), trends.topics);
   console.log('');
 
   // ── AGENT 4: HISTORY GUARD ──────────────────────────────────────────────────
   console.log('━━━ AGENT 4: HISTORY GUARD ━━━');
-  let historyGuard = {
-    block: true,
-    mustAvoid: { visualStyles: [], portraitSubjects: [], archetypes: [], hookFormulas: [], tickers: [], narrativeArcs: [], angles: [], colorTriples: [] },
-    warnings: [] as string[]
-  } as any;
+  const emptyMustAvoid: MustAvoidSet = {
+    visualStyles: [], portraitSubjects: [], archetypes: [], hookFormulas: [],
+    tickers: [], narrativeArcs: [], angles: [], colorTriples: [],
+  };
 
-  const originalCount = trends.topics.length;
-  let attempts = 0;
-
-  while (trends.topics.length > 0 && attempts < originalCount) {
-    const candidate = trends.topics[0]?.title ?? '';
-    historyGuard = await new HistoryGuardAgent().execute({
-      topic: candidate,
+  const selection = await selectTopicWithHistoryGuard(candidateTopics, (title) =>
+    new HistoryGuardAgent().execute({
+      topic: title,
       contentHistory,
       slotIndex: slotContext.slotIndex,
       todayDateKey: today,
-    });
+    }),
+  );
+  const historyGuard = selection.historyGuard ?? { block: true, mustAvoid: emptyMustAvoid, warnings: [] };
 
-    if (!historyGuard.block) {
-      console.log(`   ✅ Selected Topic: "${candidate}"`);
-      break;
-    }
-
-    console.warn(`   ⛔ Blocked "${candidate}". Pivot: ${historyGuard.suggestedPivot}`);
-    const blocked = trends.topics.shift()!;
-    trends.topics.push({ ...blocked, score: (blocked.score ?? 0) * 0.3 });
-    attempts++;
+  if (selection.selected && !selection.allBlocked) {
+    console.log(`   ✅ Selected Topic: "${selection.selected.topic.title}"`);
+  } else if (selection.selected) {
+    console.warn(`   ⚠️ All available topics were blocked by HistoryGuard. Proceeding with fallback: "${selection.selected.topic.title}"`);
   }
 
-  if (historyGuard.block && trends.topics.length > 0) {
-    console.warn(`   ⚠️ Warning: All available topics were blocked by HistoryGuard. Proceeding with fallback: "${trends.topics[0]?.title}"`);
+  // One selected angle/topic object, used end-to-end (strategy, viz, constraints).
+  // Attach research review flags so unsupported/sensitive claims surface downstream.
+  const selectedTopic = selection.selected
+    ? toSelectedTopicDecision(
+        selection.selected,
+        computeReviewFlags({
+          topic: selection.selected.topic.title,
+          sourceUrls: selection.selected.topic.sourceUrls,
+          angleId: selection.selected.angleId,
+        }),
+      )
+    : undefined;
+  const selectedAngleId = selectedTopic?.angleId;
+  if (selectedTopic && selectedTopic.reviewFlags.length > 0) {
+    console.warn(`   ⚠️ Research review flags: ${selectedTopic.reviewFlags.join(', ')}`);
   }
 
-  // Pass only the verified first candidate to prevent ContentStrategyAgent from picking a blocked topic
-  if (trends.topics.length > 0) {
-    trends.topics = [trends.topics[0]];
+  // Pass only the surviving topic to ContentStrategyAgent so it cannot re-pick a blocked one.
+  if (selection.selected) {
+    trends.topics = [selection.selected.topic];
   }
 
   if (historyGuard.warnings.length > 0) {
     for (const w of historyGuard.warnings) console.log(`   ⚠️ ${w}`);
   }
+  console.log(`   Angle: ${selectedAngleId ?? 'none'}`);
   console.log(`   mustAvoid styles: ${historyGuard.mustAvoid.visualStyles.length}, portraits: ${historyGuard.mustAvoid.portraitSubjects.length}`);
   console.log('');
 
@@ -174,7 +184,7 @@ async function main() {
     mustAvoid: historyGuard.mustAvoid,
     ctaFeedback,
     recentCtasUsed,
-    preferredAngleId: angleResult.angleCandidates[0]?.angleId,
+    selectedTopic,
   });
   console.log(`   Topic: ${strategy.topic}`);
   console.log(`   Hook:  ${strategy.hook}  (formula: ${strategy.hookFormulaId})`);
@@ -201,9 +211,9 @@ async function main() {
   // ── AGENT 7: CAROUSEL CONSTRAINTS ───────────────────────────────────────────
   console.log('━━━ AGENT 7: CAROUSEL CONSTRAINTS ━━━');
   const vizPicker = new FinancialVizPicker();
-  const isReactive = angleResult.angleCandidates[0]?.angleId === 'REACTIVE_SENTIMENT';
+  const isReactive = selectedAngleId === 'REACTIVE_SENTIMENT';
   const vizDecision = vizPicker.pickForAngle({
-    angleId: angleResult.angleCandidates[0]?.angleId,
+    angleId: selectedAngleId,
     hasTickers: activeTickers.length > 0,
     isReactiveSentiment: isReactive,
     excludedStyles: historyGuard.mustAvoid.visualStyles,
@@ -230,13 +240,36 @@ async function main() {
   console.log(`   Narrative arc: ${constraints.narrativeArc}`);
   console.log('');
 
-  // ── AGENT 8: SLIDE NARRATIVE ────────────────────────────────────────────────
+  // ── AGENT 7.5: VISUAL PLAN (deterministic — locks grammar before narrative) ──
+  console.log('━━━ AGENT 7.5: VISUAL PLAN ━━━');
+  const visualPlanResult = new VisualPlanAgent().execute({
+    strategy,
+    format,
+    constraints,
+    tickerSymbols: activeTickers,
+    dateKey: today,
+    slotIndex: slotContext.slotIndex,
+    recentHistory: contentHistory,
+    todayPriorEntries: slotContext.todayPriorEntries,
+  });
+  const visualPlan = visualPlanResult.plan;
+  console.log(`   Structure family: ${visualPlan.structureFamily}  |  cover: ${visualPlan.coverMechanism ?? 'n/a'}`);
+  console.log(`   Composition signature: ${visualPlan.compositionSignature}`);
+  console.log(`   Premise: ${visualPlan.storyboard.premise}`);
+  visualPlan.slides.forEach((s) => console.log(`   Slide ${s.slideNumber} [${s.intendedRole}/${s.visualStyle}/${s.visualPosition}] ${s.dominantSubjectClass} — ${s.storyboardBeat}`));
+  if (!visualPlanResult.valid) console.warn(`   ⚠️ Plan violations: ${visualPlanResult.violations.join('; ')}`);
+  if (visualPlanResult.overrides.length > 0) console.warn(`   ⚠️ Plan overrides: ${visualPlanResult.overrides.join('; ')}`);
+  if (visualPlanResult.varietyReasons.length > 0) console.warn(`   ⚠️ Variety pressure (could not fully resolve): ${visualPlanResult.varietyReasons.join('; ')}`);
+  console.log('');
+
+  // ── AGENT 8: SLIDE NARRATIVE (copy-only — fills the locked plan) ─────────────
   console.log('━━━ AGENT 8: SLIDE NARRATIVE ━━━');
   const narrative = await new SlideNarrativeAgent().execute({
     strategy,
     format,
     tickerSymbols: activeTickers,
     constraints,
+    visualPlan,
   });
   console.log(`   Wrote ${narrative.slides.length} slide specs${narrative.hadConstraintViolation ? ' (after constraint retries)' : ''}`);
   narrative.slides.forEach((s) => console.log(`   Slide ${s.slideNumber} [${s.role}/${s.visualStyle}]: ${s.headline}`));
@@ -259,6 +292,8 @@ async function main() {
     recentHistory: contentHistory,
     tickerSymbols: activeTickers,
     dateKey: today,
+    slotIndex: slotContext.slotIndex,
+    storyboard: visualPlan.storyboard,
   });
   console.log(`   Generated ${promptSet.slides.length} complete prompts`);
   const promptsText = promptSet.slides
@@ -280,14 +315,36 @@ async function main() {
   console.log(`   Score: ${(finalCompliance.confidenceScore * 100).toFixed(0)}%`);
   console.log('');
 
+  // ── REVIEW BLOCK (research evidence gate) ───────────────────────────────────
+  // Union the flags carried through the selected topic with a fresh screen of the
+  // PUBLISHED topic (the strategy may have reshaped the title/claims).
+  const reviewFlags = mergeReviewFlags(
+    strategy.reviewFlags,
+    computeReviewFlags({
+      topic: strategy.topic,
+      sourceUrls: strategy.sourceUrls ?? selectedTopic?.sourceUrls,
+      angleId: strategy.angleId,
+      hookFormulaId: strategy.hookFormulaId,
+    }),
+  );
+  const reviewBlock = buildReviewBlock(reviewFlags, strategy.topic);
+
   // ── TELEGRAM DELIVERY ───────────────────────────────────────────────────────
   console.log('━━━ TELEGRAM DELIVERY ━━━');
+  const varietyFallbackRatePct = Math.max(
+    computeVarietyFallbackRatePct(contentHistory),
+    visualPlanResult.varietyReasons.length > 0 ? 100 : 0,
+  );
   await sendPromptsToTelegram({
     copy,
     strategy,
     format,
     promptSet,
     slot: slotContext.config,
+    varietyFallbackRatePct,
+    reviewBlock,
+    storyboardPremise: visualPlan.storyboard.premise,
+    compositionSignature: visualPlan.compositionSignature,
   });
   console.log('');
 
@@ -321,6 +378,13 @@ async function main() {
       accent1: format.colorScheme.accent1,
       accent2: format.colorScheme.accent2,
     },
+    dominantSubjectClass: visualPlan.slides[0]?.dominantSubjectClass,
+    visualPlan: toPersistedVisualPlan(visualPlan, {
+      usedFallback: visualPlanResult.usedFallback,
+      promptFingerprints: Object.fromEntries(
+        promptSet.slides.map((s) => [s.slideNumber, s.promptFingerprint]).filter(([, fp]) => Boolean(fp)),
+      ) as Record<number, string>,
+    }),
   };
   appendContentHistory(historyPath, entry);
 
@@ -367,32 +431,16 @@ function buildResearchBrief(
   }`;
 }
 
-main().catch((err) => {
-  console.error('Pipeline failed:', err);
-  process.exit(1);
-});
-
-export function isTickerActive(symbol: string, strategy: { topic: string; searchKeywords?: string[]; slideBreakdown?: string[] }): boolean {
-  const topicTextLower = `${strategy.topic} ${(strategy.searchKeywords ?? []).join(' ')} ${(strategy.slideBreakdown ?? []).join(' ')}`.toLowerCase();
-  const topicTextOriginal = `${strategy.topic} ${(strategy.searchKeywords ?? []).join(' ')} ${(strategy.slideBreakdown ?? []).join(' ')}`;
-
-  const cleanSymbol = symbol.replace(/\.[A-Z]+$/, '');
-  const entry = TICKER_LOGO_MAP[symbol];
-
-  const searchTerms: { term: string; caseSensitive: boolean }[] = [
-    { term: cleanSymbol, caseSensitive: cleanSymbol.length <= 2 }
-  ];
-  if (entry) {
-    searchTerms.push({ term: entry.companyName, caseSensitive: entry.companyName.length <= 2 });
-  }
-
-  for (const { term, caseSensitive } of searchTerms) {
-    const escaped = term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-    const regex = new RegExp(`\\b${escaped}\\b`, caseSensitive ? '' : 'i');
-    const textToSearch = caseSensitive ? topicTextOriginal : topicTextLower;
-    if (regex.test(textToSearch)) {
-      return true;
-    }
-  }
-  return false;
+// Only launch the live pipeline when run-daily.ts is the entrypoint (npm run
+// daily / GitHub Actions). Importing this module for its exports (e.g. tests)
+// must NOT trigger Telegram delivery, history writes, or Gemini calls.
+if (require.main === module) {
+  main().catch((err) => {
+    console.error('Pipeline failed:', err);
+    process.exit(1);
+  });
 }
+
+// Re-exported for backward compatibility. New code should import directly from
+// './src/lib/agents/tickerMatch' to avoid loading the entrypoint module.
+export { isTickerActive };
