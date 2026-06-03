@@ -130,3 +130,43 @@ test('slide 2 carries a secondary-hook beat when no angle skeleton is supplied',
   }).plan;
   assert.match(plan.slides[1].storyboardBeat, /[Ss]econdary hook/);
 });
+
+// ── CTA visual concept system ────────────────────────────────────────────────
+
+test('VisualPlan derives a CTA visual concept from the CTA strategy and surfaces it', () => {
+  const plan = new VisualPlanAgent().execute({
+    strategy: baseStrategy, format: marketFormat,
+    constraints: { ...constraints, ctaId: 'save_specific' },
+    tickerSymbols: ['NVDA'], dateKey: '2026-06-03', slotIndex: 3,
+  }).plan;
+  const cta = plan.slides[plan.slides.length - 1];
+  assert.equal(cta.intendedRole, 'cta');
+  assert.equal(cta.ctaVisualConcept, 'SAVE_CARD');
+  assert.equal(plan.storyboard.ctaVisualConcept, 'SAVE_CARD');
+  assert.match(cta.ctaConceptId ?? '', /^SAVE_CARD:/);
+});
+
+async function ctaPrompt(ctaConcept: StoryboardContinuity['ctaVisualConcept']): Promise<string> {
+  const sb = storyboard('TOP_STACK');
+  sb.ctaVisualConcept = ctaConcept;
+  const res = await new ImagePromptAgent().execute({
+    slides: [{
+      slideNumber: 1, role: 'cta', headline: 'Save this before your next trade',
+      headlineColorMap: [], visualStyle: 'EDITORIAL_STAT_CARD', visualPosition: 'center',
+      mood: 'premium', narrativeNote: 'cta',
+    } as SlideSpec],
+    format: marketFormat,
+    storyboard: sb,
+    dateKey: '2026-06-03',
+  });
+  return res.slides[0].geminiPrompt;
+}
+
+test('CTA concept renders a fresh save/send scene, not the luxury-desk/globe cliché', async () => {
+  const save = await ctaPrompt('SAVE_CARD');
+  assert.match(save, /saved|bookmark|save the post/i);
+  assert.doesNotMatch(save, /Gulfstream|Rolex|holographic globe|yacht/i);
+
+  const send = await ctaPrompt('SEND_TO_FRIEND');
+  assert.match(send, /send this to a friend|paper-airplane|share/i);
+});

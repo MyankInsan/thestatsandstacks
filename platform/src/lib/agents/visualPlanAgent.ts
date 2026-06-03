@@ -8,6 +8,7 @@ import type { FormatDecision, FormatType } from './formatStyleAgent';
 import type { SlideRole, VisualPosition } from './slideNarrativeAgent';
 import type { NarrativeArc, DominantSubjectClass, ContentHistoryEntry } from '../services/contentHistory';
 import type { PortraitSelection } from './portraitLibrary';
+import type { CtaId } from './ctaLibrary';
 import { toPersistedVisualPlan, checkVisualPlanVariety } from './varietyContract';
 
 export type StructureFamily =
@@ -121,6 +122,8 @@ export interface StoryboardContinuity {
   varietyRule: string;
   /** Cover layout family — lets the image prompt switch to integrated-text mode. */
   coverLayoutFamily?: CoverLayoutFamily;
+  /** CTA visual concept — lets the image prompt render a fresh, motif-resolving CTA. */
+  ctaVisualConcept?: CtaVisualConcept;
 }
 
 export interface SlideVisualGrammar {
@@ -137,6 +140,7 @@ export interface SlideVisualGrammar {
   dominantSubjectClass: DominantSubjectClass;
   sceneConceptId: string;
   ctaConceptId?: string;
+  ctaVisualConcept?: CtaVisualConcept;
   /** The storyboard beat this slide should advance (target for the narrative). */
   storyboardBeat: string;
 }
@@ -239,6 +243,33 @@ const THEMATIC_STYLES_BY_FORMAT: Record<string, ViralStyle[]> = {
 // fuller "CTA visual concept" system (motif-callback, save-card, send-to-friend)
 // lands in the visual-variety phase; this Phase-0 swap removes the worst tropes.
 const CTA_STYLE_POOL: ViralStyle[] = ['EDITORIAL_STAT_CARD', 'MINIMALIST_CHECKLIST', 'TYPOGRAPHIC_MEGA_NUMBER', 'GLOWING_QUOTE', 'EDITORIAL_SPLIT_LAYOUT', 'MAGAZINE_COVER'];
+
+/**
+ * CTA VISUAL CONCEPT — what the final slide should actually depict, decoupled
+ * from the old luxury-desk/globe cliché. Each resolves the post's own motif and
+ * leans into 2026 save/send behavior. Derived from the chosen CTA strategy.
+ */
+export type CtaVisualConcept =
+  | 'MOTIF_CALLBACK'     // slide-1 visual returns with the answer revealed
+  | 'SAVE_CARD'          // a phone/index card showing the post being saved
+  | 'SEND_TO_FRIEND'     // a DM/share card ("send this to the friend who…")
+  | 'CHECKLIST_RECEIPT'  // the takeaways as a clean receipt/scorecard
+  | 'SCOREBOARD_RECAP'   // a one-slide recap of the carousel's numbers
+  | 'EDITORIAL_SIGNOFF'  // a single restrained typographic sign-off poster
+  | 'TWO_OPTION_PROMPT'  // "which side are you?" comment driver
+  | 'QUESTION_CARD';     // a genuine question rendered as a clean card
+
+const CTA_CONCEPT_FOR_ID: Record<CtaId, CtaVisualConcept> = {
+  save_specific: 'SAVE_CARD',
+  reference_save: 'CHECKLIST_RECEIPT',
+  share_use_case: 'SEND_TO_FRIEND',
+  comment_genuine_question: 'QUESTION_CARD',
+  question_open: 'TWO_OPTION_PROMPT',
+  follow_authority: 'EDITORIAL_SIGNOFF',
+  swipe_promise: 'MOTIF_CALLBACK',
+  dm_pull: 'SEND_TO_FRIEND',
+  story_vote: 'TWO_OPTION_PROMPT',
+};
 
 function bucketOf(style: ViralStyle): Bucket {
   return (STYLE_BUCKETS[style] as Bucket) ?? 'Layout';
@@ -488,6 +519,7 @@ export class VisualPlanAgent {
       }
       const dominantSubjectClass = dominantSubjectClassFor(style);
       const bucket = bucketOf(style);
+      const ctaVisualConcept = role === 'cta' ? CTA_CONCEPT_FOR_ID[constraints.ctaId] : undefined;
       const grammar: SlideVisualGrammar = {
         slideNumber: i + 1,
         intendedRole: role,
@@ -501,7 +533,10 @@ export class VisualPlanAgent {
         visualPosition: position,
         dominantSubjectClass,
         sceneConceptId: `${structureFamily}:${style}:${position}`,
-        ctaConceptId: role === 'cta' ? `${constraints.ctaId}:${style}` : undefined,
+        // CTA concept id drives same-day CTA dedup (concept + style), so two of
+        // today's slots can't ship the same CTA look.
+        ctaConceptId: role === 'cta' ? `${ctaVisualConcept}:${style}` : undefined,
+        ctaVisualConcept,
         storyboardBeat: beats[i],
       };
       slides.push(grammar);
@@ -561,6 +596,7 @@ function buildStoryboard(
   const accent = format.colorScheme.accent1;
   return {
     coverLayoutFamily,
+    ctaVisualConcept: slides.find((s) => s.intendedRole === 'cta')?.ctaVisualConcept,
     premise: `${strategy.topic} — ${strategy.hook}`.slice(0, 200),
     anchorPrompt: `Slide 1 establishes the premise via a ${cover?.coverMechanism ?? 'CINEMATIC_SCENE'} (${cover?.visualStyle}) in a ${coverLayoutFamily ?? 'TOP_STACK'} layout. This cover image is the visual anchor every later slide stays coherent with.`,
     sharedVisualInvariants: [

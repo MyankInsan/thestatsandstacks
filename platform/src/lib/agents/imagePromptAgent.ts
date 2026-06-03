@@ -8,7 +8,7 @@ import type { ContentHistoryEntry } from '../services/contentHistory';
 import { PROMPT_LIBRARY, type ViralStyle } from './promptLibrary';
 import { recommendModelForStyle, modelRecommendationLabel } from './modelRecommendation';
 import { TickerLogoAgent } from './tickerLogoAgent';
-import { INTEGRATED_TEXT_FAMILIES, type StoryboardContinuity, type CoverLayoutFamily } from './visualPlanAgent';
+import { INTEGRATED_TEXT_FAMILIES, type StoryboardContinuity, type CoverLayoutFamily, type CtaVisualConcept } from './visualPlanAgent';
 
 export interface SlideImagePrompt {
   slideNumber: number;
@@ -142,6 +142,35 @@ function getSceneVarySubstitutedTemplate(
   return null;
 }
 
+/**
+ * Fresh, motif-resolving CTA scenes — replaces the old luxury-desk/globe/Rolex
+ * CTA cliché. The scene is the SUBJECT; the actual CTA copy is rendered by the
+ * EXACT TEXT block. Each leans into 2026 save/send behavior.
+ */
+function buildCtaConceptScene(concept: CtaVisualConcept, accent1: string, isLight: boolean): string {
+  const ground = isLight ? 'a clean, bright on-brand background' : 'a calm, deep on-brand background';
+  const light = isLight ? 'soft, even daylight studio lighting' : 'soft directional studio lighting with rich shadows';
+  switch (concept) {
+    case 'MOTIF_CALLBACK':
+      return `A clean callback to the opening image — the same core subject/motif from slide 1 returns, now resolved and calm, as a tight editorial composition on ${ground} with generous negative space for the closing line. ${light}, premium, on-brand, no luxury-desk or globe cliché.`;
+    case 'SAVE_CARD':
+      return `A premium macro composition of a modern smartphone (or a heavy cotton index card) resting on a clean matte surface, showing a subtle filled bookmark / "Saved" state in ${accent1}; shallow depth of field, ${light}. The scene invites the viewer to save the post. No corporate-desk, watch, or skyline cliché.`;
+    case 'SEND_TO_FRIEND':
+      return `A minimal editorial composition built around a single paper-airplane / share motif (or a phone mid-DM-send) in ${accent1} on ${ground}; ${light}. The scene visually says "send this to a friend who needs it". No globe, no skyline, no luxury props.`;
+    case 'CHECKLIST_RECEIPT':
+      return `A crisp printed receipt or scorecard on a matte cotton-paper surface listing the post's key takeaways as short ticked lines, the ticks in ${accent1}; overhead editorial light, visible paper grain. The document is the hero. No desk-with-coffee cliché.`;
+    case 'SCOREBOARD_RECAP':
+      return `A clean recap card summarizing the carousel's two or three key numbers in a tidy grid on ${ground}, Apple-keynote minimalism, single ${accent1} accent; the numbers are the hero. ${light}.`;
+    case 'EDITORIAL_SIGNOFF':
+      return `A single restrained typographic sign-off on ${ground} with generous negative space and a single ${accent1} accent rule — no objects, just confident editorial type and the brand mark. Monocle / Bloomberg Businessweek restraint.`;
+    case 'TWO_OPTION_PROMPT':
+      return `A clean split composition presenting two clearly labeled options as a "which side are you?" prompt, balanced editorial layout on ${ground} with a single ${accent1} dividing rule. ${light}.`;
+    case 'QUESTION_CARD':
+    default:
+      return `A genuine question rendered as a clean editorial card on ${ground}, generous breathing room, premium type with a single ${accent1} accent — invites a real comment, not engagement bait. ${light}.`;
+  }
+}
+
 const PREMIUM_POLISH_KIT = `
 PREMIUM POLISH (always apply):
 - Lighting: pick one — Rembrandt rim (portraits), Kino softbox (product), hard rim + atmospheric smoke (action), golden-hour window light (lifestyle).
@@ -239,8 +268,18 @@ export class ImagePromptAgent extends BaseAgent {
     // Slot-aware seed so same-day slots don't render the identical scene.
     const varietySeed = `${dateKey}-s${input.slotIndex ?? 0}`;
 
+    const ctaConcept = input.storyboard?.ctaVisualConcept;
+
     const slides = input.slides.map((slide) => {
-      let visualDescription = getSceneVarySubstitutedTemplate(slide.visualStyle, slide.slideNumber, varietySeed, input.tickerSymbols, input.strategy?.topic);
+      let visualDescription: string | null = null;
+      // The final slide uses a fresh, motif-resolving CTA concept scene (replaces
+      // the old luxury-desk/globe CTA cliché) rather than the generic template.
+      if (slide.role === 'cta' && ctaConcept) {
+        visualDescription = buildCtaConceptScene(ctaConcept, input.format.colorScheme.accent1, isLightBackground(input.format.colorScheme.bg));
+      }
+      if (!visualDescription) {
+        visualDescription = getSceneVarySubstitutedTemplate(slide.visualStyle, slide.slideNumber, varietySeed, input.tickerSymbols, input.strategy?.topic);
+      }
       if (!visualDescription) {
         visualDescription = generatedPromptsMap.get(slide.slideNumber) ?? null;
       }
