@@ -3,6 +3,7 @@ import type { StrategyDecision } from '../agents/contentStrategyAgent';
 import type { FormatDecision } from '../agents/formatStyleAgent';
 import type { ImagePromptSet } from '../agents/imagePromptAgent';
 import type { SlotConfig } from '../agents/slotConfig';
+import { formatQcSummary, type QcReport } from '../agents/qcGateAgent';
 import { getLocalDateKey } from './dateUtils';
 
 const TELEGRAM_RETRY_ATTEMPTS = 4;
@@ -23,6 +24,8 @@ export interface TelegramDeliveryInput {
   /** Optional storyboard premise / composition signature surfaced in the intro. */
   storyboardPremise?: string;
   compositionSignature?: string;
+  /** Optional deterministic QC report surfaced in the intro + document. */
+  qcReport?: QcReport;
 }
 
 export interface TelegramPacket {
@@ -55,6 +58,8 @@ export function formatTelegramPacket(input: TelegramDeliveryInput, today: string
     input.compositionSignature ? `COMPOSITION SIGNATURE: ${input.compositionSignature}` : '',
     `SLIDES: ${input.promptSet.slides.length}`,
     `━━━━━━━━━━━━━━━━━━━━`,
+    input.qcReport ? formatQcSummary(input.qcReport) : '',
+    input.qcReport ? `━━━━━━━━━━━━━━━━━━━━` : '',
     'Primary render target: ChatGPT Images 2.0 (paste the anchor prompt, generate slide 1, then continue in the SAME conversation).',
     'Alternate: Seedream for cinematic image-first scenes.',
     'Slides flagged ⚠️ may garble dense chart text — a clean Canva overlay fallback block is included.',
@@ -86,6 +91,13 @@ export function formatTelegramPacket(input: TelegramDeliveryInput, today: string
 
   if (input.reviewBlock) {
     lines.push('', sep, '⚠️ HUMAN REVIEW REQUIRED', sep, input.reviewBlock);
+  }
+
+  if (input.qcReport) {
+    lines.push('', sep, `QC REPORT — ${input.qcReport.overall}  |  ENGAGEMENT ${input.qcReport.engagementScore}/100 (${input.qcReport.engagementLabel})`, sep);
+    for (const c of input.qcReport.checks) {
+      lines.push(`[${c.status}] ${c.label}: ${c.detail}`);
+    }
   }
 
   lines.push('', sep, '');

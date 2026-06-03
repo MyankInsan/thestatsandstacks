@@ -29,6 +29,7 @@ import type { MustAvoidSet } from './src/lib/agents/historyGuardAgent';
 import { toPersistedVisualPlan, computeVarietyFallbackRatePct } from './src/lib/agents/varietyContract';
 import { computeReviewFlags, mergeReviewFlags, buildReviewBlock, bestSourceTier } from './src/lib/agents/researchEvidenceGate';
 import { inferTopicFamily } from './src/lib/agents/topicScoring';
+import { runQcGate } from './src/lib/agents/qcGateAgent';
 import {
   appendContentHistory,
   loadContentHistory,
@@ -330,12 +331,34 @@ async function main() {
   );
   const reviewBlock = buildReviewBlock(reviewFlags, strategy.topic);
 
-  // ── TELEGRAM DELIVERY ───────────────────────────────────────────────────────
-  console.log('━━━ TELEGRAM DELIVERY ━━━');
+  // ── QC GATE (deterministic — report only, does not block) ───────────────────
+  const topicFamily = inferTopicFamily(strategy.topic, strategy.searchKeywords, strategy.angleId);
+  const sourceTier = bestSourceTier(strategy.sourceUrls ?? selectedTopic?.sourceUrls);
   const varietyFallbackRatePct = Math.max(
     computeVarietyFallbackRatePct(contentHistory),
     visualPlanResult.varietyReasons.length > 0 ? 100 : 0,
   );
+  const qcReport = runQcGate({
+    prompts: promptSet.slides.map((s) => ({ slideNumber: s.slideNumber, role: s.role, geminiPrompt: s.geminiPrompt })),
+    slideHeadlines: narrative.slides.map((s) => s.headline),
+    hook: strategy.hook,
+    reviewFlagCount: reviewFlags.length,
+    sourceTier,
+    topicMode: slotContext.config.topicMode,
+    topicFamily,
+    slideCount: narrative.slides.length,
+    varietyFallbackRatePct,
+    varietyUnresolved: visualPlanResult.varietyReasons.length > 0,
+    timelyPriorTodayCount: slotContext.todayPriorEntries.filter(
+      (e) => e.sourceTier && ['OFFICIAL', 'MARKET_DATA', 'REPUTABLE_PRESS'].includes(e.sourceTier),
+    ).length,
+  });
+  console.log(`   QC: ${qcReport.overall}  |  engagement ${qcReport.engagementScore}/100 (${qcReport.engagementLabel})`);
+  for (const c of qcReport.checks.filter((c) => c.status !== 'PASS')) console.log(`   ${c.status} ${c.label}: ${c.detail}`);
+  console.log('');
+
+  // ── TELEGRAM DELIVERY ───────────────────────────────────────────────────────
+  console.log('━━━ TELEGRAM DELIVERY ━━━');
   await sendPromptsToTelegram({
     copy,
     strategy,
@@ -346,6 +369,7 @@ async function main() {
     reviewBlock,
     storyboardPremise: visualPlan.storyboard.premise,
     compositionSignature: visualPlan.compositionSignature,
+    qcReport,
   });
   console.log('');
 
@@ -380,8 +404,8 @@ async function main() {
       accent2: format.colorScheme.accent2,
     },
     dominantSubjectClass: visualPlan.slides[0]?.dominantSubjectClass,
-    topicFamily: inferTopicFamily(strategy.topic, strategy.searchKeywords, strategy.angleId),
-    sourceTier: bestSourceTier(strategy.sourceUrls ?? selectedTopic?.sourceUrls),
+    topicFamily,
+    sourceTier,
     topicMode: slotContext.config.topicMode,
     visualPlan: toPersistedVisualPlan(visualPlan, {
       usedFallback: visualPlanResult.usedFallback,

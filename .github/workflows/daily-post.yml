@@ -45,11 +45,9 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
+      # Resolve the slot FIRST (pure Node on the cron string + DST — needs no repo
+      # files) so the ~4 non-firing crons/day exit in seconds instead of paying a
+      # full-history checkout. Only firing slots check out the repo below.
       - name: Resolve slot from cron / dispatch
         id: slot
         env:
@@ -119,6 +117,14 @@ jobs:
           fs.appendFileSync(process.env.GITHUB_OUTPUT, 'should_run=' + (slot ? 'true' : 'false') + '\n');
           fs.appendFileSync(process.env.GITHUB_OUTPUT, 'slot_index=' + (slot ?? '') + '\n');
           EOF
+
+      # Full history is fetched only for firing slots; the content-history commit
+      # step below uses `git pull --rebase`, so keep fetch-depth: 0 here.
+      - name: Checkout code
+        if: steps.slot.outputs.should_run == 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         if: steps.slot.outputs.should_run == 'true'
