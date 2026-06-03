@@ -3152,6 +3152,143 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-03",
+      "topic": "401k vs Roth IRA: Which Account Should Americans Use First?",
+      "hook": "Most Americans pick the wrong account first.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 7,
+      "keywords": [
+        "MU stock",
+        "Micron Technology, Inc. stock",
+        "hot stock risk checklist",
+        "market catalyst explained"
+      ],
+      "visualSignature": "2026-06-03-26918258879",
+      "schemaVersion": 3,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-06-03T23:04:25.218Z",
+      "tickersFeatured": [],
+      "topicCategory": "TAX_ACCT",
+      "hookFormulaId": "TIME_CAPSULE",
+      "ctaId": "reference_save",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "LEADER_LOGO_CUTOUTS",
+        "CANDLESTICK_HERO",
+        "CANDLESTICK_PATTERN_ANNOTATED",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "TRADING_DESK_OVERLAY",
+        "EDITORIAL_REACTION_CARICATURE",
+        "INSTITUTIONAL_FLOW_SANKEY"
+      ],
+      "coverVisualStyle": "LEADER_LOGO_CUTOUTS",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FFFFFF"
+      },
+      "dominantSubjectClass": "PORTRAIT",
+      "visualPlan": {
+        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:EDITORIAL_PORTRAIT:60515089",
+        "structureFamily": "PREMIUM_LIFESTYLE",
+        "coverMechanism": "EDITORIAL_PORTRAIT",
+        "sceneConceptIds": [
+          "PREMIUM_LIFESTYLE:LEADER_LOGO_CUTOUTS:top",
+          "PREMIUM_LIFESTYLE:CANDLESTICK_HERO:background",
+          "PREMIUM_LIFESTYLE:CANDLESTICK_PATTERN_ANNOTATED:background",
+          "PREMIUM_LIFESTYLE:EDITORIAL_SPLIT_LAYOUT:left",
+          "PREMIUM_LIFESTYLE:TRADING_DESK_OVERLAY:background",
+          "PREMIUM_LIFESTYLE:EDITORIAL_REACTION_CARICATURE:top",
+          "PREMIUM_LIFESTYLE:INSTITUTIONAL_FLOW_SANKEY:background"
+        ],
+        "ctaConceptId": "reference_save:INSTITUTIONAL_FLOW_SANKEY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "hero-top",
+            "primaryEncoding": "portrait",
+            "visualStyle": "LEADER_LOGO_CUTOUTS",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:LEADER_LOGO_CUTOUTS:top",
+            "promptFingerprint": "pf_rmzsbg"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:CANDLESTICK_HERO:background",
+            "promptFingerprint": "pf_fcgoac"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_PATTERN_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:CANDLESTICK_PATTERN_ANNOTATED:background",
+            "promptFingerprint": "pf_20oxdk"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:EDITORIAL_SPLIT_LAYOUT:left",
+            "promptFingerprint": "pf_mlr5r3"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "typography",
+            "visualStyle": "TRADING_DESK_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:TRADING_DESK_OVERLAY:background",
+            "promptFingerprint": "pf_sl80pr"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:EDITORIAL_REACTION_CARICATURE:top",
+            "promptFingerprint": "pf_nwdkdo"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "INSTITUTIONAL_FLOW_SANKEY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:INSTITUTIONAL_FLOW_SANKEY:background",
+            "promptFingerprint": "pf_tjuljw"
+          }
+        ]
+      }
     }
   ]
 }
