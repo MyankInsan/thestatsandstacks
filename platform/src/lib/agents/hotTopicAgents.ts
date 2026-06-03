@@ -4,6 +4,9 @@ import {
   normalizeTopic,
   noveltyPenalty,
 } from '../services/contentHistory';
+import { CryptoHeatAgent, NewsRssAgent, IpoFilingsAgent, type FreshTopicAgentResult } from './freshTopicAgents';
+import { topicEngagementAdjustment } from './topicScoring';
+import { getLocalDateKey } from '../services/dateUtils';
 
 type TrendTopic = TrendResearchResult['topics'][number];
 type ResearchSignalBrief = NonNullable<TrendResearchResult['signalBriefs']>[number];
@@ -81,6 +84,9 @@ interface IndexHighStatus {
 
 const INDEX_SEEDS = [
   { ticker: '^GSPC', companyName: 'S&P 500' },
+  { ticker: '^IXIC', companyName: 'Nasdaq' },
+  { ticker: '^DJI', companyName: 'Dow Jones' },
+  { ticker: '^VIX', companyName: 'VIX' },
   { ticker: '^GSPTSE', companyName: 'S&P/TSX Composite' },
 ];
 
@@ -135,10 +141,22 @@ export class HotTopicDeskAgent extends BaseAgent {
       newsCandidates: catalystNews.candidates,
     });
 
+    // Fresh, US-weighted sources (crypto, 24h news digest, IPO filings). Each is
+    // fail-soft and keyless; a dead/throttled source must never break the run.
+    const freshSettled = await Promise.allSettled<FreshTopicAgentResult>([
+      new CryptoHeatAgent().execute(),
+      new NewsRssAgent().execute(),
+      new IpoFilingsAgent().execute(),
+    ]);
+    const fresh = freshSettled
+      .filter((r): r is PromiseFulfilledResult<FreshTopicAgentResult> => r.status === 'fulfilled')
+      .map((r) => r.value);
+
     const topics = rankHotTopicCandidates([
       ...marketHeat.candidates,
       ...catalystNews.candidates,
       ...formatIdeas.candidates,
+      ...fresh.flatMap((f) => f.candidates),
     ], contentHistory);
 
     console.log(`[${this.name}] ✅ Ranked ${topics.length} hot-topic ideas`);
@@ -148,6 +166,7 @@ export class HotTopicDeskAgent extends BaseAgent {
         marketHeat.signalBrief,
         catalystNews.signalBrief,
         formatIdeas.signalBrief,
+        ...fresh.map((f) => f.signalBrief),
       ],
       generatedAt: new Date().toISOString(),
     };
@@ -203,67 +222,89 @@ export class MarketHeatAgent extends BaseAgent {
     const isWeekday = vancouverWeekday !== 'Saturday' && vancouverWeekday !== 'Sunday';
 
     for (const snap of indexStatuses) {
-      const isUS = snap.ticker === '^GSPC';
-      
+      const isCanada = snap.ticker === '^GSPTSE';
+      const isVix = snap.ticker === '^VIX';
+      // Display label: equity indices use their company name ("S&P 500",
+      // "Nasdaq", "Dow Jones"); TSX reads better as "TSX".
+      const label = isCanada ? 'TSX' : snap.companyName;
+
+      // VIX is a fear gauge, not a "level" story — give it its own branch.
+      if (isVix) {
+        if (isWeekday && snap.dayChangePercent >= 8) {
+          indexCandidates.push({
+            title: 'Volatility Is Spiking: What a Rising VIX Means for Your Portfolio',
+            score: 0.95,
+            reasoning: `The VIX jumped sharply today (${snap.dayChangePercent.toFixed(1)}%). A fear-gauge spike is a timely, educational "stay-calm / what-it-means / what-to-do" topic — never a trade call.`,
+            suggestedFormat: 'CAROUSEL',
+            suggestedSlideCount: 7,
+            searchKeywords: ['VIX spike', 'market volatility', 'fear gauge', 'why is market volatile'],
+            sourceUrls: [`https://finance.yahoo.com/quote/${snap.ticker}`],
+            contentPillar: 'Market-news explainers',
+            freshnessSignal: `VIX 1D move: ${snap.dayChangePercent.toFixed(1)}%`,
+          });
+        }
+        continue;
+      }
+
       if (snap.isNearFiveYearHigh || snap.isAtFiveYearHigh) {
-        const title = isUS
-          ? `S&P 500 Near a 5-Year High: 5 Portfolio Rules for Investors (${snap.ticker})`
-          : `TSX Near 5-Year Highs: What Canadian Investors Should Do (${snap.ticker})`;
+        const title = isCanada
+          ? `${label} Near 5-Year Highs: What Canadian Investors Should Do (${snap.ticker})`
+          : `${label} Near a 5-Year High: 5 Portfolio Rules for Investors (${snap.ticker})`;
         indexCandidates.push({
           title,
           score: snap.isAtFiveYearHigh ? 0.98 : 0.95,
           reasoning: `The ${snap.companyName} is trading at/near a 5-year high (${snap.currentPrice.toFixed(0)} vs 5y high of ${snap.fiveYearHigh.toFixed(0)}). Verify against an official index source before publishing any "record/all-time high" wording. High save intent topic on index levels and retail FOMO.`,
           suggestedFormat: 'CAROUSEL',
           suggestedSlideCount: 7,
-          searchKeywords: isUS ? ['SP500 5 year high', 'S&P 500 level'] : ['TSX multi-year high', 'investing Canada'],
+          searchKeywords: isCanada ? ['TSX multi-year high', 'investing Canada'] : [`${label} 5 year high`, `${label} level`],
           sourceUrls: [`https://finance.yahoo.com/quote/${snap.ticker}`],
           contentPillar: 'Global macro-economic news and political impacts on markets',
           freshnessSignal: `${snap.companyName} 5-year high watch: ${snap.currentPrice.toFixed(0)}`,
         });
       }
 
-      // Specific swing-change checks for S&P 500 (GSPC)
-      if (isUS && isWeekday) {
+      // Daily swing checks for US equity indices (S&P 500, Nasdaq, Dow).
+      if (!isCanada && isWeekday) {
         const absChange = Math.abs(snap.dayChangePercent);
         if (snap.dayChangePercent <= -1.0) {
           indexCandidates.push({
-            title: `S&P 500 (${snap.ticker}) Drops ${absChange.toFixed(1)}%: What is Triggering the Market Today`,
+            title: `${label} (${snap.ticker}) Drops ${absChange.toFixed(1)}%: What is Triggering the Market Today`,
             score: 0.98,
-            reasoning: `The S&P 500 dropped ${absChange.toFixed(1)}% today. High priority reactive sentiment news topic on the market selloff.`,
+            reasoning: `The ${label} dropped ${absChange.toFixed(1)}% today. High priority reactive sentiment news topic on the market selloff.`,
             suggestedFormat: 'WATCHLIST_EDUCATION',
             suggestedSlideCount: 7,
-            searchKeywords: ['S&P 500 drop', 'market selloff', 'why is market down'],
+            searchKeywords: [`${label} drop`, 'market selloff', 'why is market down'],
             sourceUrls: [`https://finance.yahoo.com/quote/${snap.ticker}`],
             contentPillar: 'Market-news explainers',
-            freshnessSignal: `S&P 500 dropped ${absChange.toFixed(1)}%`,
+            freshnessSignal: `${label} dropped ${absChange.toFixed(1)}%`,
           });
         } else if (snap.dayChangePercent >= 1.0) {
           indexCandidates.push({
-            title: `S&P 500 (${snap.ticker}) Surges ${absChange.toFixed(1)}%: What is Triggering the Market Today`,
+            title: `${label} (${snap.ticker}) Surges ${absChange.toFixed(1)}%: What is Triggering the Market Today`,
             score: 0.96,
-            reasoning: `The S&P 500 surged ${absChange.toFixed(1)}% today. High priority reactive sentiment news topic on the market rally.`,
+            reasoning: `The ${label} surged ${absChange.toFixed(1)}% today. High priority reactive sentiment news topic on the market rally.`,
             suggestedFormat: 'WATCHLIST_EDUCATION',
             suggestedSlideCount: 7,
-            searchKeywords: ['S&P 500 surge', 'market rally', 'why is market up'],
+            searchKeywords: [`${label} surge`, 'market rally', 'why is market up'],
             sourceUrls: [`https://finance.yahoo.com/quote/${snap.ticker}`],
             contentPillar: 'Market-news explainers',
-            freshnessSignal: `S&P 500 surged ${absChange.toFixed(1)}%`,
+            freshnessSignal: `${label} surged ${absChange.toFixed(1)}%`,
           });
         }
       }
 
       if (isWeekday && (Math.abs(snap.dayChangePercent) >= 0.5 || vancouverHour >= 13)) {
         const changeText = `${snap.dayChangePercent >= 0 ? '+' : ''}${snap.dayChangePercent.toFixed(2)}%`;
-        const title = isUS
-          ? `U.S. Market Close: How the S&P 500 (${snap.ticker}) Performed Today`
-          : `Canadian Market Close: How the TSX (${snap.ticker}) Performed Today`;
+        const title = isCanada
+          ? `Canadian Market Close: How the ${label} (${snap.ticker}) Performed Today`
+          : `U.S. Market Close: How the ${label} (${snap.ticker}) Performed Today`;
         indexCandidates.push({
           title,
           score: 0.93 + (Math.abs(snap.dayChangePercent) >= 1.5 ? 0.04 : 0),
           reasoning: `The ${snap.companyName} closed the day at ${snap.currentPrice.toFixed(0)} (${changeText}). Direct, timely post-market overview.`,
           suggestedFormat: 'CAROUSEL',
           suggestedSlideCount: 7,
-          searchKeywords: isUS ? ['S&P 500 close', 'market recap'] : ['TSX market close', 'Canadian market close'],
+          searchKeywords: isCanada ? ['TSX market close', 'Canadian market close'] : [`${label} close`, 'market recap'],
           sourceUrls: [`https://finance.yahoo.com/quote/${snap.ticker}`],
           contentPillar: 'Market-news explainers',
           freshnessSignal: `${snap.companyName} change today: ${changeText}`,
@@ -561,10 +602,22 @@ export function extractTickerSeeds(candidates: TrendTopic[]): MarketSeed[] {
 
 function rankHotTopicCandidates(candidates: TrendTopic[], history: ContentHistoryEntry[]): TrendTopic[] {
   const seen = new Set<string>();
+  const today = getLocalDateKey(new Date());
   return candidates
     .map((candidate) => ({
       ...candidate,
-      score: clampScore(candidate.score - noveltyPenalty(candidate.title, history)),
+      score: clampScore(
+        candidate.score
+        - noveltyPenalty(candidate.title, history)
+        + topicEngagementAdjustment({
+          title: candidate.title,
+          keywords: candidate.searchKeywords,
+          sourceUrls: candidate.sourceUrls,
+          freshnessSignal: candidate.freshnessSignal,
+          history,
+          today,
+        }),
+      ),
     }))
     .sort((a, b) => b.score - a.score)
     .filter((candidate) => {

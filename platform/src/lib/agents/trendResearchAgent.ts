@@ -8,6 +8,7 @@ import {
 } from '../services/contentHistory';
 import { getLocalDateKey } from '../services/dateUtils';
 import { neutralizeUnverifiedSuperlatives } from './researchEvidenceGate';
+import { topicEngagementAdjustment } from './topicScoring';
 
 interface TrendResearchInput {
   contentHistory?: ContentHistoryEntry[];
@@ -615,10 +616,23 @@ function rankAndDedupeCandidates(
   history: ContentHistoryEntry[]
 ): ResearchCandidate[] {
   const seen = new Set<string>();
+  const today = getLocalDateKey(new Date());
   return candidates
     .map((candidate) => ({
       ...candidate,
-      score: clampScore(candidate.score + growthScoreAdjustment(candidate) - noveltyPenalty(candidate.title, history)),
+      score: clampScore(
+        candidate.score
+        + growthScoreAdjustment(candidate)
+        - noveltyPenalty(candidate.title, history)
+        + topicEngagementAdjustment({
+          title: candidate.title,
+          keywords: candidate.searchKeywords,
+          sourceUrls: candidate.sourceUrls,
+          freshnessSignal: candidate.freshnessSignal,
+          history,
+          today,
+        }),
+      ),
     }))
     .sort((a, b) => b.score - a.score)
     .filter((candidate) => {

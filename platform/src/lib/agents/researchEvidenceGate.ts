@@ -21,7 +21,11 @@ export type ResearchReviewFlag =
   | 'RECORD_HIGH_CLAIM'
   | 'CORPORATE_ACTION_SENSITIVE_RETURN'
   | 'ANOMALY_MOVE'
-  | 'MISSING_EVIDENCE_ID';
+  | 'MISSING_EVIDENCE_ID'
+  // Hot-topic-engine additions:
+  | 'RUMOR_SINGLE_SOURCE'
+  | 'UNCORROBORATED'
+  | 'STALE_SIGNAL';
 
 export const RESEARCH_REVIEW_FLAGS: readonly ResearchReviewFlag[] = [
   'MANUAL_REVIEW_REQUIRED',
@@ -31,6 +35,9 @@ export const RESEARCH_REVIEW_FLAGS: readonly ResearchReviewFlag[] = [
   'CORPORATE_ACTION_SENSITIVE_RETURN',
   'ANOMALY_MOVE',
   'MISSING_EVIDENCE_ID',
+  'RUMOR_SINGLE_SOURCE',
+  'UNCORROBORATED',
+  'STALE_SIGNAL',
 ];
 
 /** Flags that require a human to verify the claim before publishing. */
@@ -41,7 +48,92 @@ export const MANUAL_REVIEW_FLAGS: ReadonlySet<ResearchReviewFlag> = new Set<Rese
   'CORPORATE_ACTION_SENSITIVE_RETURN',
   'ANOMALY_MOVE',
   'SECONDARY_ONLY_NEWS',
+  'RUMOR_SINGLE_SOURCE',
+  'UNCORROBORATED',
 ]);
+
+/**
+ * Source trust tiers, highest → lowest. A topic is VERIFIED when it carries an
+ * OFFICIAL/MARKET_DATA source or ≥2 independent REPUTABLE_PRESS items; an
+ * AGGREGATED-only (Reddit / social / Google-News-redirect) topic is a RUMOR.
+ */
+export type SourceTier = 'OFFICIAL' | 'MARKET_DATA' | 'REPUTABLE_PRESS' | 'AGGREGATED' | 'UNKNOWN';
+
+const TIER_RANK: Record<SourceTier, number> = {
+  OFFICIAL: 4, MARKET_DATA: 3, REPUTABLE_PRESS: 2, AGGREGATED: 1, UNKNOWN: 0,
+};
+
+const OFFICIAL_HOST_RE = /(?:^|\.)(sec\.gov|efts\.sec\.gov|federalreserve\.gov|bankofcanada\.ca|investor\.gov|irs\.gov|canada\.ca|osc\.ca|ciro\.ca|finra\.org|statcan\.gc\.ca|treasury\.gov|bls\.gov)$/i;
+const MARKET_DATA_HOST_RE = /(?:^|\.)(finance\.yahoo\.com|query1\.finance\.yahoo\.com|query2\.finance\.yahoo\.com|coingecko\.com|api\.coingecko\.com)$/i;
+const PRESS_HOST_RE = /(?:^|\.)(cnbc\.com|marketwatch\.com|reuters\.com|bloomberg\.com|wsj\.com|ft\.com|barrons\.com|coindesk\.com|nasdaq\.com|businessinsider\.com|forbes\.com|cnn\.com|apnews\.com|theglobeandmail\.com|financialpost\.com)$/i;
+const AGGREGATED_HOST_RE = /(?:^|\.)(reddit\.com|news\.google\.com|twitter\.com|x\.com|t\.co)$/i;
+
+export function classifySourceTier(url: string): SourceTier {
+  let host = '';
+  try {
+    host = new URL(url).hostname.toLowerCase();
+  } catch {
+    return 'UNKNOWN';
+  }
+  if (OFFICIAL_HOST_RE.test(host) || host.endsWith('.gov')) return 'OFFICIAL';
+  if (MARKET_DATA_HOST_RE.test(host)) return 'MARKET_DATA';
+  if (PRESS_HOST_RE.test(host)) return 'REPUTABLE_PRESS';
+  if (AGGREGATED_HOST_RE.test(host)) return 'AGGREGATED';
+  return 'UNKNOWN';
+}
+
+/** Highest tier among the given source URLs (UNKNOWN if none classify). */
+export function bestSourceTier(urls: readonly string[] | undefined): SourceTier {
+  let best: SourceTier = 'UNKNOWN';
+  for (const u of urls ?? []) {
+    const t = classifySourceTier(u);
+    if (TIER_RANK[t] > TIER_RANK[best]) best = t;
+  }
+  return best;
+}
+
+export interface VerificationResult {
+  tier: SourceTier;
+  /** VERIFIED, DEVELOPING (press but thin), or RUMOR (aggregated/none). */
+  status: 'VERIFIED' | 'DEVELOPING' | 'RUMOR';
+  flags: ResearchReviewFlag[];
+}
+
+/**
+ * Deterministic verification screen over a topic's sources + freshness. Used by
+ * the hot-topic collectors and the QC gate to label rumors and stale signals.
+ */
+export function verifyTopicSources(input: {
+  sourceUrls?: string[];
+  publishedAt?: string;
+  /** Count of independent press items on the same claim (collector-supplied). */
+  pressCorroboration?: number;
+  /** True when this slot expects a fresh (<48h) topic. */
+  expectsFresh?: boolean;
+}): VerificationResult {
+  const urls = input.sourceUrls ?? [];
+  const tier = bestSourceTier(urls);
+  const flags = new Set<ResearchReviewFlag>();
+
+  let status: VerificationResult['status'];
+  if (tier === 'OFFICIAL' || tier === 'MARKET_DATA') {
+    status = 'VERIFIED';
+  } else if (tier === 'REPUTABLE_PRESS') {
+    status = (input.pressCorroboration ?? 1) >= 2 ? 'VERIFIED' : 'DEVELOPING';
+  } else {
+    // AGGREGATED or UNKNOWN/none.
+    status = 'RUMOR';
+    flags.add(urls.length > 0 ? 'RUMOR_SINGLE_SOURCE' : 'UNCORROBORATED');
+  }
+
+  if (input.expectsFresh && input.publishedAt) {
+    const t = Date.parse(input.publishedAt);
+    if (!Number.isNaN(t) && Date.now() - t > 48 * 3_600_000) flags.add('STALE_SIGNAL');
+  }
+
+  if (flags.size > 0) flags.add('MANUAL_REVIEW_REQUIRED');
+  return { tier, status, flags: Array.from(flags) };
+}
 
 export interface ResearchEvidenceRef {
   evidenceId: string;
@@ -108,6 +200,12 @@ export function computeReviewFlags(input: ReviewFlagInput): ResearchReviewFlag[]
     flags.add('SECONDARY_ONLY_NEWS');
   }
 
+  // Aggregated/social-only sourcing (Reddit, Google-News redirect, X) is a rumor
+  // until corroborated — regardless of angle.
+  if (sources.length > 0 && bestSourceTier(sources) === 'AGGREGATED') {
+    flags.add('RUMOR_SINGLE_SOURCE');
+  }
+
   if (flags.size > 0) flags.add('MANUAL_REVIEW_REQUIRED');
   return Array.from(flags);
 }
@@ -147,6 +245,9 @@ const FLAG_GUIDANCE: Record<ResearchReviewFlag, string> = {
   CORPORATE_ACTION_SENSITIVE_RETURN: 'Multi-year return — use a split/dividend-adjusted total-return basis; do not quote raw-close math as exact.',
   ANOMALY_MOVE: 'Large single-period move — verify the exact percentage and window (1D vs YTD vs 52-week) before rendering it.',
   MISSING_EVIDENCE_ID: 'No evidence reference attached to a numeric claim — keep figures illustrative.',
+  RUMOR_SINGLE_SOURCE: 'Only aggregated/social sources (e.g. Reddit, Google News redirect) — confirm against a primary release or two independent outlets, or label the post "unconfirmed".',
+  UNCORROBORATED: 'No usable source attached — do not present this as a verified fact; treat as developing or drop it.',
+  STALE_SIGNAL: 'Signal is older than 48h for a timely-first slot — confirm it is still current or reframe as evergreen.',
 };
 
 /** Build the human-readable Telegram review block, or undefined if nothing flagged. */

@@ -27,7 +27,8 @@ import {
 } from './src/lib/agents/topicSelection';
 import type { MustAvoidSet } from './src/lib/agents/historyGuardAgent';
 import { toPersistedVisualPlan, computeVarietyFallbackRatePct } from './src/lib/agents/varietyContract';
-import { computeReviewFlags, mergeReviewFlags, buildReviewBlock } from './src/lib/agents/researchEvidenceGate';
+import { computeReviewFlags, mergeReviewFlags, buildReviewBlock, bestSourceTier } from './src/lib/agents/researchEvidenceGate';
+import { inferTopicFamily } from './src/lib/agents/topicScoring';
 import {
   appendContentHistory,
   loadContentHistory,
@@ -379,6 +380,9 @@ async function main() {
       accent2: format.colorScheme.accent2,
     },
     dominantSubjectClass: visualPlan.slides[0]?.dominantSubjectClass,
+    topicFamily: inferTopicFamily(strategy.topic, strategy.searchKeywords, strategy.angleId),
+    sourceTier: bestSourceTier(strategy.sourceUrls ?? selectedTopic?.sourceUrls),
+    topicMode: slotContext.config.topicMode,
     visualPlan: toPersistedVisualPlan(visualPlan, {
       usedFallback: visualPlanResult.usedFallback,
       promptFingerprints: Object.fromEntries(

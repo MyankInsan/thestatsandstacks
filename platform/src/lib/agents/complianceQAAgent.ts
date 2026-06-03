@@ -43,6 +43,14 @@ export class ComplianceQAAgent extends BaseAgent {
     if (/\b(explodes|moons|blasts off|skyrockets|can't miss|must[-\s]?buy)\b/i.test(fullText)) {
       failures.push('Hype-style market language is not allowed for premium finance education.');
     }
+    // Crypto-speculation / pump language (new hot-topic lane).
+    if (/\bnext (100x|bitcoin|ethereum|big crypto|crypto millionaire)\b|\b\d{2,3}x\s+(gains?|returns?|potential|coin|play)\b|\bto the moon\b|\bmoonshot\b|\bape in(to)?\b|\bx your (money|portfolio)\b|\bget rich (quick|with crypto)\b/i.test(fullText)) {
+      failures.push('Crypto-speculation / pump language is not allowed.');
+    }
+    // IPO-participation recommendation language (new hot-topic lane).
+    if (/\bget in on (the )?[\w\s]*?ipo\b|\bipos?\s+to\s+buy\b|\bshould you (buy|invest in|get into) (the )?[\w\s]*?ipo\b|\bbuy (the )?[\w]+\s+ipo\b|\bbest ipos?\b/i.test(fullText)) {
+      failures.push('IPO-participation recommendation language is not allowed.');
+    }
     if (hasExtremeOneDayPerformanceClaim(fullText)) {
       failures.push('Extreme one-day performance claims require manual source verification and are blocked by default.');
     }

@@ -79,6 +79,12 @@ export interface ContentHistoryEntry {
   dominantSubjectClass?: DominantSubjectClass;
   /** Schema v3: full slide-level visual grammar for the ten-day variety contract. */
   visualPlan?: PersistedVisualPlan;
+  /** Concept family (for the ~21-day evergreen cooldown). Free-text-derived. */
+  topicFamily?: string;
+  /** Best source tier behind the topic (audit trail for verification). */
+  sourceTier?: string;
+  /** Topic mode the slot ran in (TIMELY_FIRST | EVERGREEN_OR_TIMELY). */
+  topicMode?: string;
   seed?: boolean;
 }
 
