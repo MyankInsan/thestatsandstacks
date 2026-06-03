@@ -3289,6 +3289,130 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-03",
+      "topic": "If You Invested $10,000 in NVIDIA 5 Years Ago",
+      "hook": "What $10k in NVDA looks like today.",
+      "format": "CAROUSEL",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 6,
+      "keywords": [
+        "MU stock",
+        "Micron Technology, Inc. stock",
+        "hot stock risk checklist",
+        "market catalyst explained"
+      ],
+      "visualSignature": "2026-06-03-26920216440",
+      "schemaVersion": 3,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-06-03T23:52:04.138Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "REVERSE_SURVIVORSHIP",
+      "ctaId": "share_use_case",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "NEON_TERMINAL",
+        "PORTFOLIO_DOUGHNUT_PORTRAIT",
+        "CAP_TABLE_GRID",
+        "REDDIT_POST_SCREENSHOT",
+        "TICKER_TAPE_HERO",
+        "EDITORIAL_STAT_CARD"
+      ],
+      "coverVisualStyle": "NEON_TERMINAL",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#09090D",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FF2E93"
+      },
+      "dominantSubjectClass": "TYPOGRAPHY",
+      "visualPlan": {
+        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:TYPOGRAPHIC_POSTER:935895944",
+        "structureFamily": "EDITORIAL_MYTH_BUST",
+        "coverMechanism": "TYPOGRAPHIC_POSTER",
+        "sceneConceptIds": [
+          "EDITORIAL_MYTH_BUST:NEON_TERMINAL:top",
+          "EDITORIAL_MYTH_BUST:PORTFOLIO_DOUGHNUT_PORTRAIT:background",
+          "EDITORIAL_MYTH_BUST:CAP_TABLE_GRID:left",
+          "EDITORIAL_MYTH_BUST:REDDIT_POST_SCREENSHOT:center",
+          "EDITORIAL_MYTH_BUST:TICKER_TAPE_HERO:background",
+          "EDITORIAL_MYTH_BUST:EDITORIAL_STAT_CARD:left"
+        ],
+        "ctaConceptId": "share_use_case:EDITORIAL_STAT_CARD",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "hero-top",
+            "primaryEncoding": "terminal",
+            "visualStyle": "NEON_TERMINAL",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:NEON_TERMINAL:top",
+            "promptFingerprint": "pf_vtqn75"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut-portrait",
+            "visualStyle": "PORTFOLIO_DOUGHNUT_PORTRAIT",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "PORTRAIT",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:PORTFOLIO_DOUGHNUT_PORTRAIT:background",
+            "promptFingerprint": "pf_ac809u"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:CAP_TABLE_GRID:left",
+            "promptFingerprint": "pf_d7x4ub"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "social-mock",
+            "visualStyle": "REDDIT_POST_SCREENSHOT",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:REDDIT_POST_SCREENSHOT:center",
+            "promptFingerprint": "pf_g2wgan"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "ticker-tape",
+            "visualStyle": "TICKER_TAPE_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:TICKER_TAPE_HERO:background",
+            "promptFingerprint": "pf_v1c2m3"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "stat-card",
+            "visualStyle": "EDITORIAL_STAT_CARD",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:EDITORIAL_STAT_CARD:left",
+            "promptFingerprint": "pf_a9id5a"
+          }
+        ]
+      }
     }
   ]
 }
