@@ -3028,6 +3028,130 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-03",
+      "topic": "Earnings Season Cheat Sheet: 5 Things Smart Investors Check First",
+      "hook": "Focusing on EPS beats is wrong. Here is why",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "earnings report explained",
+        "stock earnings checklist",
+        "how to read corporate earnings",
+        "beginner stock analysis"
+      ],
+      "visualSignature": "2026-06-03-26917059241",
+      "schemaVersion": 3,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-06-03T22:34:33.428Z",
+      "tickersFeatured": [],
+      "topicCategory": "EARNINGS",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "question_open",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "EARNINGS_CARD",
+        "ANIMAL_METAPHOR",
+        "DONUT_CHART",
+        "SPORTS_RACING",
+        "MAP_DATA_OVERLAY",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "EARNINGS_CARD",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#F8F9FA",
+        "primaryText": "#111827",
+        "accent1": "#2563EB",
+        "accent2": "#4B5563"
+      },
+      "dominantSubjectClass": "CHART",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:HERO_NUMBER:2017655942",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "HERO_NUMBER",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:EARNINGS_CARD:top",
+          "COMPARISON_XRAY:ANIMAL_METAPHOR:top",
+          "COMPARISON_XRAY:DONUT_CHART:background",
+          "COMPARISON_XRAY:SPORTS_RACING:top",
+          "COMPARISON_XRAY:MAP_DATA_OVERLAY:background",
+          "COMPARISON_XRAY:MAGAZINE_COVER:top"
+        ],
+        "ctaConceptId": "question_open:MAGAZINE_COVER",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "hero-top",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "COMPARISON_XRAY:EARNINGS_CARD:top",
+            "promptFingerprint": "pf_iw2maq"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "ANIMAL_METAPHOR",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "sceneConceptId": "COMPARISON_XRAY:ANIMAL_METAPHOR:top",
+            "promptFingerprint": "pf_wzm9mi"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "COMPARISON_XRAY:DONUT_CHART:background",
+            "promptFingerprint": "pf_e98q1e"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "SPORTS_RACING",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "sceneConceptId": "COMPARISON_XRAY:SPORTS_RACING:top",
+            "promptFingerprint": "pf_dbayxd"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "choropleth",
+            "visualStyle": "MAP_DATA_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "COMPARISON_XRAY:MAP_DATA_OVERLAY:background",
+            "promptFingerprint": "pf_jurl92"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top",
+            "promptFingerprint": "pf_jmi3ea"
+          }
+        ]
+      }
     }
   ]
 }
