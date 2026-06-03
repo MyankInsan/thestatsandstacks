@@ -2902,6 +2902,132 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-03",
+      "topic": "The 5-Minute Balance Sheet Checklist: How to Read a Stock Before Buying",
+      "hook": "If you buy stocks, do this 1 thing first",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 6,
+      "keywords": [
+        "how to read a balance sheet",
+        "fundamental analysis checklist",
+        "beginner stock analysis",
+        "investing checklist"
+      ],
+      "visualSignature": "2026-06-03-26913765214",
+      "schemaVersion": 3,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-06-03T21:23:07.068Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "QUIET_COMPOUNDER",
+      "ctaId": "comment_genuine_question",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "COMPARISON_TABLE",
+        "GAMING_LEVEL_UP",
+        "CIRCULAR_PORTFOLIO_WHEEL",
+        "CROWD_PANIC",
+        "MILITARY_AEROSPACE_METAPHOR",
+        "GLOWING_QUOTE"
+      ],
+      "coverVisualStyle": "COMPARISON_TABLE",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_quant_30s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
+      },
+      "dominantSubjectClass": "CHART",
+      "visualPlan": {
+        "compositionSignature": "vp1:DATA_SNAPSHOT:SPLIT_CONTRAST:1758199621",
+        "structureFamily": "DATA_SNAPSHOT",
+        "coverMechanism": "SPLIT_CONTRAST",
+        "sceneConceptIds": [
+          "DATA_SNAPSHOT:COMPARISON_TABLE:top",
+          "DATA_SNAPSHOT:GAMING_LEVEL_UP:top",
+          "DATA_SNAPSHOT:CIRCULAR_PORTFOLIO_WHEEL:background",
+          "DATA_SNAPSHOT:CROWD_PANIC:top",
+          "DATA_SNAPSHOT:MILITARY_AEROSPACE_METAPHOR:top",
+          "DATA_SNAPSHOT:GLOWING_QUOTE:center"
+        ],
+        "ctaConceptId": "comment_genuine_question:GLOWING_QUOTE",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "hero-top",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "DATA_SNAPSHOT:COMPARISON_TABLE:top",
+            "promptFingerprint": "pf_b20bqs"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "GAMING_LEVEL_UP",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "sceneConceptId": "DATA_SNAPSHOT:GAMING_LEVEL_UP:top",
+            "promptFingerprint": "pf_z7vbtj"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "portfolio-wheel",
+            "visualStyle": "CIRCULAR_PORTFOLIO_WHEEL",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "PORTRAIT",
+            "sceneConceptId": "DATA_SNAPSHOT:CIRCULAR_PORTFOLIO_WHEEL:background",
+            "promptFingerprint": "pf_umg5k"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "sceneConceptId": "DATA_SNAPSHOT:CROWD_PANIC:top",
+            "promptFingerprint": "pf_q5z7po"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "MILITARY_AEROSPACE_METAPHOR",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "sceneConceptId": "DATA_SNAPSHOT:MILITARY_AEROSPACE_METAPHOR:top",
+            "promptFingerprint": "pf_8twz3s"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "pull-quote",
+            "visualStyle": "GLOWING_QUOTE",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "sceneConceptId": "DATA_SNAPSHOT:GLOWING_QUOTE:center",
+            "promptFingerprint": "pf_p308j3"
+          }
+        ]
+      }
     }
   ]
 }
