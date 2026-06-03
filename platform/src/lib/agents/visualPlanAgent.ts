@@ -138,6 +138,8 @@ export interface SlideVisualGrammar {
   bucket: Bucket;
   visualPosition: VisualPosition;
   dominantSubjectClass: DominantSubjectClass;
+  cameraTreatment: CameraTreatment;
+  motifTag: MotifTag;
   sceneConceptId: string;
   ctaConceptId?: string;
   ctaVisualConcept?: CtaVisualConcept;
@@ -273,6 +275,78 @@ const CTA_CONCEPT_FOR_ID: Record<CtaId, CtaVisualConcept> = {
 
 function bucketOf(style: ViralStyle): Bucket {
   return (STYLE_BUCKETS[style] as Bucket) ?? 'Layout';
+}
+
+/**
+ * Camera / crop treatment per slide — surfaced in the image prompt so the
+ * carousel varies its framing (the "different crops and camera angles" ask) and
+ * folded into the composition signature for extra variety. Deterministic from
+ * (style, slideNumber) so VisualPlanAgent and ImagePromptAgent agree without
+ * threading the value through the narrative.
+ */
+export type CameraTreatment =
+  | 'MACRO_CLOSEUP' | 'WIDE_ESTABLISHING' | 'OVERHEAD_FLATLAY' | 'LOW_ANGLE_HERO'
+  | 'EYE_LEVEL_EDITORIAL' | 'SCREEN_CAPTURE' | 'ISOMETRIC_DIAGRAM' | 'AERIAL';
+
+const MOCK_SCREENSHOT_STYLES = new Set<ViralStyle>(['REDDIT_POST_SCREENSHOT', 'TWEET_STOCK_CHART_SPLIT', 'NEON_TERMINAL']);
+
+function camerasForStyle(style: ViralStyle): CameraTreatment[] {
+  if (MOCK_SCREENSHOT_STYLES.has(style)) return ['SCREEN_CAPTURE'];
+  const subject = dominantSubjectClassFor(style);
+  switch (subject) {
+    case 'CHART': return ['SCREEN_CAPTURE', 'ISOMETRIC_DIAGRAM', 'OVERHEAD_FLATLAY', 'WIDE_ESTABLISHING'];
+    case 'PORTRAIT':
+    case 'CROWD': return ['EYE_LEVEL_EDITORIAL', 'MACRO_CLOSEUP'];
+    case 'BUILDING': return ['LOW_ANGLE_HERO', 'WIDE_ESTABLISHING', 'AERIAL'];
+    case 'METAPHOR_OBJECT': return ['MACRO_CLOSEUP', 'WIDE_ESTABLISHING', 'LOW_ANGLE_HERO'];
+    case 'TYPOGRAPHY':
+    default: return ['EYE_LEVEL_EDITORIAL', 'OVERHEAD_FLATLAY'];
+  }
+}
+
+export function cameraTreatmentFor(style: ViralStyle, slideNumber: number): CameraTreatment {
+  const cams = camerasForStyle(style);
+  return cams[(slideNumber + simpleHash(style)) % cams.length];
+}
+
+/** Human-readable camera/crop directive for the image prompt. */
+export function cameraDirective(t: CameraTreatment): string {
+  switch (t) {
+    case 'MACRO_CLOSEUP': return 'tight macro close-up framing';
+    case 'WIDE_ESTABLISHING': return 'wide establishing shot with depth';
+    case 'OVERHEAD_FLATLAY': return 'directly overhead flat-lay composition';
+    case 'LOW_ANGLE_HERO': return 'dramatic low-angle hero framing';
+    case 'EYE_LEVEL_EDITORIAL': return 'eye-level editorial framing';
+    case 'SCREEN_CAPTURE': return 'flat, head-on screen-capture framing';
+    case 'ISOMETRIC_DIAGRAM': return 'clean isometric diagram perspective';
+    case 'AERIAL': return 'high aerial perspective';
+  }
+}
+
+/**
+ * Cliché-motif tag for metaphor styles — used to avoid repeating the same tired
+ * motif (bull, chess, jet, …) within a carousel. Most styles carry 'NONE'.
+ */
+export type MotifTag =
+  | 'NONE' | 'BULL_BEAR' | 'CHESS' | 'RACING' | 'SPACE' | 'GAMING' | 'HUD_ORBIT'
+  | 'MISSILE' | 'VAULT' | 'JET_LUXURY' | 'PLANT_COINS' | 'GLOBE';
+
+const MOTIF_FOR_STYLE: Partial<Record<ViralStyle, MotifTag>> = {
+  ANIMAL_METAPHOR: 'BULL_BEAR',
+  CHESS_BOARD_STRATEGY: 'CHESS',
+  SPORTS_RACING: 'RACING',
+  SPACE_EXPLORATION: 'SPACE',
+  GAMING_LEVEL_UP: 'GAMING',
+  TECH_HUD: 'HUD_ORBIT',
+  MILITARY_AEROSPACE_METAPHOR: 'MISSILE',
+  VAULT_SECURITY: 'VAULT',
+  LUXURY_LIFESTYLE: 'JET_LUXURY',
+  NATURE_METAPHOR: 'PLANT_COINS',
+  PREMIUM_CTA: 'GLOBE',
+};
+
+export function motifFor(style: ViralStyle): MotifTag {
+  return MOTIF_FOR_STYLE[style] ?? 'NONE';
 }
 
 export function dominantSubjectClassFor(style: ViralStyle): DominantSubjectClass {
@@ -424,6 +498,7 @@ export class VisualPlanAgent {
 
     const forbidAdjacentBuckets = constraints.forbiddenAdjacentBuckets !== false;
     const chosen: ViralStyle[] = [];
+    const motifsUsed = new Set<MotifTag>();
     let humanCount = 0;
     let humanInFirst3 = 0;
     let prevDominant: DominantSubjectClass | undefined;
@@ -443,6 +518,9 @@ export class VisualPlanAgent {
       if (!allowAdjacency) {
         if (prevDominant && dominantSubjectClassFor(style) === prevDominant) return false;
         if (forbidAdjacentBuckets && prevBucket && bucketOf(style) === prevBucket) return false;
+        // Don't repeat a cliché motif (bull, chess, jet, …) within one carousel.
+        const m = motifFor(style);
+        if (m !== 'NONE' && motifsUsed.has(m)) return false;
       }
       return true;
     };
@@ -502,6 +580,8 @@ export class VisualPlanAgent {
       }
 
       chosen.push(style);
+      const motifTag = motifFor(style);
+      if (motifTag !== 'NONE') motifsUsed.add(motifTag);
       if (HUMAN_STYLES.has(style)) { humanCount++; if (i < 3) humanInFirst3++; }
       if (bucketOf(style) === 'Data') chartPlaced = true;
 
@@ -532,6 +612,8 @@ export class VisualPlanAgent {
         bucket,
         visualPosition: position,
         dominantSubjectClass,
+        cameraTreatment: cameraTreatmentFor(style, i + 1),
+        motifTag,
         sceneConceptId: `${structureFamily}:${style}:${position}`,
         // CTA concept id drives same-day CTA dedup (concept + style), so two of
         // today's slots can't ship the same CTA look.
@@ -617,7 +699,7 @@ export function computeCompositionSignature(
   slides: SlideVisualGrammar[],
 ): string {
   const detail = slides
-    .map((s) => `${s.dominantSubjectClass}|${s.layoutArchetype}|${s.primaryEncoding}`)
+    .map((s) => `${s.dominantSubjectClass}|${s.layoutArchetype}|${s.primaryEncoding}|${s.cameraTreatment ?? '-'}`)
     .join('>');
   const hash = simpleHash(`${structureFamily}|${coverMechanism ?? '-'}|${detail}`);
   return `vp1:${structureFamily}:${coverMechanism ?? 'NONE'}:${hash}`;

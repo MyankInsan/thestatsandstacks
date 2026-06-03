@@ -37,6 +37,10 @@ export interface PersistedVisualPlanSlide {
   bucket: string;
   visualPosition: string;
   dominantSubjectClass: DominantSubjectClass;
+  /** Schema v4: per-slide camera/crop treatment. */
+  cameraTreatment?: string;
+  /** Schema v4: cliché-motif tag (bull/chess/jet/…) or NONE. */
+  motifTag?: string;
   sceneConceptId: string;
   promptFingerprint?: string;
 }

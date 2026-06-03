@@ -8,7 +8,7 @@ import type { ContentHistoryEntry } from '../services/contentHistory';
 import { PROMPT_LIBRARY, type ViralStyle } from './promptLibrary';
 import { recommendModelForStyle, modelRecommendationLabel } from './modelRecommendation';
 import { TickerLogoAgent } from './tickerLogoAgent';
-import { INTEGRATED_TEXT_FAMILIES, type StoryboardContinuity, type CoverLayoutFamily, type CtaVisualConcept } from './visualPlanAgent';
+import { INTEGRATED_TEXT_FAMILIES, cameraTreatmentFor, cameraDirective, type StoryboardContinuity, type CoverLayoutFamily, type CtaVisualConcept } from './visualPlanAgent';
 
 export interface SlideImagePrompt {
   slideNumber: number;
@@ -776,7 +776,10 @@ function compilePromptString(
   const layoutDirective = integratedText
     ? coverFamilyLayoutDirective(coverFamily!)
     : getTextLayoutDirective(slide.visualPosition);
-  const sceneDescription = `${visualDescription} ${layoutDirective} The composition uses ${colorScheme.bg} as the dominant background hue with ${lightingStyle} calibrated to the visual element above.`;
+  // Body slides get an explicit camera/crop so the carousel varies its framing
+  // (covers use their layout-family framing instead).
+  const cameraNote = isCover ? '' : ` Camera framing: ${cameraDirective(cameraTreatmentFor(slide.visualStyle, slide.slideNumber))}.`;
+  const sceneDescription = `${visualDescription} ${layoutDirective}${cameraNote} The composition uses ${colorScheme.bg} as the dominant background hue with ${lightingStyle} calibrated to the visual element above.`;
 
   // Labeled-section prompt packet for ChatGPT Images 2.0 (primary manual target).
   const sections: string[] = [];

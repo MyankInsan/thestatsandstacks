@@ -29,6 +29,8 @@ export function toPersistedVisualPlan(
       bucket: s.bucket,
       visualPosition: s.visualPosition,
       dominantSubjectClass: s.dominantSubjectClass,
+      cameraTreatment: s.cameraTreatment,
+      motifTag: s.motifTag,
       sceneConceptId: s.sceneConceptId,
       promptFingerprint: opts.promptFingerprints?.[s.slideNumber],
     })),

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
 import { ImagePromptAgent } from '../src/lib/agents/imagePromptAgent';
-import { VisualPlanAgent } from '../src/lib/agents/visualPlanAgent';
+import { VisualPlanAgent, cameraTreatmentFor, motifFor } from '../src/lib/agents/visualPlanAgent';
 import type { StoryboardContinuity } from '../src/lib/agents/visualPlanAgent';
 import { toPersistedVisualPlan } from '../src/lib/agents/varietyContract';
 import { COLOR_SCHEMES, type FormatDecision } from '../src/lib/agents/formatStyleAgent';
@@ -169,4 +169,45 @@ test('CTA concept renders a fresh save/send scene, not the luxury-desk/globe cli
 
   const send = await ctaPrompt('SEND_TO_FRIEND');
   assert.match(send, /send this to a friend|paper-airplane|share/i);
+});
+
+// ── camera / crop variety ────────────────────────────────────────────────────
+
+test('cameraTreatmentFor is deterministic and varies across slides', () => {
+  const VALID = new Set(['MACRO_CLOSEUP', 'WIDE_ESTABLISHING', 'OVERHEAD_FLATLAY', 'LOW_ANGLE_HERO', 'EYE_LEVEL_EDITORIAL', 'SCREEN_CAPTURE', 'ISOMETRIC_DIAGRAM', 'AERIAL']);
+  assert.equal(cameraTreatmentFor('LINE_CHART', 2), cameraTreatmentFor('LINE_CHART', 2));
+  assert.ok(VALID.has(cameraTreatmentFor('CANDLESTICK_HERO', 1)));
+  // A chart style cycles through >1 framing across slide positions.
+  const seen = new Set([1, 2, 3, 4].map((n) => cameraTreatmentFor('LINE_CHART', n)));
+  assert.ok(seen.size >= 2, 'chart camera should vary across slide positions');
+});
+
+test('motifFor tags cliché metaphor styles and a carousel never repeats a motif', () => {
+  assert.equal(motifFor('ANIMAL_METAPHOR'), 'BULL_BEAR');
+  assert.equal(motifFor('CHESS_BOARD_STRATEGY'), 'CHESS');
+  assert.equal(motifFor('LINE_CHART'), 'NONE');
+  for (const ft of ['PHOTOREALISTIC_LUXURY_LIFESTYLE', 'MEME_HUMOR'] as const) {
+    const plan = new VisualPlanAgent().execute({
+      strategy: baseStrategy,
+      format: { formatType: ft, slideCount: 8, colorScheme: COLOR_SCHEMES[ft], visualTone: 't', reasoning: 't' },
+      constraints: { ...constraints, chartHeroSuggestion: undefined, requiredChartSlideRole: null },
+      tickerSymbols: [], dateKey: '2026-06-03', slotIndex: 5,
+    }).plan;
+    const motifs = plan.slides.map((s) => s.motifTag).filter((m) => m !== 'NONE');
+    assert.equal(new Set(motifs).size, motifs.length, `${ft}: repeated motif in ${motifs.join(',')}`);
+  }
+});
+
+test('body slides get an explicit camera framing; covers do not', async () => {
+  const res = await new ImagePromptAgent().execute({
+    slides: [
+      { slideNumber: 1, role: 'cover', headline: 'Cover', headlineColorMap: [], visualStyle: 'MAGAZINE_COVER', visualPosition: 'top', mood: 'm', narrativeNote: 'n' } as SlideSpec,
+      { slideNumber: 2, role: 'breakdown', headline: 'Body', headlineColorMap: [], visualStyle: 'LINE_CHART', visualPosition: 'background', mood: 'm', narrativeNote: 'n' } as SlideSpec,
+    ],
+    format: marketFormat,
+    storyboard: storyboard('TOP_STACK'),
+    dateKey: '2026-06-03',
+  });
+  assert.doesNotMatch(res.slides[0].geminiPrompt, /Camera framing:/);
+  assert.match(res.slides[1].geminiPrompt, /Camera framing:/);
 });
