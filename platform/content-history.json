@@ -2774,6 +2774,134 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-03",
+      "topic": "I pulled Berkshire’s latest 13F. Here's what's in it",
+      "hook": "I pulled Berkshire’s latest 13F. Here's what's in it",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "Warren Buffett portfolio",
+        "13F filings",
+        "Berkshire Hathaway cash",
+        "defensive investing strategy"
+      ],
+      "visualSignature": "2026-06-03-26908503780",
+      "schemaVersion": 3,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-06-03T19:40:45.825Z",
+      "tickersFeatured": [
+        "BRK.B"
+      ],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "PATTERN_SPOT",
+      "ctaId": "save_specific",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "BAR_CHART_HORIZONTAL",
+        "NATURE_METAPHOR",
+        "CANDLESTICK_CHART",
+        "TECH_HUD",
+        "HEATMAP_GRID",
+        "VAULT_SECURITY"
+      ],
+      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
+      "portraitSubjects": [
+        "buffett"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "CHART",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:1654481349",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "ANNOTATED_CHART",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top",
+          "HUMAN_EDITORIAL:NATURE_METAPHOR:top",
+          "HUMAN_EDITORIAL:CANDLESTICK_CHART:background",
+          "HUMAN_EDITORIAL:TECH_HUD:top",
+          "HUMAN_EDITORIAL:HEATMAP_GRID:background",
+          "HUMAN_EDITORIAL:VAULT_SECURITY:top"
+        ],
+        "ctaConceptId": "save_specific:VAULT_SECURITY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "hero-top",
+            "primaryEncoding": "bar",
+            "visualStyle": "BAR_CHART_HORIZONTAL",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top",
+            "promptFingerprint": "pf_s0lrnr"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "NATURE_METAPHOR",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "sceneConceptId": "HUMAN_EDITORIAL:NATURE_METAPHOR:top",
+            "promptFingerprint": "pf_u52xfn"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "HUMAN_EDITORIAL:CANDLESTICK_CHART:background",
+            "promptFingerprint": "pf_tvqkc2"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "TECH_HUD",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "sceneConceptId": "HUMAN_EDITORIAL:TECH_HUD:top",
+            "promptFingerprint": "pf_tkv7hx"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "heatmap",
+            "visualStyle": "HEATMAP_GRID",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "sceneConceptId": "HUMAN_EDITORIAL:HEATMAP_GRID:background",
+            "promptFingerprint": "pf_99bkyg"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "VAULT_SECURITY",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "sceneConceptId": "HUMAN_EDITORIAL:VAULT_SECURITY:top",
+            "promptFingerprint": "pf_1usoj6"
+          }
+        ]
+      }
     }
   ]
 }
