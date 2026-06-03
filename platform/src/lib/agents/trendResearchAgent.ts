@@ -7,6 +7,7 @@ import {
   noveltyPenalty,
 } from '../services/contentHistory';
 import { getLocalDateKey } from '../services/dateUtils';
+import { neutralizeUnverifiedSuperlatives } from './researchEvidenceGate';
 
 interface TrendResearchInput {
   contentHistory?: ContentHistoryEntry[];
@@ -38,18 +39,20 @@ export class TrendResearchAgent extends BaseAgent {
       contentHistory
     );
 
-    const prompt = `You are an elite Instagram growth strategist and financial content researcher for "TheStatsAndStacks", a premium Canadian personal finance brand on Instagram.
+    const prompt = `You are an elite Instagram growth strategist and financial content researcher for "TheStatsAndStacks", a premium North American (US-weighted) markets, investing, and money brand on Instagram.
 
 Today's date is ${todayLabel}.
 
+AUDIENCE & REGION WEIGHT (IMPORTANT): The audience is primarily US (~80%) with a Canadian minority (~20%). Default to US market, stock, crypto, IPO, business, and economic topics. Use Canadian topics only when they are genuinely timely or unusually strong, and aim for roughly 4 of every 5 chosen topics to be US-centric. Match references to the topic's region: US topics use S&P 500, Nasdaq, Dow, 401k, Roth IRA, the Fed; Canadian topics use TSX, TFSA, RRSP, FHSA, the Bank of Canada.
+
 Your job is to find the BEST possible topic for today's post that will maximize:
 - Saves (the #1 signal for Instagram reach)
-- Shares (the #2 signal)
+- Shares / DM sends (the strongest 2026 reach signal)
 - New followers
 - Search discoverability inside Instagram
 
 RESEARCH APPROACH:
-1. Think about what Canadian personal finance topics people are actively searching for RIGHT NOW.
+1. Think about what US (primary) and Canadian (secondary) market, investing, and money topics people are actively searching for RIGHT NOW — prioritize verified, recent news (stock moves, crypto, earnings, IPOs, macro) over evergreen explainers.
 2. Give serious priority to the hot-topic desk signals when they show market heat. Trading pages win attention by reacting to names like SanDisk, but TheStatsAndStacks must turn that heat into education: catalyst, risk map, checklist, and "what to watch" context.
 3. Consider seasonal timing, official finance calendars, tax deadlines, contribution deadlines, and market education needs.
 4. Consider formats that create saves and shares: comparisons, checklists, myth-busters, step-by-step systems, "what to check before..." frameworks, and simple visual scorecards.
@@ -60,14 +63,15 @@ RESEARCH APPROACH:
 9. Do not mimic another creator's exact templates, colors, hooks, logo placement, screenshots, or paid-community funnel language.
 10. Do not put exact percentage moves in topic titles. Use "heat check", "risk filter", or "case study" language instead. If a signal says a move is 1Y/YTD/from 52-week low, never rewrite it as 1 day/today.
 
-CONTENT PILLARS TO DRAW FROM:
-- Global macro-economic news and political impacts on markets (e.g., President statements, Fed rates)
-- Trading psychology, trader habits, and market sentiment
+CONTENT PILLARS TO DRAW FROM (US-weighted — top pillars first):
+- Breaking US market news: S&P 500 / Nasdaq / Dow highs or selloffs, big single-stock moves (Nvidia, Tesla, Apple, Microsoft, etc.), earnings reactions, index changes
+- Crypto moves: Bitcoin / Ethereum rallies or crashes, trending coins (framed as education, never buy/sell)
+- IPO and filing news: new S-1 / IPO filings and what they mean
+- Global macro-economic news and political impacts on markets (Fed rates, President statements, tariffs)
 - Hypothetical "What If" investment scenarios (e.g., "If you invested $10,000 in X 5 years ago")
-- Market-news explainers and "what to watch" for breaking stock catalysts
-- TFSA vs RRSP vs FHSA comparisons and Canadian tax strategies (Secondary)
-- Dividend investing and beginner market literacy
-- Investor protection and risk management
+- Trading psychology, trader habits, and market sentiment
+- Dividend investing, beginner market literacy, and investor protection / risk management
+- Canadian angles (SECONDARY, ~20%): TSX news, TFSA vs RRSP vs FHSA, Canadian tax strategies — use only when timely or unusually strong
 
 RECENT CONTENT TO AVOID REPEATING TOO SOON:
 ${JSON.stringify(contentHistory.slice(-14), null, 2)}
@@ -378,6 +382,53 @@ function buildResearchBacklog(today: Date, signalBriefs: ResearchSignalBrief[]):
   const signalText = signalBriefs.flatMap((signal) => signal.topicSeeds).join(' ').toLowerCase();
   const candidates: ResearchCandidate[] = [
     {
+      title: '401(k) vs Roth IRA: Which Account Should You Fund First?',
+      score: 0.88 + seasonalBoost.accountPlanning,
+      reasoning: 'US retirement-account sequencing is high-search, high-save, and beginner-safe (match first, then compare tax brackets).',
+      suggestedFormat: 'CAROUSEL',
+      suggestedSlideCount: 7,
+      searchKeywords: ['401k vs Roth IRA', 'retirement accounts', 'US investing'],
+      contentPillar: 'US account selection',
+      freshnessSignal: 'Evergreen US search demand; spikes near year-end and tax season.',
+      sourceUrls: [
+        'https://www.investor.gov/introduction-investing/investing-basics/investment-products/retirement-accounts',
+        'https://www.irs.gov/retirement-plans',
+      ],
+    },
+    {
+      title: 'What $10,000 in the S&P 500 Became Over 20 Years',
+      score: 0.87,
+      reasoning: 'Hypothetical "what if" history on a US index is highly shareable and educational without naming a single stock to buy.',
+      suggestedFormat: 'CAROUSEL',
+      suggestedSlideCount: 7,
+      searchKeywords: ['S&P 500 historical return', 'index investing', 'compound growth'],
+      contentPillar: 'Hypothetical "What If" investment scenarios',
+      freshnessSignal: 'Evergreen US index-investing aspiration; pairs with any market-news day.',
+      sourceUrls: ['https://www.investor.gov/financial-tools-calculators/calculators/compound-interest-calculator'],
+    },
+    {
+      title: 'How a Fed Rate Decision Moves Your Portfolio',
+      score: 0.86,
+      reasoning: 'US macro explainer that feels timely around every FOMC meeting and teaches cause-and-effect, not predictions.',
+      suggestedFormat: 'CAROUSEL',
+      suggestedSlideCount: 7,
+      searchKeywords: ['Fed rate decision', 'interest rates stocks', 'FOMC explained'],
+      contentPillar: 'Global macro-economic news and political impacts on markets',
+      freshnessSignal: 'Recurs around FOMC dates; strong save intent.',
+      sourceUrls: ['https://www.federalreserve.gov/monetarypolicy.htm'],
+    },
+    {
+      title: 'Bitcoin Basics: 5 Things Beginners Get Wrong',
+      score: 0.85,
+      reasoning: 'Crypto literacy captures high search/attention while staying educational and risk-first (no buy/sell, no price targets).',
+      suggestedFormat: 'CAROUSEL',
+      suggestedSlideCount: 7,
+      searchKeywords: ['bitcoin basics', 'crypto for beginners', 'crypto risk'],
+      contentPillar: 'Crypto literacy and risk',
+      freshnessSignal: 'Spikes on any major BTC/ETH move; otherwise evergreen literacy.',
+      sourceUrls: ['https://www.investor.gov/introduction-investing/investing-basics/glossary/crypto-assets'],
+    },
+    {
       title: 'TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?',
       score: 0.84 + seasonalBoost.accountPlanning,
       reasoning: 'Evergreen Canadian account comparison with strong save/share intent and search demand.',
@@ -580,11 +631,13 @@ function rankAndDedupeCandidates(
 }
 
 function sanitizeTrendCandidate(candidate: ResearchCandidate): ResearchCandidate {
-  const title = candidate.title
-    .replace(/\b(?:explodes|soars|surges|jumps|spikes|blasts off|moons)\s+[+-]?\d+(?:,\d{3})*(?:\.\d+)?%\s*(?:in|over)?\s*(?:1\s*day|today|ytd|1y|a year|a month)?\s*:?\s*/gi, '')
-    .replace(/\b[+-]?\d+(?:,\d{3})*(?:\.\d+)?%\s*(?:up|gain|move|surge|jump|spike)\s*:?\s*/gi, '')
-    .replace(/\s{2,}/g, ' ')
-    .trim();
+  const title = neutralizeUnverifiedSuperlatives(
+    candidate.title
+      .replace(/\b(?:explodes|soars|surges|jumps|spikes|blasts off|moons)\s+[+-]?\d+(?:,\d{3})*(?:\.\d+)?%\s*(?:in|over)?\s*(?:1\s*day|today|ytd|1y|a year|a month)?\s*:?\s*/gi, '')
+      .replace(/\b[+-]?\d+(?:,\d{3})*(?:\.\d+)?%\s*(?:up|gain|move|surge|jump|spike)\s*:?\s*/gi, '')
+      .replace(/\s{2,}/g, ' ')
+      .trim(),
+  );
 
   return {
     ...candidate,
@@ -609,8 +662,16 @@ function growthScoreAdjustment(candidate: ResearchCandidate): number {
   if (/\b(myth|mistake|red flag|risk|before|avoid|wrong)\b/.test(text)) {
     adjustment += 0.03;
   }
-  if (/\b(tfsa|rrsp|fhsa|canadian|canada)\b/.test(text)) {
-    adjustment += 0.02;
+  // US-weighted brand (~80% US / 20% CA): reward US-market relevance, and lightly
+  // down-weight Canada-only topics so they don't dominate (they remain eligible
+  // when genuinely timely or strong). Replaces the old Canadian-keyword bonus.
+  const isUsCentric = /\b(s&p|sp500|s&p 500|nasdaq|dow|nyse|401k|roth ira|fed|federal reserve|wall street|nvidia|tesla|apple|microsoft|openai|amazon|meta|bitcoin|ethereum|crypto|ipo)\b/.test(text);
+  const isCanadaOnly = /\b(tfsa|rrsp|fhsa|tsx|bank of canada|\.to\b|canadian|canada)\b/.test(text) && !isUsCentric;
+  if (isUsCentric) adjustment += 0.03;
+  if (isCanadaOnly) adjustment -= 0.04;
+  // Reward timely/news shapes (catalysts, earnings, IPOs, crypto) — the hotter lane.
+  if (/\b(today|breaking|just|earnings|ipo|filing|rally|selloff|sell-off|crash|surge to|catalyst|hits|nears|crypto|bitcoin)\b/.test(text)) {
+    adjustment += 0.03;
   }
   if (/\b(stock|market|earnings|portfolio|watchlist)\b/.test(text) && /\b(risk|research|check|screen|framework)\b/.test(text)) {
     adjustment += 0.025;

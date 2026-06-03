@@ -155,6 +155,14 @@ export const EXCLUDED_FROM_ROTATION: ViralStyle[] = [
   'BILLBOARD_HIGHWAY',
   'GRUNGE_STREET_POSTER',
   'GLASSMORPHISM_UI',
+  // Overused AI-cliché motifs demoted out of default rotation (still available
+  // for explicit, topic-justified override). These are the missile, the
+  // plant-in-gold-coins, the glowing-holographic-globe boardroom, and the
+  // open-bank-vault — exactly the tropes that made the feed look generated.
+  'MILITARY_AEROSPACE_METAPHOR',
+  'NATURE_METAPHOR',
+  'PREMIUM_CTA',
+  'VAULT_SECURITY',
 ];
 
 export const ROTATION_ALLOWLIST: ViralStyle[] = (Object.keys(PROMPT_LIBRARY) as ViralStyle[])

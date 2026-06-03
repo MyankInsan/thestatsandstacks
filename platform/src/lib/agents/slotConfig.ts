@@ -13,11 +13,22 @@ export type SlotPersona =
   | 'LIFESTYLE_STORYTELLING'
   | 'MEME_HUMOR';
 
+/**
+ * Per-slot topic policy (US-weighted, hot-first brand).
+ * - TIMELY_FIRST: strongly prefer a verified, recent (<48h) news topic; fall back
+ *   to evergreen only when no fresh topic fits. (Enforcement deepens in the
+ *   hot-topic-engine phase; Phase 0 surfaces it to the strategist prompt.)
+ * - EVERGREEN_OR_TIMELY: evergreen frameworks are fine, but take a strong timely
+ *   topic when one is available.
+ */
+export type TopicMode = 'TIMELY_FIRST' | 'EVERGREEN_OR_TIMELY';
+
 export interface SlotConfig {
   index: SlotIndex;
   persona: SlotPersona;
   ptHour: number;
   ptMinute: number;
+  topicMode: TopicMode;
   allowedFormats: FormatType[];
   preferredAngles: AngleId[];
   preferredHookFormulas: HookFormulaId[];
@@ -31,6 +42,7 @@ export const SLOT_CONFIGS: Record<SlotIndex, SlotConfig> = {
     persona: 'PRE_MARKET_NEWS',
     ptHour: 7,
     ptMinute: 0,
+    topicMode: 'TIMELY_FIRST',
     allowedFormats: ['PHOTOREALISTIC_NEWS_FLASH', 'PHOTOREALISTIC_MARKET_UPDATE'],
     preferredAngles: [
       'CATALYST_NEWS', 'EARNINGS_REACTION', 'INDEX_REBALANCE', 'BUYBACK_SCOREBOARD',
@@ -44,6 +56,7 @@ export const SLOT_CONFIGS: Record<SlotIndex, SlotConfig> = {
     persona: 'PORTFOLIO_POWER_PLAYER',
     ptHour: 9,
     ptMinute: 0,
+    topicMode: 'TIMELY_FIRST',
     allowedFormats: ['PHOTOREALISTIC_EXPERT_SHOCK', 'PHOTOREALISTIC_MARKET_UPDATE'],
     preferredAngles: [
       'CAP_TABLE_INSTITUTIONAL', 'F13_DELTA', 'SOVEREIGN_WEALTH', 'US_GOV_HOLDINGS',
@@ -59,6 +72,7 @@ export const SLOT_CONFIGS: Record<SlotIndex, SlotConfig> = {
     persona: 'DATA_EDUCATION',
     ptHour: 11,
     ptMinute: 0,
+    topicMode: 'TIMELY_FIRST',
     allowedFormats: ['PHOTOREALISTIC_MARKET_UPDATE', 'PHOTOREALISTIC_MINIMAL_TECH'],
     preferredAngles: [
       'ETF_XRAY', 'DIVIDEND_KINGS', 'FEE_TEARDOWN', 'TAX_DRAG_MAP', 'COMPARISON_LADDER',
@@ -72,6 +86,7 @@ export const SLOT_CONFIGS: Record<SlotIndex, SlotConfig> = {
     persona: 'CONTRARIAN_MYTH_BUST',
     ptHour: 13,
     ptMinute: 0,
+    topicMode: 'EVERGREEN_OR_TIMELY',
     allowedFormats: ['PHOTOREALISTIC_MINIMAL_TECH', 'PHOTOREALISTIC_EXPERT_SHOCK'],
     preferredAngles: [
       'REACTIVE_SENTIMENT', 'HYPOTHETICAL_REVERSAL', 'BEHAVIORAL_RECEIPT',
@@ -85,6 +100,7 @@ export const SLOT_CONFIGS: Record<SlotIndex, SlotConfig> = {
     persona: 'LIFESTYLE_STORYTELLING',
     ptHour: 14,
     ptMinute: 0,
+    topicMode: 'EVERGREEN_OR_TIMELY',
     allowedFormats: ['PHOTOREALISTIC_LUXURY_LIFESTYLE'],
     preferredAngles: [
       'HYPOTHETICAL_REVERSAL', 'BEHAVIORAL_RECEIPT', 'DIVIDEND_KINGS',
@@ -98,6 +114,7 @@ export const SLOT_CONFIGS: Record<SlotIndex, SlotConfig> = {
     persona: 'MEME_HUMOR',
     ptHour: 15,
     ptMinute: 0,
+    topicMode: 'TIMELY_FIRST',
     allowedFormats: ['MEME_HUMOR'],
     preferredAngles: ['HYPOTHETICAL_REVERSAL', 'BEHAVIORAL_RECEIPT', 'COMPARISON_LADDER'],
     preferredHookFormulas: ['REVERSE_SURVIVORSHIP', 'MYTH_STRIKE', 'PREMIUM_CONTRARIAN'],

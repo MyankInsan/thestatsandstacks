@@ -1,7 +1,7 @@
 import { BaseAgent } from './interfaces';
 import { getGeminiClient, getGeminiTextModelName } from '../services/gemini';
 import type { SlideSpec } from './slideNarrativeAgent';
-import type { FormatDecision } from './formatStyleAgent';
+import { isLightBackground, type FormatDecision } from './formatStyleAgent';
 import type { StrategyDecision } from './contentStrategyAgent';
 import type { CarouselConstraints } from './carouselConstraintAgent';
 import type { ContentHistoryEntry } from '../services/contentHistory';
@@ -50,13 +50,16 @@ const CANVA_FALLBACK_STYLES: ViralStyle[] = [
  * deterministically per slide so the carousel feels varied even when the
  * underlying style category repeats.
  */
+// Refreshed lifestyle/storytelling scenes — premium and cinematic, but anchored
+// in real life, time and patience rather than the tired wealth-flex monoculture
+// (jet + Rolex + yacht + Patek + Bentley). No brand-name watches/jets/yachts.
 const LUXURY_SCENE_VARIANTS = [
-  { setting: 'inside a Gulfstream private jet cabin with cream leather seats and a polished walnut table by the window', hero: 'a pristine Rolex Daytona watch resting on the dark walnut table', light: 'warm golden hour sunlight streaming through the porthole windows, volumetric light rays through cabin haze' },
-  { setting: 'on the teak deck of a Riva yacht at sunset, Italian coastline blurred behind', hero: 'a half-finished glass of Macallan 25 beside an open Wall Street Journal weighted against the breeze', light: 'low-angle Mediterranean golden hour, water reflections playing on the deck wood' },
-  { setting: 'in a mahogany-paneled private library with floor-to-ceiling shelves of leather-bound books', hero: 'a Mont Blanc Meisterstück fountain pen lying on an open leather ledger', light: 'a single brass desk lamp casting an amber pool of light, deep shadows in the corners' },
-  { setting: 'in a corner office on the top floor of a glass tower overlooking a glittering city skyline at twilight', hero: 'a single matte-black business card holder beside a Hermès leather portfolio on a slate desk', light: 'cool city-light blue mixing with warm tungsten of a single architect lamp' },
-  { setting: 'inside a walk-in watch vault with rosewood display cases lining the walls, museum lighting throughout', hero: 'a Patek Philippe Nautilus 5711 on a velvet pillow at the focal point', light: 'museum-style focused spot lighting on the central piece, indirect ambient elsewhere' },
-  { setting: 'in the back seat of a Bentley Mulsanne at twilight, beige leather and burr walnut interior everywhere', hero: 'a folded Financial Times on the burr walnut tray table beside a leather glasses case', light: 'reflected city light streaming through the windows, a warm interior reading lamp glow' },
+  { setting: 'in a sunlit minimalist home office at dawn, warm light spilling across a pale oak desk and linen curtains', hero: 'a single ceramic pour-over coffee beside a worn cloth-bound book left open mid-page', light: 'soft low-angle morning sun, long gentle shadows, Kodak Portra 400 warmth' },
+  { setting: 'in a quiet modern study at blue hour, a wall of matte bookshelves softly out of focus behind', hero: 'a fountain pen resting on a half-written page of cotton-grain paper beside a low brass lamp', light: 'a single warm desk lamp pooling amber light against cool twilight from the window' },
+  { setting: 'on a private rooftop terrace at golden hour with a softly blurred city skyline far below', hero: 'a small espresso cup and a pair of reading glasses on a weathered concrete ledge', light: 'low golden-hour glow, gentle haze, subtle natural lens flare' },
+  { setting: 'in a warm modernist kitchen with morning light filtering through sheer blinds', hero: 'a hand placing a single coin into a heavy glass jar already half-full of coins', light: 'bright diffuse morning light, shallow depth of field, soft warm tones' },
+  { setting: 'by a moving train window at dawn, soft landscape motion blur outside, calm muted interior', hero: 'a phone held in one hand showing a long, steady upward line, a paper coffee cup on the tray table', light: 'cool dawn light from the window mixing with warm interior tungsten' },
+  { setting: 'at a simple wooden desk in a lakeside cabin in autumn, a window framing still water and turning leaves', hero: 'an old film photograph propped beside a modern smartphone — a quiet then-and-now contrast', light: 'soft overcast daylight, calm muted palette, Cinestill warmth' },
 ];
 
 const ARCHITECTURE_SCENE_VARIANTS = [
@@ -151,9 +154,12 @@ NEGATIVE PROMPT (avoid in every render):
 - No centered hero plus glowing CTA button cliché.
 - No glassmorphism panels.
 - No stock-photo corporate handshakes.
-- No AI-hand artifacts (deformed fingers).
+- No AI-hand artifacts (deformed fingers) — render correct hands with exactly five fingers.
 - No floating geometric blobs.
 - No emoji decoration.
+- Avoid the overused AI-finance clichés unless the topic literally calls for them: no glowing holographic globe/boardroom, no charging bull or bear statue as a generic metaphor, no missile/rocket as a stand-in for "growth", no open bank vault, no Rolex/luxury watch, no whiskey glass, no superyacht/private jet, no single green sprout growing from a pile of gold coins, no generic skyline-desk-with-business-cards.
+- Physically correct lighting: real reflections and shadows from a single consistent light source; no plastic or waxy skin; no plastic-looking props.
+- No duplicated or warped UI chrome, no repeated/garbled logos, no gibberish micro-text.
 - No Midjourney or Stable Diffusion CLI flags (--ar, --style, --v, --s) — they break ChatGPT Images 2.0 and Seedream.
 `.trim();
 
@@ -276,7 +282,7 @@ function buildLlmPrompt(input: {
   const hook = input.strategy?.hook || '';
   const formatType = input.format.formatType;
   const tone = input.format.visualTone;
-  const isLight = input.format.colorScheme.bg.toLowerCase() === '#f8f9fa';
+  const isLight = isLightBackground(input.format.colorScheme.bg);
   const colors = `bg=${input.format.colorScheme.bg}, accent1=${input.format.colorScheme.accent1}, accent2=${input.format.colorScheme.accent2}${isLight ? ' (LIGHT MODE)' : ' (DARK MODE)'}`;
 
   const slidesJson = input.slides.map((s) => ({
@@ -488,7 +494,7 @@ function buildFallbackVisualDescription(
     template = PROMPT_LIBRARY[templateKey];
   }
 
-  const isLight = colorScheme.bg.toLowerCase() === '#f8f9fa';
+  const isLight = isLightBackground(colorScheme.bg);
   if (isLight) {
     template = template
       .replace(/pitch-black\s+\[bg\]/gi, 'clean [bg]')
@@ -683,7 +689,7 @@ function compilePromptString(
   const isCoverSlide = slide.role === 'cover';
   const isChartData = ['chart_data', 'data', 'shock_stat'].includes(slide.role);
 
-  const isLight = colorScheme.bg.toLowerCase() === '#f8f9fa';
+  const isLight = isLightBackground(colorScheme.bg);
   const lightingStyle = isLight
     ? 'clean light-mode studio gradients and bright professional lighting'
     : 'clean dark-mode gradients and cinematic studio lighting';

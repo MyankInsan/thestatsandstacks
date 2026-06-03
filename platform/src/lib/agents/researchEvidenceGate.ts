@@ -112,6 +112,27 @@ export function computeReviewFlags(input: ReviewFlagInput): ResearchReviewFlag[]
   return Array.from(flags);
 }
 
+/**
+ * Title/hook guard: neutralize UNVERIFIABLE superlatives ("record high",
+ * "all-time high", "ATH") that an LLM may author, since our free data sources
+ * (a Yahoo 5-year window) cannot prove them. Accurate windowed highs ("5-year
+ * high", "52-week high") are preserved untouched. This closes the leak where the
+ * figure-level guard held but the headline still said "Record High".
+ *
+ * Phase 0: always neutralizes. A later phase can relax this when a topic carries
+ * an OFFICIAL-tier corroborating source.
+ */
+export function neutralizeUnverifiedSuperlatives(text: string): string {
+  if (!text) return text;
+  return text
+    .replace(/\ball[-\s]?time[-\s]?highs?\b/gi, (m) => (m.endsWith('s') ? 'multi-year highs' : 'multi-year high'))
+    .replace(/\brecord[-\s]?highs?\b/gi, (m) => (m.endsWith('s') ? 'multi-year highs' : 'multi-year high'))
+    .replace(/\bATHs?\b/g, 'multi-year high')
+    .replace(/\bhits?\s+(?:a\s+)?new\s+highs?\b/gi, 'nears a multi-year high')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
 export function mergeReviewFlags(...lists: Array<readonly ResearchReviewFlag[] | undefined>): ResearchReviewFlag[] {
   const set = new Set<ResearchReviewFlag>();
   for (const list of lists) for (const f of list ?? []) set.add(f);

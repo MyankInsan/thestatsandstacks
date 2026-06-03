@@ -15,7 +15,7 @@ import { HookQualityGate, getDeterministicFallbackHookFormula } from './hookQual
 import type { TopicCategory } from './portraitLibrary';
 import type { AngleId } from './topicAngleAgent';
 import type { SelectedTopicDecision } from './topicSelection';
-import type { ResearchReviewFlag } from './researchEvidenceGate';
+import { type ResearchReviewFlag, neutralizeUnverifiedSuperlatives } from './researchEvidenceGate';
 
 export interface StrategyDecision {
   topic: string;
@@ -72,6 +72,9 @@ export class ContentStrategyAgent extends BaseAgent {
 
     const slotPillarBlock = input.slot
       ? `\n\nSLOT PERSONA: ${input.slot.persona} (${input.slot.description}). Pick a topic that fits this persona.`
+        + (input.slot.topicMode === 'TIMELY_FIRST'
+          ? `\nTOPIC MODE: TIMELY_FIRST — strongly prefer a VERIFIED, recent (<48h) news topic (a stock/crypto move, earnings, an IPO/filing, a macro catalyst, an index move). Use an evergreen explainer ONLY if no fresh topic fits this slot. Default to US topics (~80%).`
+          : `\nTOPIC MODE: EVERGREEN_OR_TIMELY — an evergreen framework is fine, but take a strong timely topic if one is available. Default to US topics (~80%).`)
       : '';
 
     const angleSkeleton = input.selectedTopic?.angleSlideSkeleton ?? [];
@@ -458,6 +461,10 @@ function enrichWithSlotDecisions(strategy: StrategyDecision, input: ContentStrat
 
   return {
     ...strategy,
+    // Neutralize unverifiable "record/all-time high" superlatives in the published
+    // title + hook (the figure-level guard alone let these leak into headlines).
+    topic: neutralizeUnverifiedSuperlatives(strategy.topic),
+    hook: neutralizeUnverifiedSuperlatives(strategy.hook),
     hookFormulaId,
     ctaId,
     topicCategory,

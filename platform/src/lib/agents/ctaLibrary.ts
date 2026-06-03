@@ -50,11 +50,11 @@ export const CTA_LIBRARY: Record<CtaId, CtaStrategy> = {
   },
   follow_authority: {
     id: 'follow_authority',
-    pattern: 'Follow for daily Canadian finance posts — no hype, no advice.',
+    pattern: 'Follow for daily US + Canadian market breakdowns — no hype, no advice.',
     description: 'Cold-traffic follow driver — works well when the post itself proves the bar',
     bestForSlot: [1],
     engagementBaitRisk: 'low',
-    carouselImpactNote: 'Final slide shows "@thestatsandstacks · daily Canadian finance" in elegant typography',
+    carouselImpactNote: 'Final slide shows "@thestatsandstacks · daily market breakdowns" in elegant typography that resolves the cover motif (no luxury-desk/globe cliché)',
   },
   swipe_promise: {
     id: 'swipe_promise',
