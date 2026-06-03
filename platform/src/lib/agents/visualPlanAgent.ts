@@ -1,5 +1,6 @@
 import type { ViralStyle } from './promptLibrary';
 import { ROTATION_ALLOWLIST } from './promptLibrary';
+import { lruPick } from '../services/lruPicker';
 import { STYLE_BUCKETS, type Bucket } from './financialVizPicker';
 import type { CarouselConstraints } from './carouselConstraintAgent';
 import type { StrategyDecision } from './contentStrategyAgent';
@@ -29,6 +30,88 @@ export type CoverMechanism =
   | 'TYPOGRAPHIC_POSTER'
   | 'CINEMATIC_SCENE';
 
+/**
+ * Cover LAYOUT family — the structural relationship between the headline and the
+ * image. The old planner forced every cover to TOP_STACK (text in the top third,
+ * photo below), which is why every cover looked the same. Covers now rotate
+ * across these families (soft LRU) so the feed varies its composition, and the
+ * "integrated" families bake the text INTO the scene instead of floating it over.
+ */
+export type CoverLayoutFamily =
+  | 'TOP_STACK'            // headline stacked in the top third over the image (legacy)
+  | 'INTEGRATED_SCENE'    // headline is a physical part of the scene (sign, screen, print)
+  | 'FULL_BLEED_EDITORIAL'// magazine masthead + coverlines baked into a full-bleed image
+  | 'SPLIT_EDITORIAL'     // image one half, type the other
+  | 'HERO_NUMBER'         // a single number fills the frame
+  | 'DASHBOARD_FILL'      // a data UI fills the canvas, title lives in the chrome
+  | 'MOCK_SCREENSHOT'     // a brokerage/tweet/headline mock is the hero
+  | 'DOCUMENT_RECEIPT';   // a filing/receipt/scorecard is the hero
+
+/** Families whose headline must be rendered INSIDE the scene, not as an overlay. */
+export const INTEGRATED_TEXT_FAMILIES: ReadonlySet<CoverLayoutFamily> = new Set<CoverLayoutFamily>([
+  'INTEGRATED_SCENE', 'FULL_BLEED_EDITORIAL', 'MOCK_SCREENSHOT', 'DOCUMENT_RECEIPT',
+]);
+
+// Which layout families suit each cover style. The planner LRU-picks among the
+// allowed set so a given style still varies its composition over time.
+const COVER_FAMILIES_FOR_STYLE: Partial<Record<ViralStyle, CoverLayoutFamily[]>> = {
+  TYPOGRAPHIC_MEGA_NUMBER: ['HERO_NUMBER', 'FULL_BLEED_EDITORIAL'],
+  EARNINGS_CARD: ['HERO_NUMBER', 'DOCUMENT_RECEIPT'],
+  CANDLESTICK_HERO: ['DASHBOARD_FILL', 'INTEGRATED_SCENE', 'TOP_STACK'],
+  CANDLESTICK_PATTERN_ANNOTATED: ['DASHBOARD_FILL', 'INTEGRATED_SCENE'],
+  PRICE_TIMELINE_ANNOTATED: ['DASHBOARD_FILL', 'INTEGRATED_SCENE', 'TOP_STACK'],
+  LINE_CHART: ['DASHBOARD_FILL', 'INTEGRATED_SCENE', 'TOP_STACK'],
+  AREA_CHART: ['DASHBOARD_FILL', 'INTEGRATED_SCENE'],
+  TICKER_TAPE_HERO: ['INTEGRATED_SCENE', 'FULL_BLEED_EDITORIAL'],
+  NEON_TERMINAL: ['INTEGRATED_SCENE', 'DASHBOARD_FILL'],
+  REDDIT_POST_SCREENSHOT: ['MOCK_SCREENSHOT'],
+  TWEET_STOCK_CHART_SPLIT: ['MOCK_SCREENSHOT', 'SPLIT_EDITORIAL'],
+  CAP_TABLE_GRID: ['DOCUMENT_RECEIPT', 'DASHBOARD_FILL'],
+  EARNINGS_HEAT_TABLE: ['DOCUMENT_RECEIPT', 'DASHBOARD_FILL'],
+  POSITION_CONCENTRATION_TREEMAP: ['DASHBOARD_FILL', 'DOCUMENT_RECEIPT'],
+  COMPARISON_TABLE: ['DOCUMENT_RECEIPT', 'SPLIT_EDITORIAL'],
+  EDITORIAL_STAT_CARD: ['DOCUMENT_RECEIPT', 'SPLIT_EDITORIAL'],
+  MINIMALIST_CHECKLIST: ['DOCUMENT_RECEIPT', 'SPLIT_EDITORIAL'],
+  MAGAZINE_COVER: ['FULL_BLEED_EDITORIAL', 'SPLIT_EDITORIAL'],
+  EDITORIAL_SPLIT_LAYOUT: ['SPLIT_EDITORIAL', 'FULL_BLEED_EDITORIAL'],
+  GLOWING_QUOTE: ['FULL_BLEED_EDITORIAL', 'INTEGRATED_SCENE'],
+  EXPERT_CUTOUT: ['SPLIT_EDITORIAL', 'FULL_BLEED_EDITORIAL'],
+  CARICATURE_PORTRAIT: ['FULL_BLEED_EDITORIAL', 'SPLIT_EDITORIAL'],
+  EDITORIAL_REACTION_CARICATURE: ['FULL_BLEED_EDITORIAL', 'SPLIT_EDITORIAL'],
+  LEADER_LOGO_CUTOUTS: ['SPLIT_EDITORIAL', 'FULL_BLEED_EDITORIAL'],
+  EXECUTIVE_LINEUP: ['FULL_BLEED_EDITORIAL', 'SPLIT_EDITORIAL'],
+  PORTFOLIO_DOUGHNUT_PORTRAIT: ['FULL_BLEED_EDITORIAL', 'DASHBOARD_FILL'],
+  LUXURY_LIFESTYLE: ['INTEGRATED_SCENE', 'FULL_BLEED_EDITORIAL', 'TOP_STACK'],
+  ARCHITECTURAL_OVERLAY: ['INTEGRATED_SCENE', 'FULL_BLEED_EDITORIAL', 'TOP_STACK'],
+  CORPORATE_OFFICE_SPACE: ['INTEGRATED_SCENE', 'FULL_BLEED_EDITORIAL'],
+  ANIMAL_METAPHOR: ['FULL_BLEED_EDITORIAL', 'TOP_STACK'],
+  CHESS_BOARD_STRATEGY: ['FULL_BLEED_EDITORIAL', 'TOP_STACK'],
+  SATIRICAL_METAPHOR: ['FULL_BLEED_EDITORIAL', 'TOP_STACK'],
+  FUNNY_COMPARISON: ['SPLIT_EDITORIAL', 'TOP_STACK'],
+  MEME_COMIC_PLATE: ['FULL_BLEED_EDITORIAL', 'SPLIT_EDITORIAL'],
+  MAP_DATA_OVERLAY: ['DASHBOARD_FILL', 'INTEGRATED_SCENE'],
+};
+
+const DEFAULT_COVER_FAMILIES: CoverLayoutFamily[] = ['TOP_STACK', 'FULL_BLEED_EDITORIAL', 'INTEGRATED_SCENE'];
+
+function coverFamiliesForStyle(style: ViralStyle): CoverLayoutFamily[] {
+  return COVER_FAMILIES_FOR_STYLE[style] ?? DEFAULT_COVER_FAMILIES;
+}
+
+function positionForCoverFamily(family: CoverLayoutFamily): VisualPosition {
+  switch (family) {
+    case 'HERO_NUMBER': return 'center';
+    case 'MOCK_SCREENSHOT': return 'center';
+    case 'DOCUMENT_RECEIPT': return 'center';
+    case 'SPLIT_EDITORIAL': return 'left';
+    case 'FULL_BLEED_EDITORIAL': return 'background';
+    case 'DASHBOARD_FILL': return 'background';
+    case 'INTEGRATED_SCENE': return 'background';
+    case 'TOP_STACK':
+    default: return 'top';
+  }
+}
+
 export interface StoryboardContinuity {
   premise: string;
   anchorPrompt: string;
@@ -36,6 +119,8 @@ export interface StoryboardContinuity {
   progressionRule: string;
   resolutionRule: string;
   varietyRule: string;
+  /** Cover layout family — lets the image prompt switch to integrated-text mode. */
+  coverLayoutFamily?: CoverLayoutFamily;
 }
 
 export interface SlideVisualGrammar {
@@ -43,6 +128,7 @@ export interface SlideVisualGrammar {
   intendedRole: SlideRole;
   structureFamily: StructureFamily;
   coverMechanism?: CoverMechanism;
+  coverLayoutFamily?: CoverLayoutFamily;
   layoutArchetype: string;
   primaryEncoding: string;
   visualStyle: ViralStyle;
@@ -64,6 +150,7 @@ export interface VisualPlan {
   compositionSignature: string;
   structureFamily: StructureFamily;
   coverMechanism?: CoverMechanism;
+  coverLayoutFamily?: CoverLayoutFamily;
 }
 
 export interface VisualPlanInput {
@@ -256,7 +343,11 @@ export class VisualPlanAgent {
           plan: candidate.plan,
           valid: true,
           violations,
-          usedFallback: attempt > 0 || candidate.overrides.length > 0,
+          // Genuine variety pressure = a retry was needed. Benign within-carousel
+          // adjacency overrides are surfaced in `overrides` but do NOT trip the
+          // daily variety warning (they are routine for small-pool lanes and at
+          // ~50% would make the warning meaningless).
+          usedFallback: attempt > 0,
           overrides: candidate.overrides,
           varietyReasons: [],
         };
@@ -346,6 +437,13 @@ export class VisualPlanAgent {
     const slides: SlideVisualGrammar[] = [];
     const beats = deriveBeats(strategy, roles);
 
+    // Recent cover layout families (cross-day + same-day) so the cover composition
+    // rotates instead of always being TOP_STACK. Legacy entries → TOP_STACK.
+    const recentCoverFamilies: CoverLayoutFamily[] = [
+      ...(input.recentHistory ?? []).slice(-10),
+      ...(input.todayPriorEntries ?? []),
+    ].map((e) => ((e.visualPlan?.coverLayoutFamily as CoverLayoutFamily | undefined) ?? 'TOP_STACK'));
+
     for (let i = 0; i < slideCount; i++) {
       const role = roles[i];
       let style: ViralStyle;
@@ -376,7 +474,18 @@ export class VisualPlanAgent {
       if (HUMAN_STYLES.has(style)) { humanCount++; if (i < 3) humanInFirst3++; }
       if (bucketOf(style) === 'Data') chartPlaced = true;
 
-      const position: VisualPosition = naturalPositionForStyle(style, role);
+      // Covers choose a layout FAMILY (soft LRU) which sets the position; other
+      // slides keep their natural position. This is what breaks the "every cover
+      // is text-on-top" monotony.
+      let coverLayoutFamily: CoverLayoutFamily | undefined;
+      let position: VisualPosition;
+      if (role === 'cover') {
+        const families = coverFamiliesForStyle(style);
+        coverLayoutFamily = lruPick(families, recentCoverFamilies, 10) ?? families[0];
+        position = positionForCoverFamily(coverLayoutFamily);
+      } else {
+        position = naturalPositionForStyle(style, role);
+      }
       const dominantSubjectClass = dominantSubjectClassFor(style);
       const bucket = bucketOf(style);
       const grammar: SlideVisualGrammar = {
@@ -384,7 +493,8 @@ export class VisualPlanAgent {
         intendedRole: role,
         structureFamily,
         coverMechanism: role === 'cover' ? coverMechanismFor(style) : undefined,
-        layoutArchetype: layoutArchetypeFor(position, role),
+        coverLayoutFamily,
+        layoutArchetype: role === 'cover' ? `cover-${coverLayoutFamily}` : layoutArchetypeFor(position, role),
         primaryEncoding: primaryEncodingFor(style),
         visualStyle: style,
         bucket,
@@ -401,7 +511,8 @@ export class VisualPlanAgent {
     }
 
     const coverMechanism = slides[0]?.coverMechanism;
-    const storyboard = buildStoryboard(strategy, format, slides, structureFamily);
+    const coverLayoutFamily = slides[0]?.coverLayoutFamily;
+    const storyboard = buildStoryboard(strategy, format, slides, structureFamily, coverLayoutFamily);
     const compositionSignature = computeCompositionSignature(structureFamily, coverMechanism, slides);
 
     const plan: VisualPlan = {
@@ -413,6 +524,7 @@ export class VisualPlanAgent {
       compositionSignature,
       structureFamily,
       coverMechanism,
+      coverLayoutFamily,
     };
 
     return { plan, overrides };
@@ -423,6 +535,11 @@ function deriveBeats(strategy: StrategyDecision, roles: SlideRole[]): string[] {
   const skeleton = strategy.angleSlideSkeleton ?? [];
   return roles.map((role, i) => {
     if (skeleton[i]) return skeleton[i];
+    // Slide 2 is a SECONDARY HOOK: IG re-serves slide 2 to viewers who don't
+    // swipe, so it must stand alone as a hook, not a low-energy context slide.
+    if (i === 1 && role !== 'cta') {
+      return 'Secondary hook — a surprising number, sharp contrast, or "wait, what?" moment that re-hooks anyone who did not swipe past the cover';
+    }
     switch (role) {
       case 'cover': return 'Establish the premise and create the anchor image';
       case 'context': return 'Deepen the problem / surprising context';
@@ -438,12 +555,14 @@ function buildStoryboard(
   format: FormatDecision,
   slides: SlideVisualGrammar[],
   structureFamily: StructureFamily,
+  coverLayoutFamily?: CoverLayoutFamily,
 ): StoryboardContinuity {
   const cover = slides[0];
   const accent = format.colorScheme.accent1;
   return {
+    coverLayoutFamily,
     premise: `${strategy.topic} — ${strategy.hook}`.slice(0, 200),
-    anchorPrompt: `Slide 1 establishes the premise via a ${cover?.coverMechanism ?? 'CINEMATIC_SCENE'} (${cover?.visualStyle}). This cover image is the visual anchor every later slide stays coherent with.`,
+    anchorPrompt: `Slide 1 establishes the premise via a ${cover?.coverMechanism ?? 'CINEMATIC_SCENE'} (${cover?.visualStyle}) in a ${coverLayoutFamily ?? 'TOP_STACK'} layout. This cover image is the visual anchor every later slide stays coherent with.`,
     sharedVisualInvariants: [
       `Palette anchored on ${format.colorScheme.bg} with accent ${accent}`,
       'Lower-third "@thestatsandstacks" typographic watermark on every slide',

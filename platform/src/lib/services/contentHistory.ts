@@ -6,7 +6,7 @@ import type { CtaId } from '../agents/ctaLibrary';
 import type { AngleId } from '../agents/topicAngleAgent';
 import type { SlotIndex } from '../agents/slotConfig';
 
-export const CURRENT_SCHEMA_VERSION = 3;
+export const CURRENT_SCHEMA_VERSION = 4;
 
 export type NarrativeArc =
   | 'HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA'
@@ -45,6 +45,8 @@ export interface PersistedVisualPlan {
   compositionSignature: string;
   structureFamily: string;
   coverMechanism?: string;
+  /** Schema v4: cover layout family (TOP_STACK, INTEGRATED_SCENE, …) for cover rotation. */
+  coverLayoutFamily?: string;
   sceneConceptIds: string[];
   ctaConceptId?: string;
   /** True when the plan was produced under variety/adjacency fallback pressure. */

@@ -9,17 +9,6 @@ import type { ContentHistoryEntry, PersistedVisualPlan } from '../services/conte
  */
 export const TRAILING_PACKET_WINDOW = 60;
 
-/**
- * The coarse cover tuple (coverMechanism + cover layoutArchetype + cover
- * dominant subject class) has a far smaller cardinality than the full
- * compositionSignature, so a 60-packet block on it would be unsatisfiable and
- * would flag fallback permanently. We block exact cover-composition repeats over
- * a shorter, satisfiable window (~2 days at 6 packets/day) — enough to stop the
- * "same cover three days running" problem while the granular signature block
- * still covers the full ten-day window.
- */
-export const COVER_TUPLE_WINDOW = 10;
-
 export function toPersistedVisualPlan(
   plan: VisualPlan,
   opts: { usedFallback?: boolean; promptFingerprints?: Record<number, string> } = {},
@@ -28,6 +17,7 @@ export function toPersistedVisualPlan(
     compositionSignature: plan.compositionSignature,
     structureFamily: plan.structureFamily,
     coverMechanism: plan.coverMechanism,
+    coverLayoutFamily: plan.coverLayoutFamily,
     sceneConceptIds: plan.slides.map((s) => s.sceneConceptId),
     ctaConceptId: plan.slides.find((s) => s.intendedRole === 'cta')?.ctaConceptId,
     usedFallback: opts.usedFallback,
@@ -47,7 +37,10 @@ export function toPersistedVisualPlan(
 
 function coverTupleOf(plan: PersistedVisualPlan): string {
   const cover = plan.slides[0];
-  return `${plan.coverMechanism ?? '-'}|${cover?.layoutArchetype ?? '-'}|${cover?.dominantSubjectClass ?? '-'}`;
+  // Prefer the explicit cover layout family (v4); legacy plans fall back to the
+  // cover's layoutArchetype (which was always 'hero-top' pre-v4).
+  const coverLayout = plan.coverLayoutFamily ?? cover?.layoutArchetype ?? '-';
+  return `${plan.coverMechanism ?? '-'}|${coverLayout}|${cover?.dominantSubjectClass ?? '-'}`;
 }
 
 export interface VarietyCheckResult {
@@ -78,18 +71,19 @@ export function checkVisualPlanVariety(
     reasons.push('identical compositionSignature within trailing 60 packets');
   }
 
-  const coverWindow = recentHistory
-    .slice(-COVER_TUPLE_WINDOW)
-    .map((e) => e.visualPlan)
-    .filter((p): p is PersistedVisualPlan => Boolean(p));
-  const candidateCoverTuple = coverTupleOf(candidate);
-  if (coverWindow.some((p) => coverTupleOf(p) === candidateCoverTuple)) {
-    reasons.push('identical cover mechanism + layout archetype + dominant subject class within cover window');
-  }
-
   const todayPlans = todayPriorEntries
     .map((e) => e.visualPlan)
     .filter((p): p is PersistedVisualPlan => Boolean(p));
+
+  // Same-day cover-composition reuse is a hard block (two of today's 6 slots must
+  // not share the identical cover look). Cross-day cover rotation is handled
+  // SOFTLY by VisualPlanAgent's coverLayoutFamily LRU — a global cross-day block
+  // over the small-cardinality cover tuple is unsatisfiable and would flag
+  // fallback permanently (QA: hard blocks = composition signature + same-day reuse).
+  const candidateCoverTuple = coverTupleOf(candidate);
+  if (todayPlans.some((p) => coverTupleOf(p) === candidateCoverTuple)) {
+    reasons.push('identical cover composition reused same-day');
+  }
 
   const todayScenes = new Set(todayPlans.flatMap((p) => p.sceneConceptIds));
   if (candidate.sceneConceptIds.some((id) => todayScenes.has(id))) {

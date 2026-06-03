@@ -8,7 +8,7 @@ import type { ContentHistoryEntry } from '../services/contentHistory';
 import { PROMPT_LIBRARY, type ViralStyle } from './promptLibrary';
 import { recommendModelForStyle, modelRecommendationLabel } from './modelRecommendation';
 import { TickerLogoAgent } from './tickerLogoAgent';
-import type { StoryboardContinuity } from './visualPlanAgent';
+import { INTEGRATED_TEXT_FAMILIES, type StoryboardContinuity, type CoverLayoutFamily } from './visualPlanAgent';
 
 export interface SlideImagePrompt {
   slideNumber: number;
@@ -589,6 +589,36 @@ export function getTextLayoutDirective(position: SlideSpec['visualPosition']): s
   }
 }
 
+/** Text-rendering instruction for covers whose headline is baked INTO the scene. */
+function integratedTextPrefix(family: CoverLayoutFamily): string {
+  switch (family) {
+    case 'FULL_BLEED_EDITORIAL':
+      return 'Set the following text as designed editorial coverlines BAKED INTO the full-bleed image — like a premium magazine cover where the masthead and headline are part of the photograph with strong type hierarchy. Perfectly spelled, no extra characters, NOT a floating caption overlay:';
+    case 'MOCK_SCREENSHOT':
+      return 'Render the following text INSIDE the mock interface as real on-screen text (post, headline card, or app UI), pixel-crisp and perfectly spelled, as a native part of the screenshot — NOT an external overlay:';
+    case 'DOCUMENT_RECEIPT':
+      return 'Render the following text as printed type ON the document / receipt / scorecard itself, perfectly spelled and aligned to the document, as part of the object — NOT a floating overlay:';
+    case 'INTEGRATED_SCENE':
+    default:
+      return 'Render the following text as a physical, in-scene element — printed on a sign or print, lit on a screen or terminal, or set as a headline within the scene — so it reads as a natural part of the photograph, perfectly spelled, NOT a floating caption overlay:';
+  }
+}
+
+/** Information-architecture line for integrated cover layout families. */
+function coverFamilyLayoutDirective(family: CoverLayoutFamily): string {
+  switch (family) {
+    case 'FULL_BLEED_EDITORIAL':
+      return 'Layout structure: full-bleed editorial cover — the image fills the entire frame; the headline and coverlines are integrated into the composition like a high-end magazine cover, with a clear type hierarchy and generous breathing room.';
+    case 'MOCK_SCREENSHOT':
+      return 'Layout structure: a realistic full-frame screenshot/mockup (brokerage order card, social post, or headline card) is the hero; all text lives inside the UI, pixel-accurate.';
+    case 'DOCUMENT_RECEIPT':
+      return 'Layout structure: a document / receipt / scorecard is the hero, centered with breathing room; the text is printed on the document itself.';
+    case 'INTEGRATED_SCENE':
+    default:
+      return 'Layout structure: the headline is part of the scene itself (on a screen, sign, print, or terminal); compose so the in-scene text is legible and dominant while the scene stays photographic.';
+  }
+}
+
 function compilePromptString(
   slide: SlideSpec,
   visualDescription: string,
@@ -659,27 +689,37 @@ function compilePromptString(
     );
   }
 
+  // Cover layout family decides whether the headline is an OVERLAY (top/split/
+  // center) or BAKED INTO the scene (integrated/full-bleed/mock/document). The
+  // integrated families are the fix for "text and image feel separated".
+  const coverFamily = isCover ? storyboard?.coverLayoutFamily : undefined;
+  const integratedText = Boolean(coverFamily && INTEGRATED_TEXT_FAMILIES.has(coverFamily));
+
   let positionPrefix = '';
-  switch (slide.visualPosition) {
-    case 'left':
-      // The visual subject is on the left, so the text overlays should occupy the right side
-      positionPrefix = 'Aligned cleanly in a vertical column on the right side of the frame (occupying the right 45% of the canvas), render the following exact text, perfectly spelled with no extra characters:';
-      break;
-    case 'right':
-      // The visual subject is on the right, so the text overlays should occupy the left side
-      positionPrefix = 'Aligned cleanly in a vertical column on the left side of the frame (occupying the left 45% of the canvas), render the following exact text, perfectly spelled with no extra characters:';
-      break;
-    case 'center':
-      positionPrefix = 'Centered perfectly in the middle of the frame with generous negative space, render the following exact text, perfectly spelled with no extra characters:';
-      break;
-    case 'background':
-      // Overlaid on top of the background graphic, positioned in a neat corner block to avoid top-heavy look
-      positionPrefix = 'Aligned cleanly in a modern, compact editorial block in the top-left quadrant of the frame (leaving the rest of the canvas open for the background viz), render the following exact text elements, perfectly spelled with no extra characters:';
-      break;
-    case 'top':
-    default:
-      positionPrefix = 'Positioned cleanly in the top-third of the frame in a stacked block, render the following exact text, perfectly spelled with no extra characters:';
-      break;
+  if (integratedText) {
+    positionPrefix = integratedTextPrefix(coverFamily!);
+  } else {
+    switch (slide.visualPosition) {
+      case 'left':
+        // The visual subject is on the left, so the text overlays should occupy the right side
+        positionPrefix = 'Aligned cleanly in a vertical column on the right side of the frame (occupying the right 45% of the canvas), render the following exact text, perfectly spelled with no extra characters:';
+        break;
+      case 'right':
+        // The visual subject is on the right, so the text overlays should occupy the left side
+        positionPrefix = 'Aligned cleanly in a vertical column on the left side of the frame (occupying the left 45% of the canvas), render the following exact text, perfectly spelled with no extra characters:';
+        break;
+      case 'center':
+        positionPrefix = 'Centered perfectly in the middle of the frame with generous negative space, render the following exact text, perfectly spelled with no extra characters:';
+        break;
+      case 'background':
+        // Overlaid on top of the background graphic, positioned in a neat corner block to avoid top-heavy look
+        positionPrefix = 'Aligned cleanly in a modern, compact editorial block in the top-left quadrant of the frame (leaving the rest of the canvas open for the background viz), render the following exact text elements, perfectly spelled with no extra characters:';
+        break;
+      case 'top':
+      default:
+        positionPrefix = 'Positioned cleanly in the top-third of the frame in a stacked block, render the following exact text, perfectly spelled with no extra characters:';
+        break;
+    }
   }
 
   const textProse = textItems.length > 0
@@ -694,7 +734,9 @@ function compilePromptString(
     ? 'clean light-mode studio gradients and bright professional lighting'
     : 'clean dark-mode gradients and cinematic studio lighting';
 
-  const layoutDirective = getTextLayoutDirective(slide.visualPosition);
+  const layoutDirective = integratedText
+    ? coverFamilyLayoutDirective(coverFamily!)
+    : getTextLayoutDirective(slide.visualPosition);
   const sceneDescription = `${visualDescription} ${layoutDirective} The composition uses ${colorScheme.bg} as the dominant background hue with ${lightingStyle} calibrated to the visual element above.`;
 
   // Labeled-section prompt packet for ChatGPT Images 2.0 (primary manual target).
