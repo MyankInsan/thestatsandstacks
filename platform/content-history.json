@@ -3865,6 +3865,148 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-04",
+      "topic": "The RMD Tax Cheat Sheet: How US Investors Manage Required Distributions",
+      "hook": "RMD taxes are unavoidable. That is wrong. Here’s why.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "required minimum distributions",
+        "RMD tax strategies",
+        "retirement account withdrawal rules",
+        "IRA tax loop holes"
+      ],
+      "visualSignature": "2026-06-04-26981505613",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-06-04T21:52:17.675Z",
+      "tickersFeatured": [],
+      "topicCategory": "TAX_ACCT",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "question_open",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "COMPARISON_TABLE",
+        "LUXURY_LIFESTYLE",
+        "CAP_TABLE_GRID",
+        "TECH_HUD",
+        "POSITION_CONCENTRATION_TREEMAP",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "COMPARISON_TABLE",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "retiree_with_charts"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F4F1EA",
+        "primaryText": "#1A1A1A",
+        "accent1": "#B0341E",
+        "accent2": "#6B6B6B"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "GENERAL",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:SPLIT_CONTRAST:1657746342",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "SPLIT_CONTRAST",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:COMPARISON_TABLE:center",
+          "COMPARISON_XRAY:LUXURY_LIFESTYLE:top",
+          "COMPARISON_XRAY:CAP_TABLE_GRID:left",
+          "COMPARISON_XRAY:TECH_HUD:top",
+          "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background",
+          "COMPARISON_XRAY:MAGAZINE_COVER:top"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:MAGAZINE_COVER",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:COMPARISON_TABLE:center",
+            "promptFingerprint": "pf_q96eoa"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "COMPARISON_XRAY:LUXURY_LIFESTYLE:top",
+            "promptFingerprint": "pf_p3nc4z"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CAP_TABLE_GRID:left",
+            "promptFingerprint": "pf_nyzu8u"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "TECH_HUD",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "HUD_ORBIT",
+            "sceneConceptId": "COMPARISON_XRAY:TECH_HUD:top",
+            "promptFingerprint": "pf_e486j8"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "treemap",
+            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background",
+            "promptFingerprint": "pf_6gt49q"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top",
+            "promptFingerprint": "pf_rvs5f8"
+          }
+        ]
+      }
     }
   ]
 }
