@@ -92,6 +92,16 @@ async function main() {
   fs.writeFileSync(researchBriefPath, buildResearchBrief(trends, contentHistory), 'utf-8');
   console.log(`   Research brief: ${researchBriefPath}`);
 
+  // Capture the full ranked trend list (with source tiers) BEFORE it is reduced
+  // to the selected topic below — written as a TREND_SNAPSHOT.json artifact for
+  // audit ("why this topic") and cross-run dedup review.
+  const rankedTrendSnapshot = trends.topics.map((t) => ({
+    title: t.title,
+    score: t.score,
+    sourceTier: bestSourceTier(t.sourceUrls),
+    freshnessSignal: t.freshnessSignal ?? null,
+  }));
+
   const tickersInNews = await tickersPromise;
   const tickerSymbols = tickersInNews.tickers.map((t) => t.symbol);
   console.log(`   Tickers: ${tickerSymbols.join(', ') || 'none'}`);
@@ -355,6 +365,22 @@ async function main() {
   });
   console.log(`   QC: ${qcReport.overall}  |  engagement ${qcReport.engagementScore}/100 (${qcReport.engagementLabel})`);
   for (const c of qcReport.checks.filter((c) => c.status !== 'PASS')) console.log(`   ${c.status} ${c.label}: ${c.detail}`);
+
+  fs.writeFileSync(
+    path.join(outputDir, 'TREND_SNAPSHOT.json'),
+    JSON.stringify({
+      date: today,
+      slotIndex: slotContext.slotIndex,
+      selectedTopic: strategy.topic,
+      selectedSourceTier: sourceTier,
+      topicFamily,
+      topicMode: slotContext.config.topicMode,
+      engagementScore: qcReport.engagementScore,
+      rankedTrends: rankedTrendSnapshot,
+      capturedAt: new Date().toISOString(),
+    }, null, 2),
+    'utf-8',
+  );
   console.log('');
 
   // ── TELEGRAM DELIVERY ───────────────────────────────────────────────────────

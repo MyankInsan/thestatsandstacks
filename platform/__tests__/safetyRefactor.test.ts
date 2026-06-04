@@ -4,6 +4,7 @@ import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { isTickerActive } from '../src/lib/agents/tickerMatch';
 import { formatTelegramPacket, TOTAL_DAILY_SLOTS } from '../src/lib/services/telegramDelivery';
+import { runQcGate } from '../src/lib/agents/qcGateAgent';
 import { SLOT_CONFIGS } from '../src/lib/agents/slotConfig';
 import type { ImagePromptSet } from '../src/lib/agents/imagePromptAgent';
 import type { CopyBundle } from '../src/lib/agents/copywritingAgent';
@@ -111,4 +112,31 @@ test('formatTelegramPacket surfaces a review block when present', () => {
   );
   assert.match(packet.intro, /HUMAN REVIEW REQUIRED/);
   assert.match(packet.document, /RECORD_HIGH_CLAIM/);
+});
+
+test('formatTelegramPacket shows A/B hooks and the QC + engagement summary', () => {
+  const qcReport = runQcGate({
+    prompts: [{ slideNumber: 1, role: 'cover', geminiPrompt: 'EXACT TEXT ... WATERMARK ... NEGATIVE CONSTRAINTS' }],
+    slideHeadlines: ['a tight hook', 'a sharp second'],
+    hook: 'Nvidia just crushed estimates',
+    reviewFlagCount: 0, sourceTier: 'MARKET_DATA', topicMode: 'TIMELY_FIRST',
+    topicFamily: 'SINGLE_STOCK', slideCount: 6, varietyFallbackRatePct: 0,
+    varietyUnresolved: false, timelyPriorTodayCount: 4,
+  });
+  const packet = formatTelegramPacket(
+    {
+      copy: baseCopy,
+      strategy: { ...baseStrategy, hookVariantB: 'The NVDA number nobody noticed' } as StrategyDecision,
+      format: baseFormat,
+      promptSet: basePromptSet,
+      slot: SLOT_CONFIGS[1],
+      qcReport,
+    },
+    '2026-06-02',
+  );
+  assert.match(packet.intro, /HOOK A:/);
+  assert.match(packet.intro, /HOOK B \(A\/B\):/);
+  assert.match(packet.intro, /QC: (PASS|WARN|FAIL)/);
+  assert.match(packet.intro, /Engagement \d+\/100/);
+  assert.match(packet.document, /QC REPORT/);
 });

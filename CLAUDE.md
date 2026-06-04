@@ -135,7 +135,7 @@ Required secrets: `GEMINI_API_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. Op
 
 ### QC gate (report-only)
 
-`qcGateAgent.ts` runs after prompt compilation and before Telegram delivery. It does **not** block (compliance + cost guards already hard-block upstream) — it produces a deterministic PASS/WARN/FAIL report (unresolved `[bracket]` placeholders, prompt completeness, headline legibility, slide count, two-chance hook, source-tier verification, review flags, visual-variety pressure, daily timely mix ≥4/6) plus a heuristic 0–100 engagement score. The summary is surfaced in the Telegram intro + a full block in the document so the operator can eyeball a packet before generating it.
+`qcGateAgent.ts` runs after prompt compilation and before Telegram delivery. It does **not** block (compliance + cost guards already hard-block upstream) — it produces a deterministic PASS/WARN/FAIL report (unresolved `[bracket]` placeholders, prompt completeness, headline legibility, slide count, two-chance hook, source-tier verification, review flags, visual-variety pressure, daily timely mix ≥4/6) plus a heuristic 0–100 engagement score. The summary is surfaced in the Telegram intro + a full block in the document so the operator can eyeball a packet before generating it. The strategist also returns an **A/B alternate cover hook** (`StrategyDecision.hookVariantB`) shown as "HOOK A / HOOK B" in Telegram, and each run writes a `TREND_SNAPSHOT.json` artifact (ranked topics + source tiers + the selection) to the output dir for audit.
 
 ### Zero-cost mode
 

@@ -20,6 +20,8 @@ import { type ResearchReviewFlag, neutralizeUnverifiedSuperlatives } from './res
 export interface StrategyDecision {
   topic: string;
   hook: string;
+  /** Optional A/B alternate cover hook (same topic, different framing). */
+  hookVariantB?: string;
   format: 'CAROUSEL' | 'SINGLE_IMAGE' | 'WATCHLIST_EDUCATION';
   slideCount: number;
   slideBreakdown: string[];
@@ -120,6 +122,7 @@ Pick the best one. Output ONLY valid JSON (no markdown, no code fences):
 {
   "topic": "exact topic title",
   "hook": "the hook text for slide 1 (4-11 words)",
+  "hookVariantB": "an ALTERNATE cover hook for the SAME topic, a clearly different angle/framing (4-11 words, no hype) — for A/B choice",
   "hookFormulaId": "${input.slot ? input.slot.preferredHookFormulas[0] : 'RECEIPT_DROP'}",
   "topicCategory": "EARNINGS|MACRO|POLICY|TAX_ACCT|CRYPTO|COMMODITY|HOUSING|BEHAVIORAL|HOW_TO|CAP_TABLE",
   "format": "CAROUSEL or SINGLE_IMAGE or WATCHLIST_EDUCATION",
@@ -465,6 +468,7 @@ function enrichWithSlotDecisions(strategy: StrategyDecision, input: ContentStrat
     // title + hook (the figure-level guard alone let these leak into headlines).
     topic: neutralizeUnverifiedSuperlatives(strategy.topic),
     hook: neutralizeUnverifiedSuperlatives(strategy.hook),
+    hookVariantB: strategy.hookVariantB ? neutralizeUnverifiedSuperlatives(strategy.hookVariantB) : undefined,
     hookFormulaId,
     ctaId,
     topicCategory,
