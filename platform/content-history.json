@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "entries": [
     {
       "date": "2026-05-22",
@@ -18,7 +18,7 @@
         "Canadian investing research"
       ],
       "visualSignature": "2026-05-22",
-      "schemaVersion": 3
+      "schemaVersion": 4
     },
     {
       "date": "2026-05-23",
@@ -38,7 +38,7 @@
         "investing for beginners"
       ],
       "visualSignature": "2026-05-23",
-      "schemaVersion": 3
+      "schemaVersion": 4
     },
     {
       "date": "2026-05-24",
@@ -55,7 +55,7 @@
         "payday checklist Canada"
       ],
       "visualSignature": "2026-05-24-26385618396",
-      "schemaVersion": 3
+      "schemaVersion": 4
     },
     {
       "date": "2026-05-25",
@@ -71,7 +71,7 @@
         "market catalyst explained"
       ],
       "visualSignature": "2026-05-25-26420072064",
-      "schemaVersion": 3
+      "schemaVersion": 4
     },
     {
       "date": "2026-05-26",
@@ -88,7 +88,7 @@
         "wealth compounding"
       ],
       "visualSignature": "2026-05-26-26477189710",
-      "schemaVersion": 3
+      "schemaVersion": 4
     },
     {
       "date": "2026-05-26",
@@ -105,7 +105,7 @@
         "emotional trading"
       ],
       "visualSignature": "2026-05-26-26492472007",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 5,
       "postedAtUtc": "2026-05-27T05:22:36.794Z",
       "tickersFeatured": [],
@@ -148,7 +148,7 @@
         "market catalyst explained"
       ],
       "visualSignature": "2026-05-26-26493291437",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 3,
       "postedAtUtc": "2026-05-27T05:46:31.192Z",
       "tickersFeatured": [],
@@ -189,7 +189,7 @@
         "market catalyst explained"
       ],
       "visualSignature": "2026-05-26-26493697129",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 1,
       "postedAtUtc": "2026-05-27T05:58:53.228Z",
       "tickersFeatured": [],
@@ -231,7 +231,7 @@
         "investing risk checklist"
       ],
       "visualSignature": "2026-05-27-26525978535",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 1,
       "postedAtUtc": "2026-05-27T17:01:00.796Z",
       "tickersFeatured": [
@@ -293,7 +293,7 @@
         "top Canadian dividend stocks"
       ],
       "visualSignature": "2026-05-27-26533076641",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 2,
       "postedAtUtc": "2026-05-27T19:16:41.723Z",
       "tickersFeatured": [
@@ -353,7 +353,7 @@
         "low cost index funds Canada"
       ],
       "visualSignature": "2026-05-27-26541297901",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 3,
       "postedAtUtc": "2026-05-27T22:02:19.600Z",
       "tickersFeatured": [
@@ -415,7 +415,7 @@
         "Western Digital performance"
       ],
       "visualSignature": "2026-05-27-26548742155",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 4,
       "postedAtUtc": "2026-05-28T01:21:29.249Z",
       "tickersFeatured": [
@@ -475,7 +475,7 @@
         "index fund vs stock picking"
       ],
       "visualSignature": "2026-05-27-26558987180",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 5,
       "postedAtUtc": "2026-05-28T06:38:23.621Z",
       "tickersFeatured": [
@@ -541,7 +541,7 @@
         "market catalyst explained"
       ],
       "visualSignature": "2026-05-28-26591214964",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 1,
       "postedAtUtc": "2026-05-28T17:34:56.521Z",
       "tickersFeatured": [
@@ -603,7 +603,7 @@
         "stock ownership breakdown"
       ],
       "visualSignature": "2026-05-28-26597508232",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 2,
       "postedAtUtc": "2026-05-28T19:35:46.714Z",
       "tickersFeatured": [
@@ -666,7 +666,7 @@
         "Canadian ETF portfolio"
       ],
       "visualSignature": "2026-05-28-26604774259",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 3,
       "postedAtUtc": "2026-05-28T22:01:34.486Z",
       "tickersFeatured": [
@@ -735,7 +735,7 @@
         "market risk map"
       ],
       "visualSignature": "2026-05-28-26612524281",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 4,
       "postedAtUtc": "2026-05-29T01:31:09.843Z",
       "tickersFeatured": [
@@ -806,7 +806,7 @@
         "market catalyst explained"
       ],
       "visualSignature": "2026-05-28-26622340783",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 5,
       "postedAtUtc": "2026-05-29T06:39:57.179Z",
       "tickersFeatured": [],
@@ -850,7 +850,7 @@
         "semiconductor catalysts"
       ],
       "visualSignature": "2026-05-29-26652146761",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 1,
       "postedAtUtc": "2026-05-29T17:32:32.021Z",
       "tickersFeatured": [
@@ -919,7 +919,7 @@
         "who owns Robinhood"
       ],
       "visualSignature": "2026-05-29-26657792126",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 2,
       "postedAtUtc": "2026-05-29T19:31:19.569Z",
       "tickersFeatured": [],
@@ -960,7 +960,7 @@
         "TFSA cash strategy"
       ],
       "visualSignature": "2026-05-29-26664230728",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 3,
       "postedAtUtc": "2026-05-29T21:56:45.969Z",
       "tickersFeatured": [],
@@ -1001,7 +1001,7 @@
         "S&P 500 record"
       ],
       "visualSignature": "2026-05-29-26665224647",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 5,
       "postedAtUtc": "2026-05-29T22:23:59.160Z",
       "tickersFeatured": [
@@ -1046,7 +1046,7 @@
         "S&P 500 record"
       ],
       "visualSignature": "2026-05-29-26665954545",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 6,
       "postedAtUtc": "2026-05-29T22:43:57.049Z",
       "tickersFeatured": [],
@@ -1090,7 +1090,7 @@
         "stock watchlist"
       ],
       "visualSignature": "2026-05-30-26687041184",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 1,
       "postedAtUtc": "2026-05-30T15:03:26.370Z",
       "tickersFeatured": [],
@@ -1132,7 +1132,7 @@
         "pension asset allocation"
       ],
       "visualSignature": "2026-05-30-26689427278",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 2,
       "postedAtUtc": "2026-05-30T16:53:56.284Z",
       "tickersFeatured": [],
@@ -1175,7 +1175,7 @@
         "portfolio rebalancing"
       ],
       "visualSignature": "2026-05-30-26692761258",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 3,
       "postedAtUtc": "2026-05-30T19:29:49.692Z",
       "tickersFeatured": [],
@@ -1217,7 +1217,7 @@
         "Canadian portfolio strategy"
       ],
       "visualSignature": "2026-05-30-26694909780",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 4,
       "postedAtUtc": "2026-05-30T21:10:13.621Z",
       "tickersFeatured": [],
@@ -1260,7 +1260,7 @@
         "currency drag Canada"
       ],
       "visualSignature": "2026-05-30-26695793888",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 5,
       "postedAtUtc": "2026-05-30T21:54:24.485Z",
       "tickersFeatured": [],
@@ -1303,7 +1303,7 @@
         "VFV vs VSP"
       ],
       "visualSignature": "2026-05-30-26699288094",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 6,
       "postedAtUtc": "2026-05-31T00:54:39.038Z",
       "tickersFeatured": [],
@@ -1346,7 +1346,7 @@
         "passive investing trends"
       ],
       "visualSignature": "2026-05-31-26716367800",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 1,
       "postedAtUtc": "2026-05-31T15:18:03.791Z",
       "tickersFeatured": [],
@@ -1389,7 +1389,7 @@
         "13F filing analysis"
       ],
       "visualSignature": "2026-05-31-26718621091",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 2,
       "postedAtUtc": "2026-05-31T16:53:42.316Z",
       "tickersFeatured": [],
@@ -1432,7 +1432,7 @@
         "flash memory stock catalyst"
       ],
       "visualSignature": "2026-05-31-26722138028",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 3,
       "postedAtUtc": "2026-05-31T19:26:50.214Z",
       "tickersFeatured": [],
@@ -1475,7 +1475,7 @@
         "AI server market catalyst"
       ],
       "visualSignature": "2026-05-31-26724469439",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 4,
       "postedAtUtc": "2026-05-31T21:14:12.316Z",
       "tickersFeatured": [],
@@ -1517,7 +1517,7 @@
         "S&P 500 record"
       ],
       "visualSignature": "2026-05-31-26725371062",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 5,
       "postedAtUtc": "2026-05-31T21:53:24.344Z",
       "tickersFeatured": [],
@@ -1561,7 +1561,7 @@
         "dividend growth strategy"
       ],
       "visualSignature": "2026-05-31-26726985611",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 6,
       "postedAtUtc": "2026-05-31T23:08:46.172Z",
       "tickersFeatured": [],
@@ -1604,7 +1604,7 @@
         "S&P 500 record"
       ],
       "visualSignature": "2026-06-01-26776461232",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 1,
       "postedAtUtc": "2026-06-01T19:25:53.946Z",
       "tickersFeatured": [],
@@ -1644,7 +1644,7 @@
         "Canadian investing"
       ],
       "visualSignature": "2026-06-01-26778999579",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 2,
       "postedAtUtc": "2026-06-01T20:15:20.660Z",
       "tickersFeatured": [],
@@ -1687,7 +1687,7 @@
         "investing risk"
       ],
       "visualSignature": "2026-06-01-26783608152",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 3,
       "postedAtUtc": "2026-06-01T21:45:22.688Z",
       "tickersFeatured": [],
@@ -1729,7 +1729,7 @@
         "fundamental analysis tools"
       ],
       "visualSignature": "2026-06-01-26786140566",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 4,
       "postedAtUtc": "2026-06-01T22:43:14.785Z",
       "tickersFeatured": [],
@@ -1769,7 +1769,7 @@
         "S&P 500 record"
       ],
       "visualSignature": "2026-06-01-26786983108",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 5,
       "postedAtUtc": "2026-06-01T23:02:17.231Z",
       "tickersFeatured": [],
@@ -1811,7 +1811,7 @@
         "S&P 500 record"
       ],
       "visualSignature": "2026-06-01-26788350586",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 6,
       "postedAtUtc": "2026-06-01T23:35:32.628Z",
       "tickersFeatured": [],
@@ -1856,7 +1856,7 @@
         "stock retirement"
       ],
       "visualSignature": "2026-06-02-26838494460",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 1,
       "postedAtUtc": "2026-06-02T18:04:10.366Z",
       "tickersFeatured": [],
@@ -1983,7 +1983,7 @@
         "portfolio rebalancing Canada"
       ],
       "visualSignature": "2026-06-02-26843293041",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 2,
       "postedAtUtc": "2026-06-02T19:36:02.146Z",
       "tickersFeatured": [],
@@ -2109,7 +2109,7 @@
         "Canadian dividend stocks"
       ],
       "visualSignature": "2026-06-02-26847483124",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 3,
       "postedAtUtc": "2026-06-02T20:58:43.459Z",
       "tickersFeatured": [],
@@ -2235,7 +2235,7 @@
         "aerospace industry catalysts"
       ],
       "visualSignature": "2026-06-02-26851613330",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 4,
       "postedAtUtc": "2026-06-02T22:32:32.319Z",
       "tickersFeatured": [],
@@ -2372,7 +2372,7 @@
         "S&P 500 level"
       ],
       "visualSignature": "2026-06-02-26852829717",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 5,
       "postedAtUtc": "2026-06-02T23:01:04.304Z",
       "tickersFeatured": [],
@@ -2524,7 +2524,7 @@
         "AI hardware watchlist"
       ],
       "visualSignature": "2026-06-02-26854755748",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 6,
       "postedAtUtc": "2026-06-02T23:53:37.542Z",
       "tickersFeatured": [],
@@ -2663,7 +2663,7 @@
         "personal finance checklist"
       ],
       "visualSignature": "2026-06-03-26904334706",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 1,
       "postedAtUtc": "2026-06-03T18:21:22.049Z",
       "tickersFeatured": [],
@@ -2789,7 +2789,7 @@
         "defensive investing strategy"
       ],
       "visualSignature": "2026-06-03-26908503780",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 2,
       "postedAtUtc": "2026-06-03T19:40:45.825Z",
       "tickersFeatured": [
@@ -2917,7 +2917,7 @@
         "investing checklist"
       ],
       "visualSignature": "2026-06-03-26913765214",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 3,
       "postedAtUtc": "2026-06-03T21:23:07.068Z",
       "tickersFeatured": [],
@@ -3043,7 +3043,7 @@
         "beginner stock analysis"
       ],
       "visualSignature": "2026-06-03-26917059241",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 4,
       "postedAtUtc": "2026-06-03T22:34:33.428Z",
       "tickersFeatured": [],
@@ -3167,7 +3167,7 @@
         "market catalyst explained"
       ],
       "visualSignature": "2026-06-03-26918258879",
-      "schemaVersion": 3,
+      "schemaVersion": 4,
       "slotIndex": 5,
       "postedAtUtc": "2026-06-03T23:04:25.218Z",
       "tickersFeatured": [],
@@ -3292,124 +3292,155 @@
     },
     {
       "date": "2026-06-03",
-      "topic": "If You Invested $10,000 in NVIDIA 5 Years Ago",
-      "hook": "What $10k in NVDA looks like today.",
+      "topic": "5 Money Leaks Quietly Keeping Canadians Broke",
+      "hook": "These small leaks do the most damage.",
       "format": "CAROUSEL",
       "formatType": "MEME_HUMOR",
-      "slideCount": 6,
+      "slideCount": 7,
       "keywords": [
-        "MU stock",
-        "Micron Technology, Inc. stock",
-        "hot stock risk checklist",
-        "market catalyst explained"
+        "SpaceX IPO",
+        "pre-IPO investing",
+        "SpaceX stock",
+        "how to buy SpaceX"
       ],
-      "visualSignature": "2026-06-03-26920216440",
-      "schemaVersion": 3,
+      "visualSignature": "2026-06-03-26932675396",
+      "schemaVersion": 4,
       "slotIndex": 6,
-      "postedAtUtc": "2026-06-03T23:52:04.138Z",
+      "postedAtUtc": "2026-06-04T05:31:35.889Z",
       "tickersFeatured": [],
       "topicCategory": "HOW_TO",
-      "hookFormulaId": "REVERSE_SURVIVORSHIP",
-      "ctaId": "share_use_case",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "comment_genuine_question",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
       "visualStylesUsed": [
-        "NEON_TERMINAL",
-        "PORTFOLIO_DOUGHNUT_PORTRAIT",
-        "CAP_TABLE_GRID",
-        "REDDIT_POST_SCREENSHOT",
-        "TICKER_TAPE_HERO",
-        "EDITORIAL_STAT_CARD"
+        "EDITORIAL_REACTION_CARICATURE",
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "LINE_CHART",
+        "CARICATURE_PORTRAIT",
+        "CHESS_BOARD_STRATEGY",
+        "ARCHITECTURAL_OVERLAY",
+        "SPACE_EXPLORATION"
       ],
-      "coverVisualStyle": "NEON_TERMINAL",
+      "coverVisualStyle": "EDITORIAL_REACTION_CARICATURE",
       "portraitSubjects": [],
       "archetypesUsed": [],
       "colorSchemeUsed": {
-        "bg": "#09090D",
+        "bg": "#0A0A0A",
         "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FF2E93"
+        "accent1": "#FF2E93",
+        "accent2": "#00CFFF"
       },
-      "dominantSubjectClass": "TYPOGRAPHY",
+      "dominantSubjectClass": "PORTRAIT",
+      "topicFamily": "IPO",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "TIMELY_FIRST",
       "visualPlan": {
-        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:TYPOGRAPHIC_POSTER:935895944",
+        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:EDITORIAL_PORTRAIT:481362371",
         "structureFamily": "EDITORIAL_MYTH_BUST",
-        "coverMechanism": "TYPOGRAPHIC_POSTER",
+        "coverMechanism": "EDITORIAL_PORTRAIT",
+        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
         "sceneConceptIds": [
-          "EDITORIAL_MYTH_BUST:NEON_TERMINAL:top",
-          "EDITORIAL_MYTH_BUST:PORTFOLIO_DOUGHNUT_PORTRAIT:background",
-          "EDITORIAL_MYTH_BUST:CAP_TABLE_GRID:left",
-          "EDITORIAL_MYTH_BUST:REDDIT_POST_SCREENSHOT:center",
-          "EDITORIAL_MYTH_BUST:TICKER_TAPE_HERO:background",
-          "EDITORIAL_MYTH_BUST:EDITORIAL_STAT_CARD:left"
+          "EDITORIAL_MYTH_BUST:EDITORIAL_REACTION_CARICATURE:background",
+          "EDITORIAL_MYTH_BUST:TYPOGRAPHIC_MEGA_NUMBER:center",
+          "EDITORIAL_MYTH_BUST:LINE_CHART:background",
+          "EDITORIAL_MYTH_BUST:CARICATURE_PORTRAIT:top",
+          "EDITORIAL_MYTH_BUST:CHESS_BOARD_STRATEGY:top",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top",
+          "EDITORIAL_MYTH_BUST:SPACE_EXPLORATION:top"
         ],
-        "ctaConceptId": "share_use_case:EDITORIAL_STAT_CARD",
-        "usedFallback": true,
+        "ctaConceptId": "QUESTION_CARD:SPACE_EXPLORATION",
+        "usedFallback": false,
         "slides": [
           {
             "slideNumber": 1,
-            "layoutArchetype": "hero-top",
-            "primaryEncoding": "terminal",
-            "visualStyle": "NEON_TERMINAL",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:NEON_TERMINAL:top",
-            "promptFingerprint": "pf_vtqn75"
+            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
+            "bucket": "Human",
+            "visualPosition": "background",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:EDITORIAL_REACTION_CARICATURE:background",
+            "promptFingerprint": "pf_estfal"
           },
           {
             "slideNumber": 2,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "donut-portrait",
-            "visualStyle": "PORTFOLIO_DOUGHNUT_PORTRAIT",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "PORTRAIT",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:PORTFOLIO_DOUGHNUT_PORTRAIT:background",
-            "promptFingerprint": "pf_ac809u"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "logo-grid",
-            "visualStyle": "CAP_TABLE_GRID",
-            "bucket": "Data",
-            "visualPosition": "left",
-            "dominantSubjectClass": "CHART",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:CAP_TABLE_GRID:left",
-            "promptFingerprint": "pf_d7x4ub"
-          },
-          {
-            "slideNumber": 4,
             "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "social-mock",
-            "visualStyle": "REDDIT_POST_SCREENSHOT",
+            "primaryEncoding": "mega-number",
+            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
             "bucket": "Layout",
             "visualPosition": "center",
             "dominantSubjectClass": "TYPOGRAPHY",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:REDDIT_POST_SCREENSHOT:center",
-            "promptFingerprint": "pf_g2wgan"
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:TYPOGRAPHIC_MEGA_NUMBER:center",
+            "promptFingerprint": "pf_rok1qn"
           },
           {
-            "slideNumber": 5,
+            "slideNumber": 3,
             "layoutArchetype": "full-bleed",
-            "primaryEncoding": "ticker-tape",
-            "visualStyle": "TICKER_TAPE_HERO",
+            "primaryEncoding": "line",
+            "visualStyle": "LINE_CHART",
             "bucket": "Data",
             "visualPosition": "background",
             "dominantSubjectClass": "CHART",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:TICKER_TAPE_HERO:background",
-            "promptFingerprint": "pf_v1c2m3"
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:LINE_CHART:background",
+            "promptFingerprint": "pf_fbqe8p"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:CARICATURE_PORTRAIT:top",
+            "promptFingerprint": "pf_wvjfut"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "CHESS_BOARD_STRATEGY",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "CHESS",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:CHESS_BOARD_STRATEGY:top",
+            "promptFingerprint": "pf_79nyy3"
           },
           {
             "slideNumber": 6,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "stat-card",
-            "visualStyle": "EDITORIAL_STAT_CARD",
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
             "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:EDITORIAL_STAT_CARD:left",
-            "promptFingerprint": "pf_a9id5a"
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top",
+            "promptFingerprint": "pf_w97o3g"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "SPACE_EXPLORATION",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "SPACE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:SPACE_EXPLORATION:top",
+            "promptFingerprint": "pf_1czm01"
           }
         ]
       }
