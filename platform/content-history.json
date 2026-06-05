@@ -4597,6 +4597,160 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-05",
+      "topic": "How President Trump's Policies Impact the Tech Sector",
+      "hook": "What the new policies mean for Tech.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 7,
+      "keywords": [
+        "portfolio check",
+        "investing checklist",
+        "risk management"
+      ],
+      "visualSignature": "2026-06-05-27037162198",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-06-05T20:08:44.140Z",
+      "tickersFeatured": [],
+      "topicCategory": "POLICY",
+      "hookFormulaId": "DECISION_FORK",
+      "ctaId": "save_specific",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "AREA_CHART",
+        "CORPORATE_OFFICE_SPACE",
+        "SANKEY_DIAGRAM",
+        "ANIMAL_METAPHOR",
+        "EARNINGS_HEAT_TABLE",
+        "LUXURY_LIFESTYLE",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "AREA_CHART",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFB000",
+        "accent2": "#00CFFF"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "GENERAL",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:519512369",
+        "structureFamily": "DATA_SNAPSHOT",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "DATA_SNAPSHOT:AREA_CHART:background",
+          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top",
+          "DATA_SNAPSHOT:SANKEY_DIAGRAM:background",
+          "DATA_SNAPSHOT:ANIMAL_METAPHOR:top",
+          "DATA_SNAPSHOT:EARNINGS_HEAT_TABLE:background",
+          "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top",
+          "DATA_SNAPSHOT:MAGAZINE_COVER:top"
+        ],
+        "ctaConceptId": "SAVE_CARD:MAGAZINE_COVER",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "area",
+            "visualStyle": "AREA_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:AREA_CHART:background",
+            "promptFingerprint": "pf_y3tuj4"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "architecture",
+            "visualStyle": "CORPORATE_OFFICE_SPACE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top",
+            "promptFingerprint": "pf_nquwol"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:SANKEY_DIAGRAM:background",
+            "promptFingerprint": "pf_jbz9vp"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "ANIMAL_METAPHOR",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "BULL_BEAR",
+            "sceneConceptId": "DATA_SNAPSHOT:ANIMAL_METAPHOR:top",
+            "promptFingerprint": "pf_3aspf8"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "heat-table",
+            "visualStyle": "EARNINGS_HEAT_TABLE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:EARNINGS_HEAT_TABLE:background",
+            "promptFingerprint": "pf_thxish"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top",
+            "promptFingerprint": "pf_6pshrp"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:MAGAZINE_COVER:top",
+            "promptFingerprint": "pf_vmucuh"
+          }
+        ]
+      }
     }
   ]
 }
