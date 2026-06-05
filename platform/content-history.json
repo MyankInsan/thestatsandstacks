@@ -4894,163 +4894,6 @@
     },
     {
       "date": "2026-06-05",
-      "topic": "Why the First $100K Feels So Slow for Canadian Investors",
-      "hook": "The first $100K feels slow.",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
-      "slideCount": 7,
-      "keywords": [
-        "retirement planning",
-        "how to buy retirement home",
-        "senior living finance",
-        "investor protection"
-      ],
-      "visualSignature": "2026-06-05-27042641689",
-      "schemaVersion": 4,
-      "slotIndex": 5,
-      "postedAtUtc": "2026-06-05T22:15:30.954Z",
-      "tickersFeatured": [],
-      "topicCategory": "HOUSING",
-      "hookFormulaId": "QUIET_COMPOUNDER",
-      "ctaId": "reference_save",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "COMPARISON_TABLE",
-        "SPACE_EXPLORATION",
-        "HEATMAP_GRID",
-        "GAMING_LEVEL_UP",
-        "CIRCULAR_PORTFOLIO_WHEEL",
-        "CROWD_PANIC",
-        "ARCHITECTURAL_OVERLAY"
-      ],
-      "coverVisualStyle": "COMPARISON_TABLE",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "canadian_uni_grad_25"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0B0E0C",
-        "primaryText": "#F2F2F0",
-        "accent1": "#7FB08A",
-        "accent2": "#D8C7A0"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "GENERAL",
-      "sourceTier": "REPUTABLE_PRESS",
-      "topicMode": "EVERGREEN_OR_TIMELY",
-      "visualPlan": {
-        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:SPLIT_CONTRAST:1946010349",
-        "structureFamily": "PREMIUM_LIFESTYLE",
-        "coverMechanism": "SPLIT_CONTRAST",
-        "coverLayoutFamily": "SPLIT_EDITORIAL",
-        "sceneConceptIds": [
-          "PREMIUM_LIFESTYLE:COMPARISON_TABLE:left",
-          "PREMIUM_LIFESTYLE:SPACE_EXPLORATION:top",
-          "PREMIUM_LIFESTYLE:HEATMAP_GRID:background",
-          "PREMIUM_LIFESTYLE:GAMING_LEVEL_UP:top",
-          "PREMIUM_LIFESTYLE:CIRCULAR_PORTFOLIO_WHEEL:background",
-          "PREMIUM_LIFESTYLE:CROWD_PANIC:top",
-          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top"
-        ],
-        "ctaConceptId": "CHECKLIST_RECEIPT:ARCHITECTURAL_OVERLAY",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-SPLIT_EDITORIAL",
-            "primaryEncoding": "table",
-            "visualStyle": "COMPARISON_TABLE",
-            "bucket": "Data",
-            "visualPosition": "left",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:COMPARISON_TABLE:left",
-            "promptFingerprint": "pf_qxinnx"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "SPACE_EXPLORATION",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "SPACE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:SPACE_EXPLORATION:top",
-            "promptFingerprint": "pf_u9lctd"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "heatmap",
-            "visualStyle": "HEATMAP_GRID",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:HEATMAP_GRID:background",
-            "promptFingerprint": "pf_ic08c9"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "GAMING_LEVEL_UP",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "GAMING",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:GAMING_LEVEL_UP:top",
-            "promptFingerprint": "pf_aqtif"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "portfolio-wheel",
-            "visualStyle": "CIRCULAR_PORTFOLIO_WHEEL",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:CIRCULAR_PORTFOLIO_WHEEL:background",
-            "promptFingerprint": "pf_rl30lt"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CROWD_PANIC",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CROWD",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:CROWD_PANIC:top",
-            "promptFingerprint": "pf_i9br3v"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top",
-            "promptFingerprint": "pf_pybmcm"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-05",
       "topic": "TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?",
       "hook": "Most Canadians pick the wrong account first.",
       "format": "CAROUSEL",
@@ -5199,6 +5042,161 @@
             "motifTag": "NONE",
             "sceneConceptId": "EDITORIAL_MYTH_BUST:NEON_TERMINAL:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_kgyjmo"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-06-05",
+      "topic": "401k vs Roth IRA: Which Account Should Americans Use First?",
+      "hook": "Most Americans pick the wrong account first.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 7,
+      "keywords": [
+        "Social Security rules 2026",
+        "turning 62 retirement",
+        "retirement account rules",
+        "early retirement age"
+      ],
+      "visualSignature": "2026-06-05-27045214162",
+      "schemaVersion": 4,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-06-05T23:27:58.646Z",
+      "tickersFeatured": [],
+      "topicCategory": "TAX_ACCT",
+      "hookFormulaId": "QUIET_COMPOUNDER",
+      "ctaId": "share_use_case",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "CROWD_PANIC",
+        "ARCHITECTURAL_OVERLAY",
+        "CANDLESTICK_PATTERN_ANNOTATED",
+        "NEON_TERMINAL",
+        "TRADING_DESK_OVERLAY",
+        "EDITORIAL_REACTION_CARICATURE",
+        "PORTFOLIO_BAR_RACE"
+      ],
+      "coverVisualStyle": "CROWD_PANIC",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FFFFFF"
+      },
+      "dominantSubjectClass": "CROWD",
+      "topicFamily": "ACCT_COMPARISON",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:CINEMATIC_SCENE:678360173",
+        "structureFamily": "PREMIUM_LIFESTYLE",
+        "coverMechanism": "CINEMATIC_SCENE",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "PREMIUM_LIFESTYLE:CROWD_PANIC:background:FILING_EXCERPT",
+          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:CANDLESTICK_PATTERN_ANNOTATED:background:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:NEON_TERMINAL:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:TRADING_DESK_OVERLAY:background:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:PORTFOLIO_BAR_RACE:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:PORTFOLIO_BAR_RACE",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:CROWD_PANIC:background:FILING_EXCERPT",
+            "promptFingerprint": "pf_h79ms0"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_pga77z"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_PATTERN_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:CANDLESTICK_PATTERN_ANNOTATED:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_imn0ho"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "terminal",
+            "visualStyle": "NEON_TERMINAL",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:NEON_TERMINAL:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_f17qiu"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "typography",
+            "visualStyle": "TRADING_DESK_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:TRADING_DESK_OVERLAY:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_mhp1os"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_dd6039"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "bar-race",
+            "visualStyle": "PORTFOLIO_BAR_RACE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:PORTFOLIO_BAR_RACE:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_ngfjrh"
           }
         ]
       }
