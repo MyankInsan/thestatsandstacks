@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { VisualPlanAgent, dominantSubjectClassFor } from '../src/lib/agents/visualPlanAgent';
 import { SlideNarrativeAgent } from '../src/lib/agents/slideNarrativeAgent';
+import { EvidenceArtifactAgent } from '../src/lib/agents/evidenceArtifactAgent';
 import type { CarouselConstraints } from '../src/lib/agents/carouselConstraintAgent';
 import type { StrategyDecision } from '../src/lib/agents/contentStrategyAgent';
 import type { FormatDecision } from '../src/lib/agents/formatStyleAgent';
@@ -104,6 +105,29 @@ test('VisualPlanAgent: composition signature is deterministic and storyboard is 
   assert.ok(a.plan.storyboard.anchorPrompt.length > 0);
   assert.ok(a.plan.storyboard.progressionRule.length > 0);
   assert.ok(a.plan.storyboard.resolutionRule.length > 0);
+});
+
+test('VisualPlanAgent attaches deterministic evidence artifacts to each slide and storyboard', () => {
+  const evidenceArtifactPlan = new EvidenceArtifactAgent().execute({
+    strategy,
+    tickerSymbols: ['NVDA'],
+    slideCount: format.slideCount,
+  });
+  const result = new VisualPlanAgent().execute({
+    strategy,
+    format,
+    constraints: makeConstraints(),
+    tickerSymbols: ['NVDA'],
+    dateKey: '2026-06-02',
+    slotIndex: 1,
+    evidenceArtifactPlan,
+  });
+
+  assert.equal(result.plan.evidenceArtifactPlan, evidenceArtifactPlan);
+  assert.equal(result.plan.storyboard.evidenceArtifactPlan, evidenceArtifactPlan);
+  assert.equal(result.plan.slides[0].evidenceArtifact?.kind, 'EARNINGS_TABLE');
+  assert.match(result.plan.slides[0].storyboardBeat, /evidence artifact/i);
+  assert.ok(result.plan.storyboard.sharedVisualInvariants.some((rule) => /evidence artifact/i.test(rule)));
 });
 
 test('dominantSubjectClassFor maps known styles', () => {

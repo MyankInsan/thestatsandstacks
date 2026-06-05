@@ -12,6 +12,7 @@ import { ContentStrategyAgent } from './src/lib/agents/contentStrategyAgent';
 import { FormatStyleAgent } from './src/lib/agents/formatStyleAgent';
 import { CarouselConstraintAgent } from './src/lib/agents/carouselConstraintAgent';
 import { FinancialVizPicker } from './src/lib/agents/financialVizPicker';
+import { EvidenceArtifactAgent } from './src/lib/agents/evidenceArtifactAgent';
 import { VisualPlanAgent } from './src/lib/agents/visualPlanAgent';
 import { SlideNarrativeAgent } from './src/lib/agents/slideNarrativeAgent';
 import { ComplianceQAAgent } from './src/lib/agents/complianceQAAgent';
@@ -220,6 +221,19 @@ async function main() {
   console.log(`   Tone:   ${format.visualTone}`);
   console.log('');
 
+  // ── AGENT 6.5: EVIDENCE ARTIFACTS ──────────────────────────────────────────
+  console.log('━━━ AGENT 6.5: EVIDENCE ARTIFACTS ━━━');
+  const evidenceArtifactPlan = new EvidenceArtifactAgent().execute({
+    strategy,
+    tickerSymbols: activeTickers,
+    slideCount: format.slideCount,
+  });
+  console.log(`   Premise: ${evidenceArtifactPlan.premise}`);
+  evidenceArtifactPlan.artifacts.forEach((artifact) => {
+    console.log(`   Slide ${artifact.slideNumber}: ${artifact.kind} — ${artifact.label}`);
+  });
+  console.log('');
+
   // ── AGENT 7: CAROUSEL CONSTRAINTS ───────────────────────────────────────────
   console.log('━━━ AGENT 7: CAROUSEL CONSTRAINTS ━━━');
   const vizPicker = new FinancialVizPicker();
@@ -263,6 +277,7 @@ async function main() {
     slotIndex: slotContext.slotIndex,
     recentHistory: contentHistory,
     todayPriorEntries: slotContext.todayPriorEntries,
+    evidenceArtifactPlan,
   });
   const visualPlan = visualPlanResult.plan;
   console.log(`   Structure family: ${visualPlan.structureFamily}  |  cover: ${visualPlan.coverMechanism ?? 'n/a'}`);
@@ -377,6 +392,11 @@ async function main() {
       topicMode: slotContext.config.topicMode,
       engagementScore: qcReport.engagementScore,
       rankedTrends: rankedTrendSnapshot,
+      evidenceArtifacts: evidenceArtifactPlan.artifacts.map((artifact) => ({
+        slideNumber: artifact.slideNumber,
+        kind: artifact.kind,
+        label: artifact.label,
+      })),
       capturedAt: new Date().toISOString(),
     }, null, 2),
     'utf-8',

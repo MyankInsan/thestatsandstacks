@@ -5,10 +5,12 @@ import { isLightBackground, type FormatDecision } from './formatStyleAgent';
 import type { StrategyDecision } from './contentStrategyAgent';
 import type { CarouselConstraints } from './carouselConstraintAgent';
 import type { ContentHistoryEntry } from '../services/contentHistory';
-import { PROMPT_LIBRARY, type ViralStyle } from './promptLibrary';
+import { EXCLUDED_FROM_ROTATION, PROMPT_LIBRARY, type ViralStyle } from './promptLibrary';
 import { recommendModelForStyle, modelRecommendationLabel } from './modelRecommendation';
 import { TickerLogoAgent } from './tickerLogoAgent';
+import { NAMED_BY_SLUG } from './portraitLibrary';
 import { INTEGRATED_TEXT_FAMILIES, cameraTreatmentFor, cameraDirective, type StoryboardContinuity, type CoverLayoutFamily, type CtaVisualConcept } from './visualPlanAgent';
+import type { EvidenceArtifact } from './evidenceArtifactAgent';
 
 export interface SlideImagePrompt {
   slideNumber: number;
@@ -94,6 +96,76 @@ function simpleHash(str: string): number {
     h = ((h << 5) - h + str.charCodeAt(i)) | 0;
   }
   return Math.abs(h);
+}
+
+const UNRESOLVED_PLACEHOLDER_RE = /\$X{2,}(?:,\s*X{3})*|XX,XXX|\bX\s*%/i;
+const EXCLUDED_STYLE_SET = new Set<ViralStyle>(EXCLUDED_FROM_ROTATION);
+
+function hasUnresolvedPlaceholder(value: string | undefined): boolean {
+  return Boolean(value && UNRESOLVED_PLACEHOLDER_RE.test(value));
+}
+
+function sanitizeRenderText(value: string | undefined, replacement: string): string | undefined {
+  if (!value) return undefined;
+  return hasUnresolvedPlaceholder(value) ? replacement : value;
+}
+
+function resolveTickerPortrait(tickerSymbols?: string[]): { displayName: string; promptHint: string } | undefined {
+  if (!tickerSymbols || tickerSymbols.length === 0) return undefined;
+  const agent = new TickerLogoAgent();
+  for (const ticker of tickerSymbols) {
+    const portraitSlug = agent.resolve(ticker)?.portraitSubject;
+    if (!portraitSlug) continue;
+    const named = NAMED_BY_SLUG[portraitSlug];
+    if (named) return { displayName: named.displayName, promptHint: `${named.displayName}, ${named.promptHint}` };
+  }
+  return undefined;
+}
+
+const REAL_WORLD_ANCHORS_BY_TICKER: Record<string, string[]> = {
+  NVDA: [
+    'Jensen Huang only when a portrait is useful',
+    'NVIDIA GPU / AI accelerator hardware, data-center racks, or a GTC keynote-stage visual',
+    'NVIDIA earnings table, split-adjusted price timeline, or product-roadmap slide',
+  ],
+  LULU: [
+    'Lululemon storefront, mall entrance, sales floor, apparel rack, or fabric tag',
+    'inventory / markdown / traffic evidence shown as a receipt, store checklist, or earnings filing excerpt',
+    'consumer-discretionary heat table focused on retail context, not unrelated mega-cap logos',
+  ],
+};
+
+function buildEditorialRealismContract(tickerSymbols?: string[]): string {
+  const symbols = tickerSymbols ?? [];
+  const agent = new TickerLogoAgent();
+  const resolved = agent.resolveMany(symbols).filter((item) => item.entry);
+  const logoLine = resolved.length > 0
+    ? `Only use the listed ticker logos: ${resolved.map((item) => `${item.ticker} (${item.entry!.companyName}: ${item.entry!.markStyle})`).join(', ')}. Do NOT add unrelated company logos, ticker wheels, or decorative logo orbits.`
+    : 'No ticker logos are required. Do NOT invent company logos, ticker wheels, or decorative logo orbits.';
+
+  const anchorLines = symbols
+    .flatMap((symbol) => {
+      const entry = agent.resolve(symbol);
+      const specific = REAL_WORLD_ANCHORS_BY_TICKER[symbol.toUpperCase()] ?? [];
+      const companyLine = entry
+        ? [`${symbol.toUpperCase()} / ${entry.companyName}: use company-specific artifacts, filings, product/storefront evidence, or a verified chart before any decorative metaphor.`]
+        : [`${symbol.toUpperCase()}: use a verified chart, filing excerpt, product/storefront evidence, or source-document artifact before any decorative metaphor.`];
+      return [...companyLine, ...specific.map((anchor) => `  - ${anchor}`)];
+    });
+
+  const anchors = anchorLines.length > 0
+    ? anchorLines.map((line) => `- ${line}`).join('\n')
+    : '- Use real-world evidence objects: source documents, bank/brokerage UI, receipts, filings, annotated charts, physical product/store scenes, or real market-data surfaces.';
+
+  return [
+    'Make this look researched by a human editor, not generated from generic AI-finance aesthetics.',
+    'Every slide needs a concrete evidence anchor: a real-world object, document, chart, storefront/product detail, named public figure when appropriate, or source-style interface that naturally belongs to the topic.',
+    logoLine,
+    'If no named public figure is supplied, avoid fake finance influencers and generic portfolio-manager faces; use hands, silhouettes, over-the-shoulder views, product/store scenes, documents, or non-identifiable people.',
+    'Avoid synthetic tells: random floating logo halos, glowing HUD webs, fantasy CGI metaphors, impossible luxury props, plastic skin, and repetitive top-text/bottom-object poster layouts.',
+    'Topic-specific anchors:',
+    anchors,
+  ].join('\n');
 }
 
 /**
@@ -287,7 +359,7 @@ export class ImagePromptAgent extends BaseAgent {
         visualDescription = buildFallbackVisualDescription(slide, input.format, input.constraints, varietySeed, input.tickerSymbols);
       }
 
-      const compiledPrompt = compilePromptString(slide, visualDescription, input.format, input.constraints, input.storyboard);
+      const compiledPrompt = compilePromptString(slide, visualDescription, input.format, input.constraints, input.storyboard, input.tickerSymbols);
       const recommended = recommendModelForStyle(slide.visualStyle);
       const canvaFallback = CANVA_FALLBACK_STYLES.includes(slide.visualStyle);
       const canvaFallbackData = canvaFallback ? buildCanvaFallbackData(slide, input.tickerSymbols ?? []) : undefined;
@@ -335,8 +407,11 @@ function buildLlmPrompt(input: {
 
   const recentBlock = buildRecentMemoryBlock(input.recentHistory ?? []);
 
+  const tickerPortrait = resolveTickerPortrait(input.tickerSymbols);
   const portraitSection = input.constraints?.portraitSelection
     ? `PORTRAIT (use as written; do NOT substitute another person):\n- Tier ${input.constraints.portraitSelection.tier}\n- Subject slug: ${input.constraints.portraitSelection.slug}\n- Render description: "${input.constraints.portraitSelection.promptHint}"`
+    : tickerPortrait
+      ? `PORTRAIT (ticker-linked; use as written when a portrait-style slide appears):\n- Subject: ${tickerPortrait.displayName}\n- Render description: "${tickerPortrait.promptHint}"\n- Do NOT substitute a generic portfolio manager.`
     : 'PORTRAIT: none required for this carousel.';
 
   const ctaSection = input.constraints
@@ -344,8 +419,10 @@ function buildLlmPrompt(input: {
     : '';
 
   const tickerLogoSection = buildTickerLogoSection(input.tickerSymbols ?? []);
+  const editorialRealismContract = buildEditorialRealismContract(input.tickerSymbols);
 
   const styleReference = Object.entries(PROMPT_LIBRARY)
+    .filter(([style]) => !EXCLUDED_STYLE_SET.has(style as ViralStyle))
     .filter(([style]) => !['POP_CULTURE_PORTRAIT', 'FLUID_LIQUID_TEXT', 'BILLBOARD_HIGHWAY', 'GRUNGE_STREET_POSTER', 'GLASSMORPHISM_UI'].includes(style))
     .map(([style, desc]) => `- ${style}: ${desc}`)
     .join('\n');
@@ -366,6 +443,9 @@ ${portraitSection}
 ${ctaSection}
 
 ${tickerLogoSection}
+
+EDITORIAL REALISM CONTRACT:
+${editorialRealismContract}
 
 SLIDE SPECS:
 ${JSON.stringify(slidesJson, null, 2)}
@@ -432,7 +512,7 @@ function buildTickerLogoSection(tickerSymbols: string[]): string {
   const resolved = agent.resolveMany(tickerSymbols).filter((r) => r.entry);
   if (resolved.length === 0) return 'TICKER LOGOS: none in static map.';
   const lines = resolved.map((r) => `- ${r.ticker} (${r.entry!.companyName}): ${r.entry!.markStyle} in brand color ${r.entry!.brandColorHex}`);
-  return `TICKER LOGOS (render exactly as described — do not invent alternate brand marks):\n${lines.join('\n')}`;
+  return `TICKER LOGOS (render exactly as described — do not invent alternate brand marks, and do not add logos for companies that are not listed here):\n${lines.join('\n')}`;
 }
 
 function getSatiricalConcept(headline: string, subtext: string): string {
@@ -444,7 +524,7 @@ function getSatiricalConcept(headline: string, subtext: string): string {
     return 'An exquisite, architecturally complex birdhouse constructed entirely from meticulously stacked, gleaming Canadian Gold Maple Leaf coins, featuring a polished walnut roof and brass perches. The birdhouse sits on a perfectly manicured velvet moss turf under a focused studio spotlight. The background is a soft, dark forest green gradient. Shot on Hasselblad H6D-100c, f/4, crisp details of coin engravings, ultra-premium editorial print style';
   }
   if (text.includes('saving') || text.includes('hisa') || text.includes('gic') || text.includes('cash')) {
-    return 'A heavy, monolithic safe crafted from polished black obsidian with a brushed platinum dial and hinges, its door slightly ajar to reveal a single, delicate green seed sprouting a detailed, glowing 24k gold leaf in the center. Volumetric lighting casts a soft amber glow from inside the safe. Smoked oak floor, high contrast, clean minimalist layout, shot on Phase One IQ4, tilt-shift lens';
+    return 'A clean editorial rate-ladder board built from matte black metal rails and cream index cards, each card showing a different cash bucket and time horizon. A single amber desk lamp creates precise shadows across the cards; no vault, no gold bars, no sprout imagery. Shot on Phase One IQ4, tilt-shift lens, restrained financial-publication aesthetic';
   }
   if (text.includes('inflation') || text.includes('price') || text.includes('cost')) {
     return 'A highly detailed vintage brass scale where a single pristine coffee bean balances perfectly against a heavy, towering stack of crisp paper bills. The scale is set on a dark, polished mahogany table, with soft morning window light creating long, elegant shadows. Shallow depth of field, warm key light, shot on Hasselblad H6D-100c, f/2.8';
@@ -458,18 +538,18 @@ function getSatiricalConcept(headline: string, subtext: string): string {
 function getAnimalMetaphor(headline: string, subtext: string): string {
   const text = `${headline} ${subtext}`.toLowerCase();
   if (text.includes('bull') || text.includes('grow') || text.includes('rise') || text.includes('gain')) {
-    return 'A majestic, muscular charging bull sculpted entirely from raw, polished green emerald, with its hooves kicking up a fine, shimmering jade dust. The bull charges forward through a dark, smoky studio space with a single glowing green line chart reflecting off its crystalline body. Dramatic rim lighting, high contrast, shot on ARRI Alexa 65, cinematic color grading';
+    return 'A premium editorial data sculpture: stacked translucent revenue bars rising across a matte black plinth, with one clean annotated line chart arcing above them. No animals, no statues, no market mascots. Dramatic rim lighting, high contrast, shot on ARRI Alexa 65, cinematic color grading';
   }
   if (text.includes('bear') || text.includes('fall') || text.includes('drop') || text.includes('crash')) {
-    return 'A fierce, roaring grizzly bear sculpted from rough, charcoal-textured volcanic stone with glowing red lava-like veins running across its body. The background is a dark, desaturated space with a single desaturated red line chart fading into the shadows. Intense rim lighting, dramatic high-contrast composition, shot on ARRI Alexa 65 anamorphic';
+    return 'A restrained downside-risk tableau: a cracked ceramic price tile resting beside a red annotated drawdown line on matte black paper. No animals, no statues, no mascots. Intense rim lighting, dramatic high-contrast composition, shot on ARRI Alexa 65 anamorphic';
   }
   if (text.includes('speed') || text.includes('fast') || text.includes('momentum')) {
-    return 'A sleek, aerodynamic cheetah crafted from polished black obsidian with glowing 24k gold accents, captured mid-sprint across a dark synthwave grid. Shimmering gold particles streak behind its body, implying high speed. High-speed action, cinematic rim lighting, premium retro-futurist aesthetic, shot on ARRI Alexa 65';
+    return 'A high-speed financial terminal wall captured with controlled motion blur: clean price ticks cascade diagonally while one annotated signal remains razor sharp. No race cars, rockets, animals, or mascots. Cinematic rim lighting, premium retro-futurist aesthetic, shot on ARRI Alexa 65';
   }
   if (text.includes('safe') || text.includes('protect') || text.includes('secure')) {
-    return 'A powerful golden lion resting its paw protectively over a glowing, intricate holographic shield on a dark marble floor. Warm golden-hour light catches the lion\'s mane and reflects off the sleek blue holographic shield. Museum-style spotlighting, deep shadows, Phase One IQ4';
+    return 'A calm risk-control dashboard rendered as layered translucent screens over a matte desk, with one clean shield-shaped allocation grid in the center. No animals, no vault, no globe. Museum-style spotlighting, deep shadows, Phase One IQ4';
   }
-  return 'A majestic white falcon with silver-tipped feathers and sharp brass talons, soaring high above a geometric, desaturated cityscape at sunrise. The soft morning light catches the falcon\'s wings, creating a warm, elegant rim glow. Clean minimalist composition, generous negative space, shot on Phase One IQ4';
+  return 'A clean abstract portfolio map made of thin brass lines and labeled matte tiles, viewed from above on dark stone. The composition feels analytical and premium, with generous negative space, no animals, no mascots, shot on Phase One IQ4';
 }
 
 function getFunnyComparison(headline: string, subtext: string): { left: string; right: string } {
@@ -477,18 +557,18 @@ function getFunnyComparison(headline: string, subtext: string): { left: string; 
   if (text.includes('tfsa') || text.includes('rrsp') || text.includes('fhsa')) {
     return {
       left: 'a sleek golden pedestal with a single, highly detailed, glowing golden coin representing a disciplined investor\'s tax-free account. The coin is beautifully engraved with a geometric pattern of compounding lines',
-      right: 'a chaotic, burning pile of lottery tickets, crumpled paper, and a tiny plastic toy rocket ship representing a speculative investor\'s reckless portfolio, with smoke rising in the background'
+      right: 'a chaotic pile of lottery tickets, crumpled receipts, and torn brokerage confirmations representing a speculative investor\'s reckless portfolio, with smoke rising in the background'
     };
   }
   if (text.includes('hisa') || text.includes('gic')) {
     return {
-      left: 'a modern, clean glass vault showing neatly stacked bundles of cash, perfectly protected and organized, lit by a cool blue light',
+      left: 'a modern rate-ladder card showing neatly organized cash buckets and maturity dates, lit by a cool blue light',
       right: 'a leaky, water-damaged paper bag filled with rusty coins resting in a puddle of water, representing cash losing value to inflation, lit by a harsh, yellow light'
     };
   }
   return {
     left: 'a sleek golden pedestal with a single, highly detailed, glowing golden coin representing a disciplined investor\'s portfolio, beautifully shot in warm key light',
-    right: 'a chaotic, burning pile of lottery tickets, crumpled paper, and a tiny plastic toy rocket ship representing a speculative investor\'s reckless portfolio, shot in cool side-lighting'
+    right: 'a chaotic pile of lottery tickets, crumpled receipts, and torn brokerage confirmations representing a speculative investor\'s reckless portfolio, shot in cool side-lighting'
   };
 }
 
@@ -526,7 +606,7 @@ function buildFallbackVisualDescription(
   tickerSymbols?: string[],
  ): string {
   const { colorScheme } = format;
-  const templateKey = pickFallbackStyle(slide.visualStyle, constraints);
+  const templateKey = pickFallbackStyle(slide.visualStyle);
   
   let template = getSceneVarySubstitutedTemplate(templateKey, slide.slideNumber, dateKey, tickerSymbols);
   if (!template) {
@@ -554,8 +634,15 @@ function buildFallbackVisualDescription(
       .replace(/Reflective black floor/gi, 'Reflective light floor');
   }
 
-  const portraitDescription = constraints?.portraitSelection?.promptHint ?? 'a sharp 50-something portfolio manager with silver hair, navy chalk-stripe suit, no tie';
-  const stock = (slide.dataPoint && /[A-Z0-9\-\.\^]{2,8}/.test(slide.dataPoint)) ? slide.dataPoint.match(/[A-Z0-9\-\.\^]{2,8}/)![0] : 'a major company';
+  const tickerPortrait = resolveTickerPortrait(tickerSymbols);
+  const portraitDescription = constraints?.portraitSelection?.promptHint
+    ?? tickerPortrait?.promptHint
+    ?? 'an anonymous non-identifiable finance professional shown as a backlit silhouette, face not visible';
+  const portraitSubject = constraints?.portraitSelection?.displayName
+    ?? tickerPortrait?.displayName
+    ?? 'an anonymous non-identifiable finance professional';
+  const cleanDataPoint = sanitizeRenderText(slide.dataPoint, 'verified move');
+  const stock = (cleanDataPoint && /[A-Z0-9\-\.\^]{2,8}/.test(cleanDataPoint)) ? cleanDataPoint.match(/[A-Z0-9\-\.\^]{2,8}/)![0] : (tickerSymbols?.[0] ?? 'a major company');
 
   const satiricalConcept = getSatiricalConcept(slide.headline, slide.subtext ?? '');
   const animalMetaphor = getAnimalMetaphor(slide.headline, slide.subtext ?? '');
@@ -568,9 +655,9 @@ function buildFallbackVisualDescription(
   const totalMatch = (slide.subtext || slide.headline).match(/\$\d+[\d,kKmM]*/);
   const total = totalMatch ? totalMatch[0] : '$15,000';
 
-  const tweetText = slide.subtext || slide.headline;
+  const tweetText = sanitizeRenderText(slide.subtext || slide.headline, 'Split-adjusted math matters') ?? 'Split-adjusted math matters';
 
-  const statsList = (slide.subtext || '')
+  const statsList = (sanitizeRenderText(slide.subtext, 'Split-adjusted math matters') || '')
     .split('|')
     .map(s => s.trim())
     .filter(Boolean);
@@ -588,11 +675,11 @@ function buildFallbackVisualDescription(
     .replace(/\[accent1\]/g, colorScheme.accent1)
     .replace(/\[accent2\]/g, colorScheme.accent2)
     .replace(/\[bg\]/g, colorScheme.bg)
-    .replace(/\[portraitSubject\]/g, constraints?.portraitSelection?.displayName ?? 'a senior portfolio manager')
+    .replace(/\[portraitSubject\]/g, portraitSubject)
     .replace(/\[portraitDescription\]/g, portraitDescription)
     .replace(/\[stock\]/g, stock)
-    .replace(/\[price\]/g, slide.dataPoint ?? 'price')
-    .replace(/\[pct\]/g, slide.dataPoint ?? 'change')
+    .replace(/\[price\]/g, cleanDataPoint ?? 'verified price')
+    .replace(/\[pct\]/g, cleanDataPoint ?? 'verified change')
     .replace(/\[text\]/g, slide.headline)
     .replace(/\[satiricalConcept\]/g, satiricalConcept)
     .replace(/\[animalMetaphor\]/g, animalMetaphor)
@@ -607,8 +694,8 @@ function buildFallbackVisualDescription(
     .replace(/\[subjectCard\]/g, subjectCard);
 }
 
-function pickFallbackStyle(suggested: ViralStyle, constraints?: CarouselConstraints): ViralStyle {
-  if (PROMPT_LIBRARY[suggested]) return suggested;
+function pickFallbackStyle(suggested: ViralStyle): ViralStyle {
+  if (PROMPT_LIBRARY[suggested] && !EXCLUDED_STYLE_SET.has(suggested)) return suggested;
   return 'ARCHITECTURAL_OVERLAY';
 }
 
@@ -664,6 +751,7 @@ function compilePromptString(
   format: FormatDecision,
   constraints?: CarouselConstraints,
   storyboard?: StoryboardContinuity,
+  tickerSymbols?: string[],
 ): string {
   const { colorScheme } = format;
 
@@ -671,51 +759,54 @@ function compilePromptString(
   // Suppress unsupported exact figures: if the narrative flagged the data point
   // as "illustrative" (inferred, not evidence-backed), do not render a precise
   // unverified number — keep the magnitude visual but label it illustrative.
-  const suppressExactFigure = /illustrative/i.test(slide.narrativeNote ?? '');
+  const hasPlaceholderFigure = hasUnresolvedPlaceholder(slide.dataPoint);
+  const suppressExactFigure = /illustrative/i.test(slide.narrativeNote ?? '') || hasPlaceholderFigure;
   const textItems: string[] = [];
 
   if (slide.eyebrow) {
     textItems.push(`a small uppercase eyebrow label reading "${slide.eyebrow}"`);
   }
   
-  if (slide.headline) {
+  const headlineText = sanitizeRenderText(slide.headline, 'VERIFY THE MATH');
+  if (headlineText) {
     if (isCover) {
-      textItems.push(`a massive bold headline reading "${slide.headline}"`);
+      textItems.push(`a massive bold headline reading "${headlineText}"`);
     } else {
       switch (slide.visualPosition) {
         case 'left':
         case 'right':
-          textItems.push(`a prominent, left-aligned bold title reading "${slide.headline}"`);
+          textItems.push(`a prominent, left-aligned bold title reading "${headlineText}"`);
           break;
         case 'center':
-          textItems.push(`a centered bold title reading "${slide.headline}"`);
+          textItems.push(`a centered bold title reading "${headlineText}"`);
           break;
         case 'background':
-          textItems.push(`a clean, left-aligned title reading "${slide.headline}"`);
+          textItems.push(`a clean, left-aligned title reading "${headlineText}"`);
           break;
         case 'top':
         default:
-          textItems.push(`a bold headline reading "${slide.headline}"`);
+          textItems.push(`a bold headline reading "${headlineText}"`);
           break;
       }
     }
   }
 
-  if (slide.subtext) {
+  const subtext = sanitizeRenderText(slide.subtext, 'Split-adjusted math matters');
+  if (subtext) {
     switch (slide.visualPosition) {
       case 'left':
       case 'right':
-        textItems.push(`a clean supporting subtext paragraph reading "${slide.subtext}"`);
+        textItems.push(`a clean supporting subtext paragraph reading "${subtext}"`);
         break;
       case 'center':
-        textItems.push(`a centered supporting line reading "${slide.subtext}"`);
+        textItems.push(`a centered supporting line reading "${subtext}"`);
         break;
       case 'background':
-        textItems.push(`a small, clean supporting caption line reading "${slide.subtext}"`);
+        textItems.push(`a small, clean supporting caption line reading "${subtext}"`);
         break;
       case 'top':
       default:
-        textItems.push(`a clean supporting line reading "${slide.subtext}"`);
+        textItems.push(`a clean supporting line reading "${subtext}"`);
         break;
     }
   }
@@ -723,7 +814,7 @@ function compilePromptString(
   if (slide.dataPoint) {
     textItems.push(
       suppressExactFigure
-        ? `an illustrative magnitude indicator (do NOT render the exact unverified figure "${slide.dataPoint}" as a precise number — show it as clearly illustrative)`
+        ? `an illustrative magnitude indicator without exact digits (show direction and scale as clearly illustrative, and use a verified figure only after manual calculation)`
         : `a hero data figure reading "${slide.dataPoint}"`,
     );
   }
@@ -776,10 +867,14 @@ function compilePromptString(
   const layoutDirective = integratedText
     ? coverFamilyLayoutDirective(coverFamily!)
     : getTextLayoutDirective(slide.visualPosition);
+  const evidenceArtifact = slide.evidenceArtifact ?? artifactForSlide(storyboard, slide.slideNumber);
+  const evidenceSubjectDirective = evidenceArtifact
+    ? `Use this concrete evidence object as the primary subject: ${evidenceArtifact.label}. ${evidenceArtifact.visualAnchor}.`
+    : '';
   // Body slides get an explicit camera/crop so the carousel varies its framing
   // (covers use their layout-family framing instead).
   const cameraNote = isCover ? '' : ` Camera framing: ${cameraDirective(cameraTreatmentFor(slide.visualStyle, slide.slideNumber))}.`;
-  const sceneDescription = `${visualDescription} ${layoutDirective}${cameraNote} The composition uses ${colorScheme.bg} as the dominant background hue with ${lightingStyle} calibrated to the visual element above.`;
+  const sceneDescription = `${evidenceSubjectDirective ? `${evidenceSubjectDirective} ` : ''}${visualDescription} ${layoutDirective}${cameraNote} The composition uses ${colorScheme.bg} as the dominant background hue with ${lightingStyle} calibrated to the visual element above.`;
 
   // Labeled-section prompt packet for ChatGPT Images 2.0 (primary manual target).
   const sections: string[] = [];
@@ -796,6 +891,10 @@ function compilePromptString(
     sections.push(`CHANGE ONLY\n- This slide's subject/scene, data graphic, and the EXACT TEXT below. Keep palette logic, type system, and the brand watermark identical to the anchor.`);
   }
 
+  sections.push(`EDITORIAL REALISM CONTRACT\n${buildEditorialRealismContract(tickerSymbols)}`);
+  if (evidenceArtifact) {
+    sections.push(`EVIDENCE ARTIFACT\nPlan premise: ${storyboard?.evidenceArtifactPlan?.premise ?? 'This slide is grounded in one concrete evidence object.'}\nShared rule: ${storyboard?.evidenceArtifactPlan?.sharedEvidenceRule ?? 'Do not replace the artifact with generic finance symbolism.'}\nKind: ${evidenceArtifact.kind}\nLabel: ${evidenceArtifact.label}\nVisual anchor: ${evidenceArtifact.visualAnchor}\nData integrity: ${evidenceArtifact.dataIntegrityNote}`);
+  }
   sections.push(`PURPOSE\n${slide.role.toUpperCase().replace(/_/g, ' ')} slide${slide.narrativeNote ? ` — ${slide.narrativeNote}` : ''}`);
   sections.push(`INFORMATION ARCHITECTURE\n${layoutDirective}`);
   sections.push(`SUBJECT AND SCENE\n${sceneDescription}`);
@@ -804,9 +903,13 @@ function compilePromptString(
   sections.push(`WATERMARK\n${WATERMARK_LINE}`);
   if (isChartData) sections.push(`DATA GRAPHIC SPECIFICATION\n${FINANCIAL_TEXT_RENDERING}`);
   sections.push(`STYLE AND MATERIALS\nPremium editorial rendering: ${lightingStyle}; named materials (brushed titanium, polished marble, oxidized brass, raw concrete, smoked oak) over generic surfaces.`);
-  sections.push(`NEGATIVE CONSTRAINTS\nHigh-end professional rendering, perfect spelling, legible typography, no overlapping letters, no extra borders, no extra digits or duplicated numerals, no AI-hand artifacts, no watermarks beyond the lower-edge brand mark.${suppressExactFigure ? ' Do NOT print the exact unverified figure as a precise number.' : ''}`);
+  sections.push(`NEGATIVE CONSTRAINTS\nHigh-end professional rendering, perfect spelling, legible typography, no overlapping letters, no extra borders, no extra digits or duplicated numerals, no AI-hand artifacts, no watermarks beyond the lower-edge brand mark, no fake finance influencer, no generic portfolio manager, no unrelated company logos, no random logo orbit, no glowing HUD web, no fantasy CGI metaphor unless it is literally requested by the slide.${suppressExactFigure ? ' Do NOT print the exact unverified figure as a precise number.' : ''}`);
 
   return sections.filter((line) => line && line.trim().length > 0).join('\n\n');
+}
+
+function artifactForSlide(storyboard: StoryboardContinuity | undefined, slideNumber: number): EvidenceArtifact | undefined {
+  return storyboard?.evidenceArtifactPlan?.artifacts.find((artifact) => artifact.slideNumber === slideNumber);
 }
 
 function buildCanvaFallbackData(slide: SlideSpec, tickerSymbols: string[]): string {

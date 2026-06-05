@@ -10,6 +10,7 @@ import type { NarrativeArc, DominantSubjectClass, ContentHistoryEntry } from '..
 import type { PortraitSelection } from './portraitLibrary';
 import type { CtaId } from './ctaLibrary';
 import { toPersistedVisualPlan, checkVisualPlanVariety } from './varietyContract';
+import type { EvidenceArtifact, EvidenceArtifactPlan } from './evidenceArtifactAgent';
 
 export type StructureFamily =
   | 'NEWS_FLASH'
@@ -124,6 +125,8 @@ export interface StoryboardContinuity {
   coverLayoutFamily?: CoverLayoutFamily;
   /** CTA visual concept — lets the image prompt render a fresh, motif-resolving CTA. */
   ctaVisualConcept?: CtaVisualConcept;
+  /** Concrete evidence objects that keep the carousel grounded in real artifacts. */
+  evidenceArtifactPlan?: EvidenceArtifactPlan;
 }
 
 export interface SlideVisualGrammar {
@@ -143,6 +146,7 @@ export interface SlideVisualGrammar {
   sceneConceptId: string;
   ctaConceptId?: string;
   ctaVisualConcept?: CtaVisualConcept;
+  evidenceArtifact?: EvidenceArtifact;
   /** The storyboard beat this slide should advance (target for the narrative). */
   storyboardBeat: string;
 }
@@ -157,6 +161,7 @@ export interface VisualPlan {
   structureFamily: StructureFamily;
   coverMechanism?: CoverMechanism;
   coverLayoutFamily?: CoverLayoutFamily;
+  evidenceArtifactPlan?: EvidenceArtifactPlan;
 }
 
 export interface VisualPlanInput {
@@ -168,6 +173,7 @@ export interface VisualPlanInput {
   slotIndex?: number;
   recentHistory?: ContentHistoryEntry[];
   todayPriorEntries?: ContentHistoryEntry[];
+  evidenceArtifactPlan?: EvidenceArtifactPlan;
 }
 
 export interface VisualPlanResult {
@@ -233,12 +239,14 @@ const STRUCTURE_FAMILY_BY_FORMAT: Record<FormatType, StructureFamily> = {
 
 const THEMATIC_STYLES_BY_FORMAT: Record<string, ViralStyle[]> = {
   PHOTOREALISTIC_NEWS_FLASH: ['ARCHITECTURAL_OVERLAY', 'CANDLESTICK_HERO', 'TICKER_TAPE_HERO', 'PRICE_TIMELINE_ANNOTATED', 'GLOWING_QUOTE', 'LINE_CHART', 'EDITORIAL_SPLIT_LAYOUT'],
-  PHOTOREALISTIC_LUXURY_LIFESTYLE: ['LUXURY_LIFESTYLE', 'MAGAZINE_COVER', 'CHESS_BOARD_STRATEGY', 'GLOWING_QUOTE', 'TYPOGRAPHIC_MEGA_NUMBER', 'EDITORIAL_SPLIT_LAYOUT', 'EDITORIAL_STAT_CARD'],
+  PHOTOREALISTIC_LUXURY_LIFESTYLE: ['LUXURY_LIFESTYLE', 'MAGAZINE_COVER', 'GLOWING_QUOTE', 'TYPOGRAPHIC_MEGA_NUMBER', 'EDITORIAL_SPLIT_LAYOUT', 'EDITORIAL_STAT_CARD', 'PRICE_TIMELINE_ANNOTATED', 'COMPARISON_TABLE'],
   PHOTOREALISTIC_MARKET_UPDATE: ['CANDLESTICK_HERO', 'LINE_CHART', 'AREA_CHART', 'SANKEY_DIAGRAM', 'DONUT_CHART', 'BAR_CHART_HORIZONTAL', 'TICKER_TAPE_HERO', 'EARNINGS_HEAT_TABLE', 'PRICE_TIMELINE_ANNOTATED', 'EDITORIAL_STAT_CARD', 'CORPORATE_OFFICE_SPACE'],
-  PHOTOREALISTIC_EXPERT_SHOCK: ['EXPERT_CUTOUT', 'CARICATURE_PORTRAIT', 'EXECUTIVE_LINEUP', 'LEADER_LOGO_CUTOUTS', 'EDITORIAL_REACTION_CARICATURE', 'PORTFOLIO_DOUGHNUT_PORTRAIT', 'COMPARISON_TABLE', 'TYPOGRAPHIC_MEGA_NUMBER'],
+  PHOTOREALISTIC_EXPERT_SHOCK: ['EXPERT_CUTOUT', 'CARICATURE_PORTRAIT', 'EDITORIAL_REACTION_CARICATURE', 'COMPARISON_TABLE', 'TYPOGRAPHIC_MEGA_NUMBER', 'EARNINGS_CARD', 'CAP_TABLE_GRID'],
   PHOTOREALISTIC_MINIMAL_TECH: ['MINIMALIST_CHECKLIST', 'TYPOGRAPHIC_MEGA_NUMBER', 'COMPARISON_TABLE', 'CAP_TABLE_GRID', 'POSITION_CONCENTRATION_TREEMAP', 'MACRO_FLOW_DIAGRAM', 'PRICE_TIMELINE_ANNOTATED', 'EDITORIAL_SPLIT_LAYOUT', 'EARNINGS_CARD', 'MAP_DATA_OVERLAY', 'EDITORIAL_STAT_CARD'],
-  MEME_HUMOR: ['EDITORIAL_REACTION_CARICATURE', 'CARICATURE_PORTRAIT', 'SATIRICAL_METAPHOR', 'FUNNY_COMPARISON', 'GLOWING_QUOTE', 'ANIMAL_METAPHOR', 'COMPARISON_TABLE', 'TYPOGRAPHIC_MEGA_NUMBER'],
+  MEME_HUMOR: ['EDITORIAL_REACTION_CARICATURE', 'CARICATURE_PORTRAIT', 'MEME_COMIC_PLATE', 'SATIRICAL_METAPHOR', 'FUNNY_COMPARISON', 'GLOWING_QUOTE', 'REDDIT_POST_SCREENSHOT', 'TWEET_STOCK_CHART_SPLIT', 'COMPARISON_TABLE', 'TYPOGRAPHIC_MEGA_NUMBER'],
 };
+
+const ROTATION_ALLOWED = new Set<ViralStyle>(ROTATION_ALLOWLIST);
 
 // CTA visual pool — editorial/typographic endings that resolve the post's own
 // motif, NOT the old luxury clichés (globe boardroom / jet+Rolex / vault). The
@@ -508,6 +516,7 @@ export class VisualPlanAgent {
 
     const isValid = (style: ViralStyle, slideIndex: number, allowAdjacency: boolean): boolean => {
       if (!STYLE_BUCKETS[style]) return false;
+      if (!ROTATION_ALLOWED.has(style)) return false;
       if (excluded.has(style)) return false;
       if (chosen.includes(style)) return false;
       if (prevStyle === style) return false;
@@ -544,7 +553,7 @@ export class VisualPlanAgent {
     };
 
     const slides: SlideVisualGrammar[] = [];
-    const beats = deriveBeats(strategy, roles);
+    const beats = deriveBeats(strategy, roles, input.evidenceArtifactPlan);
 
     // Recent cover layout families (cross-day + same-day) so the cover composition
     // rotates instead of always being TOP_STACK. Legacy entries → TOP_STACK.
@@ -600,6 +609,7 @@ export class VisualPlanAgent {
       const dominantSubjectClass = dominantSubjectClassFor(style);
       const bucket = bucketOf(style);
       const ctaVisualConcept = role === 'cta' ? CTA_CONCEPT_FOR_ID[constraints.ctaId] : undefined;
+      const evidenceArtifact = artifactForSlide(input.evidenceArtifactPlan, i + 1);
       const grammar: SlideVisualGrammar = {
         slideNumber: i + 1,
         intendedRole: role,
@@ -614,11 +624,12 @@ export class VisualPlanAgent {
         dominantSubjectClass,
         cameraTreatment: cameraTreatmentFor(style, i + 1),
         motifTag,
-        sceneConceptId: `${structureFamily}:${style}:${position}`,
+        sceneConceptId: `${structureFamily}:${style}:${position}:${evidenceArtifact?.kind ?? 'NO_ARTIFACT'}`,
         // CTA concept id drives same-day CTA dedup (concept + style), so two of
         // today's slots can't ship the same CTA look.
         ctaConceptId: role === 'cta' ? `${ctaVisualConcept}:${style}` : undefined,
         ctaVisualConcept,
+        evidenceArtifact,
         storyboardBeat: beats[i],
       };
       slides.push(grammar);
@@ -629,7 +640,7 @@ export class VisualPlanAgent {
 
     const coverMechanism = slides[0]?.coverMechanism;
     const coverLayoutFamily = slides[0]?.coverLayoutFamily;
-    const storyboard = buildStoryboard(strategy, format, slides, structureFamily, coverLayoutFamily);
+    const storyboard = buildStoryboard(strategy, format, slides, structureFamily, coverLayoutFamily, input.evidenceArtifactPlan);
     const compositionSignature = computeCompositionSignature(structureFamily, coverMechanism, slides);
 
     const plan: VisualPlan = {
@@ -642,27 +653,34 @@ export class VisualPlanAgent {
       structureFamily,
       coverMechanism,
       coverLayoutFamily,
+      evidenceArtifactPlan: input.evidenceArtifactPlan,
     };
 
     return { plan, overrides };
   }
 }
 
-function deriveBeats(strategy: StrategyDecision, roles: SlideRole[]): string[] {
+function deriveBeats(
+  strategy: StrategyDecision,
+  roles: SlideRole[],
+  evidenceArtifactPlan?: EvidenceArtifactPlan,
+): string[] {
   const skeleton = strategy.angleSlideSkeleton ?? [];
   return roles.map((role, i) => {
-    if (skeleton[i]) return skeleton[i];
+    const artifact = artifactForSlide(evidenceArtifactPlan, i + 1);
+    const artifactBeat = artifact ? ` Evidence artifact: ${artifact.label}.` : '';
+    if (skeleton[i]) return `${skeleton[i]}${artifactBeat}`;
     // Slide 2 is a SECONDARY HOOK: IG re-serves slide 2 to viewers who don't
     // swipe, so it must stand alone as a hook, not a low-energy context slide.
     if (i === 1 && role !== 'cta') {
-      return 'Secondary hook — a surprising number, sharp contrast, or "wait, what?" moment that re-hooks anyone who did not swipe past the cover';
+      return `Secondary hook — a surprising number, sharp contrast, or "wait, what?" moment that re-hooks anyone who did not swipe past the cover.${artifactBeat}`;
     }
     switch (role) {
-      case 'cover': return 'Establish the premise and create the anchor image';
-      case 'context': return 'Deepen the problem / surprising context';
-      case 'chart_data': return 'Deliver the hero data point as a chart';
-      case 'cta': return 'Resolve the original motif and give the save/follow reason';
-      default: return `Advance one distinct evidence point or decision branch (${i + 1})`;
+      case 'cover': return `Establish the premise and create the anchor image.${artifactBeat}`;
+      case 'context': return `Deepen the problem / surprising context.${artifactBeat}`;
+      case 'chart_data': return `Deliver the hero data point as a chart.${artifactBeat}`;
+      case 'cta': return `Resolve the original motif and give the save/follow reason.${artifactBeat}`;
+      default: return `Advance one distinct evidence point or decision branch (${i + 1}).${artifactBeat}`;
     }
   });
 }
@@ -673,12 +691,14 @@ function buildStoryboard(
   slides: SlideVisualGrammar[],
   structureFamily: StructureFamily,
   coverLayoutFamily?: CoverLayoutFamily,
+  evidenceArtifactPlan?: EvidenceArtifactPlan,
 ): StoryboardContinuity {
   const cover = slides[0];
   const accent = format.colorScheme.accent1;
   return {
     coverLayoutFamily,
     ctaVisualConcept: slides.find((s) => s.intendedRole === 'cta')?.ctaVisualConcept,
+    evidenceArtifactPlan,
     premise: `${strategy.topic} — ${strategy.hook}`.slice(0, 200),
     anchorPrompt: `Slide 1 establishes the premise via a ${cover?.coverMechanism ?? 'CINEMATIC_SCENE'} (${cover?.visualStyle}) in a ${coverLayoutFamily ?? 'TOP_STACK'} layout. This cover image is the visual anchor every later slide stays coherent with.`,
     sharedVisualInvariants: [
@@ -686,11 +706,18 @@ function buildStoryboard(
       'Lower-third "@thestatsandstacks" typographic watermark on every slide',
       `Consistent ${structureFamily} brand treatment and type hierarchy`,
       'Same lighting logic and material vocabulary across the set',
+      evidenceArtifactPlan
+        ? `Evidence artifact continuity: ${evidenceArtifactPlan.sharedEvidenceRule}`
+        : 'Evidence artifact continuity: every slide must be grounded in a real-world chart, source document, product/store scene, or checklist.',
     ],
     progressionRule: 'Each middle slide advances exactly one new state, evidence point, consequence, or decision branch — camera/crop/chart-type/layout may change while motif, palette logic and brand treatment stay coherent.',
     resolutionRule: 'The CTA slide resolves the original motif from slide 1 instead of switching to a generic luxury scene.',
     varietyRule: 'No two adjacent slides share a dominant subject class or visual style; the cover mechanism + layout archetype sequence must not repeat a recent packet.',
   };
+}
+
+function artifactForSlide(plan: EvidenceArtifactPlan | undefined, slideNumber: number): EvidenceArtifact | undefined {
+  return plan?.artifacts.find((artifact) => artifact.slideNumber === slideNumber);
 }
 
 export function computeCompositionSignature(

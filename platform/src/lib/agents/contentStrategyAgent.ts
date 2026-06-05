@@ -5,7 +5,6 @@ import {
   isTooSimilarToRecent,
   noveltyPenalty,
   parseEnumOrInfer,
-  type NarrativeArc,
 } from '../services/contentHistory';
 import type { SlotConfig } from './slotConfig';
 import type { MustAvoidSet } from './historyGuardAgent';
@@ -160,7 +159,7 @@ const fallbackStrategies: StrategyDecision[] = [
       "Slide 1: What $10k in NVDA looks like today | The power of holding a tech winner | Let's look at the math",
       'Slide 2: The Initial Investment | $10,000 invested 5 years ago | Buying when the market was uncertain',
       'Slide 3: The Growth Journey | Through macro shocks and rate hikes | The stock continued its trajectory',
-      'Slide 4: The Result Today | That $10,000 is now worth $XX,XXX | A massive X% return',
+      'Slide 4: The Result Today | The split-adjusted chart tells the story | Verify the exact total before rendering',
       'Slide 5: The Lesson | Time in the market beats timing the market | Conviction pays off',
       'Slide 6: Save this reminder | Wealth is built slowly, then all at once | Educational only, not financial advice',
     ],
@@ -462,7 +461,7 @@ function enrichWithSlotDecisions(strategy: StrategyDecision, input: ContentStrat
 
   void CTA_LIBRARY;
 
-  return {
+  return sanitizeUnresolvedPlaceholders({
     ...strategy,
     // Neutralize unverifiable "record/all-time high" superlatives in the published
     // title + hook (the figure-level guard alone let these leak into headlines).
@@ -476,7 +475,25 @@ function enrichWithSlotDecisions(strategy: StrategyDecision, input: ContentStrat
     angleSlideSkeleton,
     payoffSlideIndex,
     reviewFlags,
+  });
+}
+
+function sanitizeUnresolvedPlaceholders(strategy: StrategyDecision): StrategyDecision {
+  return {
+    ...strategy,
+    topic: sanitizePlaceholderText(strategy.topic),
+    hook: sanitizePlaceholderText(strategy.hook),
+    hookVariantB: strategy.hookVariantB ? sanitizePlaceholderText(strategy.hookVariantB) : undefined,
+    slideBreakdown: strategy.slideBreakdown.map(sanitizePlaceholderText),
+    reasoning: sanitizePlaceholderText(strategy.reasoning),
   };
+}
+
+function sanitizePlaceholderText(text: string): string {
+  return text
+    .replace(/\$X{2,}(?:,\s*X{3})*/gi, 'a verified split-adjusted total')
+    .replace(/\bX%\s*return\b/gi, 'verified split-adjusted return')
+    .replace(/\bX%\b/gi, 'verified return');
 }
 
 function inferTopicCategoryFrom(strategy: StrategyDecision): TopicCategory {

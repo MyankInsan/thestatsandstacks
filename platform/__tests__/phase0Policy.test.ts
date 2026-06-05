@@ -95,7 +95,22 @@ test('every slot config declares a valid topicMode', () => {
 // ── Cliché demotion ───────────────────────────────────────────────────────────
 
 test('overused cliché motifs are demoted out of the rotation allowlist', () => {
-  for (const demoted of ['MILITARY_AEROSPACE_METAPHOR', 'NATURE_METAPHOR', 'PREMIUM_CTA', 'VAULT_SECURITY'] as const) {
+  for (const demoted of [
+    'MILITARY_AEROSPACE_METAPHOR',
+    'NATURE_METAPHOR',
+    'PREMIUM_CTA',
+    'VAULT_SECURITY',
+    'ANIMAL_METAPHOR',
+    'CHESS_BOARD_STRATEGY',
+    'SPORTS_RACING',
+    'SPACE_EXPLORATION',
+    'CIRCULAR_PORTFOLIO_WHEEL',
+    'TECH_HUD',
+    'GAMING_LEVEL_UP',
+    'POP_CULTURE_PORTRAIT',
+    'EXECUTIVE_LINEUP',
+    'LEADER_LOGO_CUTOUTS',
+  ] as const) {
     assert.ok(EXCLUDED_FROM_ROTATION.includes(demoted), `${demoted} should be excluded`);
     assert.ok(!ROTATION_ALLOWLIST.includes(demoted), `${demoted} should not be in the rotation allowlist`);
   }

@@ -49,6 +49,9 @@ export const TICKER_LOGO_MAP: Record<string, TickerLogoEntry> = {
   // China / e-commerce
   BABA: { brandColorHex: '#FF6A00', markStyle: 'orange Alibaba ribbon mark', companyName: 'Alibaba Group' },
 
+  // Retail / consumer
+  LULU: { brandColorHex: '#D3132A', markStyle: 'red circular Lululemon athletica logo mark', companyName: 'Lululemon Athletica' },
+
   // Healthcare
   LLY: { brandColorHex: '#D52B1E', markStyle: 'red Eli Lilly wordmark', companyName: 'Eli Lilly' },
   UNH: { brandColorHex: '#002677', markStyle: 'navy UnitedHealth Group mark', companyName: 'UnitedHealth Group' },

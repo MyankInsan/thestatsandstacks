@@ -6,6 +6,7 @@ import path from 'node:path';
 import { VisualPlanAgent } from '../src/lib/agents/visualPlanAgent';
 import { SlideNarrativeAgent } from '../src/lib/agents/slideNarrativeAgent';
 import { ImagePromptAgent } from '../src/lib/agents/imagePromptAgent';
+import { EvidenceArtifactAgent } from '../src/lib/agents/evidenceArtifactAgent';
 import { toPersistedVisualPlan, checkVisualPlanVariety } from '../src/lib/agents/varietyContract';
 import { appendContentHistory, loadContentHistory, CURRENT_SCHEMA_VERSION, type ContentHistoryEntry } from '../src/lib/services/contentHistory';
 import type { CarouselConstraints } from '../src/lib/agents/carouselConstraintAgent';
@@ -45,10 +46,14 @@ test('end-to-end deterministic path: plan → locked copy → image packet → v
   const historyPath = path.join(os.tmpdir(), `tsas-int-${Date.now()}.json`);
   try {
     // 1. Visual plan (deterministic, locks grammar).
+    const evidenceArtifactPlan = new EvidenceArtifactAgent().execute({
+      strategy, tickerSymbols: ['NVDA'], slideCount: format.slideCount,
+    });
     const planResult = new VisualPlanAgent().execute({
-      strategy, format, constraints, tickerSymbols: ['NVDA'], dateKey: '2026-06-02', slotIndex: 1,
+      strategy, format, constraints, tickerSymbols: ['NVDA'], dateKey: '2026-06-02', slotIndex: 1, evidenceArtifactPlan,
     });
     assert.equal(planResult.valid, true, `plan invalid: ${planResult.violations.join('; ')}`);
+    assert.equal(planResult.plan.slides[0].evidenceArtifact?.kind, 'EARNINGS_TABLE');
 
     // 2. Copy-only narrative fills the locked plan.
     const narrative = await new SlideNarrativeAgent().execute({
@@ -68,6 +73,7 @@ test('end-to-end deterministic path: plan → locked copy → image packet → v
     assert.equal(promptSet.slides.length, narrative.slides.length);
     assert.match(promptSet.slides[0].geminiPrompt, /ANCHOR slide/);
     assert.match(promptSet.slides[0].geminiPrompt, /MUST KEEP/);
+    assert.match(promptSet.slides[0].geminiPrompt, /EVIDENCE ARTIFACT/);
     for (const s of promptSet.slides) {
       assert.match(s.geminiPrompt, /1080x1350/);
       assert.ok(s.promptFingerprint.startsWith('pf_'));

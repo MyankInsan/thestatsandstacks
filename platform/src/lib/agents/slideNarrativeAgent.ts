@@ -5,14 +5,15 @@ import type { ViralStyle } from './promptLibrary';
 import { ROTATION_ALLOWLIST } from './promptLibrary';
 import type { CarouselConstraints } from './carouselConstraintAgent';
 import type { VisualPlan } from './visualPlanAgent';
+import type { EvidenceArtifact } from './evidenceArtifactAgent';
 
 const THEMATIC_STYLES_BY_FORMAT: Record<string, string[]> = {
-  PHOTOREALISTIC_NEWS_FLASH:        ['ARCHITECTURAL_OVERLAY', 'CROWD_PANIC', 'MILITARY_AEROSPACE_METAPHOR', 'NEON_TERMINAL', 'GLOWING_QUOTE', 'CANDLESTICK_CHART'],
-  PHOTOREALISTIC_LUXURY_LIFESTYLE:  ['LUXURY_LIFESTYLE', 'MAGAZINE_COVER', 'CHESS_BOARD_STRATEGY', 'VAULT_SECURITY', 'GLOWING_QUOTE', 'PREMIUM_CTA'],
+  PHOTOREALISTIC_NEWS_FLASH:        ['ARCHITECTURAL_OVERLAY', 'CROWD_PANIC', 'NEON_TERMINAL', 'GLOWING_QUOTE', 'CANDLESTICK_CHART'],
+  PHOTOREALISTIC_LUXURY_LIFESTYLE:  ['LUXURY_LIFESTYLE', 'MAGAZINE_COVER', 'GLOWING_QUOTE', 'TYPOGRAPHIC_MEGA_NUMBER', 'EDITORIAL_SPLIT_LAYOUT', 'EDITORIAL_STAT_CARD'],
   PHOTOREALISTIC_MARKET_UPDATE:     ['TRADER_DESK_SILHOUETTE', 'LINE_CHART', 'CORPORATE_OFFICE_SPACE', 'AREA_CHART', 'SANKEY_DIAGRAM', 'DONUT_CHART', 'BAR_CHART_HORIZONTAL', 'CANDLESTICK_HERO', 'TICKER_TAPE_HERO', 'EARNINGS_HEAT_TABLE', 'REDDIT_POST_SCREENSHOT', 'TWEET_STOCK_CHART_SPLIT', 'EDITORIAL_STAT_CARD'],
-  PHOTOREALISTIC_EXPERT_SHOCK:      ['EXPERT_CUTOUT', 'CARICATURE_PORTRAIT', 'EXECUTIVE_LINEUP', 'LEADER_LOGO_CUTOUTS', 'EDITORIAL_REACTION_CARICATURE', 'POP_CULTURE_PORTRAIT', 'CIRCULAR_PORTFOLIO_WHEEL', 'PORTFOLIO_DOUGHNUT_PORTRAIT'],
+  PHOTOREALISTIC_EXPERT_SHOCK:      ['EXPERT_CUTOUT', 'CARICATURE_PORTRAIT', 'EDITORIAL_REACTION_CARICATURE', 'COMPARISON_TABLE', 'TYPOGRAPHIC_MEGA_NUMBER', 'EARNINGS_CARD'],
   PHOTOREALISTIC_MINIMAL_TECH:      ['MINIMALIST_CHECKLIST', 'TYPOGRAPHIC_MEGA_NUMBER', 'COMPARISON_TABLE', 'GLASSMORPHISM_UI', 'NEON_TERMINAL', 'CAP_TABLE_GRID', 'POSITION_CONCENTRATION_TREEMAP', 'MACRO_FLOW_DIAGRAM', 'PRICE_TIMELINE_ANNOTATED', 'PORTFOLIO_BAR_RACE', 'EDITORIAL_SPLIT_LAYOUT', 'EARNINGS_CARD', 'MAP_DATA_OVERLAY', 'EDITORIAL_STAT_CARD'],
-  MEME_HUMOR:                       ['EDITORIAL_REACTION_CARICATURE', 'CARICATURE_PORTRAIT', 'MEME_COMIC_PLATE', 'SATIRICAL_METAPHOR', 'FUNNY_COMPARISON', 'GLOWING_QUOTE', 'ANIMAL_METAPHOR', 'REDDIT_POST_SCREENSHOT', 'TWEET_STOCK_CHART_SPLIT'],
+  MEME_HUMOR:                       ['EDITORIAL_REACTION_CARICATURE', 'CARICATURE_PORTRAIT', 'MEME_COMIC_PLATE', 'SATIRICAL_METAPHOR', 'FUNNY_COMPARISON', 'GLOWING_QUOTE', 'REDDIT_POST_SCREENSHOT', 'TWEET_STOCK_CHART_SPLIT'],
 };
 
 export interface HeadlineColor {
@@ -39,6 +40,8 @@ export interface SlideSpec {
   /** The storyboard beat this slide advances (filled into the locked visual
    * plan; copy-only narrative output). */
   storyboardBeat?: string;
+  /** Concrete artifact the image prompt must render as the slide's subject. */
+  evidenceArtifact?: EvidenceArtifact;
 }
 
 export interface SlideNarrative {
@@ -182,6 +185,7 @@ function buildCopyOnlyPrompt(
     visualStyle: g.visualStyle,
     visualPosition: g.visualPosition,
     storyboardBeat: g.storyboardBeat,
+    evidenceArtifact: g.evidenceArtifact,
   }));
 
   const driftBlock = attempt > 1 && previousDrift.length > 0
@@ -279,6 +283,7 @@ function buildLockedSlides(
       mood: nonEmptyString(copy.mood) ?? format.visualTone,
       narrativeNote: nonEmptyString(copy.narrativeNote) ?? fallback.narrativeNote,
       storyboardBeat: nonEmptyString(copy.storyboardBeat) ?? g.storyboardBeat,
+      evidenceArtifact: g.evidenceArtifact,
     };
   });
 }
@@ -349,7 +354,7 @@ SLIDE NARRATIVE RULES:
 - Slide 2: Agitator / Secondary Hook — deepen the problem or expand the hook
 - Middle slides: PAS (Problem-Agitate-Solve) framework. Each middle slide ends with an "Open Loop" transition.
 - Penultimate Slide: Summary / Cheat-sheet (highly savable bulleted list).
-- Last slide: Always role "cta" — strong follow/save prompt. For the CTA slide, use visualStyle "PREMIUM_CTA" or another premium cinematic style (LUXURY_LIFESTYLE or VAULT_SECURITY). Never use MINIMALIST_CHECKLIST for CTA.
+- Last slide: Always role "cta" — strong follow/save prompt. For the CTA slide, use an editorial/saveable style such as EDITORIAL_STAT_CARD, GLOWING_QUOTE, TYPOGRAPHIC_MEGA_NUMBER, MAGAZINE_COVER, or EDITORIAL_SPLIT_LAYOUT. Never use PREMIUM_CTA, VAULT_SECURITY, jet/watch/globe/chess/bull/rocket-style metaphors for CTA.
 - Each headline: max 8 words, bold and punchy.
 - headlineColorMap: break headline into parts, assign each part a color (primary=white, accent1=neon, accent2=cyan/secondary).
 - visualStyle: assign a DIFFERENT visualStyle to each slide based on its role. Choose EXACTLY ONE from the RECOMMENDED VISUAL STYLES list where possible, and fallback to the OTHER ALLOWED VISUAL STYLES list only if necessary (e.g. for charts or CTAs). Do not use the same visualStyle twice in a row.
@@ -465,10 +470,10 @@ const FALLBACK_EYEBROWS: Record<string, string> = {
 };
 
 const FALLBACK_VISUAL_VARIANTS: Record<string, ViralStyle[]> = {
-  PHOTOREALISTIC_NEWS_FLASH:        ['ARCHITECTURAL_OVERLAY', 'CROWD_PANIC', 'MILITARY_AEROSPACE_METAPHOR'],
+  PHOTOREALISTIC_NEWS_FLASH:        ['ARCHITECTURAL_OVERLAY', 'CROWD_PANIC', 'NEON_TERMINAL'],
   PHOTOREALISTIC_LUXURY_LIFESTYLE:  ['LUXURY_LIFESTYLE', 'MAGAZINE_COVER'],
   PHOTOREALISTIC_MARKET_UPDATE:     ['TRADER_DESK_SILHOUETTE', 'LINE_CHART', 'CORPORATE_OFFICE_SPACE'],
-  PHOTOREALISTIC_EXPERT_SHOCK:      ['EXPERT_CUTOUT', 'CARICATURE_PORTRAIT', 'EXECUTIVE_LINEUP', 'LEADER_LOGO_CUTOUTS'],
+  PHOTOREALISTIC_EXPERT_SHOCK:      ['EXPERT_CUTOUT', 'CARICATURE_PORTRAIT', 'EDITORIAL_REACTION_CARICATURE'],
   PHOTOREALISTIC_MINIMAL_TECH:      ['MINIMALIST_CHECKLIST', 'TYPOGRAPHIC_MEGA_NUMBER', 'COMPARISON_TABLE'],
   MEME_HUMOR:                       ['EDITORIAL_REACTION_CARICATURE', 'CARICATURE_PORTRAIT', 'SATIRICAL_METAPHOR'],
 };
@@ -635,11 +640,11 @@ function buildFallback(strategy: StrategyDecision, format: FormatDecision, const
   }
 
   // 3. Choose CTA Style
-  let ctaStyle: ViralStyle = 'PREMIUM_CTA';
+  let ctaStyle: ViralStyle = 'EDITORIAL_STAT_CARD';
   if (excluded.has(ctaStyle) || chosenStyles.includes(ctaStyle)) {
     ctaStyle = (ROTATION_ALLOWLIST.find(
-      (v) => ['LUXURY_LIFESTYLE', 'VAULT_SECURITY', 'ARCHITECTURAL_OVERLAY'].includes(v) && !chosenStyles.includes(v),
-    ) || 'PREMIUM_CTA') as ViralStyle;
+      (v) => ['MINIMALIST_CHECKLIST', 'TYPOGRAPHIC_MEGA_NUMBER', 'GLOWING_QUOTE', 'MAGAZINE_COVER', 'EDITORIAL_SPLIT_LAYOUT'].includes(v) && !chosenStyles.includes(v),
+    ) || 'GLOWING_QUOTE') as ViralStyle;
   }
   chosenStyles.push(ctaStyle);
 
