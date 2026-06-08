@@ -7434,6 +7434,149 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-08",
+      "topic": "The OpenAI S-1 Filing: 5 Rules to Analyze Pre-IPO Tech Giants",
+      "hook": "Everyone says OpenAI is software. The disclosure says infrastructure.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "OpenAI IPO",
+        "S-1 filing analysis",
+        "pre-IPO tech valuation",
+        "SaaS margins versus AI compute",
+        "how to read an S-1"
+      ],
+      "visualSignature": "2026-06-08-27169382748",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-06-08T22:03:26.224Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "PREMIUM_CONTRARIAN",
+      "ctaId": "question_open",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "MACRO_FLOW_DIAGRAM",
+        "TRADER_DESK_SILHOUETTE",
+        "SANKEY_DIAGRAM",
+        "CROWD_PANIC",
+        "RADAR_CHART",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "MACRO_FLOW_DIAGRAM",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "retiree_with_charts"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#FFFFFF",
+        "primaryText": "#0F172A",
+        "accent1": "#0E7C66",
+        "accent2": "#475569"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "IPO",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:630965142",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:FILING_EXCERPT",
+          "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:EARNINGS_TABLE",
+          "COMPARISON_XRAY:SANKEY_DIAGRAM:background:EARNINGS_TABLE",
+          "COMPARISON_XRAY:CROWD_PANIC:top:EARNINGS_TABLE",
+          "COMPARISON_XRAY:RADAR_CHART:background:STORE_SCENE",
+          "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:MAGAZINE_COVER",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "flow",
+            "visualStyle": "MACRO_FLOW_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:FILING_EXCERPT",
+            "promptFingerprint": "pf_glip6v"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "TRADER_DESK_SILHOUETTE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_7id0hv"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:SANKEY_DIAGRAM:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_vd4h8y"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_7pxapl"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:RADAR_CHART:background:STORE_SCENE",
+            "promptFingerprint": "pf_liiora"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_fz2q1y"
+          }
+        ]
+      }
     }
   ]
 }
