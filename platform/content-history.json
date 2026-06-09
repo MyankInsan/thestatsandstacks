@@ -7876,6 +7876,164 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-09",
+      "topic": "Finfluencer Red Flags: 7 Phrases Investors Should Pause On",
+      "hook": "Good finance content does not need pressure.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 7,
+      "keywords": [
+        "VIX spike",
+        "market volatility",
+        "fear gauge",
+        "hedging strategy",
+        "portfolio protection"
+      ],
+      "visualSignature": "2026-06-09-27224998864",
+      "schemaVersion": 4,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-06-09T17:59:28.681Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "CAP_TABLE",
+      "ctaId": "save_specific",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "EXPERT_CUTOUT",
+        "COMPARISON_TABLE",
+        "MINIMALIST_CHECKLIST",
+        "CARICATURE_PORTRAIT",
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "EARNINGS_CARD",
+        "EDITORIAL_STAT_CARD"
+      ],
+      "coverVisualStyle": "EXPERT_CUTOUT",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "silver_haired_pm"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "PORTRAIT",
+      "topicFamily": "INDEX_MOVE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:EDITORIAL_PORTRAIT:1182762262",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "EDITORIAL_PORTRAIT",
+        "coverLayoutFamily": "SPLIT_EDITORIAL",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:RISK_MATRIX",
+          "HUMAN_EDITORIAL:COMPARISON_TABLE:left:PRICE_CHART",
+          "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRICE_CHART",
+          "HUMAN_EDITORIAL:EARNINGS_CARD:center:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SAVE_CARD:EDITORIAL_STAT_CARD",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-SPLIT_EDITORIAL",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EXPERT_CUTOUT",
+            "bucket": "Human",
+            "visualPosition": "left",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:RISK_MATRIX",
+            "promptFingerprint": "pf_wcitgk"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:COMPARISON_TABLE:left:PRICE_CHART",
+            "promptFingerprint": "pf_cft66z"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "checklist",
+            "visualStyle": "MINIMALIST_CHECKLIST",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_6d0b41"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_6f8o90"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "mega-number",
+            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRICE_CHART",
+            "promptFingerprint": "pf_s69shi"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_pbjqjr"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "stat-card",
+            "visualStyle": "EDITORIAL_STAT_CARD",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_jbm2nx"
+          }
+        ]
+      }
     }
   ]
 }
