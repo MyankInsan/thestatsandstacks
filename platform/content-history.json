@@ -8034,6 +8034,148 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-09",
+      "topic": "Canada/US Stock Watchlist: The 6-Point Research Screen",
+      "hook": "If you buy stocks, run this screen first",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 6,
+      "keywords": [
+        "stock research checklist",
+        "how to screen stocks",
+        "fundamental analysis framework",
+        "stock watchlist criteria"
+      ],
+      "visualSignature": "2026-06-09-27232882517",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-06-09T20:22:18.597Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "IF_THEN_LADDER",
+      "ctaId": "reference_save",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "CANDLESTICK_HERO",
+        "CORPORATE_OFFICE_SPACE",
+        "DONUT_CHART",
+        "LUXURY_LIFESTYLE",
+        "LINE_CHART",
+        "GLOWING_QUOTE"
+      ],
+      "coverVisualStyle": "CANDLESTICK_HERO",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "canadian_uni_grad_25"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "GENERAL",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:2122829357",
+        "structureFamily": "DATA_SNAPSHOT",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "TOP_STACK",
+        "sceneConceptIds": [
+          "DATA_SNAPSHOT:CANDLESTICK_HERO:top:RISK_MATRIX",
+          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:STORE_SCENE",
+          "DATA_SNAPSHOT:DONUT_CHART:background:EARNINGS_TABLE",
+          "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:EARNINGS_TABLE",
+          "DATA_SNAPSHOT:LINE_CHART:background:EARNINGS_TABLE",
+          "DATA_SNAPSHOT:GLOWING_QUOTE:center:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "CHECKLIST_RECEIPT:GLOWING_QUOTE",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-TOP_STACK",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_HERO",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CANDLESTICK_HERO:top:RISK_MATRIX",
+            "promptFingerprint": "pf_jzbk35"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "architecture",
+            "visualStyle": "CORPORATE_OFFICE_SPACE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:STORE_SCENE",
+            "promptFingerprint": "pf_z8htqx"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:DONUT_CHART:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_lzw0wj"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_qllv1u"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "line",
+            "visualStyle": "LINE_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:LINE_CHART:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_6edtiv"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "pull-quote",
+            "visualStyle": "GLOWING_QUOTE",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_p3d67q"
+          }
+        ]
+      }
     }
   ]
 }
