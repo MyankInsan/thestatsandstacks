@@ -9091,6 +9091,148 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-10",
+      "topic": "The Semiconductor Slump: 5 Risk Signals to Screen on Chip Stocks",
+      "hook": "Buying chip dips is safe is wrong. Here is why",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "semiconductor stocks",
+        "chip stock correction",
+        "Micron stock MU",
+        "AMD stock analysis"
+      ],
+      "visualSignature": "2026-06-10-27309539366",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-06-10T22:14:10.804Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "question_open",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "POSITION_CONCENTRATION_TREEMAP",
+        "CARICATURE_PORTRAIT",
+        "MAP_DATA_OVERLAY",
+        "CORPORATE_OFFICE_SPACE",
+        "SANKEY_DIAGRAM",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "POSITION_CONCENTRATION_TREEMAP",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "retiree_with_charts"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F4F1EA",
+        "primaryText": "#1A1A1A",
+        "accent1": "#B0341E",
+        "accent2": "#6B6B6B"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "SINGLE_STOCK",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:2132625334",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:center:RISK_MATRIX",
+          "COMPARISON_XRAY:CARICATURE_PORTRAIT:top:PRODUCT_DETAIL",
+          "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:CORPORATE_OFFICE_SPACE:top:PRODUCT_DETAIL",
+          "COMPARISON_XRAY:SANKEY_DIAGRAM:background:RISK_MATRIX",
+          "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:MAGAZINE_COVER",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "treemap",
+            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:center:RISK_MATRIX",
+            "promptFingerprint": "pf_4qbzuk"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CARICATURE_PORTRAIT:top:PRODUCT_DETAIL",
+            "promptFingerprint": "pf_y7aymi"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "choropleth",
+            "visualStyle": "MAP_DATA_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_ig13p8"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "architecture",
+            "visualStyle": "CORPORATE_OFFICE_SPACE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CORPORATE_OFFICE_SPACE:top:PRODUCT_DETAIL",
+            "promptFingerprint": "pf_ruwgpw"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:SANKEY_DIAGRAM:background:RISK_MATRIX",
+            "promptFingerprint": "pf_jkzi4k"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_20izqw"
+          }
+        ]
+      }
     }
   ]
 }
