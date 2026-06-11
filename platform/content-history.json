@@ -10271,6 +10271,163 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-11",
+      "topic": "5 Money Leaks Quietly Keeping Canadians Broke",
+      "hook": "These small leaks do the most damage.",
+      "format": "CAROUSEL",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 7,
+      "keywords": [
+        "Adobe Q2 earnings",
+        "ADBE stock",
+        "generative AI revenue",
+        "SaaS business model"
+      ],
+      "visualSignature": "2026-06-11-27383757782",
+      "schemaVersion": 4,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-06-11T23:30:30.731Z",
+      "tickersFeatured": [],
+      "topicCategory": "EARNINGS",
+      "hookFormulaId": "PREMIUM_CONTRARIAN",
+      "ctaId": "comment_genuine_question",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "PORTFOLIO_BAR_RACE",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "PORTFOLIO_BAR_RACE",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_quant_30s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0E0B08",
+        "primaryText": "#FFF7E6",
+        "accent1": "#FFB000",
+        "accent2": "#FF3B30"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "SINGLE_STOCK",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:ANNOTATED_CHART:963379610",
+        "structureFamily": "EDITORIAL_MYTH_BUST",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
+        "sceneConceptIds": [
+          "EDITORIAL_MYTH_BUST:PORTFOLIO_BAR_RACE:background:EARNINGS_TABLE",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:EARNINGS_TABLE",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "QUESTION_CARD:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
+            "primaryEncoding": "bar-race",
+            "visualStyle": "PORTFOLIO_BAR_RACE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:PORTFOLIO_BAR_RACE:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_oo1ae4"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_nf8h0c"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_fkq13x"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_5kxmps"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_i2kwb7"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_dqki7u"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_1gq1yq"
+          }
+        ]
+      }
     }
   ]
 }
