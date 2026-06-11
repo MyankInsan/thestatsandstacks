@@ -9531,6 +9531,163 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-11",
+      "topic": "The S&P 500 and Nasdaq Market Rally: The 5-Question Risk Filter Before You FOMO In",
+      "hook": "The S&P 500 is up this week. Should you care?",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 7,
+      "keywords": [
+        "Nasdaq surge",
+        "S&P 500 rally",
+        "stock risk filter",
+        "investing checklist"
+      ],
+      "visualSignature": "2026-06-11-27365585575",
+      "schemaVersion": 4,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-06-11T17:36:28.405Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "QUIET_NUMBER",
+      "ctaId": "follow_authority",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "BAR_CHART_HORIZONTAL",
+        "ARCHITECTURAL_OVERLAY",
+        "COMPARISON_TABLE",
+        "GLOWING_QUOTE",
+        "CANDLESTICK_HERO",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "PRICE_TIMELINE_ANNOTATED"
+      ],
+      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
+      "portraitSubjects": [
+        "mark_carney"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00CFFF",
+        "accent2": "#FFB000"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "INDEX_MOVE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:NEWS_FLASH:ANNOTATED_CHART:331707391",
+        "structureFamily": "NEWS_FLASH",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
+        "sceneConceptIds": [
+          "NEWS_FLASH:BAR_CHART_HORIZONTAL:background:EARNINGS_TABLE",
+          "NEWS_FLASH:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
+          "NEWS_FLASH:COMPARISON_TABLE:left:FILING_EXCERPT",
+          "NEWS_FLASH:GLOWING_QUOTE:center:PRICE_CHART",
+          "NEWS_FLASH:CANDLESTICK_HERO:background:EARNINGS_TABLE",
+          "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:PRICE_CHART",
+          "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "EDITORIAL_SIGNOFF:PRICE_TIMELINE_ANNOTATED",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
+            "primaryEncoding": "bar",
+            "visualStyle": "BAR_CHART_HORIZONTAL",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:BAR_CHART_HORIZONTAL:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_4hoe51"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
+            "promptFingerprint": "pf_6nag7f"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:COMPARISON_TABLE:left:FILING_EXCERPT",
+            "promptFingerprint": "pf_3fn3j"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "pull-quote",
+            "visualStyle": "GLOWING_QUOTE",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:GLOWING_QUOTE:center:PRICE_CHART",
+            "promptFingerprint": "pf_ffv9tb"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:CANDLESTICK_HERO:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_4lx7ls"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:PRICE_CHART",
+            "promptFingerprint": "pf_abomph"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_ifgpa7"
+          }
+        ]
+      }
     }
   ]
 }
