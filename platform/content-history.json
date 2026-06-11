@@ -9688,6 +9688,148 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-11",
+      "topic": "Who Actually Owners Micron (MU)? AI Memory Cap Table Analysis",
+      "hook": "Who actually owns Micron?",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "Micron institutional ownership",
+        "MU cap table",
+        "who owns Micron",
+        "AI hardware watchlist"
+      ],
+      "visualSignature": "2026-06-11-27369275397",
+      "schemaVersion": 4,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-06-11T18:47:45.126Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "PATTERN_SPOT",
+      "ctaId": "save_specific",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "CARICATURE_PORTRAIT",
+        "EARNINGS_CARD",
+        "MINIMALIST_CHECKLIST",
+        "LINE_CHART",
+        "LUXURY_LIFESTYLE",
+        "EDITORIAL_STAT_CARD"
+      ],
+      "coverVisualStyle": "CARICATURE_PORTRAIT",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "silver_haired_pm"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00CFFF",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "PORTRAIT",
+      "topicFamily": "CAP_TABLE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:EDITORIAL_PORTRAIT:802675218",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "EDITORIAL_PORTRAIT",
+        "coverLayoutFamily": "SPLIT_EDITORIAL",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:left:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:EARNINGS_CARD:center:STORE_SCENE",
+          "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:LINE_CHART:background:STORE_SCENE",
+          "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top:EARNINGS_TABLE",
+          "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SAVE_CARD:EDITORIAL_STAT_CARD",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-SPLIT_EDITORIAL",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "left",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:left:FILING_EXCERPT",
+            "promptFingerprint": "pf_f3dt9m"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:STORE_SCENE",
+            "promptFingerprint": "pf_4tjeki"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "checklist",
+            "visualStyle": "MINIMALIST_CHECKLIST",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_x5hpwj"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "line",
+            "visualStyle": "LINE_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:LINE_CHART:background:STORE_SCENE",
+            "promptFingerprint": "pf_ynx5fy"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_82la9x"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "stat-card",
+            "visualStyle": "EDITORIAL_STAT_CARD",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_ffjdwm"
+          }
+        ]
+      }
     }
   ]
 }
