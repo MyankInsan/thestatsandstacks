@@ -10916,6 +10916,163 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-12",
+      "topic": "Finfluencer Red Flags: 7 Phrases Investors Should Pause On",
+      "hook": "Good finance content does not need pressure.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 7,
+      "keywords": [
+        "Federal Reserve news",
+        "Fed chair succession",
+        "interest rate impact",
+        "macro economics portfolio"
+      ],
+      "visualSignature": "2026-06-12-27445181298",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-06-12T22:00:25.561Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "question_open",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "CAP_TABLE_GRID",
+        "CROWD_PANIC",
+        "POSITION_CONCENTRATION_TREEMAP",
+        "NEON_TERMINAL",
+        "MAP_DATA_OVERLAY",
+        "REDDIT_POST_SCREENSHOT",
+        "RADAR_CHART"
+      ],
+      "coverVisualStyle": "CAP_TABLE_GRID",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_cfo_50s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F8F9FA",
+        "primaryText": "#111827",
+        "accent1": "#2563EB",
+        "accent2": "#4B5563"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "MACRO",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:DOCUMENT_RECEIPT:1732812095",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:CAP_TABLE_GRID:center:RISK_MATRIX",
+          "COMPARISON_XRAY:CROWD_PANIC:top:PRICE_CHART",
+          "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:NEON_TERMINAL:top:FILING_EXCERPT",
+          "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:PRICE_CHART",
+          "COMPARISON_XRAY:REDDIT_POST_SCREENSHOT:center:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:RADAR_CHART:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:RADAR_CHART",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CAP_TABLE_GRID:center:RISK_MATRIX",
+            "promptFingerprint": "pf_15csj5"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:PRICE_CHART",
+            "promptFingerprint": "pf_rgg0u9"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "treemap",
+            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_jzpofk"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "terminal",
+            "visualStyle": "NEON_TERMINAL",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:NEON_TERMINAL:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_60z8m3"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "choropleth",
+            "visualStyle": "MAP_DATA_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:PRICE_CHART",
+            "promptFingerprint": "pf_pq1wcn"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "social-mock",
+            "visualStyle": "REDDIT_POST_SCREENSHOT",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:REDDIT_POST_SCREENSHOT:center:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_8t2537"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:RADAR_CHART:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_s4gcao"
+          }
+        ]
+      }
     }
   ]
 }
