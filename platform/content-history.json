@@ -11970,6 +11970,162 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-13",
+      "topic": "5 Money Leaks Quietly Keeping Canadians Broke",
+      "hook": "These small leaks do the most damage.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 7,
+      "keywords": [
+        "bitcoin basics",
+        "crypto for beginners",
+        "crypto risk"
+      ],
+      "visualSignature": "2026-06-13-27480263203",
+      "schemaVersion": 4,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-06-13T22:03:23.354Z",
+      "tickersFeatured": [],
+      "topicCategory": "CRYPTO",
+      "hookFormulaId": "COHORT_TRUTH",
+      "ctaId": "share_use_case",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "CAP_TABLE_GRID",
+        "EARNINGS_HEAT_TABLE",
+        "PORTFOLIO_BAR_RACE",
+        "TWEET_STOCK_CHART_SPLIT",
+        "FUNNY_COMPARISON",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "CAP_TABLE_GRID",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "crypto_native_founder"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0E0B08",
+        "primaryText": "#F5EFE6",
+        "accent1": "#E8C9A0",
+        "accent2": "#C9A227"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CRYPTO",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:DOCUMENT_RECEIPT:31846387",
+        "structureFamily": "PREMIUM_LIFESTYLE",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "PREMIUM_LIFESTYLE:CAP_TABLE_GRID:center:RISK_MATRIX",
+          "PREMIUM_LIFESTYLE:EARNINGS_HEAT_TABLE:background:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:PORTFOLIO_BAR_RACE:background:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:TWEET_STOCK_CHART_SPLIT:background:EARNINGS_TABLE",
+          "PREMIUM_LIFESTYLE:FUNNY_COMPARISON:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:CAP_TABLE_GRID:center:RISK_MATRIX",
+            "promptFingerprint": "pf_w09br8"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "heat-table",
+            "visualStyle": "EARNINGS_HEAT_TABLE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:EARNINGS_HEAT_TABLE:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_mkp0rc"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "bar-race",
+            "visualStyle": "PORTFOLIO_BAR_RACE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:PORTFOLIO_BAR_RACE:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_dwtymu"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "social-chart-split",
+            "visualStyle": "TWEET_STOCK_CHART_SPLIT",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:TWEET_STOCK_CHART_SPLIT:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_jo9tth"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "FUNNY_COMPARISON",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:FUNNY_COMPARISON:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_rizxvt"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_hb5h6v"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_4wiq3l"
+          }
+        ]
+      }
     }
   ]
 }
