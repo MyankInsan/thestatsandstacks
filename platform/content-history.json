@@ -12283,6 +12283,148 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-14",
+      "topic": "Dow Jones Near a 5-Year High: The 5-Question Risk Filter",
+      "hook": "The Dow is up 1Y. Should you care?",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 6,
+      "keywords": [
+        "Dow Jones 5 year high",
+        "market peak portfolio rules",
+        "stock risk filter",
+        "investing checklist"
+      ],
+      "visualSignature": "2026-06-14-27503911545",
+      "schemaVersion": 4,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-06-14T15:47:04.638Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "QUIET_NUMBER",
+      "ctaId": "swipe_promise",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "ARCHITECTURAL_OVERLAY",
+        "TICKER_TAPE_HERO",
+        "GLOWING_QUOTE",
+        "COMPARISON_TABLE",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "PRICE_TIMELINE_ANNOTATED"
+      ],
+      "coverVisualStyle": "ARCHITECTURAL_OVERLAY",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_cfo_50s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00CFFF",
+        "accent2": "#FFB000"
+      },
+      "dominantSubjectClass": "BUILDING",
+      "topicFamily": "INDEX_MOVE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:NEWS_FLASH:CINEMATIC_SCENE:1319361250",
+        "structureFamily": "NEWS_FLASH",
+        "coverMechanism": "CINEMATIC_SCENE",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "NEWS_FLASH:ARCHITECTURAL_OVERLAY:background:RISK_MATRIX",
+          "NEWS_FLASH:TICKER_TAPE_HERO:background:STORE_SCENE",
+          "NEWS_FLASH:GLOWING_QUOTE:center:PRICE_CHART",
+          "NEWS_FLASH:COMPARISON_TABLE:left:RISK_MATRIX",
+          "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:EARNINGS_TABLE",
+          "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "MOTIF_CALLBACK:PRICE_TIMELINE_ANNOTATED",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "background",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:ARCHITECTURAL_OVERLAY:background:RISK_MATRIX",
+            "promptFingerprint": "pf_gujmh"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "ticker-tape",
+            "visualStyle": "TICKER_TAPE_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:TICKER_TAPE_HERO:background:STORE_SCENE",
+            "promptFingerprint": "pf_eajrh4"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "pull-quote",
+            "visualStyle": "GLOWING_QUOTE",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:GLOWING_QUOTE:center:PRICE_CHART",
+            "promptFingerprint": "pf_txnu0n"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:COMPARISON_TABLE:left:RISK_MATRIX",
+            "promptFingerprint": "pf_9dqu44"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:EARNINGS_TABLE",
+            "promptFingerprint": "pf_gfbutc"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_s8pwxr"
+          }
+        ]
+      }
     }
   ]
 }
