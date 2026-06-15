@@ -13621,6 +13621,148 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-15",
+      "topic": "Micron Technology (MU) Heat Check: The AI Memory Catalyst and Watchlist Rules",
+      "hook": "Everyone says buy MU. The SEC filing says otherwise.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "MU stock analysis",
+        "semiconductor cycle",
+        "High Bandwidth Memory risk",
+        "AI chip stocks watchlist"
+      ],
+      "visualSignature": "2026-06-15-27580313456",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-06-15T22:28:45.378Z",
+      "tickersFeatured": [],
+      "topicCategory": "EARNINGS",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "question_open",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "MACRO_FLOW_DIAGRAM",
+        "TRADER_DESK_SILHOUETTE",
+        "MAP_DATA_OVERLAY",
+        "CROWD_PANIC",
+        "RADAR_CHART",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "MACRO_FLOW_DIAGRAM",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_quant_30s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F8F9FA",
+        "primaryText": "#111827",
+        "accent1": "#2563EB",
+        "accent2": "#4B5563"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "SINGLE_STOCK",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:798172028",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:FILING_EXCERPT",
+          "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:EARNINGS_TABLE",
+          "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:EARNINGS_TABLE",
+          "COMPARISON_XRAY:CROWD_PANIC:top:PRICE_CHART",
+          "COMPARISON_XRAY:RADAR_CHART:background:EARNINGS_TABLE",
+          "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
+            "primaryEncoding": "flow",
+            "visualStyle": "MACRO_FLOW_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:FILING_EXCERPT",
+            "promptFingerprint": "pf_uxr4y7"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "TRADER_DESK_SILHOUETTE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_8rzuss"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "choropleth",
+            "visualStyle": "MAP_DATA_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_6iz29j"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:PRICE_CHART",
+            "promptFingerprint": "pf_sjq3dv"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:RADAR_CHART:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_xm3v3r"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_8uc8w8"
+          }
+        ]
+      }
     }
   ]
 }
