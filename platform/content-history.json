@@ -16980,6 +16980,149 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-19",
+      "topic": "Who actually owns Tesla?",
+      "hook": "Who actually owns Tesla?",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "Tesla ownership",
+        "TSLA cap table",
+        "Elon Musk stake",
+        "institutional investors"
+      ],
+      "visualSignature": "2026-06-19-27840533529",
+      "schemaVersion": 4,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-06-19T17:48:40.456Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "CAP_TABLE",
+      "ctaId": "save_specific",
+      "angleId": "CAP_TABLE_INSTITUTIONAL",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "CAP_TABLE_GRID",
+        "EXPERT_CUTOUT",
+        "COMPARISON_TABLE",
+        "EDITORIAL_REACTION_CARICATURE",
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "EARNINGS_CARD"
+      ],
+      "coverVisualStyle": "CAP_TABLE_GRID",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_cfo_50s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FF3B30"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CAP_TABLE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:DOCUMENT_RECEIPT:1413433688",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:CAP_TABLE_GRID:background:EARNINGS_TABLE",
+          "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:COMPARISON_TABLE:left:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:STORE_SCENE",
+          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRICE_CHART",
+          "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SAVE_CARD:EARNINGS_CARD",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CAP_TABLE_GRID:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_cdpddd"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EXPERT_CUTOUT",
+            "bucket": "Human",
+            "visualPosition": "left",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:FILING_EXCERPT",
+            "promptFingerprint": "pf_xxg5pv"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:COMPARISON_TABLE:left:FILING_EXCERPT",
+            "promptFingerprint": "pf_grxnrj"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:STORE_SCENE",
+            "promptFingerprint": "pf_8hvmlj"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "mega-number",
+            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRICE_CHART",
+            "promptFingerprint": "pf_5mm3er"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_eaa3y5"
+          }
+        ]
+      }
     }
   ]
 }
