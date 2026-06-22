@@ -19739,6 +19739,148 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-22",
+      "topic": "Alphabet Talent Risk Check: The 4-Question Key Employee Risk Filter",
+      "hook": "The 'permanent tech moat' is wrong. Here is why.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "Alphabet talent risk",
+        "key person risk",
+        "how to read 10-K risk factors",
+        "Google AI talent flight"
+      ],
+      "visualSignature": "2026-06-22-27987326043",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-06-22T22:14:11.740Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "question_open",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "CAP_TABLE_GRID",
+        "TRADER_DESK_SILHOUETTE",
+        "POSITION_CONCENTRATION_TREEMAP",
+        "CROWD_PANIC",
+        "MAP_DATA_OVERLAY",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "CAP_TABLE_GRID",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_quant_30s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F4F1EA",
+        "primaryText": "#1A1A1A",
+        "accent1": "#B0341E",
+        "accent2": "#6B6B6B"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "INVESTOR_PROTECTION",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:DOCUMENT_RECEIPT:1307095210",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:CAP_TABLE_GRID:center:FILING_EXCERPT",
+          "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background:FILING_EXCERPT",
+          "COMPARISON_XRAY:CROWD_PANIC:top:RISK_MATRIX",
+          "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:FILING_EXCERPT",
+          "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:ARCHITECTURAL_OVERLAY",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CAP_TABLE_GRID:center:FILING_EXCERPT",
+            "promptFingerprint": "pf_x7n00w"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "TRADER_DESK_SILHOUETTE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_juzrs6"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "treemap",
+            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background:FILING_EXCERPT",
+            "promptFingerprint": "pf_mzldzd"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:RISK_MATRIX",
+            "promptFingerprint": "pf_bhkduv"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "choropleth",
+            "visualStyle": "MAP_DATA_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:FILING_EXCERPT",
+            "promptFingerprint": "pf_77lgw8"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_9r7rtf"
+          }
+        ]
+      }
     }
   ]
 }
