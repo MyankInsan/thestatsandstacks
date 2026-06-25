@@ -22656,6 +22656,163 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-25",
+      "topic": "401k vs Roth IRA: Which Account Should Americans Use First?",
+      "hook": "Most Americans pick the wrong account first.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 7,
+      "keywords": [
+        "401k vs Roth IRA",
+        "retirement sequencing",
+        "US investing"
+      ],
+      "visualSignature": "2026-06-25-28203873326",
+      "schemaVersion": 4,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-06-25T22:22:29.736Z",
+      "tickersFeatured": [],
+      "topicCategory": "TAX_ACCT",
+      "hookFormulaId": "COHORT_TRUTH",
+      "ctaId": "share_use_case",
+      "angleId": "BEHAVIORAL_RECEIPT",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "TWEET_STOCK_CHART_SPLIT",
+        "SATIRICAL_METAPHOR",
+        "FUNNY_COMPARISON",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "TWEET_STOCK_CHART_SPLIT",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "millennial_dad_with_laptop"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0E0B08",
+        "primaryText": "#F5EFE6",
+        "accent1": "#E8C9A0",
+        "accent2": "#C9A227"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "ACCT_COMPARISON",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:DOCUMENT_RECEIPT:1053292795",
+        "structureFamily": "PREMIUM_LIFESTYLE",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "MOCK_SCREENSHOT",
+        "sceneConceptIds": [
+          "PREMIUM_LIFESTYLE:TWEET_STOCK_CHART_SPLIT:center:RISK_MATRIX",
+          "PREMIUM_LIFESTYLE:SATIRICAL_METAPHOR:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:FUNNY_COMPARISON:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-MOCK_SCREENSHOT",
+            "primaryEncoding": "social-chart-split",
+            "visualStyle": "TWEET_STOCK_CHART_SPLIT",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:TWEET_STOCK_CHART_SPLIT:center:RISK_MATRIX",
+            "promptFingerprint": "pf_xiv72h"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "SATIRICAL_METAPHOR",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:SATIRICAL_METAPHOR:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_jf3pzu"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "FUNNY_COMPARISON",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:FUNNY_COMPARISON:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_xpiebu"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_1vmfn2"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_5wqhkq"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_3etjfe"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_5zgn8y"
+          }
+        ]
+      }
     }
   ]
 }
