@@ -22813,6 +22813,164 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-25",
+      "topic": "How President Trump's Policies Impact the Tech Sector",
+      "hook": "What the new policies mean for Tech.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 7,
+      "keywords": [
+        "Trump tech stocks",
+        "market news",
+        "macro economics",
+        "stock market update"
+      ],
+      "visualSignature": "2026-06-25-28206587564",
+      "schemaVersion": 4,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-06-25T23:26:11.533Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "comment_genuine_question",
+      "angleId": "COMPARISON_LADDER",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "MEME_COMIC_PLATE",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "MEME_COMIC_PLATE",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_cfo_50s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#09090D",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FF2E93"
+      },
+      "dominantSubjectClass": "TYPOGRAPHY",
+      "topicFamily": "MACRO",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:CINEMATIC_SCENE:2076710883",
+        "structureFamily": "EDITORIAL_MYTH_BUST",
+        "coverMechanism": "CINEMATIC_SCENE",
+        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
+        "sceneConceptIds": [
+          "EDITORIAL_MYTH_BUST:MEME_COMIC_PLATE:background:FILING_EXCERPT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:EARNINGS_TABLE",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:EARNINGS_TABLE",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:RISK_MATRIX",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:EARNINGS_TABLE",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "QUESTION_CARD:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
+            "primaryEncoding": "typography",
+            "visualStyle": "MEME_COMIC_PLATE",
+            "bucket": "Layout",
+            "visualPosition": "background",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:MEME_COMIC_PLATE:background:FILING_EXCERPT",
+            "promptFingerprint": "pf_oq0cc3"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_kxhci"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_eqs3vd"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_ure3co"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:RISK_MATRIX",
+            "promptFingerprint": "pf_txj7mw"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_o3xdms"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_p666mg"
+          }
+        ]
+      }
     }
   ]
 }
