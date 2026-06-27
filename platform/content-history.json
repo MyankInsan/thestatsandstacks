@@ -23888,6 +23888,148 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-27",
+      "topic": "What Happened in the Markets in the Last 24 Hours",
+      "hook": "The number nobody mentions about Tether's gold",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 6,
+      "keywords": [
+        "Tether gold reserves",
+        "stablecoin collateral",
+        "crypto market news",
+        "bullion-backed loans"
+      ],
+      "visualSignature": "2026-06-27-28293072631",
+      "schemaVersion": 4,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-06-27T15:17:06.856Z",
+      "tickersFeatured": [],
+      "topicCategory": "CRYPTO",
+      "hookFormulaId": "QUIET_NUMBER",
+      "ctaId": "swipe_promise",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "CANDLESTICK_HERO",
+        "GLOWING_QUOTE",
+        "TICKER_TAPE_HERO",
+        "MINIMALIST_CHECKLIST",
+        "DONUT_CHART",
+        "EDITORIAL_STAT_CARD"
+      ],
+      "coverVisualStyle": "CANDLESTICK_HERO",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "crypto_native_founder"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFFFFF"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CRYPTO",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:NEWS_FLASH:ANNOTATED_CHART:2129880831",
+        "structureFamily": "NEWS_FLASH",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "NEWS_FLASH:CANDLESTICK_HERO:background:PRICE_CHART",
+          "NEWS_FLASH:GLOWING_QUOTE:center:RISK_MATRIX",
+          "NEWS_FLASH:TICKER_TAPE_HERO:background:SOURCE_DOCUMENT",
+          "NEWS_FLASH:MINIMALIST_CHECKLIST:left:EARNINGS_TABLE",
+          "NEWS_FLASH:DONUT_CHART:background:RISK_MATRIX",
+          "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "MOTIF_CALLBACK:EDITORIAL_STAT_CARD",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:CANDLESTICK_HERO:background:PRICE_CHART",
+            "promptFingerprint": "pf_x0y181"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "pull-quote",
+            "visualStyle": "GLOWING_QUOTE",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:GLOWING_QUOTE:center:RISK_MATRIX",
+            "promptFingerprint": "pf_d0g6aa"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "ticker-tape",
+            "visualStyle": "TICKER_TAPE_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:TICKER_TAPE_HERO:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_6pw7mu"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "checklist",
+            "visualStyle": "MINIMALIST_CHECKLIST",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:MINIMALIST_CHECKLIST:left:EARNINGS_TABLE",
+            "promptFingerprint": "pf_7zbfv1"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:DONUT_CHART:background:RISK_MATRIX",
+            "promptFingerprint": "pf_ra73v8"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "stat-card",
+            "visualStyle": "EDITORIAL_STAT_CARD",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_alyno2"
+          }
+        ]
+      }
     }
   ]
 }
