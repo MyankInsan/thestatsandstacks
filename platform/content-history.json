@@ -26891,6 +26891,163 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-06-30",
+      "topic": "Are Millions of Kids Missing Out on 'Trump Accounts'? What Parents Need to Know About the Rules",
+      "hook": "If you have kids, do this 1 thing first",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 7,
+      "keywords": [
+        "Trump accounts for kids",
+        "child savings rules",
+        "youth investing plans",
+        "tax-advantaged accounts US"
+      ],
+      "visualSignature": "2026-06-30-28472408488",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-06-30T20:10:06.423Z",
+      "tickersFeatured": [],
+      "topicCategory": "POLICY",
+      "hookFormulaId": "COMPARISON_LADDER",
+      "ctaId": "reference_save",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "LINE_CHART",
+        "CORPORATE_OFFICE_SPACE",
+        "DONUT_CHART",
+        "LUXURY_LIFESTYLE",
+        "SANKEY_DIAGRAM",
+        "CARICATURE_PORTRAIT",
+        "EDITORIAL_SPLIT_LAYOUT"
+      ],
+      "coverVisualStyle": "LINE_CHART",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "millennial_dad_with_laptop"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "GENERAL",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:1723950018",
+        "structureFamily": "DATA_SNAPSHOT",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "DATA_SNAPSHOT:LINE_CHART:background:PRICE_CHART",
+          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:DONUT_CHART:background:EARNINGS_TABLE",
+          "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:CARICATURE_PORTRAIT:top:RISK_MATRIX",
+          "DATA_SNAPSHOT:EDITORIAL_SPLIT_LAYOUT:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "CHECKLIST_RECEIPT:EDITORIAL_SPLIT_LAYOUT",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "line",
+            "visualStyle": "LINE_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:LINE_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_ipyyp9"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "architecture",
+            "visualStyle": "CORPORATE_OFFICE_SPACE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_wpj8go"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:DONUT_CHART:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_iz1hya"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_q7ml5o"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_a3otbw"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CARICATURE_PORTRAIT:top:RISK_MATRIX",
+            "promptFingerprint": "pf_ngncx4"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:EDITORIAL_SPLIT_LAYOUT:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_4b9n4m"
+          }
+        ]
+      }
     }
   ]
 }
