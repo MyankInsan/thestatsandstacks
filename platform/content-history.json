@@ -28828,6 +28828,162 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-07-02",
+      "topic": "Credit Score Myths Canadians Still Believe",
+      "hook": "Some credit advice is just noise.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 7,
+      "keywords": [
+        "bitcoin basics",
+        "crypto for beginners",
+        "crypto risk"
+      ],
+      "visualSignature": "2026-07-02-28621990651",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-07-02T21:20:46.491Z",
+      "tickersFeatured": [],
+      "topicCategory": "CRYPTO",
+      "hookFormulaId": "REVERSE_SURVIVORSHIP",
+      "ctaId": "question_open",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "BAR_CHART_HORIZONTAL",
+        "TRADER_DESK_SILHOUETTE",
+        "MACRO_FLOW_DIAGRAM",
+        "CROWD_PANIC",
+        "MAP_DATA_OVERLAY",
+        "NEON_TERMINAL",
+        "RADAR_CHART"
+      ],
+      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "young_retail_trader"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#FFFFFF",
+        "primaryText": "#0F172A",
+        "accent1": "#0E7C66",
+        "accent2": "#475569"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CRYPTO",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:1564456386",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:BAR_CHART_HORIZONTAL:background:RISK_MATRIX",
+          "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:CROWD_PANIC:top:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:NEON_TERMINAL:top:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:RADAR_CHART:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:RADAR_CHART",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "bar",
+            "visualStyle": "BAR_CHART_HORIZONTAL",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:BAR_CHART_HORIZONTAL:background:RISK_MATRIX",
+            "promptFingerprint": "pf_t2qu5a"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "TRADER_DESK_SILHOUETTE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_dwlig0"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "flow",
+            "visualStyle": "MACRO_FLOW_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_lfpb1p"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_9frlje"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "choropleth",
+            "visualStyle": "MAP_DATA_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_9g3cb3"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "terminal",
+            "visualStyle": "NEON_TERMINAL",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:NEON_TERMINAL:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_6wiflj"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:RADAR_CHART:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_uidvgj"
+          }
+        ]
+      }
     }
   ]
 }
