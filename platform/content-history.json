@@ -29753,6 +29753,148 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-07-03",
+      "topic": "The 10-Minute Portfolio Diagnostic Before You Deposit More Money",
+      "hook": "Adding cash fixes your portfolio is wrong. Here is why",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "portfolio audit",
+        "asset allocation",
+        "rebalancing strategy",
+        "investment checklist"
+      ],
+      "visualSignature": "2026-07-03-28683605519",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-07-03T21:19:05.851Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "question_open",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "CAP_TABLE_GRID",
+        "TRADER_DESK_SILHOUETTE",
+        "MACRO_FLOW_DIAGRAM",
+        "CROWD_PANIC",
+        "MAP_DATA_OVERLAY",
+        "NEON_TERMINAL"
+      ],
+      "coverVisualStyle": "CAP_TABLE_GRID",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_quant_30s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F8F9FA",
+        "primaryText": "#111827",
+        "accent1": "#2563EB",
+        "accent2": "#4B5563"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "GENERAL",
+      "sourceTier": "UNKNOWN",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:DOCUMENT_RECEIPT:2121880340",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:CAP_TABLE_GRID:center:PRICE_CHART",
+          "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:FILING_EXCERPT",
+          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:CROWD_PANIC:top:FILING_EXCERPT",
+          "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:NEON_TERMINAL:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:NEON_TERMINAL",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CAP_TABLE_GRID:center:PRICE_CHART",
+            "promptFingerprint": "pf_gl4caj"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "TRADER_DESK_SILHOUETTE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_63btgf"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "flow",
+            "visualStyle": "MACRO_FLOW_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_ybbp75"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_5tz8zs"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "choropleth",
+            "visualStyle": "MAP_DATA_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_x4zpzl"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "terminal",
+            "visualStyle": "NEON_TERMINAL",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:NEON_TERMINAL:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_enpx3m"
+          }
+        ]
+      }
     }
   ]
 }
