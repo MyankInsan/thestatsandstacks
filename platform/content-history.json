@@ -32427,6 +32427,163 @@
           }
         ]
       }
+    },
+    {
+      "date": "2026-07-06",
+      "topic": "The Nasdaq Heat Check: What to Assess Before Reacting to the Market Rally",
+      "hook": "Buying index rallies is safe. Here is why.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 7,
+      "keywords": [
+        "Nasdaq concentration risk",
+        "index investing FOMO",
+        "S&P 500 equal weight vs market cap",
+        "portfolio risk filter"
+      ],
+      "visualSignature": "2026-07-06-28825109283",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-07-06T21:46:03.480Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "question_open",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "MAP_DATA_OVERLAY",
+        "CROWD_PANIC",
+        "SANKEY_DIAGRAM",
+        "ARCHITECTURAL_OVERLAY",
+        "RADAR_CHART",
+        "NEON_TERMINAL",
+        "AREA_CHART"
+      ],
+      "coverVisualStyle": "MAP_DATA_OVERLAY",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "boomer_diy_investor"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F8F9FA",
+        "primaryText": "#111827",
+        "accent1": "#2563EB",
+        "accent2": "#4B5563"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "INDEX_MOVE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:110034385",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:EARNINGS_TABLE",
+          "COMPARISON_XRAY:CROWD_PANIC:top:STORE_SCENE",
+          "COMPARISON_XRAY:SANKEY_DIAGRAM:background:PRICE_CHART",
+          "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
+          "COMPARISON_XRAY:RADAR_CHART:background:PRICE_CHART",
+          "COMPARISON_XRAY:NEON_TERMINAL:top:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:AREA_CHART:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:AREA_CHART",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "choropleth",
+            "visualStyle": "MAP_DATA_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_9e5fi"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:STORE_SCENE",
+            "promptFingerprint": "pf_w00wae"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:SANKEY_DIAGRAM:background:PRICE_CHART",
+            "promptFingerprint": "pf_8xillx"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
+            "promptFingerprint": "pf_aostj"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:RADAR_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_ab4zix"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "terminal",
+            "visualStyle": "NEON_TERMINAL",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:NEON_TERMINAL:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_om7q41"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "area",
+            "visualStyle": "AREA_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:AREA_CHART:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_d36e92"
+          }
+        ]
+      }
     }
   ]
 }
