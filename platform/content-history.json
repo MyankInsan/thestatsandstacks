@@ -2,48 +2,6 @@
   "schemaVersion": 4,
   "entries": [
     {
-      "date": "2026-05-26",
-      "topic": "How President Trump's Policies Impact the Tech Sector",
-      "hook": "What the new policies mean for Tech.",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
-      "slideCount": 7,
-      "keywords": [
-        "SNDK stock",
-        "Sandisk Corporation stock",
-        "hot stock risk checklist",
-        "market catalyst explained"
-      ],
-      "visualSignature": "2026-05-26-26493697129",
-      "schemaVersion": 4,
-      "slotIndex": 1,
-      "postedAtUtc": "2026-05-27T05:58:53.228Z",
-      "tickersFeatured": [],
-      "topicCategory": "POLICY",
-      "hookFormulaId": "QUIET_NUMBER",
-      "ctaId": "follow_authority",
-      "angleId": "INDEX_REBALANCE",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "ARCHITECTURAL_OVERLAY",
-        "MILITARY_AEROSPACE_METAPHOR",
-        "ARCHITECTURAL_OVERLAY",
-        "CROWD_PANIC",
-        "MILITARY_AEROSPACE_METAPHOR",
-        "ARCHITECTURAL_OVERLAY",
-        "PREMIUM_CTA"
-      ],
-      "coverVisualStyle": "ARCHITECTURAL_OVERLAY",
-      "portraitSubjects": [],
-      "archetypesUsed": [],
-      "colorSchemeUsed": {
-        "bg": "#050505",
-        "primaryText": "#FFFFFF",
-        "accent1": "#39FF14",
-        "accent2": "#00CFFF"
-      }
-    },
-    {
       "date": "2026-05-27",
       "topic": "Micron Technology (MU) Heat Check: The 5-Question Risk Filter",
       "hook": "Micron is up 188% YTD. Should you care?",
@@ -33948,6 +33906,150 @@
             "motifTag": "NONE",
             "sceneConceptId": "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_5mw77h"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-08",
+      "topic": "Average investor return vs the index they held",
+      "hook": "Everyone says buy-and-hold. The disclosure says we trade too much.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "Dalbar study",
+        "average investor returns",
+        "index fund performance",
+        "behavioral gap",
+        "underperforming the index"
+      ],
+      "visualSignature": "2026-07-08-28976134293",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-07-08T21:19:35.608Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "REVERSE_SURVIVORSHIP",
+      "ctaId": "question_open",
+      "angleId": "BEHAVIORAL_RECEIPT",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "POSITION_CONCENTRATION_TREEMAP",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "MACRO_FLOW_DIAGRAM",
+        "EXPERT_CUTOUT",
+        "PRICE_TIMELINE_ANNOTATED",
+        "GLOWING_QUOTE"
+      ],
+      "coverVisualStyle": "POSITION_CONCENTRATION_TREEMAP",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "immigrant_entrepreneur"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#FFFFFF",
+        "primaryText": "#0F172A",
+        "accent1": "#0E7C66",
+        "accent2": "#475569"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "INDEX_MOVE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:331533678",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:center:FILING_EXCERPT",
+          "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:PRICE_CHART",
+          "COMPARISON_XRAY:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:GLOWING_QUOTE:center:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:GLOWING_QUOTE",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "treemap",
+            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:center:FILING_EXCERPT",
+            "promptFingerprint": "pf_upmryh"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_w4uune"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "flow",
+            "visualStyle": "MACRO_FLOW_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:PRICE_CHART",
+            "promptFingerprint": "pf_kiblmg"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EXPERT_CUTOUT",
+            "bucket": "Human",
+            "visualPosition": "left",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_5k6mt7"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_ntlj19"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "pull-quote",
+            "visualStyle": "GLOWING_QUOTE",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_w36b7o"
           }
         ]
       }
