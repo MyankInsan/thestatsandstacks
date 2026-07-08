@@ -3,66 +3,6 @@
   "entries": [
     {
       "date": "2026-05-27",
-      "topic": "What Norway's $1.7T fund owns in Canada",
-      "hook": "I pulled Norway’s $1.7T filing. Here’s what’s inside",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 6,
-      "keywords": [
-        "Norway sovereign wealth fund Canada",
-        "NBIM Canadian holdings",
-        "what institutions buy in Canada",
-        "top Canadian dividend stocks"
-      ],
-      "visualSignature": "2026-05-27-26533076641",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-05-27T19:16:41.723Z",
-      "tickersFeatured": [
-        "JPM",
-        "BA",
-        "LULU",
-        "ANF",
-        "FL",
-        "DKS",
-        "AZO",
-        "AAL",
-        "DIS",
-        "IMAX",
-        "STLA",
-        "AVB",
-        "EQR",
-        "WMT",
-        "LLY",
-        "TGT"
-      ],
-      "topicCategory": "CAP_TABLE",
-      "hookFormulaId": "RECEIPT_DROP",
-      "ctaId": "share_use_case",
-      "angleId": "CAP_TABLE_INSTITUTIONAL",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "EXPERT_CUTOUT",
-        "CORPORATE_OFFICE_SPACE",
-        "TICKER_TAPE_HERO",
-        "CAP_TABLE_GRID",
-        "CHESS_BOARD_STRATEGY",
-        "PREMIUM_CTA"
-      ],
-      "coverVisualStyle": "EXPERT_CUTOUT",
-      "portraitSubjects": [
-        "trump"
-      ],
-      "archetypesUsed": [],
-      "colorSchemeUsed": {
-        "bg": "#000000",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF3B30",
-        "accent2": "#FFD700"
-      }
-    },
-    {
-      "date": "2026-05-27",
       "topic": "How a 1% MER actually compounds over 30 years",
       "hook": "1% sounds small. Here is the 30-year math",
       "format": "CAROUSEL",
@@ -34145,6 +34085,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "PREMIUM_LIFESTYLE:CANDLESTICK_HERO:background:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_uq8ba3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-08",
+      "topic": "TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?",
+      "hook": "Most Canadians pick the wrong account first.",
+      "format": "CAROUSEL",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 7,
+      "keywords": [
+        "TFSA vs RRSP",
+        "FHSA Canada",
+        "Canadian investing"
+      ],
+      "visualSignature": "2026-07-08-28981968573",
+      "schemaVersion": 4,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-07-08T23:15:03.850Z",
+      "tickersFeatured": [],
+      "topicCategory": "TAX_ACCT",
+      "hookFormulaId": "PREMIUM_CONTRARIAN",
+      "ctaId": "comment_genuine_question",
+      "angleId": "COMPARISON_LADDER",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "EARNINGS_HEAT_TABLE",
+        "MEME_COMIC_PLATE",
+        "SATIRICAL_METAPHOR",
+        "FUNNY_COMPARISON",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "EARNINGS_HEAT_TABLE",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "canadian_uni_grad_25"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0E0B08",
+        "primaryText": "#FFF7E6",
+        "accent1": "#FFB000",
+        "accent2": "#FF3B30"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "ACCT_COMPARISON",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:ANNOTATED_CHART:1819910980",
+        "structureFamily": "EDITORIAL_MYTH_BUST",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "EDITORIAL_MYTH_BUST:EARNINGS_HEAT_TABLE:background:RISK_MATRIX",
+          "EDITORIAL_MYTH_BUST:MEME_COMIC_PLATE:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:SATIRICAL_METAPHOR:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:FUNNY_COMPARISON:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "QUESTION_CARD:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "heat-table",
+            "visualStyle": "EARNINGS_HEAT_TABLE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:EARNINGS_HEAT_TABLE:background:RISK_MATRIX",
+            "promptFingerprint": "pf_mdvgu4"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "MEME_COMIC_PLATE",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:MEME_COMIC_PLATE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_w4025g"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "SATIRICAL_METAPHOR",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:SATIRICAL_METAPHOR:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_rkw5"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "FUNNY_COMPARISON",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:FUNNY_COMPARISON:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_3nwxul"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_d2s164"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_a9w5cq"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_2mckid"
           }
         ]
       }
