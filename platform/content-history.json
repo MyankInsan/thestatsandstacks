@@ -2,71 +2,6 @@
   "schemaVersion": 4,
   "entries": [
     {
-      "date": "2026-05-27",
-      "topic": "What $10k in Rocket Lab (RKLB) 5 years ago looks like",
-      "hook": "What $10k in RKLB 5 years ago looks like",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
-      "slideCount": 6,
-      "keywords": [
-        "RKLB historical return",
-        "growth stock volatility",
-        "behavioral finance Canada",
-        "index fund vs stock picking"
-      ],
-      "visualSignature": "2026-05-27-26558987180",
-      "schemaVersion": 4,
-      "slotIndex": 5,
-      "postedAtUtc": "2026-05-28T06:38:23.621Z",
-      "tickersFeatured": [
-        "JPM",
-        "BA",
-        "LULU",
-        "ANF",
-        "FL",
-        "DKS",
-        "AZO",
-        "AAL",
-        "WMT",
-        "DIS",
-        "IMAX",
-        "STLA",
-        "AVB",
-        "EQR",
-        "IMAX",
-        "STLA",
-        "STLA",
-        "WMT",
-        "LLY",
-        "ELF",
-        "TGT"
-      ],
-      "topicCategory": "BEHAVIORAL",
-      "hookFormulaId": "TIME_CAPSULE",
-      "ctaId": "save_specific",
-      "angleId": "TAX_DRAG_MAP",
-      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
-      "visualStylesUsed": [
-        "LUXURY_LIFESTYLE",
-        "LUXURY_LIFESTYLE",
-        "MAGAZINE_COVER",
-        "LUXURY_LIFESTYLE",
-        "MAGAZINE_COVER",
-        "PREMIUM_CTA"
-      ],
-      "coverVisualStyle": "LUXURY_LIFESTYLE",
-      "portraitSubjects": [
-        "cathie_wood"
-      ],
-      "archetypesUsed": [],
-      "colorSchemeUsed": {
-        "bg": "#0A0A0A",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FFFFFF"
-      }
-    },
-    {
       "date": "2026-05-28",
       "topic": "5 Money Leaks Quietly Keeping Canadians Broke",
       "hook": "These small leaks do the most damage.",
@@ -34417,6 +34352,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_kulx2v"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-09",
+      "topic": "Finfluencer Red Flags: 7 Phrases Investors Should Pause On",
+      "hook": "Good finance content does not need pressure.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 7,
+      "keywords": [
+        "finfluencer red flags",
+        "investment scams social media",
+        "investing risk"
+      ],
+      "visualSignature": "2026-07-09-29045886050",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-07-09T20:00:16.026Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "QUIET_COMPOUNDER",
+      "ctaId": "reference_save",
+      "angleId": "DIVIDEND_KINGS",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "BAR_CHART_HORIZONTAL",
+        "CORPORATE_OFFICE_SPACE",
+        "CANDLESTICK_HERO",
+        "TRADER_DESK_SILHOUETTE",
+        "AREA_CHART",
+        "CROWD_PANIC",
+        "GLOWING_QUOTE"
+      ],
+      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "silver_haired_pm"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "INVESTOR_PROTECTION",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:1446386979",
+        "structureFamily": "DATA_SNAPSHOT",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "DATA_SNAPSHOT:BAR_CHART_HORIZONTAL:background:RISK_MATRIX",
+          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:PRICE_CHART",
+          "DATA_SNAPSHOT:CANDLESTICK_HERO:background:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:TRADER_DESK_SILHOUETTE:top:FILING_EXCERPT",
+          "DATA_SNAPSHOT:AREA_CHART:background:PRICE_CHART",
+          "DATA_SNAPSHOT:CROWD_PANIC:top:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:GLOWING_QUOTE:center:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "CHECKLIST_RECEIPT:GLOWING_QUOTE",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "bar",
+            "visualStyle": "BAR_CHART_HORIZONTAL",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:BAR_CHART_HORIZONTAL:background:RISK_MATRIX",
+            "promptFingerprint": "pf_wnrc7d"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "architecture",
+            "visualStyle": "CORPORATE_OFFICE_SPACE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:PRICE_CHART",
+            "promptFingerprint": "pf_7f5vi4"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CANDLESTICK_HERO:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_ounhyz"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "TRADER_DESK_SILHOUETTE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:TRADER_DESK_SILHOUETTE:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_n058w7"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "area",
+            "visualStyle": "AREA_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:AREA_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_8k91j9"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CROWD_PANIC:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_lz3kpr"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "pull-quote",
+            "visualStyle": "GLOWING_QUOTE",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_n9jskt"
           }
         ]
       }
