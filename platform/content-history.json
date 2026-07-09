@@ -3,67 +3,6 @@
   "entries": [
     {
       "date": "2026-05-27",
-      "topic": "How a 1% MER actually compounds over 30 years",
-      "hook": "1% sounds small. Here is the 30-year math",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
-      "slideCount": 6,
-      "keywords": [
-        "MER fees Canada",
-        "mutual fund vs ETF compounding",
-        "Canadian investment fees math",
-        "low cost index funds Canada"
-      ],
-      "visualSignature": "2026-05-27-26541297901",
-      "schemaVersion": 4,
-      "slotIndex": 3,
-      "postedAtUtc": "2026-05-27T22:02:19.600Z",
-      "tickersFeatured": [
-        "JPM",
-        "BA",
-        "LULU",
-        "ANF",
-        "FL",
-        "DKS",
-        "AZO",
-        "AAL",
-        "SAVE",
-        "DIS",
-        "IMAX",
-        "AVB",
-        "EQR",
-        "STLA",
-        "WMT",
-        "LLY",
-        "TGT"
-      ],
-      "topicCategory": "HOW_TO",
-      "hookFormulaId": "QUIET_COMPOUNDER",
-      "ctaId": "comment_genuine_question",
-      "angleId": "DIVIDEND_KINGS",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "TECH_HUD",
-        "EDITORIAL_SPLIT_LAYOUT",
-        "BAR_CHART_HORIZONTAL",
-        "COMPARISON_TABLE",
-        "DONUT_CHART",
-        "GLOWING_QUOTE"
-      ],
-      "coverVisualStyle": "TECH_HUD",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "boomer_diy_investor"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#F8F9FA",
-        "primaryText": "#111827",
-        "accent1": "#2563EB",
-        "accent2": "#4B5563"
-      }
-    },
-    {
-      "date": "2026-05-27",
       "topic": "If you had skipped Western Digital and bought the index",
       "hook": "If you'd skipped WDC and bought the index",
       "format": "CAROUSEL",
@@ -34242,6 +34181,148 @@
             "motifTag": "NONE",
             "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_2mckid"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-09",
+      "topic": "If You Invested $10,000 in NVIDIA 5 Years Ago",
+      "hook": "What $10k in NVDA looks like today.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 6,
+      "keywords": [
+        "MU stock news",
+        "Micron manufacturing push",
+        "semiconductor stock checklist",
+        "US chip supply chain"
+      ],
+      "visualSignature": "2026-07-09-29033218927",
+      "schemaVersion": 4,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-07-09T16:37:35.306Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "ANTI_FOMO",
+      "ctaId": "follow_authority",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "PRICE_TIMELINE_ANNOTATED",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "COMPARISON_TABLE",
+        "LUXURY_LIFESTYLE",
+        "DONUT_CHART",
+        "EDITORIAL_STAT_CARD"
+      ],
+      "coverVisualStyle": "PRICE_TIMELINE_ANNOTATED",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_quant_30s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00CFFF",
+        "accent2": "#FFB000"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "HYPOTHETICAL_RETURN",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:NEWS_FLASH:ANNOTATED_CHART:585610169",
+        "structureFamily": "NEWS_FLASH",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "TOP_STACK",
+        "sceneConceptIds": [
+          "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:top:PRICE_CHART",
+          "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
+          "NEWS_FLASH:COMPARISON_TABLE:left:PRICE_CHART",
+          "NEWS_FLASH:LUXURY_LIFESTYLE:top:PRICE_CHART",
+          "NEWS_FLASH:DONUT_CHART:background:SOURCE_DOCUMENT",
+          "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "EDITORIAL_SIGNOFF:EDITORIAL_STAT_CARD",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-TOP_STACK",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:top:PRICE_CHART",
+            "promptFingerprint": "pf_xihowp"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_3m07oj"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:COMPARISON_TABLE:left:PRICE_CHART",
+            "promptFingerprint": "pf_pf71nb"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "NEWS_FLASH:LUXURY_LIFESTYLE:top:PRICE_CHART",
+            "promptFingerprint": "pf_sd6qy7"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:DONUT_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_bwwgh"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "stat-card",
+            "visualStyle": "EDITORIAL_STAT_CARD",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_dspwp2"
           }
         ]
       }
