@@ -2,48 +2,6 @@
   "schemaVersion": 4,
   "entries": [
     {
-      "date": "2026-05-29",
-      "topic": "TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?",
-      "hook": "Most Canadians pick the wrong account first.",
-      "format": "CAROUSEL",
-      "formatType": "MEME_HUMOR",
-      "slideCount": 7,
-      "keywords": [
-        "SP500 all time high",
-        "S&P 500 record"
-      ],
-      "visualSignature": "2026-05-29-26665954545",
-      "schemaVersion": 4,
-      "slotIndex": 6,
-      "postedAtUtc": "2026-05-29T22:43:57.049Z",
-      "tickersFeatured": [],
-      "topicCategory": "TAX_ACCT",
-      "hookFormulaId": "MYTH_STRIKE",
-      "ctaId": "question_open",
-      "angleId": "BEHAVIORAL_RECEIPT",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "EDITORIAL_REACTION_CARICATURE",
-        "SATIRICAL_METAPHOR",
-        "EDITORIAL_REACTION_CARICATURE",
-        "CARICATURE_PORTRAIT",
-        "SATIRICAL_METAPHOR",
-        "EDITORIAL_REACTION_CARICATURE",
-        "PREMIUM_CTA"
-      ],
-      "coverVisualStyle": "EDITORIAL_REACTION_CARICATURE",
-      "portraitSubjects": [
-        "trudeau"
-      ],
-      "archetypesUsed": [],
-      "colorSchemeUsed": {
-        "bg": "#09090D",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FF2E93"
-      }
-    },
-    {
       "date": "2026-05-30",
       "topic": "Broadcom Inc. (AVGO) Heat Check: What to Watch on Your Watchlist",
       "hook": "AVGO is up this year. Should you care?",
@@ -35386,6 +35344,147 @@
             "motifTag": "NONE",
             "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_bxjb8q"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-11",
+      "topic": "What Norway's $1.7T fund owns in Canada",
+      "hook": "I pulled Norway's $1.7T filing. Here's what's inside",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "Norway Sovereign Wealth Fund",
+        "Norges Bank Canadian holdings",
+        "CPPIB vs Norway",
+        "Canadian dividend stocks"
+      ],
+      "visualSignature": "2026-07-11-29160152081",
+      "schemaVersion": 4,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-07-11T16:41:05.481Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "RECEIPT_DROP",
+      "ctaId": "save_specific",
+      "angleId": "SOVEREIGN_WEALTH",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "INSTITUTIONAL_FLOW_SANKEY",
+        "EXPERT_CUTOUT",
+        "COMPARISON_TABLE",
+        "CARICATURE_PORTRAIT",
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "EARNINGS_CARD"
+      ],
+      "coverVisualStyle": "INSTITUTIONAL_FLOW_SANKEY",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00CFFF",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CAP_TABLE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:1756746110",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:INSTITUTIONAL_FLOW_SANKEY:background:EARNINGS_TABLE",
+          "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:COMPARISON_TABLE:left:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SAVE_CARD:EARNINGS_CARD",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
+            "primaryEncoding": "sankey",
+            "visualStyle": "INSTITUTIONAL_FLOW_SANKEY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:INSTITUTIONAL_FLOW_SANKEY:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_1lkqtg"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EXPERT_CUTOUT",
+            "bucket": "Human",
+            "visualPosition": "left",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_6axawy"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:COMPARISON_TABLE:left:FILING_EXCERPT",
+            "promptFingerprint": "pf_1evaol"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_re3paf"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "mega-number",
+            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:FILING_EXCERPT",
+            "promptFingerprint": "pf_hqzrdh"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_8b3r5"
           }
         ]
       }
