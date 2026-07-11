@@ -3,48 +3,6 @@
   "entries": [
     {
       "date": "2026-05-30",
-      "topic": "Broadcom Inc. (AVGO) Heat Check: What to Watch on Your Watchlist",
-      "hook": "AVGO is up this year. Should you care?",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
-      "slideCount": 7,
-      "keywords": [
-        "AVGO stock analysis",
-        "Broadcom news",
-        "AI hardware stocks",
-        "stock watchlist"
-      ],
-      "visualSignature": "2026-05-30-26687041184",
-      "schemaVersion": 4,
-      "slotIndex": 1,
-      "postedAtUtc": "2026-05-30T15:03:26.370Z",
-      "tickersFeatured": [],
-      "topicCategory": "MACRO",
-      "hookFormulaId": "QUIET_NUMBER",
-      "ctaId": "follow_authority",
-      "angleId": "INDEX_REBALANCE",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "ARCHITECTURAL_OVERLAY",
-        "CROWD_PANIC",
-        "MILITARY_AEROSPACE_METAPHOR",
-        "CANDLESTICK_CHART",
-        "TICKER_TAPE_HERO",
-        "NEON_TERMINAL",
-        "EDITORIAL_SPLIT_LAYOUT"
-      ],
-      "coverVisualStyle": "ARCHITECTURAL_OVERLAY",
-      "portraitSubjects": [],
-      "archetypesUsed": [],
-      "colorSchemeUsed": {
-        "bg": "#050505",
-        "primaryText": "#FFFFFF",
-        "accent1": "#39FF14",
-        "accent2": "#00CFFF"
-      }
-    },
-    {
-      "date": "2026-05-30",
       "topic": "Stocks the US government effectively holds via TSP/CalPERS",
       "hook": "I pulled CalPERS' latest filing. Here's what's in it",
       "format": "CAROUSEL",
@@ -35485,6 +35443,150 @@
             "motifTag": "NONE",
             "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_8b3r5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-11",
+      "topic": "How a 1% MER actually compounds over 30 years",
+      "hook": "1% sounds small. Here is the 30-year math",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 6,
+      "keywords": [
+        "MER",
+        "mutual fund fees",
+        "expense ratio",
+        "compounding interest",
+        "low cost ETFs"
+      ],
+      "visualSignature": "2026-07-11-29164789860",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-07-11T19:14:09.947Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "QUIET_COMPOUNDER",
+      "ctaId": "reference_save",
+      "angleId": "FEE_TEARDOWN",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "LINE_CHART",
+        "CORPORATE_OFFICE_SPACE",
+        "AREA_CHART",
+        "LUXURY_LIFESTYLE",
+        "EARNINGS_HEAT_TABLE",
+        "EDITORIAL_SPLIT_LAYOUT"
+      ],
+      "coverVisualStyle": "LINE_CHART",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_quant_30s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFB000",
+        "accent2": "#00CFFF"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "ETF_FEES",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:1918613969",
+        "structureFamily": "DATA_SNAPSHOT",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "DATA_SNAPSHOT:LINE_CHART:background:PRICE_CHART",
+          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:AREA_CHART:background:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:EARNINGS_HEAT_TABLE:background:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:EDITORIAL_SPLIT_LAYOUT:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "CHECKLIST_RECEIPT:EDITORIAL_SPLIT_LAYOUT",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "line",
+            "visualStyle": "LINE_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:LINE_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_wqohdl"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "architecture",
+            "visualStyle": "CORPORATE_OFFICE_SPACE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_87o5ts"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "area",
+            "visualStyle": "AREA_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:AREA_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_j8n5dm"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_9m5lu"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "heat-table",
+            "visualStyle": "EARNINGS_HEAT_TABLE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:EARNINGS_HEAT_TABLE:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_tyuq67"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:EDITORIAL_SPLIT_LAYOUT:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_dojbf0"
           }
         ]
       }
