@@ -3,48 +3,6 @@
   "entries": [
     {
       "date": "2026-05-30",
-      "topic": "TSX Record High: What Smart Investors Check Before Reacting",
-      "hook": "If you invest in Canadian stocks, do this first",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
-      "slideCount": 7,
-      "keywords": [
-        "TSX record high",
-        "investing Canada",
-        "Canadian index high",
-        "portfolio rebalancing"
-      ],
-      "visualSignature": "2026-05-30-26692761258",
-      "schemaVersion": 4,
-      "slotIndex": 3,
-      "postedAtUtc": "2026-05-30T19:29:49.692Z",
-      "tickersFeatured": [],
-      "topicCategory": "MACRO",
-      "hookFormulaId": "IF_THEN_LADDER",
-      "ctaId": "reference_save",
-      "angleId": "ETF_XRAY",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "TRADER_DESK_SILHOUETTE",
-        "CORPORATE_OFFICE_SPACE",
-        "RADAR_CHART",
-        "AREA_CHART",
-        "HEATMAP_GRID",
-        "CIRCULAR_PORTFOLIO_WHEEL",
-        "LUXURY_LIFESTYLE"
-      ],
-      "coverVisualStyle": "TRADER_DESK_SILHOUETTE",
-      "portraitSubjects": [],
-      "archetypesUsed": [],
-      "colorSchemeUsed": {
-        "bg": "#050505",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF3B30",
-        "accent2": "#39FF14"
-      }
-    },
-    {
-      "date": "2026-05-30",
       "topic": "VFV vs VSP: The Real Cost of Currency Hedging",
       "hook": "Hedging your S&P 500 is wrong. Here is why",
       "format": "CAROUSEL",
@@ -35686,6 +35644,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_pdkhzs"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-11",
+      "topic": "TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?",
+      "hook": "Most Canadians pick the wrong account first.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 7,
+      "keywords": [
+        "TFSA vs RRSP",
+        "FHSA Canada",
+        "Canadian investing"
+      ],
+      "visualSignature": "2026-07-11-29169119211",
+      "schemaVersion": 4,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-07-11T21:44:49.107Z",
+      "tickersFeatured": [],
+      "topicCategory": "TAX_ACCT",
+      "hookFormulaId": "QUIET_COMPOUNDER",
+      "ctaId": "share_use_case",
+      "angleId": "DIVIDEND_KINGS",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "PRICE_TIMELINE_ANNOTATED",
+        "ARCHITECTURAL_OVERLAY",
+        "RADAR_CHART",
+        "NEON_TERMINAL",
+        "CANDLESTICK_CHART",
+        "EDITORIAL_REACTION_CARICATURE",
+        "HEATMAP_GRID"
+      ],
+      "coverVisualStyle": "PRICE_TIMELINE_ANNOTATED",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "seasoned_canadian_banker"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FFFFFF"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "ACCT_COMPARISON",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:ANNOTATED_CHART:97046999",
+        "structureFamily": "PREMIUM_LIFESTYLE",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "PREMIUM_LIFESTYLE:PRICE_TIMELINE_ANNOTATED:background:RISK_MATRIX",
+          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:RADAR_CHART:background:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:NEON_TERMINAL:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:CANDLESTICK_CHART:background:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:HEATMAP_GRID:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:HEATMAP_GRID",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:PRICE_TIMELINE_ANNOTATED:background:RISK_MATRIX",
+            "promptFingerprint": "pf_oz2nmk"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_rmf36l"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:RADAR_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_6frigc"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "terminal",
+            "visualStyle": "NEON_TERMINAL",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:NEON_TERMINAL:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_3dhuhj"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:CANDLESTICK_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_9o37st"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_6ydjf0"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "heatmap",
+            "visualStyle": "HEATMAP_GRID",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:HEATMAP_GRID:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_u4m4i2"
           }
         ]
       }
