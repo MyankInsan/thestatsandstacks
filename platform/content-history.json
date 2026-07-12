@@ -3,49 +3,6 @@
   "entries": [
     {
       "date": "2026-05-31",
-      "topic": "Western Digital (WDC) Heat Check: The 5-Point Watchlist Checklist",
-      "hook": "If you track tech stocks, do this 1 thing first",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
-      "slideCount": 6,
-      "keywords": [
-        "WDC stock",
-        "Western Digital Corporation stock",
-        "semiconductor risk map",
-        "flash memory stock catalyst"
-      ],
-      "visualSignature": "2026-05-31-26722138028",
-      "schemaVersion": 4,
-      "slotIndex": 3,
-      "postedAtUtc": "2026-05-31T19:26:50.214Z",
-      "tickersFeatured": [],
-      "topicCategory": "HOW_TO",
-      "hookFormulaId": "IF_THEN_LADDER",
-      "ctaId": "reference_save",
-      "angleId": "DIVIDEND_KINGS",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "EDITORIAL_STAT_CARD",
-        "EXPERT_CUTOUT",
-        "CORPORATE_OFFICE_SPACE",
-        "EARNINGS_HEAT_TABLE",
-        "MINIMALIST_CHECKLIST",
-        "TRADING_DESK_OVERLAY"
-      ],
-      "coverVisualStyle": "EDITORIAL_STAT_CARD",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "millennial_dad_with_laptop"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#050505",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF3B30",
-        "accent2": "#39FF14"
-      }
-    },
-    {
-      "date": "2026-05-31",
       "topic": "Credit Score Myths Canadians Still Believe",
       "hook": "Some credit advice is just noise.",
       "format": "CAROUSEL",
@@ -36343,6 +36300,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_i6zkp2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-12",
+      "topic": "5 Money Leaks Quietly Keeping Canadians Broke",
+      "hook": "These small leaks do the most damage.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 7,
+      "keywords": [
+        "budgeting Canada",
+        "money leaks",
+        "personal finance Canada"
+      ],
+      "visualSignature": "2026-07-12-29209985870",
+      "schemaVersion": 4,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-07-12T21:45:30.575Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "TIME_CAPSULE",
+      "ctaId": "share_use_case",
+      "angleId": "DIVIDEND_KINGS",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "RADAR_CHART",
+        "NEON_TERMINAL",
+        "CANDLESTICK_CHART",
+        "EDITORIAL_REACTION_CARICATURE",
+        "HEATMAP_GRID",
+        "REDDIT_POST_SCREENSHOT",
+        "CANDLESTICK_PATTERN_ANNOTATED"
+      ],
+      "coverVisualStyle": "RADAR_CHART",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "boomer_diy_investor"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0B0E0C",
+        "primaryText": "#F2F2F0",
+        "accent1": "#7FB08A",
+        "accent2": "#D8C7A0"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "GENERAL",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:ANNOTATED_CHART:1762170457",
+        "structureFamily": "PREMIUM_LIFESTYLE",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "TOP_STACK",
+        "sceneConceptIds": [
+          "PREMIUM_LIFESTYLE:RADAR_CHART:top:PRICE_CHART",
+          "PREMIUM_LIFESTYLE:NEON_TERMINAL:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:CANDLESTICK_CHART:background:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:EDITORIAL_REACTION_CARICATURE:top:EARNINGS_TABLE",
+          "PREMIUM_LIFESTYLE:HEATMAP_GRID:background:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:REDDIT_POST_SCREENSHOT:center:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:CANDLESTICK_PATTERN_ANNOTATED:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:CANDLESTICK_PATTERN_ANNOTATED",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-TOP_STACK",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:RADAR_CHART:top:PRICE_CHART",
+            "promptFingerprint": "pf_x07tl6"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "terminal",
+            "visualStyle": "NEON_TERMINAL",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:NEON_TERMINAL:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_nn938i"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:CANDLESTICK_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_yje33c"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:EDITORIAL_REACTION_CARICATURE:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_vf6khe"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "heatmap",
+            "visualStyle": "HEATMAP_GRID",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:HEATMAP_GRID:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_izteng"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "social-mock",
+            "visualStyle": "REDDIT_POST_SCREENSHOT",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:REDDIT_POST_SCREENSHOT:center:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_ap4goq"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_PATTERN_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:CANDLESTICK_PATTERN_ANNOTATED:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_fv8b8h"
           }
         ]
       }
