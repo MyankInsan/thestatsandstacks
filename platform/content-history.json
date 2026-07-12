@@ -3,49 +3,6 @@
   "entries": [
     {
       "date": "2026-05-31",
-      "topic": "What Michael Burry (Scion) bought and sold last quarter",
-      "hook": "I pulled Michael Burry's 13F. Here's what's in it",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 6,
-      "keywords": [
-        "Michael Burry 13F",
-        "Scion Asset Management portfolio",
-        "institutional stock holdings",
-        "13F filing analysis"
-      ],
-      "visualSignature": "2026-05-31-26718621091",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-05-31T16:53:42.316Z",
-      "tickersFeatured": [],
-      "topicCategory": "CAP_TABLE",
-      "hookFormulaId": "RECEIPT_DROP",
-      "ctaId": "comment_genuine_question",
-      "angleId": "CAP_TABLE_INSTITUTIONAL",
-      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
-      "visualStylesUsed": [
-        "VAULT_SECURITY",
-        "POP_CULTURE_PORTRAIT",
-        "BAR_CHART_HORIZONTAL",
-        "CAP_TABLE_GRID",
-        "PORTFOLIO_DOUGHNUT_PORTRAIT",
-        "LUXURY_LIFESTYLE"
-      ],
-      "coverVisualStyle": "VAULT_SECURITY",
-      "portraitSubjects": [
-        "michael_burry"
-      ],
-      "archetypesUsed": [],
-      "colorSchemeUsed": {
-        "bg": "#000000",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF3B30",
-        "accent2": "#FFD700"
-      }
-    },
-    {
-      "date": "2026-05-31",
       "topic": "Western Digital (WDC) Heat Check: The 5-Point Watchlist Checklist",
       "hook": "If you track tech stocks, do this 1 thing first",
       "format": "CAROUSEL",
@@ -36229,6 +36186,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "DATA_SNAPSHOT:EDITORIAL_SPLIT_LAYOUT:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_ruqalo"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-12",
+      "topic": "How President Trump's Policies Impact the Tech Sector",
+      "hook": "What the new policies mean for Tech.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 7,
+      "keywords": [
+        "how to read S-1 filing",
+        "new IPO filings",
+        "SEC S-1 registration",
+        "IPO investing risks"
+      ],
+      "visualSignature": "2026-07-12-29208679082",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-07-12T21:03:29.680Z",
+      "tickersFeatured": [],
+      "topicCategory": "POLICY",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "question_open",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "POSITION_CONCENTRATION_TREEMAP",
+        "LUXURY_LIFESTYLE",
+        "MACRO_FLOW_DIAGRAM",
+        "TRADER_DESK_SILHOUETTE",
+        "LINE_CHART",
+        "CROWD_PANIC",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "POSITION_CONCENTRATION_TREEMAP",
+      "portraitSubjects": [
+        "trump"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#F8F9FA",
+        "primaryText": "#111827",
+        "accent1": "#2563EB",
+        "accent2": "#4B5563"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "IPO",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:455478579",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:center:FILING_EXCERPT",
+          "COMPARISON_XRAY:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:EARNINGS_TABLE",
+          "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:EARNINGS_TABLE",
+          "COMPARISON_XRAY:LINE_CHART:background:RISK_MATRIX",
+          "COMPARISON_XRAY:CROWD_PANIC:top:EARNINGS_TABLE",
+          "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:MAGAZINE_COVER",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "treemap",
+            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:center:FILING_EXCERPT",
+            "promptFingerprint": "pf_oeca18"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "COMPARISON_XRAY:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_od122y"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "flow",
+            "visualStyle": "MACRO_FLOW_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_dk9k0b"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "TRADER_DESK_SILHOUETTE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_sv5s1j"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "line",
+            "visualStyle": "LINE_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:LINE_CHART:background:RISK_MATRIX",
+            "promptFingerprint": "pf_j6vbqs"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_9rgmmn"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_i6zkp2"
           }
         ]
       }
