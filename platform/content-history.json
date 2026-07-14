@@ -2,48 +2,6 @@
   "schemaVersion": 4,
   "entries": [
     {
-      "date": "2026-06-01",
-      "topic": "How President Trump's Policies Impact the Tech Sector",
-      "hook": "What the new policies mean for Tech.",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "MEME_HUMOR",
-      "slideCount": 7,
-      "keywords": [
-        "SP500 all time high",
-        "S&P 500 record"
-      ],
-      "visualSignature": "2026-06-01-26788350586",
-      "schemaVersion": 4,
-      "slotIndex": 6,
-      "postedAtUtc": "2026-06-01T23:35:32.628Z",
-      "tickersFeatured": [],
-      "topicCategory": "POLICY",
-      "hookFormulaId": "MYTH_STRIKE",
-      "ctaId": "share_use_case",
-      "angleId": "COMPARISON_LADDER",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "EDITORIAL_REACTION_CARICATURE",
-        "LINE_CHART",
-        "NATURE_METAPHOR",
-        "TECH_HUD",
-        "CHESS_BOARD_STRATEGY",
-        "POP_CULTURE_PORTRAIT",
-        "LUXURY_LIFESTYLE"
-      ],
-      "coverVisualStyle": "EDITORIAL_REACTION_CARICATURE",
-      "portraitSubjects": [
-        "trump"
-      ],
-      "archetypesUsed": [],
-      "colorSchemeUsed": {
-        "bg": "#09090D",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FF2E93"
-      }
-    },
-    {
       "date": "2026-06-02",
       "topic": "Companies retiring the most shares this year",
       "hook": "The number nobody mentions about buybacks",
@@ -37332,6 +37290,162 @@
             "motifTag": "NONE",
             "sceneConceptId": "DATA_SNAPSHOT:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_mn1srk"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-14",
+      "topic": "Finfluencer Red Flags: 7 Phrases Investors Should Pause On",
+      "hook": "Good finance content does not need pressure.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 7,
+      "keywords": [
+        "bitcoin basics",
+        "crypto for beginners",
+        "crypto risk"
+      ],
+      "visualSignature": "2026-07-14-29368136200",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-07-14T21:10:33.834Z",
+      "tickersFeatured": [],
+      "topicCategory": "CRYPTO",
+      "hookFormulaId": "REVERSE_SURVIVORSHIP",
+      "ctaId": "question_open",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "CAP_TABLE_GRID",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "POSITION_CONCENTRATION_TREEMAP",
+        "CROWD_PANIC",
+        "MACRO_FLOW_DIAGRAM",
+        "ARCHITECTURAL_OVERLAY",
+        "PRICE_TIMELINE_ANNOTATED"
+      ],
+      "coverVisualStyle": "CAP_TABLE_GRID",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "crypto_native_founder"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#FFFFFF",
+        "primaryText": "#0F172A",
+        "accent1": "#0E7C66",
+        "accent2": "#475569"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CRYPTO",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:DOCUMENT_RECEIPT:1896621846",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:CAP_TABLE_GRID:center:RISK_MATRIX",
+          "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:PRICE_CHART",
+          "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:CROWD_PANIC:top:FILING_EXCERPT",
+          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:PRICE_CHART",
+          "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:PRICE_TIMELINE_ANNOTATED",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CAP_TABLE_GRID:center:RISK_MATRIX",
+            "promptFingerprint": "pf_e28h9k"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:PRICE_CHART",
+            "promptFingerprint": "pf_qtn1p7"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "treemap",
+            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_li7do0"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_ps9911"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "flow",
+            "visualStyle": "MACRO_FLOW_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:PRICE_CHART",
+            "promptFingerprint": "pf_6gtkt8"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_8vqhvu"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_baa0iu"
           }
         ]
       }
