@@ -3,134 +3,6 @@
   "entries": [
     {
       "date": "2026-06-03",
-      "topic": "I pulled Berkshire’s latest 13F. Here's what's in it",
-      "hook": "I pulled Berkshire’s latest 13F. Here's what's in it",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 6,
-      "keywords": [
-        "Warren Buffett portfolio",
-        "13F filings",
-        "Berkshire Hathaway cash",
-        "defensive investing strategy"
-      ],
-      "visualSignature": "2026-06-03-26908503780",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-06-03T19:40:45.825Z",
-      "tickersFeatured": [
-        "BRK.B"
-      ],
-      "topicCategory": "CAP_TABLE",
-      "hookFormulaId": "PATTERN_SPOT",
-      "ctaId": "save_specific",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "BAR_CHART_HORIZONTAL",
-        "NATURE_METAPHOR",
-        "CANDLESTICK_CHART",
-        "TECH_HUD",
-        "HEATMAP_GRID",
-        "VAULT_SECURITY"
-      ],
-      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
-      "portraitSubjects": [
-        "buffett"
-      ],
-      "archetypesUsed": [],
-      "colorSchemeUsed": {
-        "bg": "#000000",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF3B30",
-        "accent2": "#FFD700"
-      },
-      "dominantSubjectClass": "CHART",
-      "visualPlan": {
-        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:1654481349",
-        "structureFamily": "HUMAN_EDITORIAL",
-        "coverMechanism": "ANNOTATED_CHART",
-        "sceneConceptIds": [
-          "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top",
-          "HUMAN_EDITORIAL:NATURE_METAPHOR:top",
-          "HUMAN_EDITORIAL:CANDLESTICK_CHART:background",
-          "HUMAN_EDITORIAL:TECH_HUD:top",
-          "HUMAN_EDITORIAL:HEATMAP_GRID:background",
-          "HUMAN_EDITORIAL:VAULT_SECURITY:top"
-        ],
-        "ctaConceptId": "save_specific:VAULT_SECURITY",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "hero-top",
-            "primaryEncoding": "bar",
-            "visualStyle": "BAR_CHART_HORIZONTAL",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "sceneConceptId": "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top",
-            "promptFingerprint": "pf_s0lrnr"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "NATURE_METAPHOR",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "sceneConceptId": "HUMAN_EDITORIAL:NATURE_METAPHOR:top",
-            "promptFingerprint": "pf_u52xfn"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "candlestick",
-            "visualStyle": "CANDLESTICK_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "sceneConceptId": "HUMAN_EDITORIAL:CANDLESTICK_CHART:background",
-            "promptFingerprint": "pf_tvqkc2"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "TECH_HUD",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "sceneConceptId": "HUMAN_EDITORIAL:TECH_HUD:top",
-            "promptFingerprint": "pf_tkv7hx"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "heatmap",
-            "visualStyle": "HEATMAP_GRID",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "sceneConceptId": "HUMAN_EDITORIAL:HEATMAP_GRID:background",
-            "promptFingerprint": "pf_99bkyg"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "VAULT_SECURITY",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "sceneConceptId": "HUMAN_EDITORIAL:VAULT_SECURITY:top",
-            "promptFingerprint": "pf_1usoj6"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-03",
       "topic": "The 5-Minute Balance Sheet Checklist: How to Read a Stock Before Buying",
       "hook": "If you buy stocks, do this 1 thing first",
       "format": "CAROUSEL",
@@ -37579,6 +37451,148 @@
             "motifTag": "NONE",
             "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_bedesy"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-15",
+      "topic": "Apple's AI Strategy Shift: What the OpenAI Alliance Breakdowns Mean for Your Watchlist",
+      "hook": "Everyone says Apple needs OpenAI. The data says otherwise.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 6,
+      "keywords": [
+        "Apple OpenAI partnership",
+        "AAPL stock analysis",
+        "Apple Intelligence strategy",
+        "Tech stock watchlists"
+      ],
+      "visualSignature": "2026-07-15-29457102990",
+      "schemaVersion": 4,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-07-15T23:06:48.870Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "PREMIUM_CONTRARIAN",
+      "ctaId": "comment_genuine_question",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "EARNINGS_HEAT_TABLE",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "EARNINGS_HEAT_TABLE",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "silver_haired_pm"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF2E93",
+        "accent2": "#00CFFF"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "SINGLE_STOCK",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:ANNOTATED_CHART:1459385921",
+        "structureFamily": "EDITORIAL_MYTH_BUST",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "EDITORIAL_MYTH_BUST:EARNINGS_HEAT_TABLE:background:RISK_MATRIX",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:RISK_MATRIX",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "QUESTION_CARD:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "heat-table",
+            "visualStyle": "EARNINGS_HEAT_TABLE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:EARNINGS_HEAT_TABLE:background:RISK_MATRIX",
+            "promptFingerprint": "pf_w4e8dz"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_6hgdea"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:RISK_MATRIX",
+            "promptFingerprint": "pf_ofhzp"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_7vxo7a"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_ghmbmg"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_ky028b"
           }
         ]
       }
