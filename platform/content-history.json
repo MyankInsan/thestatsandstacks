@@ -2,145 +2,6 @@
   "schemaVersion": 4,
   "entries": [
     {
-      "date": "2026-06-02",
-      "topic": "Credit Score Myths Canadians Still Believe",
-      "hook": "Some credit advice is just noise.",
-      "format": "CAROUSEL",
-      "formatType": "MEME_HUMOR",
-      "slideCount": 7,
-      "keywords": [
-        "MU stock",
-        "Micron Technology stock",
-        "semiconductor market cycle",
-        "AI hardware watchlist"
-      ],
-      "visualSignature": "2026-06-02-26854755748",
-      "schemaVersion": 4,
-      "slotIndex": 6,
-      "postedAtUtc": "2026-06-02T23:53:37.542Z",
-      "tickersFeatured": [],
-      "topicCategory": "BEHAVIORAL",
-      "hookFormulaId": "PREMIUM_CONTRARIAN",
-      "ctaId": "share_use_case",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "TRADER_DESK_SILHOUETTE",
-        "MILITARY_AEROSPACE_METAPHOR",
-        "CANDLESTICK_PATTERN_ANNOTATED",
-        "ARCHITECTURAL_OVERLAY",
-        "TRADING_DESK_OVERLAY",
-        "NEON_TERMINAL",
-        "INSTITUTIONAL_FLOW_SANKEY"
-      ],
-      "coverVisualStyle": "TRADER_DESK_SILHOUETTE",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "boomer_diy_investor"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#09090D",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FF2E93"
-      },
-      "dominantSubjectClass": "PORTRAIT",
-      "visualPlan": {
-        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:CINEMATIC_SCENE:969346143",
-        "structureFamily": "EDITORIAL_MYTH_BUST",
-        "coverMechanism": "CINEMATIC_SCENE",
-        "sceneConceptIds": [
-          "EDITORIAL_MYTH_BUST:TRADER_DESK_SILHOUETTE:top",
-          "EDITORIAL_MYTH_BUST:MILITARY_AEROSPACE_METAPHOR:top",
-          "EDITORIAL_MYTH_BUST:CANDLESTICK_PATTERN_ANNOTATED:background",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top",
-          "EDITORIAL_MYTH_BUST:TRADING_DESK_OVERLAY:background",
-          "EDITORIAL_MYTH_BUST:NEON_TERMINAL:top",
-          "EDITORIAL_MYTH_BUST:INSTITUTIONAL_FLOW_SANKEY:background"
-        ],
-        "ctaConceptId": "share_use_case:INSTITUTIONAL_FLOW_SANKEY",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "hero-top",
-            "primaryEncoding": "portrait",
-            "visualStyle": "TRADER_DESK_SILHOUETTE",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:TRADER_DESK_SILHOUETTE:top",
-            "promptFingerprint": "pf_772nmp"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "MILITARY_AEROSPACE_METAPHOR",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:MILITARY_AEROSPACE_METAPHOR:top",
-            "promptFingerprint": "pf_2y25zz"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "candlestick",
-            "visualStyle": "CANDLESTICK_PATTERN_ANNOTATED",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:CANDLESTICK_PATTERN_ANNOTATED:background",
-            "promptFingerprint": "pf_vqhls7"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top",
-            "promptFingerprint": "pf_j8jwrb"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "typography",
-            "visualStyle": "TRADING_DESK_OVERLAY",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:TRADING_DESK_OVERLAY:background",
-            "promptFingerprint": "pf_dhm2mw"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "terminal",
-            "visualStyle": "NEON_TERMINAL",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:NEON_TERMINAL:top",
-            "promptFingerprint": "pf_eyq4tf"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "sankey",
-            "visualStyle": "INSTITUTIONAL_FLOW_SANKEY",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:INSTITUTIONAL_FLOW_SANKEY:background",
-            "promptFingerprint": "pf_kc04wr"
-          }
-        ]
-      }
-    },
-    {
       "date": "2026-06-03",
       "topic": "The Payday Order of Operations: How to Automate Your Canadian Net Worth",
       "hook": "Before your next TFSA contribution, check this",
@@ -37531,6 +37392,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "DATA_SNAPSHOT:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_ohx2mm"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-15",
+      "topic": "Credit Score Myths Canadians Still Believe",
+      "hook": "Some credit advice is just noise.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 7,
+      "keywords": [
+        "US strategic petroleum reserve",
+        "oil prices macro impact",
+        "inflation stocks",
+        "energy sector watchlist"
+      ],
+      "visualSignature": "2026-07-15-29450607391",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-07-15T21:13:18.619Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "question_open",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "POSITION_CONCENTRATION_TREEMAP",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "DONUT_CHART",
+        "EXPERT_CUTOUT",
+        "MACRO_FLOW_DIAGRAM",
+        "ARCHITECTURAL_OVERLAY",
+        "PRICE_TIMELINE_ANNOTATED"
+      ],
+      "coverVisualStyle": "POSITION_CONCENTRATION_TREEMAP",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "seasoned_canadian_banker"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F8F9FA",
+        "primaryText": "#111827",
+        "accent1": "#2563EB",
+        "accent2": "#4B5563"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "MACRO",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:975785196",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:center:FILING_EXCERPT",
+          "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:DONUT_CHART:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:PRICE_TIMELINE_ANNOTATED",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "treemap",
+            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:center:FILING_EXCERPT",
+            "promptFingerprint": "pf_nsq7dn"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_khvjel"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:DONUT_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_jtvl9s"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EXPERT_CUTOUT",
+            "bucket": "Human",
+            "visualPosition": "left",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_qcmvdf"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "flow",
+            "visualStyle": "MACRO_FLOW_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_w7anfx"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_4lk7zw"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_uthsmi"
           }
         ]
       }
