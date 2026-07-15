@@ -3,145 +3,6 @@
   "entries": [
     {
       "date": "2026-06-02",
-      "topic": "Rocket Lab (RKLB) Heat Check: Space Economy Catalyst Map",
-      "hook": "Space is pure hype is wrong. Here is why",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
-      "slideCount": 7,
-      "keywords": [
-        "RKLB stock",
-        "Rocket Lab stock",
-        "space economy investing",
-        "aerospace industry catalysts"
-      ],
-      "visualSignature": "2026-06-02-26851613330",
-      "schemaVersion": 4,
-      "slotIndex": 4,
-      "postedAtUtc": "2026-06-02T22:32:32.319Z",
-      "tickersFeatured": [],
-      "topicCategory": "HOW_TO",
-      "hookFormulaId": "MYTH_STRIKE",
-      "ctaId": "question_open",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "CAP_TABLE_GRID",
-        "EDITORIAL_STAT_CARD",
-        "DONUT_CHART",
-        "NATURE_METAPHOR",
-        "POSITION_CONCENTRATION_TREEMAP",
-        "TECH_HUD",
-        "MACRO_FLOW_DIAGRAM"
-      ],
-      "coverVisualStyle": "CAP_TABLE_GRID",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "female_quant_30s"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#F8F9FA",
-        "primaryText": "#111827",
-        "accent1": "#2563EB",
-        "accent2": "#4B5563"
-      },
-      "dominantSubjectClass": "CHART",
-      "visualPlan": {
-        "compositionSignature": "vp1:COMPARISON_XRAY:DOCUMENT_RECEIPT:1612658914",
-        "structureFamily": "COMPARISON_XRAY",
-        "coverMechanism": "DOCUMENT_RECEIPT",
-        "sceneConceptIds": [
-          "COMPARISON_XRAY:CAP_TABLE_GRID:top",
-          "COMPARISON_XRAY:EDITORIAL_STAT_CARD:left",
-          "COMPARISON_XRAY:DONUT_CHART:background",
-          "COMPARISON_XRAY:NATURE_METAPHOR:top",
-          "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background",
-          "COMPARISON_XRAY:TECH_HUD:top",
-          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background"
-        ],
-        "ctaConceptId": "question_open:MACRO_FLOW_DIAGRAM",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "hero-top",
-            "primaryEncoding": "logo-grid",
-            "visualStyle": "CAP_TABLE_GRID",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "sceneConceptId": "COMPARISON_XRAY:CAP_TABLE_GRID:top",
-            "promptFingerprint": "pf_wrqbd1"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "stat-card",
-            "visualStyle": "EDITORIAL_STAT_CARD",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "sceneConceptId": "COMPARISON_XRAY:EDITORIAL_STAT_CARD:left",
-            "promptFingerprint": "pf_x4hxml"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "donut",
-            "visualStyle": "DONUT_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "sceneConceptId": "COMPARISON_XRAY:DONUT_CHART:background",
-            "promptFingerprint": "pf_s7jdqp"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "NATURE_METAPHOR",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "sceneConceptId": "COMPARISON_XRAY:NATURE_METAPHOR:top",
-            "promptFingerprint": "pf_vd7qtn"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "treemap",
-            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "sceneConceptId": "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background",
-            "promptFingerprint": "pf_4rq13g"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "TECH_HUD",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "sceneConceptId": "COMPARISON_XRAY:TECH_HUD:top",
-            "promptFingerprint": "pf_v74utd"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "flow",
-            "visualStyle": "MACRO_FLOW_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background",
-            "promptFingerprint": "pf_t6g8rn"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-02",
       "topic": "HISA vs GIC vs ETF: Where Should Short-Term Money Go?",
       "hook": "Do not invest money you need soon.",
       "format": "CAROUSEL",
@@ -37521,6 +37382,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_oqsftq"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-15",
+      "topic": "How President Trump's Policies Impact the Tech Sector",
+      "hook": "What the new policies mean for Tech.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 7,
+      "keywords": [
+        "semiconductor stock selloff",
+        "Micron stock MU",
+        "Western Digital stock WDC",
+        "ASML earnings 2026"
+      ],
+      "visualSignature": "2026-07-15-29434708042",
+      "schemaVersion": 4,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-07-15T17:09:27.096Z",
+      "tickersFeatured": [],
+      "topicCategory": "EARNINGS",
+      "hookFormulaId": "CAP_TABLE",
+      "ctaId": "save_specific",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "BAR_CHART_HORIZONTAL",
+        "CARICATURE_PORTRAIT",
+        "COMPARISON_TABLE",
+        "EDITORIAL_REACTION_CARICATURE",
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "EARNINGS_CARD",
+        "MINIMALIST_CHECKLIST"
+      ],
+      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_cfo_50s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "INDEX_MOVE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:1288315124",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "TOP_STACK",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top:EARNINGS_TABLE",
+          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:COMPARISON_TABLE:left:EARNINGS_TABLE",
+          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:EARNINGS_TABLE",
+          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:RISK_MATRIX",
+          "HUMAN_EDITORIAL:EARNINGS_CARD:center:EARNINGS_TABLE",
+          "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SAVE_CARD:MINIMALIST_CHECKLIST",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-TOP_STACK",
+            "primaryEncoding": "bar",
+            "visualStyle": "BAR_CHART_HORIZONTAL",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_oo7of9"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_fgwfre"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:COMPARISON_TABLE:left:EARNINGS_TABLE",
+            "promptFingerprint": "pf_f44to"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_lurqeg"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "mega-number",
+            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:RISK_MATRIX",
+            "promptFingerprint": "pf_51lgkg"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:EARNINGS_TABLE",
+            "promptFingerprint": "pf_fdumrv"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "checklist",
+            "visualStyle": "MINIMALIST_CHECKLIST",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_htyido"
           }
         ]
       }
