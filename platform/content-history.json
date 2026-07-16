@@ -3,132 +3,6 @@
   "entries": [
     {
       "date": "2026-06-03",
-      "topic": "The 5-Minute Balance Sheet Checklist: How to Read a Stock Before Buying",
-      "hook": "If you buy stocks, do this 1 thing first",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
-      "slideCount": 6,
-      "keywords": [
-        "how to read a balance sheet",
-        "fundamental analysis checklist",
-        "beginner stock analysis",
-        "investing checklist"
-      ],
-      "visualSignature": "2026-06-03-26913765214",
-      "schemaVersion": 4,
-      "slotIndex": 3,
-      "postedAtUtc": "2026-06-03T21:23:07.068Z",
-      "tickersFeatured": [],
-      "topicCategory": "HOW_TO",
-      "hookFormulaId": "QUIET_COMPOUNDER",
-      "ctaId": "comment_genuine_question",
-      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
-      "visualStylesUsed": [
-        "COMPARISON_TABLE",
-        "GAMING_LEVEL_UP",
-        "CIRCULAR_PORTFOLIO_WHEEL",
-        "CROWD_PANIC",
-        "MILITARY_AEROSPACE_METAPHOR",
-        "GLOWING_QUOTE"
-      ],
-      "coverVisualStyle": "COMPARISON_TABLE",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "female_quant_30s"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#050505",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF3B30",
-        "accent2": "#39FF14"
-      },
-      "dominantSubjectClass": "CHART",
-      "visualPlan": {
-        "compositionSignature": "vp1:DATA_SNAPSHOT:SPLIT_CONTRAST:1758199621",
-        "structureFamily": "DATA_SNAPSHOT",
-        "coverMechanism": "SPLIT_CONTRAST",
-        "sceneConceptIds": [
-          "DATA_SNAPSHOT:COMPARISON_TABLE:top",
-          "DATA_SNAPSHOT:GAMING_LEVEL_UP:top",
-          "DATA_SNAPSHOT:CIRCULAR_PORTFOLIO_WHEEL:background",
-          "DATA_SNAPSHOT:CROWD_PANIC:top",
-          "DATA_SNAPSHOT:MILITARY_AEROSPACE_METAPHOR:top",
-          "DATA_SNAPSHOT:GLOWING_QUOTE:center"
-        ],
-        "ctaConceptId": "comment_genuine_question:GLOWING_QUOTE",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "hero-top",
-            "primaryEncoding": "table",
-            "visualStyle": "COMPARISON_TABLE",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "sceneConceptId": "DATA_SNAPSHOT:COMPARISON_TABLE:top",
-            "promptFingerprint": "pf_b20bqs"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "GAMING_LEVEL_UP",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "sceneConceptId": "DATA_SNAPSHOT:GAMING_LEVEL_UP:top",
-            "promptFingerprint": "pf_z7vbtj"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "portfolio-wheel",
-            "visualStyle": "CIRCULAR_PORTFOLIO_WHEEL",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "PORTRAIT",
-            "sceneConceptId": "DATA_SNAPSHOT:CIRCULAR_PORTFOLIO_WHEEL:background",
-            "promptFingerprint": "pf_umg5k"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CROWD_PANIC",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CROWD",
-            "sceneConceptId": "DATA_SNAPSHOT:CROWD_PANIC:top",
-            "promptFingerprint": "pf_q5z7po"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "MILITARY_AEROSPACE_METAPHOR",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "sceneConceptId": "DATA_SNAPSHOT:MILITARY_AEROSPACE_METAPHOR:top",
-            "promptFingerprint": "pf_8twz3s"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "pull-quote",
-            "visualStyle": "GLOWING_QUOTE",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "sceneConceptId": "DATA_SNAPSHOT:GLOWING_QUOTE:center",
-            "promptFingerprint": "pf_p308j3"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-03",
       "topic": "Earnings Season Cheat Sheet: 5 Things Smart Investors Check First",
       "hook": "Focusing on EPS beats is wrong. Here is why",
       "format": "CAROUSEL",
@@ -37593,6 +37467,150 @@
             "motifTag": "NONE",
             "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_ky028b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-16",
+      "topic": "Companies retiring the most shares this year",
+      "hook": "The number nobody mentions about stock buybacks",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 6,
+      "keywords": [
+        "stock buybacks",
+        "share retirement",
+        "float reduction",
+        "earnings per share",
+        "capital allocation"
+      ],
+      "visualSignature": "2026-07-16-29511279221",
+      "schemaVersion": 4,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-07-16T15:41:58.815Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "QUIET_NUMBER",
+      "ctaId": "follow_authority",
+      "angleId": "BUYBACK_SCOREBOARD",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "ARCHITECTURAL_OVERLAY",
+        "TICKER_TAPE_HERO",
+        "MINIMALIST_CHECKLIST",
+        "PRICE_TIMELINE_ANNOTATED",
+        "GLOWING_QUOTE",
+        "LINE_CHART"
+      ],
+      "coverVisualStyle": "ARCHITECTURAL_OVERLAY",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "immigrant_entrepreneur"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00CFFF",
+        "accent2": "#FFB000"
+      },
+      "dominantSubjectClass": "BUILDING",
+      "topicFamily": "SINGLE_STOCK",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:NEWS_FLASH:CINEMATIC_SCENE:1722737799",
+        "structureFamily": "NEWS_FLASH",
+        "coverMechanism": "CINEMATIC_SCENE",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "NEWS_FLASH:ARCHITECTURAL_OVERLAY:background:EARNINGS_TABLE",
+          "NEWS_FLASH:TICKER_TAPE_HERO:background:SOURCE_DOCUMENT",
+          "NEWS_FLASH:MINIMALIST_CHECKLIST:left:EARNINGS_TABLE",
+          "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:PRICE_CHART",
+          "NEWS_FLASH:GLOWING_QUOTE:center:EARNINGS_TABLE",
+          "NEWS_FLASH:LINE_CHART:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "EDITORIAL_SIGNOFF:LINE_CHART",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "background",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:ARCHITECTURAL_OVERLAY:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_xvb7d8"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "ticker-tape",
+            "visualStyle": "TICKER_TAPE_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:TICKER_TAPE_HERO:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_zt6xs"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "checklist",
+            "visualStyle": "MINIMALIST_CHECKLIST",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:MINIMALIST_CHECKLIST:left:EARNINGS_TABLE",
+            "promptFingerprint": "pf_i8kfm3"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:PRICE_CHART",
+            "promptFingerprint": "pf_51qxkd"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "pull-quote",
+            "visualStyle": "GLOWING_QUOTE",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:GLOWING_QUOTE:center:EARNINGS_TABLE",
+            "promptFingerprint": "pf_h8ewqp"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "line",
+            "visualStyle": "LINE_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:LINE_CHART:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_f02rhc"
           }
         ]
       }
