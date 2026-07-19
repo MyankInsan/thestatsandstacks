@@ -3,163 +3,6 @@
   "entries": [
     {
       "date": "2026-06-07",
-      "topic": "The Western Digital (WDC) Heat Check: What Smart Investors Check Before Buying Hardware Pullbacks",
-      "hook": "Western Digital is up YTD. Should you care?",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
-      "slideCount": 7,
-      "keywords": [
-        "Western Digital stock",
-        "WDC analysis",
-        "SanDisk stock split",
-        "AI hardware stocks"
-      ],
-      "visualSignature": "2026-06-07-27096558847",
-      "schemaVersion": 4,
-      "slotIndex": 1,
-      "postedAtUtc": "2026-06-07T15:22:07.645Z",
-      "tickersFeatured": [],
-      "topicCategory": "EARNINGS",
-      "hookFormulaId": "ANTI_FOMO",
-      "ctaId": "swipe_promise",
-      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
-      "visualStylesUsed": [
-        "BAR_CHART_HORIZONTAL",
-        "GLOWING_QUOTE",
-        "TICKER_TAPE_HERO",
-        "MINIMALIST_CHECKLIST",
-        "PRICE_TIMELINE_ANNOTATED",
-        "EDITORIAL_SPLIT_LAYOUT",
-        "LINE_CHART"
-      ],
-      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "female_cfo_50s"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0B0F14",
-        "primaryText": "#FFFFFF",
-        "accent1": "#00CFFF",
-        "accent2": "#FFB000"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "SINGLE_STOCK",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:NEWS_FLASH:ANNOTATED_CHART:1975266655",
-        "structureFamily": "NEWS_FLASH",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "TOP_STACK",
-        "sceneConceptIds": [
-          "NEWS_FLASH:BAR_CHART_HORIZONTAL:top:PRICE_CHART",
-          "NEWS_FLASH:GLOWING_QUOTE:center:STORE_SCENE",
-          "NEWS_FLASH:TICKER_TAPE_HERO:background:SOURCE_DOCUMENT",
-          "NEWS_FLASH:MINIMALIST_CHECKLIST:left:PRICE_CHART",
-          "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:PRICE_CHART",
-          "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:PRICE_CHART",
-          "NEWS_FLASH:LINE_CHART:background:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "MOTIF_CALLBACK:LINE_CHART",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-TOP_STACK",
-            "primaryEncoding": "bar",
-            "visualStyle": "BAR_CHART_HORIZONTAL",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:BAR_CHART_HORIZONTAL:top:PRICE_CHART",
-            "promptFingerprint": "pf_38o4lp"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "pull-quote",
-            "visualStyle": "GLOWING_QUOTE",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:GLOWING_QUOTE:center:STORE_SCENE",
-            "promptFingerprint": "pf_vlfy1x"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "ticker-tape",
-            "visualStyle": "TICKER_TAPE_HERO",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:TICKER_TAPE_HERO:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_8i7rlp"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "checklist",
-            "visualStyle": "MINIMALIST_CHECKLIST",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:MINIMALIST_CHECKLIST:left:PRICE_CHART",
-            "promptFingerprint": "pf_ddo6fw"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "annotated-timeline",
-            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:PRICE_CHART",
-            "promptFingerprint": "pf_ct8350"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "editorial-split",
-            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:PRICE_CHART",
-            "promptFingerprint": "pf_nkl2gh"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "line",
-            "visualStyle": "LINE_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:LINE_CHART:background:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_6kv2j3"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-07",
       "topic": "The \"Warning Zone\" Portfolio Check: How a Hot Jobs Report Triggered a Market Selloff",
       "hook": "I pulled Barclays' latest market warning. Here's what's inside",
       "format": "WATCHLIST_EDUCATION",
@@ -37778,6 +37621,148 @@
             "motifTag": "NONE",
             "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_retv5m"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-19",
+      "topic": "The 10-Minute Portfolio Check: 5 Rules to Verify Before Adding New Capital",
+      "hook": "Everyone says buy the dip. The checklist says wait.",
+      "format": "CAROUSEL",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 6,
+      "keywords": [
+        "portfolio rebalancing strategy",
+        "risk management checklist",
+        "asset allocation guide",
+        "how to manage portfolio risk"
+      ],
+      "visualSignature": "2026-07-19-29706928495",
+      "schemaVersion": 4,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-07-19T22:57:58.896Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "comment_genuine_question",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "PRICE_TIMELINE_ANNOTATED",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "PRICE_TIMELINE_ANNOTATED",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "boomer_diy_investor"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#09090D",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FF2E93"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "GENERAL",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:ANNOTATED_CHART:1366861521",
+        "structureFamily": "EDITORIAL_MYTH_BUST",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "EDITORIAL_MYTH_BUST:PRICE_TIMELINE_ANNOTATED:background:RISK_MATRIX",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "QUESTION_CARD:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:PRICE_TIMELINE_ANNOTATED:background:RISK_MATRIX",
+            "promptFingerprint": "pf_tgu1nw"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_gznj3q"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_6w7cd7"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_1q67v0"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
+            "promptFingerprint": "pf_p0ijxy"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_q4rllh"
           }
         ]
       }
