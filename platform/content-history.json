@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-06-07",
-      "topic": "The Geopolitical Volatility Checklist: How Global Conflicts Shift Asset Flows",
-      "hook": "Selling during geopolitical panics is wrong. Here is why",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
-      "slideCount": 6,
-      "keywords": [
-        "geopolitical market impact",
-        "VIX volatility index",
-        "market selloff strategy",
-        "defensive investing"
-      ],
-      "visualSignature": "2026-06-07-27105101385",
-      "schemaVersion": 4,
-      "slotIndex": 4,
-      "postedAtUtc": "2026-06-07T21:24:06.193Z",
-      "tickersFeatured": [],
-      "topicCategory": "MACRO",
-      "hookFormulaId": "MYTH_STRIKE",
-      "ctaId": "question_open",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "POSITION_CONCENTRATION_TREEMAP",
-        "CROWD_PANIC",
-        "MACRO_FLOW_DIAGRAM",
-        "ARCHITECTURAL_OVERLAY",
-        "RADAR_CHART",
-        "NEON_TERMINAL"
-      ],
-      "coverVisualStyle": "POSITION_CONCENTRATION_TREEMAP",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "female_cfo_50s"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#F4F1EA",
-        "primaryText": "#1A1A1A",
-        "accent1": "#B0341E",
-        "accent2": "#6B6B6B"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "INDEX_MOVE",
-      "sourceTier": "REPUTABLE_PRESS",
-      "topicMode": "EVERGREEN_OR_TIMELY",
-      "visualPlan": {
-        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:394811204",
-        "structureFamily": "COMPARISON_XRAY",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "DOCUMENT_RECEIPT",
-        "sceneConceptIds": [
-          "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:center:PRICE_CHART",
-          "COMPARISON_XRAY:CROWD_PANIC:top:PRICE_CHART",
-          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
-          "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
-          "COMPARISON_XRAY:RADAR_CHART:background:RISK_MATRIX",
-          "COMPARISON_XRAY:NEON_TERMINAL:top:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "TWO_OPTION_PROMPT:NEON_TERMINAL",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
-            "primaryEncoding": "treemap",
-            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:center:PRICE_CHART",
-            "promptFingerprint": "pf_euetw4"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CROWD_PANIC",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CROWD",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:PRICE_CHART",
-            "promptFingerprint": "pf_vdac9l"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "flow",
-            "visualStyle": "MACRO_FLOW_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_e4xzu5"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
-            "promptFingerprint": "pf_n5raps"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "radar",
-            "visualStyle": "RADAR_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:RADAR_CHART:background:RISK_MATRIX",
-            "promptFingerprint": "pf_jboy8b"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "terminal",
-            "visualStyle": "NEON_TERMINAL",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:NEON_TERMINAL:top:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_ksw0xm"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-07",
       "topic": "TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?",
       "hook": "Most Canadians pick the wrong account first.",
       "format": "CAROUSEL",
@@ -37745,6 +37603,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_9ce526"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-20",
+      "topic": "401k vs Roth IRA: Which Account Should Americans Use First?",
+      "hook": "Most Americans pick the wrong account first.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 7,
+      "keywords": [
+        "TSX multi-year high",
+        "investing Canada",
+        "stock risk filter",
+        "investing checklist"
+      ],
+      "visualSignature": "2026-07-20-29773451023",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-07-20T19:55:43.980Z",
+      "tickersFeatured": [],
+      "topicCategory": "TAX_ACCT",
+      "hookFormulaId": "COMPARISON_LADDER",
+      "ctaId": "reference_save",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "CANDLESTICK_HERO",
+        "CORPORATE_OFFICE_SPACE",
+        "MINIMALIST_CHECKLIST",
+        "LINE_CHART",
+        "LUXURY_LIFESTYLE",
+        "SANKEY_DIAGRAM",
+        "GLOWING_QUOTE"
+      ],
+      "coverVisualStyle": "CANDLESTICK_HERO",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "retiree_with_charts"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFB000",
+        "accent2": "#00CFFF"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "INDEX_MOVE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:2088729071",
+        "structureFamily": "DATA_SNAPSHOT",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "DATA_SNAPSHOT:CANDLESTICK_HERO:background:RISK_MATRIX",
+          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:LINE_CHART:background:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:GLOWING_QUOTE:center:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "CHECKLIST_RECEIPT:GLOWING_QUOTE",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CANDLESTICK_HERO:background:RISK_MATRIX",
+            "promptFingerprint": "pf_qvt2gr"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "architecture",
+            "visualStyle": "CORPORATE_OFFICE_SPACE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_3x1bjf"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "checklist",
+            "visualStyle": "MINIMALIST_CHECKLIST",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_76715v"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "line",
+            "visualStyle": "LINE_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:LINE_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_5sr1y0"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_r3ywgm"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_1ww5fm"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "pull-quote",
+            "visualStyle": "GLOWING_QUOTE",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_8iuuam"
           }
         ]
       }
