@@ -3,164 +3,6 @@
   "entries": [
     {
       "date": "2026-06-07",
-      "topic": "The \"Warning Zone\" Portfolio Check: How a Hot Jobs Report Triggered a Market Selloff",
-      "hook": "I pulled Barclays' latest market warning. Here's what's inside",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 7,
-      "keywords": [
-        "market correction",
-        "jobs report stock market",
-        "interest rates stocks",
-        "Federal Reserve",
-        "Barclays market warning"
-      ],
-      "visualSignature": "2026-06-07-27099014313",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-06-07T17:03:03.396Z",
-      "tickersFeatured": [],
-      "topicCategory": "MACRO",
-      "hookFormulaId": "RECEIPT_DROP",
-      "ctaId": "save_specific",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "EDITORIAL_REACTION_CARICATURE",
-        "TYPOGRAPHIC_MEGA_NUMBER",
-        "DONUT_CHART",
-        "LUXURY_LIFESTYLE",
-        "EARNINGS_CARD",
-        "TRADER_DESK_SILHOUETTE",
-        "EDITORIAL_STAT_CARD"
-      ],
-      "coverVisualStyle": "EDITORIAL_REACTION_CARICATURE",
-      "portraitSubjects": [
-        "mark_carney"
-      ],
-      "archetypesUsed": [],
-      "colorSchemeUsed": {
-        "bg": "#0A0A0A",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FF3B30"
-      },
-      "dominantSubjectClass": "PORTRAIT",
-      "topicFamily": "INDEX_MOVE",
-      "sourceTier": "AGGREGATED",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:HUMAN_EDITORIAL:EDITORIAL_PORTRAIT:710849075",
-        "structureFamily": "HUMAN_EDITORIAL",
-        "coverMechanism": "EDITORIAL_PORTRAIT",
-        "coverLayoutFamily": "SPLIT_EDITORIAL",
-        "sceneConceptIds": [
-          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:left:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:SOURCE_DOCUMENT",
-          "HUMAN_EDITORIAL:DONUT_CHART:background:RISK_MATRIX",
-          "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
-          "HUMAN_EDITORIAL:EARNINGS_CARD:center:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:TRADER_DESK_SILHOUETTE:top:RISK_MATRIX",
-          "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "SAVE_CARD:EDITORIAL_STAT_CARD",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-SPLIT_EDITORIAL",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
-            "bucket": "Human",
-            "visualPosition": "left",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:left:EARNINGS_TABLE",
-            "promptFingerprint": "pf_sizpcv"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "mega-number",
-            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_tibke8"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "donut",
-            "visualStyle": "DONUT_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:DONUT_CHART:background:RISK_MATRIX",
-            "promptFingerprint": "pf_jzvtg6"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "LUXURY_LIFESTYLE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "JET_LUXURY",
-            "sceneConceptId": "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_tvobzj"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "metric-card",
-            "visualStyle": "EARNINGS_CARD",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:EARNINGS_TABLE",
-            "promptFingerprint": "pf_g5myec"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "TRADER_DESK_SILHOUETTE",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:TRADER_DESK_SILHOUETTE:top:RISK_MATRIX",
-            "promptFingerprint": "pf_jrv688"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "stat-card",
-            "visualStyle": "EDITORIAL_STAT_CARD",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_d34o34"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-07",
       "topic": "The SpaceX IPO Guide: How Retail Investors Research High-Demand Tech S-1 Filings",
       "hook": "If you watch tech IPOs, do this 1 thing first",
       "format": "CAROUSEL",
@@ -37763,6 +37605,161 @@
             "motifTag": "NONE",
             "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_q4rllh"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-20",
+      "topic": "Why the First $100K Feels So Slow for Canadian Investors",
+      "hook": "The first $100K feels slow.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 7,
+      "keywords": [
+        "first 100k investing",
+        "compound growth Canada",
+        "beginner investing Canada"
+      ],
+      "visualSignature": "2026-07-20-29756668416",
+      "schemaVersion": 4,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-07-20T16:00:01.649Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "QUIET_NUMBER",
+      "ctaId": "swipe_promise",
+      "angleId": "INDEX_REBALANCE",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "RADAR_CHART",
+        "TRADER_DESK_SILHOUETTE",
+        "CANDLESTICK_CHART",
+        "HEATMAP_GRID",
+        "CROWD_PANIC",
+        "COMPARISON_TABLE",
+        "EDITORIAL_STAT_CARD"
+      ],
+      "coverVisualStyle": "RADAR_CHART",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00CFFF",
+        "accent2": "#FFB000"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "GENERAL",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:NEWS_FLASH:ANNOTATED_CHART:941402372",
+        "structureFamily": "NEWS_FLASH",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
+        "sceneConceptIds": [
+          "NEWS_FLASH:RADAR_CHART:background:PRICE_CHART",
+          "NEWS_FLASH:TRADER_DESK_SILHOUETTE:top:SOURCE_DOCUMENT",
+          "NEWS_FLASH:CANDLESTICK_CHART:background:SOURCE_DOCUMENT",
+          "NEWS_FLASH:HEATMAP_GRID:background:PRODUCT_DETAIL",
+          "NEWS_FLASH:CROWD_PANIC:top:SOURCE_DOCUMENT",
+          "NEWS_FLASH:COMPARISON_TABLE:left:PRICE_CHART",
+          "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "MOTIF_CALLBACK:EDITORIAL_STAT_CARD",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:RADAR_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_r58zo1"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "TRADER_DESK_SILHOUETTE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:TRADER_DESK_SILHOUETTE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_g6ojv7"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:CANDLESTICK_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_5bv74r"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "heatmap",
+            "visualStyle": "HEATMAP_GRID",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:HEATMAP_GRID:background:PRODUCT_DETAIL",
+            "promptFingerprint": "pf_1wdtab"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:CROWD_PANIC:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_jprp36"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:COMPARISON_TABLE:left:PRICE_CHART",
+            "promptFingerprint": "pf_kl1u0o"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "stat-card",
+            "visualStyle": "EDITORIAL_STAT_CARD",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_a4sffg"
           }
         ]
       }
