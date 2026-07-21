@@ -3,149 +3,6 @@
   "entries": [
     {
       "date": "2026-06-08",
-      "topic": "The OpenAI S-1 Filing: 5 Rules to Analyze Pre-IPO Tech Giants",
-      "hook": "Everyone says OpenAI is software. The disclosure says infrastructure.",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
-      "slideCount": 6,
-      "keywords": [
-        "OpenAI IPO",
-        "S-1 filing analysis",
-        "pre-IPO tech valuation",
-        "SaaS margins versus AI compute",
-        "how to read an S-1"
-      ],
-      "visualSignature": "2026-06-08-27169382748",
-      "schemaVersion": 4,
-      "slotIndex": 4,
-      "postedAtUtc": "2026-06-08T22:03:26.224Z",
-      "tickersFeatured": [],
-      "topicCategory": "HOW_TO",
-      "hookFormulaId": "PREMIUM_CONTRARIAN",
-      "ctaId": "question_open",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "MACRO_FLOW_DIAGRAM",
-        "TRADER_DESK_SILHOUETTE",
-        "SANKEY_DIAGRAM",
-        "CROWD_PANIC",
-        "RADAR_CHART",
-        "MAGAZINE_COVER"
-      ],
-      "coverVisualStyle": "MACRO_FLOW_DIAGRAM",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "retiree_with_charts"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#FFFFFF",
-        "primaryText": "#0F172A",
-        "accent1": "#0E7C66",
-        "accent2": "#475569"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "IPO",
-      "sourceTier": "REPUTABLE_PRESS",
-      "topicMode": "EVERGREEN_OR_TIMELY",
-      "visualPlan": {
-        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:630965142",
-        "structureFamily": "COMPARISON_XRAY",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "INTEGRATED_SCENE",
-        "sceneConceptIds": [
-          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:FILING_EXCERPT",
-          "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:EARNINGS_TABLE",
-          "COMPARISON_XRAY:SANKEY_DIAGRAM:background:EARNINGS_TABLE",
-          "COMPARISON_XRAY:CROWD_PANIC:top:EARNINGS_TABLE",
-          "COMPARISON_XRAY:RADAR_CHART:background:STORE_SCENE",
-          "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "TWO_OPTION_PROMPT:MAGAZINE_COVER",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-INTEGRATED_SCENE",
-            "primaryEncoding": "flow",
-            "visualStyle": "MACRO_FLOW_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:FILING_EXCERPT",
-            "promptFingerprint": "pf_glip6v"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "TRADER_DESK_SILHOUETTE",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:TRADER_DESK_SILHOUETTE:top:EARNINGS_TABLE",
-            "promptFingerprint": "pf_7id0hv"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "sankey",
-            "visualStyle": "SANKEY_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:SANKEY_DIAGRAM:background:EARNINGS_TABLE",
-            "promptFingerprint": "pf_vd4h8y"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CROWD_PANIC",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CROWD",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:EARNINGS_TABLE",
-            "promptFingerprint": "pf_7pxapl"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "radar",
-            "visualStyle": "RADAR_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:RADAR_CHART:background:STORE_SCENE",
-            "promptFingerprint": "pf_liiora"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "magazine",
-            "visualStyle": "MAGAZINE_COVER",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_fz2q1y"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-08",
       "topic": "5 Money Leaks Quietly Keeping Canadians Broke",
       "hook": "These small leaks do the most damage.",
       "format": "CAROUSEL",
@@ -37824,6 +37681,148 @@
             "motifTag": "NONE",
             "sceneConceptId": "DATA_SNAPSHOT:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_tb6b96"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-21",
+      "topic": "The Semiconductor Comeback: Inside Today's Nasdaq Surge",
+      "hook": "What $10k in AMD 5 years ago looks like",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 6,
+      "keywords": [
+        "Nasdaq surge",
+        "semiconductor stocks",
+        "AMD stock research",
+        "market volatility"
+      ],
+      "visualSignature": "2026-07-21-29871631485",
+      "schemaVersion": 4,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-07-21T21:58:48.575Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "TIME_CAPSULE",
+      "ctaId": "share_use_case",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "SANKEY_DIAGRAM",
+        "CROWD_PANIC",
+        "RADAR_CHART",
+        "ARCHITECTURAL_OVERLAY",
+        "CANDLESTICK_CHART",
+        "NEON_TERMINAL"
+      ],
+      "coverVisualStyle": "SANKEY_DIAGRAM",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "immigrant_entrepreneur"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0B0E0C",
+        "primaryText": "#F2F2F0",
+        "accent1": "#7FB08A",
+        "accent2": "#D8C7A0"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "INDEX_MOVE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:ANNOTATED_CHART:2085938863",
+        "structureFamily": "PREMIUM_LIFESTYLE",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
+        "sceneConceptIds": [
+          "PREMIUM_LIFESTYLE:SANKEY_DIAGRAM:background:PRICE_CHART",
+          "PREMIUM_LIFESTYLE:CROWD_PANIC:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:RADAR_CHART:background:PRICE_CHART",
+          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:PRODUCT_DETAIL",
+          "PREMIUM_LIFESTYLE:CANDLESTICK_CHART:background:FILING_EXCERPT",
+          "PREMIUM_LIFESTYLE:NEON_TERMINAL:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:NEON_TERMINAL",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:SANKEY_DIAGRAM:background:PRICE_CHART",
+            "promptFingerprint": "pf_28l5it"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:CROWD_PANIC:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_xi78wd"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:RADAR_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_z4wz8r"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:PRODUCT_DETAIL",
+            "promptFingerprint": "pf_orbwcz"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:CANDLESTICK_CHART:background:FILING_EXCERPT",
+            "promptFingerprint": "pf_826skj"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "terminal",
+            "visualStyle": "NEON_TERMINAL",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:NEON_TERMINAL:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_169my1"
           }
         ]
       }
