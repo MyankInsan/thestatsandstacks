@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-06-09",
-      "topic": "Canada/US Stock Watchlist: The 6-Point Research Screen",
-      "hook": "If you buy stocks, run this screen first",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
-      "slideCount": 6,
-      "keywords": [
-        "stock research checklist",
-        "how to screen stocks",
-        "fundamental analysis framework",
-        "stock watchlist criteria"
-      ],
-      "visualSignature": "2026-06-09-27232882517",
-      "schemaVersion": 4,
-      "slotIndex": 3,
-      "postedAtUtc": "2026-06-09T20:22:18.597Z",
-      "tickersFeatured": [],
-      "topicCategory": "HOW_TO",
-      "hookFormulaId": "IF_THEN_LADDER",
-      "ctaId": "reference_save",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "CANDLESTICK_HERO",
-        "CORPORATE_OFFICE_SPACE",
-        "DONUT_CHART",
-        "LUXURY_LIFESTYLE",
-        "LINE_CHART",
-        "GLOWING_QUOTE"
-      ],
-      "coverVisualStyle": "CANDLESTICK_HERO",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "canadian_uni_grad_25"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#050505",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF3B30",
-        "accent2": "#39FF14"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "GENERAL",
-      "sourceTier": "OFFICIAL",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:2122829357",
-        "structureFamily": "DATA_SNAPSHOT",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "TOP_STACK",
-        "sceneConceptIds": [
-          "DATA_SNAPSHOT:CANDLESTICK_HERO:top:RISK_MATRIX",
-          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:STORE_SCENE",
-          "DATA_SNAPSHOT:DONUT_CHART:background:EARNINGS_TABLE",
-          "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:EARNINGS_TABLE",
-          "DATA_SNAPSHOT:LINE_CHART:background:EARNINGS_TABLE",
-          "DATA_SNAPSHOT:GLOWING_QUOTE:center:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "CHECKLIST_RECEIPT:GLOWING_QUOTE",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-TOP_STACK",
-            "primaryEncoding": "candlestick",
-            "visualStyle": "CANDLESTICK_HERO",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:CANDLESTICK_HERO:top:RISK_MATRIX",
-            "promptFingerprint": "pf_jzbk35"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "architecture",
-            "visualStyle": "CORPORATE_OFFICE_SPACE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:STORE_SCENE",
-            "promptFingerprint": "pf_z8htqx"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "donut",
-            "visualStyle": "DONUT_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:DONUT_CHART:background:EARNINGS_TABLE",
-            "promptFingerprint": "pf_lzw0wj"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "LUXURY_LIFESTYLE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "JET_LUXURY",
-            "sceneConceptId": "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:EARNINGS_TABLE",
-            "promptFingerprint": "pf_qllv1u"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "line",
-            "visualStyle": "LINE_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:LINE_CHART:background:EARNINGS_TABLE",
-            "promptFingerprint": "pf_6edtiv"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "pull-quote",
-            "visualStyle": "GLOWING_QUOTE",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_p3d67q"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-09",
       "topic": "The Speculative Tech Risk Map: What D-Wave Quantum's Crash Teaches Us",
       "hook": "Buying speculative tech dips is wrong. Here is why",
       "format": "WATCHLIST_EDUCATION",
@@ -37835,6 +37693,148 @@
             "motifTag": "NONE",
             "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_zigmhw"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-22",
+      "topic": "If You Invested $10,000 in NVIDIA 5 Years Ago",
+      "hook": "What $10k in NVDA looks like today.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "salary transparency laws",
+        "how to negotiate salary",
+        "wage transparency 2026",
+        "personal finance career tips"
+      ],
+      "visualSignature": "2026-07-22-29950992710",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-07-22T19:35:38.819Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "IF_THEN_LADDER",
+      "ctaId": "save_specific",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "CAP_TABLE_GRID",
+        "CARICATURE_PORTRAIT",
+        "POSITION_CONCENTRATION_TREEMAP",
+        "CROWD_PANIC",
+        "MACRO_FLOW_DIAGRAM",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "CAP_TABLE_GRID",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "millennial_dad_with_laptop"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F8F9FA",
+        "primaryText": "#111827",
+        "accent1": "#2563EB",
+        "accent2": "#4B5563"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "HYPOTHETICAL_RETURN",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:DOCUMENT_RECEIPT:1750443578",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:CAP_TABLE_GRID:center:PRICE_CHART",
+          "COMPARISON_XRAY:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background:PRICE_CHART",
+          "COMPARISON_XRAY:CROWD_PANIC:top:PRICE_CHART",
+          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SAVE_CARD:MAGAZINE_COVER",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CAP_TABLE_GRID:center:PRICE_CHART",
+            "promptFingerprint": "pf_15hivj"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_ycwnm0"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "treemap",
+            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background:PRICE_CHART",
+            "promptFingerprint": "pf_qztlw3"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:PRICE_CHART",
+            "promptFingerprint": "pf_3sykhx"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "flow",
+            "visualStyle": "MACRO_FLOW_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_p4w0d0"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_pkp1ch"
           }
         ]
       }
