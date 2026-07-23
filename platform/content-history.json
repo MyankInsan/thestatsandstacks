@@ -3,164 +3,6 @@
   "entries": [
     {
       "date": "2026-06-10",
-      "topic": "401k vs Roth IRA: Which Account Should Americans Use First?",
-      "hook": "Most Americans pick the wrong account first.",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
-      "slideCount": 7,
-      "keywords": [
-        "market selloff",
-        "VIX volatility spike",
-        "S&P 500 pullback",
-        "Nasdaq correction",
-        "portfolio risk management"
-      ],
-      "visualSignature": "2026-06-10-27304714159",
-      "schemaVersion": 4,
-      "slotIndex": 3,
-      "postedAtUtc": "2026-06-10T20:46:48.752Z",
-      "tickersFeatured": [],
-      "topicCategory": "TAX_ACCT",
-      "hookFormulaId": "COMPARISON_LADDER",
-      "ctaId": "reference_save",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "EARNINGS_HEAT_TABLE",
-        "EXPERT_CUTOUT",
-        "COMPARISON_TABLE",
-        "CROWD_PANIC",
-        "RADAR_CHART",
-        "ARCHITECTURAL_OVERLAY",
-        "CANDLESTICK_CHART"
-      ],
-      "coverVisualStyle": "EARNINGS_HEAT_TABLE",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "millennial_dad_with_laptop"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0B0F14",
-        "primaryText": "#FFFFFF",
-        "accent1": "#00E0A4",
-        "accent2": "#FF6B6B"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "INDEX_MOVE",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:1680860645",
-        "structureFamily": "DATA_SNAPSHOT",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "DASHBOARD_FILL",
-        "sceneConceptIds": [
-          "DATA_SNAPSHOT:EARNINGS_HEAT_TABLE:background:RISK_MATRIX",
-          "DATA_SNAPSHOT:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
-          "DATA_SNAPSHOT:COMPARISON_TABLE:left:SOURCE_DOCUMENT",
-          "DATA_SNAPSHOT:CROWD_PANIC:top:SOURCE_DOCUMENT",
-          "DATA_SNAPSHOT:RADAR_CHART:background:SOURCE_DOCUMENT",
-          "DATA_SNAPSHOT:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-          "DATA_SNAPSHOT:CANDLESTICK_CHART:background:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "CHECKLIST_RECEIPT:CANDLESTICK_CHART",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-DASHBOARD_FILL",
-            "primaryEncoding": "heat-table",
-            "visualStyle": "EARNINGS_HEAT_TABLE",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:EARNINGS_HEAT_TABLE:background:RISK_MATRIX",
-            "promptFingerprint": "pf_so0vk9"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EXPERT_CUTOUT",
-            "bucket": "Human",
-            "visualPosition": "left",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_qmuol1"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "table",
-            "visualStyle": "COMPARISON_TABLE",
-            "bucket": "Data",
-            "visualPosition": "left",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:COMPARISON_TABLE:left:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_x2ghdc"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CROWD_PANIC",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CROWD",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:CROWD_PANIC:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_bme8qs"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "radar",
-            "visualStyle": "RADAR_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:RADAR_CHART:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_mbzm1k"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "AERIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_naio83"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "candlestick",
-            "visualStyle": "CANDLESTICK_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:CANDLESTICK_CHART:background:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_i1j65q"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-10",
       "topic": "The Semiconductor Slump: 5 Risk Signals to Screen on Chip Stocks",
       "hook": "Buying chip dips is safe is wrong. Here is why",
       "format": "WATCHLIST_EDUCATION",
@@ -37863,6 +37705,150 @@
             "motifTag": "NONE",
             "sceneConceptId": "COMPARISON_XRAY:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_us8pwe"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-23",
+      "topic": "If you had skipped Peloton and bought the index",
+      "hook": "If you'd skipped Peloton and bought the index",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "index investing",
+        "S&P 500",
+        "behavioral finance",
+        "Peloton stock",
+        "portfolio construction"
+      ],
+      "visualSignature": "2026-07-23-30045051611",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-07-23T21:17:21.949Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "REVERSE_SURVIVORSHIP",
+      "ctaId": "share_use_case",
+      "angleId": "HYPOTHETICAL_REVERSAL",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "EDITORIAL_REACTION_CARICATURE",
+        "EARNINGS_CARD",
+        "TRADER_DESK_SILHOUETTE",
+        "LINE_CHART",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "young_retail_trader"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "TYPOGRAPHY",
+      "topicFamily": "INDEX_MOVE",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:HERO_NUMBER:893034783",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "HERO_NUMBER",
+        "coverLayoutFamily": "HERO_NUMBER",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRICE_CHART",
+          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:EARNINGS_CARD:center:STORE_SCENE",
+          "HUMAN_EDITORIAL:TRADER_DESK_SILHOUETTE:top:PRICE_CHART",
+          "HUMAN_EDITORIAL:LINE_CHART:background:PRICE_CHART",
+          "HUMAN_EDITORIAL:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:MAGAZINE_COVER",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-HERO_NUMBER",
+            "primaryEncoding": "mega-number",
+            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRICE_CHART",
+            "promptFingerprint": "pf_ey9wq9"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_yciuva"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:STORE_SCENE",
+            "promptFingerprint": "pf_sh4v10"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "TRADER_DESK_SILHOUETTE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TRADER_DESK_SILHOUETTE:top:PRICE_CHART",
+            "promptFingerprint": "pf_fp754l"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "line",
+            "visualStyle": "LINE_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:LINE_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_8k5jwo"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_d69xp3"
           }
         ]
       }
