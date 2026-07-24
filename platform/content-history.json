@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-06-11",
-      "topic": "Why the Classic 60/40 Portfolio is Facing a New Risk Check",
-      "hook": "If you own a 60/40 portfolio, do this 1 thing first",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
-      "slideCount": 6,
-      "keywords": [
-        "60/40 portfolio risk",
-        "stock bond correlation",
-        "asset allocation strategy",
-        "portfolio diversification"
-      ],
-      "visualSignature": "2026-06-11-27375301577",
-      "schemaVersion": 4,
-      "slotIndex": 3,
-      "postedAtUtc": "2026-06-11T20:29:17.879Z",
-      "tickersFeatured": [],
-      "topicCategory": "MACRO",
-      "hookFormulaId": "QUIET_COMPOUNDER",
-      "ctaId": "reference_save",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "AREA_CHART",
-        "CORPORATE_OFFICE_SPACE",
-        "DONUT_CHART",
-        "EXPERT_CUTOUT",
-        "SANKEY_DIAGRAM",
-        "TYPOGRAPHIC_MEGA_NUMBER"
-      ],
-      "coverVisualStyle": "AREA_CHART",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "silver_haired_pm"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0A0A0A",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFB000",
-        "accent2": "#00CFFF"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "GENERAL",
-      "sourceTier": "AGGREGATED",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:189089978",
-        "structureFamily": "DATA_SNAPSHOT",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "INTEGRATED_SCENE",
-        "sceneConceptIds": [
-          "DATA_SNAPSHOT:AREA_CHART:background:RISK_MATRIX",
-          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:RISK_MATRIX",
-          "DATA_SNAPSHOT:DONUT_CHART:background:RISK_MATRIX",
-          "DATA_SNAPSHOT:EXPERT_CUTOUT:left:PRICE_CHART",
-          "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:RISK_MATRIX",
-          "DATA_SNAPSHOT:TYPOGRAPHIC_MEGA_NUMBER:center:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "CHECKLIST_RECEIPT:TYPOGRAPHIC_MEGA_NUMBER",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-INTEGRATED_SCENE",
-            "primaryEncoding": "area",
-            "visualStyle": "AREA_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:AREA_CHART:background:RISK_MATRIX",
-            "promptFingerprint": "pf_dei4xh"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "architecture",
-            "visualStyle": "CORPORATE_OFFICE_SPACE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:RISK_MATRIX",
-            "promptFingerprint": "pf_rqh51r"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "donut",
-            "visualStyle": "DONUT_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:DONUT_CHART:background:RISK_MATRIX",
-            "promptFingerprint": "pf_jmg0rq"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EXPERT_CUTOUT",
-            "bucket": "Human",
-            "visualPosition": "left",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:EXPERT_CUTOUT:left:PRICE_CHART",
-            "promptFingerprint": "pf_ud0by8"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "sankey",
-            "visualStyle": "SANKEY_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:RISK_MATRIX",
-            "promptFingerprint": "pf_i8py5t"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "mega-number",
-            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:TYPOGRAPHIC_MEGA_NUMBER:center:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_g461qj"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-11",
       "topic": "Hyperliquid (HYPE) Heat Check: What's Driving DEX Token Valuations",
       "hook": "DEX tokens equal platform equity is wrong. Here's why",
       "format": "WATCHLIST_EDUCATION",
@@ -37877,6 +37735,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "COMPARISON_XRAY:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_gdg2cl"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-24",
+      "topic": "401k vs Roth IRA: Which Account Should Americans Use First?",
+      "hook": "Most Americans pick the wrong account first.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 7,
+      "keywords": [
+        "TSX multi-year high",
+        "investing Canada",
+        "stock risk filter",
+        "investing checklist"
+      ],
+      "visualSignature": "2026-07-24-30126682500",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-07-24T21:16:31.435Z",
+      "tickersFeatured": [],
+      "topicCategory": "TAX_ACCT",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "share_use_case",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "TICKER_TAPE_HERO",
+        "EARNINGS_HEAT_TABLE",
+        "MACRO_FLOW_DIAGRAM",
+        "PRICE_TIMELINE_ANNOTATED",
+        "PORTFOLIO_BAR_RACE",
+        "MAP_DATA_OVERLAY",
+        "TWEET_STOCK_CHART_SPLIT"
+      ],
+      "coverVisualStyle": "TICKER_TAPE_HERO",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "boomer_diy_investor"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FF3B30"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "INDEX_MOVE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:1188404692",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:TICKER_TAPE_HERO:background:RISK_MATRIX",
+          "HUMAN_EDITORIAL:EARNINGS_HEAT_TABLE:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:PRICE_TIMELINE_ANNOTATED:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:PORTFOLIO_BAR_RACE:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:MAP_DATA_OVERLAY:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:TWEET_STOCK_CHART_SPLIT:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:TWEET_STOCK_CHART_SPLIT",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
+            "primaryEncoding": "ticker-tape",
+            "visualStyle": "TICKER_TAPE_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TICKER_TAPE_HERO:background:RISK_MATRIX",
+            "promptFingerprint": "pf_b4kgkn"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "heat-table",
+            "visualStyle": "EARNINGS_HEAT_TABLE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_HEAT_TABLE:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_mkzihg"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "flow",
+            "visualStyle": "MACRO_FLOW_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_p6ic88"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:PRICE_TIMELINE_ANNOTATED:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_6asp7t"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "bar-race",
+            "visualStyle": "PORTFOLIO_BAR_RACE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:PORTFOLIO_BAR_RACE:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_57wq3g"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "choropleth",
+            "visualStyle": "MAP_DATA_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:MAP_DATA_OVERLAY:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_369tf7"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "social-chart-split",
+            "visualStyle": "TWEET_STOCK_CHART_SPLIT",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TWEET_STOCK_CHART_SPLIT:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_tticvp"
           }
         ]
       }
