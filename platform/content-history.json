@@ -2,147 +2,6 @@
   "schemaVersion": 4,
   "entries": [
     {
-      "date": "2026-06-10",
-      "topic": "If You Invested $10,000 in NVIDIA 5 Years Ago",
-      "hook": "What $10k in NVDA looks like today.",
-      "format": "CAROUSEL",
-      "formatType": "MEME_HUMOR",
-      "slideCount": 6,
-      "keywords": [
-        "how to evaluate stocks",
-        "stock watchlist",
-        "investing checklist"
-      ],
-      "visualSignature": "2026-06-10-27312934235",
-      "schemaVersion": 4,
-      "slotIndex": 6,
-      "postedAtUtc": "2026-06-10T23:33:46.937Z",
-      "tickersFeatured": [],
-      "topicCategory": "HOW_TO",
-      "hookFormulaId": "MYTH_STRIKE",
-      "ctaId": "comment_genuine_question",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "CAP_TABLE_GRID",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY"
-      ],
-      "coverVisualStyle": "CAP_TABLE_GRID",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "boomer_diy_investor"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#09090D",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FF2E93"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "HYPOTHETICAL_RETURN",
-      "sourceTier": "OFFICIAL",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:DOCUMENT_RECEIPT:286766452",
-        "structureFamily": "EDITORIAL_MYTH_BUST",
-        "coverMechanism": "DOCUMENT_RECEIPT",
-        "coverLayoutFamily": "DASHBOARD_FILL",
-        "sceneConceptIds": [
-          "EDITORIAL_MYTH_BUST:CAP_TABLE_GRID:background:RISK_MATRIX",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "QUESTION_CARD:ARCHITECTURAL_OVERLAY",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-DASHBOARD_FILL",
-            "primaryEncoding": "logo-grid",
-            "visualStyle": "CAP_TABLE_GRID",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:CAP_TABLE_GRID:background:RISK_MATRIX",
-            "promptFingerprint": "pf_t1a3x1"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_ejydpp"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "AERIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
-            "promptFingerprint": "pf_16h70f"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
-            "promptFingerprint": "pf_i9nrfp"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_655g6w"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "AERIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_suluap"
-          }
-        ]
-      }
-    },
-    {
       "date": "2026-06-11",
       "topic": "The S&P 500 and Nasdaq Market Rally: The 5-Question Risk Filter Before You FOMO In",
       "hook": "The S&P 500 is up this week. Should you care?",
@@ -37862,6 +37721,162 @@
             "motifTag": "NONE",
             "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_wfo2t"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-24",
+      "topic": "How President Trump's Policies Impact the Tech Sector",
+      "hook": "What the new policies mean for Tech.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 7,
+      "keywords": [
+        "Trump tech stocks",
+        "market news",
+        "macro economics",
+        "stock market update"
+      ],
+      "visualSignature": "2026-07-24-30104938122",
+      "schemaVersion": 4,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-07-24T15:30:48.828Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "ANTI_FOMO",
+      "ctaId": "swipe_promise",
+      "angleId": "INDEX_REBALANCE",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "RADAR_CHART",
+        "EXPERT_CUTOUT",
+        "AREA_CHART",
+        "HEATMAP_GRID",
+        "TRADER_DESK_SILHOUETTE",
+        "CANDLESTICK_CHART",
+        "EDITORIAL_STAT_CARD"
+      ],
+      "coverVisualStyle": "RADAR_CHART",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00CFFF",
+        "accent2": "#FFB000"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "MACRO",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:NEWS_FLASH:ANNOTATED_CHART:44847814",
+        "structureFamily": "NEWS_FLASH",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "TOP_STACK",
+        "sceneConceptIds": [
+          "NEWS_FLASH:RADAR_CHART:top:FILING_EXCERPT",
+          "NEWS_FLASH:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
+          "NEWS_FLASH:AREA_CHART:background:EARNINGS_TABLE",
+          "NEWS_FLASH:HEATMAP_GRID:background:EARNINGS_TABLE",
+          "NEWS_FLASH:TRADER_DESK_SILHOUETTE:top:RISK_MATRIX",
+          "NEWS_FLASH:CANDLESTICK_CHART:background:EARNINGS_TABLE",
+          "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "MOTIF_CALLBACK:EDITORIAL_STAT_CARD",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-TOP_STACK",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:RADAR_CHART:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_mr0rom"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EXPERT_CUTOUT",
+            "bucket": "Human",
+            "visualPosition": "left",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_3ciey5"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "area",
+            "visualStyle": "AREA_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:AREA_CHART:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_d45k9n"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "heatmap",
+            "visualStyle": "HEATMAP_GRID",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:HEATMAP_GRID:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_qjgt1i"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "TRADER_DESK_SILHOUETTE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:TRADER_DESK_SILHOUETTE:top:RISK_MATRIX",
+            "promptFingerprint": "pf_vjdsz4"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:CANDLESTICK_CHART:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_yl1s8b"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "stat-card",
+            "visualStyle": "EDITORIAL_STAT_CARD",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_eqe20m"
           }
         ]
       }
