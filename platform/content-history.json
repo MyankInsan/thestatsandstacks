@@ -3,163 +3,6 @@
   "entries": [
     {
       "date": "2026-06-13",
-      "topic": "Western Digital Corporation (WDC) Heat Check: What the AI Storage Push Actually Means",
-      "hook": "Western Digital is up this year. Should you care?",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
-      "slideCount": 7,
-      "keywords": [
-        "Western Digital stock",
-        "WDC news",
-        "AI storage sector",
-        "NAND flash memory cycle"
-      ],
-      "visualSignature": "2026-06-13-27470938343",
-      "schemaVersion": 4,
-      "slotIndex": 1,
-      "postedAtUtc": "2026-06-13T15:33:53.626Z",
-      "tickersFeatured": [],
-      "topicCategory": "EARNINGS",
-      "hookFormulaId": "ANTI_FOMO",
-      "ctaId": "follow_authority",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "CANDLESTICK_HERO",
-        "GLOWING_QUOTE",
-        "COMPARISON_TABLE",
-        "EDITORIAL_SPLIT_LAYOUT",
-        "TICKER_TAPE_HERO",
-        "LUXURY_LIFESTYLE",
-        "EDITORIAL_STAT_CARD"
-      ],
-      "coverVisualStyle": "CANDLESTICK_HERO",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "female_cfo_50s"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#050505",
-        "primaryText": "#FFFFFF",
-        "accent1": "#39FF14",
-        "accent2": "#00CFFF"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "SINGLE_STOCK",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:NEWS_FLASH:ANNOTATED_CHART:313984579",
-        "structureFamily": "NEWS_FLASH",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "INTEGRATED_SCENE",
-        "sceneConceptIds": [
-          "NEWS_FLASH:CANDLESTICK_HERO:background:FILING_EXCERPT",
-          "NEWS_FLASH:GLOWING_QUOTE:center:EARNINGS_TABLE",
-          "NEWS_FLASH:COMPARISON_TABLE:left:PRODUCT_DETAIL",
-          "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
-          "NEWS_FLASH:TICKER_TAPE_HERO:background:EARNINGS_TABLE",
-          "NEWS_FLASH:LUXURY_LIFESTYLE:top:RISK_MATRIX",
-          "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "EDITORIAL_SIGNOFF:EDITORIAL_STAT_CARD",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-INTEGRATED_SCENE",
-            "primaryEncoding": "candlestick",
-            "visualStyle": "CANDLESTICK_HERO",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:CANDLESTICK_HERO:background:FILING_EXCERPT",
-            "promptFingerprint": "pf_1omvqv"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "pull-quote",
-            "visualStyle": "GLOWING_QUOTE",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:GLOWING_QUOTE:center:EARNINGS_TABLE",
-            "promptFingerprint": "pf_9n9l5x"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "table",
-            "visualStyle": "COMPARISON_TABLE",
-            "bucket": "Data",
-            "visualPosition": "left",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:COMPARISON_TABLE:left:PRODUCT_DETAIL",
-            "promptFingerprint": "pf_9acyjx"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "editorial-split",
-            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_44r9dp"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "ticker-tape",
-            "visualStyle": "TICKER_TAPE_HERO",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:TICKER_TAPE_HERO:background:EARNINGS_TABLE",
-            "promptFingerprint": "pf_ow12if"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "LUXURY_LIFESTYLE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "JET_LUXURY",
-            "sceneConceptId": "NEWS_FLASH:LUXURY_LIFESTYLE:top:RISK_MATRIX",
-            "promptFingerprint": "pf_3r7yeb"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "stat-card",
-            "visualStyle": "EDITORIAL_STAT_CARD",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_xwtobs"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-13",
       "topic": "The Intel AI Shift Case Study: Decoding the Rare Double Upgrade",
       "hook": "I pulled BofA's Intel report. Here's what's in it",
       "format": "WATCHLIST_EDUCATION",
@@ -37832,6 +37675,148 @@
             "motifTag": "NONE",
             "sceneConceptId": "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_7uky2v"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-26",
+      "topic": "If You Invested $10,000 in NVIDIA 5 Years Ago",
+      "hook": "What $10k in NVDA looks like today.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "MU news",
+        "semiconductor stock selloff",
+        "AI spending risk",
+        "Micron stock analysis"
+      ],
+      "visualSignature": "2026-07-26-30216541782",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-07-26T19:20:33.575Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "IF_THEN_LADDER",
+      "ctaId": "save_specific",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "MACRO_FLOW_DIAGRAM",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "DONUT_CHART",
+        "LUXURY_LIFESTYLE",
+        "PRICE_TIMELINE_ANNOTATED",
+        "GLOWING_QUOTE"
+      ],
+      "coverVisualStyle": "MACRO_FLOW_DIAGRAM",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "immigrant_entrepreneur"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F4F1EA",
+        "primaryText": "#1A1A1A",
+        "accent1": "#B0341E",
+        "accent2": "#6B6B6B"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "HYPOTHETICAL_RETURN",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:818256084",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "TOP_STACK",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:top:RISK_MATRIX",
+          "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:DONUT_CHART:background:PRICE_CHART",
+          "COMPARISON_XRAY:LUXURY_LIFESTYLE:top:PRICE_CHART",
+          "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:GLOWING_QUOTE:center:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SAVE_CARD:GLOWING_QUOTE",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-TOP_STACK",
+            "primaryEncoding": "flow",
+            "visualStyle": "MACRO_FLOW_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:top:RISK_MATRIX",
+            "promptFingerprint": "pf_wwxcht"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_oebedl"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:DONUT_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_2lkdqo"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "COMPARISON_XRAY:LUXURY_LIFESTYLE:top:PRICE_CHART",
+            "promptFingerprint": "pf_r34j7j"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_cwban4"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "pull-quote",
+            "visualStyle": "GLOWING_QUOTE",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_wm7298"
           }
         ]
       }
