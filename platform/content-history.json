@@ -3,163 +3,6 @@
   "entries": [
     {
       "date": "2026-06-14",
-      "topic": "The S-1 IPO Screen: How to Analyze a New Company Before It Lists",
-      "hook": "I pulled Southern Cross's S-1. Here's what's inside.",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 7,
-      "keywords": [
-        "S-1 filing explained",
-        "Southern Cross Acquisition IPO",
-        "how to read a prospectus",
-        "pre-IPO cap table"
-      ],
-      "visualSignature": "2026-06-14-27505971332",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-06-14T17:06:45.557Z",
-      "tickersFeatured": [],
-      "topicCategory": "CAP_TABLE",
-      "hookFormulaId": "BEHIND_THE_SCENES",
-      "ctaId": "save_specific",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "CARICATURE_PORTRAIT",
-        "TYPOGRAPHIC_MEGA_NUMBER",
-        "DONUT_CHART",
-        "EDITORIAL_REACTION_CARICATURE",
-        "EARNINGS_CARD",
-        "LUXURY_LIFESTYLE",
-        "EDITORIAL_STAT_CARD"
-      ],
-      "coverVisualStyle": "CARICATURE_PORTRAIT",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "immigrant_entrepreneur"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0B0F14",
-        "primaryText": "#FFFFFF",
-        "accent1": "#00CFFF",
-        "accent2": "#FFD700"
-      },
-      "dominantSubjectClass": "PORTRAIT",
-      "topicFamily": "IPO",
-      "sourceTier": "OFFICIAL",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:HUMAN_EDITORIAL:EDITORIAL_PORTRAIT:340867591",
-        "structureFamily": "HUMAN_EDITORIAL",
-        "coverMechanism": "EDITORIAL_PORTRAIT",
-        "coverLayoutFamily": "SPLIT_EDITORIAL",
-        "sceneConceptIds": [
-          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:left:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRODUCT_DETAIL",
-          "HUMAN_EDITORIAL:DONUT_CHART:background:RISK_MATRIX",
-          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:RISK_MATRIX",
-          "HUMAN_EDITORIAL:EARNINGS_CARD:center:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "SAVE_CARD:EDITORIAL_STAT_CARD",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-SPLIT_EDITORIAL",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CARICATURE_PORTRAIT",
-            "bucket": "Human",
-            "visualPosition": "left",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:left:FILING_EXCERPT",
-            "promptFingerprint": "pf_uv99ov"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "mega-number",
-            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRODUCT_DETAIL",
-            "promptFingerprint": "pf_xuxfwa"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "donut",
-            "visualStyle": "DONUT_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:DONUT_CHART:background:RISK_MATRIX",
-            "promptFingerprint": "pf_jpu9bh"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:RISK_MATRIX",
-            "promptFingerprint": "pf_27d4zr"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "metric-card",
-            "visualStyle": "EARNINGS_CARD",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:EARNINGS_TABLE",
-            "promptFingerprint": "pf_qb2fo3"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "LUXURY_LIFESTYLE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "JET_LUXURY",
-            "sceneConceptId": "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top:FILING_EXCERPT",
-            "promptFingerprint": "pf_ldi65n"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "stat-card",
-            "visualStyle": "EDITORIAL_STAT_CARD",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_66o83z"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-14",
       "topic": "Microsoft vs Amazon: The AI Cloud Infrastructure Scorecard",
       "hook": "MSFT vs AMZN in 2026: the real winner",
       "format": "CAROUSEL",
@@ -37817,6 +37660,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_gmpy05"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-27",
+      "topic": "Why the First $100K Feels So Slow for Canadian Investors",
+      "hook": "The first $100K feels slow.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 7,
+      "keywords": [
+        "COIN stock",
+        "Coinbase Global, Inc. stock",
+        "hot stock risk checklist",
+        "market catalyst explained"
+      ],
+      "visualSignature": "2026-07-27-30306093431",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-07-27T21:24:03.122Z",
+      "tickersFeatured": [],
+      "topicCategory": "CRYPTO",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "share_use_case",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "CANDLESTICK_CHART",
+        "CROWD_PANIC",
+        "HEATMAP_GRID",
+        "NEON_TERMINAL",
+        "CANDLESTICK_PATTERN_ANNOTATED",
+        "REDDIT_POST_SCREENSHOT",
+        "TRADING_DESK_OVERLAY"
+      ],
+      "coverVisualStyle": "CANDLESTICK_CHART",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "crypto_native_founder"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FF3B30"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CRYPTO",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:347877169",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:CANDLESTICK_CHART:background:RISK_MATRIX",
+          "HUMAN_EDITORIAL:CROWD_PANIC:top:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:HEATMAP_GRID:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:NEON_TERMINAL:top:PRODUCT_DETAIL",
+          "HUMAN_EDITORIAL:CANDLESTICK_PATTERN_ANNOTATED:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:REDDIT_POST_SCREENSHOT:center:PRICE_CHART",
+          "HUMAN_EDITORIAL:TRADING_DESK_OVERLAY:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:TRADING_DESK_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CANDLESTICK_CHART:background:RISK_MATRIX",
+            "promptFingerprint": "pf_6ounoi"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CROWD_PANIC:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_fza5zf"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "heatmap",
+            "visualStyle": "HEATMAP_GRID",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:HEATMAP_GRID:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_u0vzlf"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "terminal",
+            "visualStyle": "NEON_TERMINAL",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:NEON_TERMINAL:top:PRODUCT_DETAIL",
+            "promptFingerprint": "pf_9ofede"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_PATTERN_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CANDLESTICK_PATTERN_ANNOTATED:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_eqk21t"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "social-mock",
+            "visualStyle": "REDDIT_POST_SCREENSHOT",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:REDDIT_POST_SCREENSHOT:center:PRICE_CHART",
+            "promptFingerprint": "pf_xu5r58"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "typography",
+            "visualStyle": "TRADING_DESK_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TRADING_DESK_OVERLAY:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_ql9pf6"
           }
         ]
       }
