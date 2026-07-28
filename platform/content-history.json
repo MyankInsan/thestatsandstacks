@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-06-15",
-      "topic": "Stellar (XLM) Heat Check: Decoding the 24-Hour Crypto Move and Risks",
-      "hook": "Who actually owns Stellar?",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 6,
-      "keywords": [
-        "Stellar price",
-        "XLM supply distribution",
-        "Stellar Development Foundation",
-        "crypto concentration risk"
-      ],
-      "visualSignature": "2026-06-15-27571302247",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-06-15T19:37:31.278Z",
-      "tickersFeatured": [],
-      "topicCategory": "CRYPTO",
-      "hookFormulaId": "CAP_TABLE",
-      "ctaId": "save_specific",
-      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
-      "visualStylesUsed": [
-        "EXPERT_CUTOUT",
-        "TYPOGRAPHIC_MEGA_NUMBER",
-        "DONUT_CHART",
-        "EDITORIAL_REACTION_CARICATURE",
-        "EARNINGS_CARD",
-        "MINIMALIST_CHECKLIST"
-      ],
-      "coverVisualStyle": "EXPERT_CUTOUT",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "young_retail_trader"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#000000",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF3B30",
-        "accent2": "#FFD700"
-      },
-      "dominantSubjectClass": "PORTRAIT",
-      "topicFamily": "CRYPTO",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:HUMAN_EDITORIAL:EDITORIAL_PORTRAIT:1637022852",
-        "structureFamily": "HUMAN_EDITORIAL",
-        "coverMechanism": "EDITORIAL_PORTRAIT",
-        "coverLayoutFamily": "SPLIT_EDITORIAL",
-        "sceneConceptIds": [
-          "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:STORE_SCENE",
-          "HUMAN_EDITORIAL:DONUT_CHART:background:SOURCE_DOCUMENT",
-          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
-          "HUMAN_EDITORIAL:EARNINGS_CARD:center:RISK_MATRIX",
-          "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "SAVE_CARD:MINIMALIST_CHECKLIST",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-SPLIT_EDITORIAL",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EXPERT_CUTOUT",
-            "bucket": "Human",
-            "visualPosition": "left",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:EARNINGS_TABLE",
-            "promptFingerprint": "pf_rjv32v"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "mega-number",
-            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:STORE_SCENE",
-            "promptFingerprint": "pf_2i6i5m"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "donut",
-            "visualStyle": "DONUT_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:DONUT_CHART:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_sli9rp"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_wm77k8"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "metric-card",
-            "visualStyle": "EARNINGS_CARD",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:RISK_MATRIX",
-            "promptFingerprint": "pf_tyn49h"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "checklist",
-            "visualStyle": "MINIMALIST_CHECKLIST",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_4ck6m2"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-15",
       "topic": "The Global Oil Shock: What the Tentative US-Iran Deal Means for Markets",
       "hook": "If you own stocks, watch this 1 shift first",
       "format": "CAROUSEL",
@@ -37846,6 +37704,149 @@
             "motifTag": "NONE",
             "sceneConceptId": "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_txh8lx"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-28",
+      "topic": "If You Invested $10,000 in NVIDIA 5 Years Ago",
+      "hook": "What $10k in NVDA looks like today.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "semiconductor stock selloff",
+        "Micron stock MU",
+        "AMD chip stocks",
+        "tech investing checklist",
+        "leveraged chip ETFs"
+      ],
+      "visualSignature": "2026-07-28-30399662383",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-07-28T21:20:58.225Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "PREMIUM_CONTRARIAN",
+      "ctaId": "share_use_case",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "BAR_CHART_HORIZONTAL",
+        "EDITORIAL_REACTION_CARICATURE",
+        "EARNINGS_CARD",
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "CAP_TABLE_GRID",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "boomer_diy_investor"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00CFFF",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "HYPOTHETICAL_RETURN",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:1145895730",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "TOP_STACK",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top:PRICE_CHART",
+          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:EARNINGS_CARD:center:PRICE_CHART",
+          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRICE_CHART",
+          "HUMAN_EDITORIAL:CAP_TABLE_GRID:left:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:MAGAZINE_COVER",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-TOP_STACK",
+            "primaryEncoding": "bar",
+            "visualStyle": "BAR_CHART_HORIZONTAL",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top:PRICE_CHART",
+            "promptFingerprint": "pf_y38eyn"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_a7doil"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:PRICE_CHART",
+            "promptFingerprint": "pf_ccql5c"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "mega-number",
+            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRICE_CHART",
+            "promptFingerprint": "pf_6ac8ar"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CAP_TABLE_GRID:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_o536ay"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_4a7bcq"
           }
         ]
       }
