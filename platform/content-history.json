@@ -3,149 +3,6 @@
   "entries": [
     {
       "date": "2026-06-16",
-      "topic": "Who actually owns Tesla?",
-      "hook": "Who actually owns Tesla?",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 6,
-      "keywords": [
-        "Tesla ownership",
-        "TSLA institutional holdings",
-        "Elon Musk TSLA stake",
-        "Tesla retail investors"
-      ],
-      "visualSignature": "2026-06-16-27642424159",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-06-16T19:29:37.555Z",
-      "tickersFeatured": [],
-      "topicCategory": "CAP_TABLE",
-      "hookFormulaId": "CAP_TABLE",
-      "ctaId": "save_specific",
-      "angleId": "CAP_TABLE_INSTITUTIONAL",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "CAP_TABLE_GRID",
-        "CARICATURE_PORTRAIT",
-        "COMPARISON_TABLE",
-        "EDITORIAL_REACTION_CARICATURE",
-        "TYPOGRAPHIC_MEGA_NUMBER",
-        "EARNINGS_CARD"
-      ],
-      "coverVisualStyle": "CAP_TABLE_GRID",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "immigrant_entrepreneur"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0A0A0A",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FF3B30"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "CAP_TABLE",
-      "sourceTier": "REPUTABLE_PRESS",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:HUMAN_EDITORIAL:DOCUMENT_RECEIPT:1093513344",
-        "structureFamily": "HUMAN_EDITORIAL",
-        "coverMechanism": "DOCUMENT_RECEIPT",
-        "coverLayoutFamily": "DASHBOARD_FILL",
-        "sceneConceptIds": [
-          "HUMAN_EDITORIAL:CAP_TABLE_GRID:background:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:COMPARISON_TABLE:left:SOURCE_DOCUMENT",
-          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:STORE_SCENE",
-          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:STORE_SCENE",
-          "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "SAVE_CARD:EARNINGS_CARD",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-DASHBOARD_FILL",
-            "primaryEncoding": "logo-grid",
-            "visualStyle": "CAP_TABLE_GRID",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:CAP_TABLE_GRID:background:EARNINGS_TABLE",
-            "promptFingerprint": "pf_5y6cp8"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CARICATURE_PORTRAIT",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:FILING_EXCERPT",
-            "promptFingerprint": "pf_jccbpl"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "table",
-            "visualStyle": "COMPARISON_TABLE",
-            "bucket": "Data",
-            "visualPosition": "left",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:COMPARISON_TABLE:left:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_6itiic"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:STORE_SCENE",
-            "promptFingerprint": "pf_kkvzpo"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "mega-number",
-            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:STORE_SCENE",
-            "promptFingerprint": "pf_wcz1go"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "metric-card",
-            "visualStyle": "EARNINGS_CARD",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_vu3tv1"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-16",
       "topic": "The SpaceX Options Wave: How Implied Volatility Traps Retail Investors",
       "hook": "If you trade hyped options, do this 1 thing first",
       "format": "CAROUSEL",
@@ -37906,6 +37763,162 @@
             "motifTag": "NONE",
             "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_2fm9f9"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-29",
+      "topic": "Finfluencer Red Flags: 7 Phrases Investors Should Pause On",
+      "hook": "Good finance content does not need pressure.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 7,
+      "keywords": [
+        "the Fed news",
+        "the Fed stock",
+        "market news today"
+      ],
+      "visualSignature": "2026-07-29-30490717677",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-07-29T21:09:24.996Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "REVERSE_SURVIVORSHIP",
+      "ctaId": "share_use_case",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "RADAR_CHART",
+        "TRADER_DESK_SILHOUETTE",
+        "AREA_CHART",
+        "CROWD_PANIC",
+        "CANDLESTICK_CHART",
+        "NEON_TERMINAL",
+        "HEATMAP_GRID"
+      ],
+      "coverVisualStyle": "RADAR_CHART",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "silver_haired_pm"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "MACRO",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:1836373895",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:RADAR_CHART:background:RISK_MATRIX",
+          "HUMAN_EDITORIAL:TRADER_DESK_SILHOUETTE:top:PRICE_CHART",
+          "HUMAN_EDITORIAL:AREA_CHART:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:CROWD_PANIC:top:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:CANDLESTICK_CHART:background:PRICE_CHART",
+          "HUMAN_EDITORIAL:NEON_TERMINAL:top:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:HEATMAP_GRID:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:HEATMAP_GRID",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:RADAR_CHART:background:RISK_MATRIX",
+            "promptFingerprint": "pf_jduay1"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "TRADER_DESK_SILHOUETTE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TRADER_DESK_SILHOUETTE:top:PRICE_CHART",
+            "promptFingerprint": "pf_x52d4j"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "area",
+            "visualStyle": "AREA_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:AREA_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_dhaw3s"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CROWD_PANIC:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_ba1zh5"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CANDLESTICK_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_a61gag"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "terminal",
+            "visualStyle": "NEON_TERMINAL",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:NEON_TERMINAL:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_elkeu1"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "heatmap",
+            "visualStyle": "HEATMAP_GRID",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:HEATMAP_GRID:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_1ewht8"
           }
         ]
       }
