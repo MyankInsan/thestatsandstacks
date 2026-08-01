@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-06-19",
-      "topic": "Bleichroeder S-1 Case Study: How to Read a New IPO Filing",
-      "hook": "Everyone says buy the hype. The S-1 says wait.",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
-      "slideCount": 6,
-      "keywords": [
-        "Bleichroeder Acquisition Corp S-1",
-        "how to read SEC filings",
-        "IPO investing risk",
-        "new IPO filings"
-      ],
-      "visualSignature": "2026-06-19-27848693463",
-      "schemaVersion": 4,
-      "slotIndex": 4,
-      "postedAtUtc": "2026-06-19T21:18:37.714Z",
-      "tickersFeatured": [],
-      "topicCategory": "HOW_TO",
-      "hookFormulaId": "PREMIUM_CONTRARIAN",
-      "ctaId": "question_open",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "BAR_CHART_HORIZONTAL",
-        "LUXURY_LIFESTYLE",
-        "MACRO_FLOW_DIAGRAM",
-        "CARICATURE_PORTRAIT",
-        "MAP_DATA_OVERLAY",
-        "MAGAZINE_COVER"
-      ],
-      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "female_quant_30s"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#F4F1EA",
-        "primaryText": "#1A1A1A",
-        "accent1": "#B0341E",
-        "accent2": "#6B6B6B"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "IPO",
-      "sourceTier": "OFFICIAL",
-      "topicMode": "EVERGREEN_OR_TIMELY",
-      "visualPlan": {
-        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:1808706969",
-        "structureFamily": "COMPARISON_XRAY",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
-        "sceneConceptIds": [
-          "COMPARISON_XRAY:BAR_CHART_HORIZONTAL:background:FILING_EXCERPT",
-          "COMPARISON_XRAY:LUXURY_LIFESTYLE:top:STORE_SCENE",
-          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:PRICE_CHART",
-          "COMPARISON_XRAY:CARICATURE_PORTRAIT:top:FILING_EXCERPT",
-          "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:SOURCE_DOCUMENT",
-          "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "TWO_OPTION_PROMPT:MAGAZINE_COVER",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
-            "primaryEncoding": "bar",
-            "visualStyle": "BAR_CHART_HORIZONTAL",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:BAR_CHART_HORIZONTAL:background:FILING_EXCERPT",
-            "promptFingerprint": "pf_nvy1yb"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "LUXURY_LIFESTYLE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "JET_LUXURY",
-            "sceneConceptId": "COMPARISON_XRAY:LUXURY_LIFESTYLE:top:STORE_SCENE",
-            "promptFingerprint": "pf_hg2lz9"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "flow",
-            "visualStyle": "MACRO_FLOW_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:PRICE_CHART",
-            "promptFingerprint": "pf_pnl4mn"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CARICATURE_PORTRAIT",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:CARICATURE_PORTRAIT:top:FILING_EXCERPT",
-            "promptFingerprint": "pf_9dq91v"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "choropleth",
-            "visualStyle": "MAP_DATA_OVERLAY",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_ly00ev"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "magazine",
-            "visualStyle": "MAGAZINE_COVER",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_okdmfc"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-19",
       "topic": "401k vs Roth IRA: Which Account Should Americans Use First?",
       "hook": "Most Americans pick the wrong account first.",
       "format": "CAROUSEL",
@@ -37860,6 +37718,149 @@
             "motifTag": "NONE",
             "sceneConceptId": "PREMIUM_LIFESTYLE:FUNNY_COMPARISON:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_4pfppa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-01",
+      "topic": "Berkshire’s $397 Billion Cash Pile: Why Buffett is Still Waiting",
+      "hook": "Everyone says cash is trash. The disclosure says otherwise.",
+      "format": "CAROUSEL",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 6,
+      "keywords": [
+        "Warren Buffett cash",
+        "Berkshire Hathaway cash pile",
+        "market valuation",
+        "Buffett indicator",
+        "investing patience"
+      ],
+      "visualSignature": "2026-08-01-30722293927",
+      "schemaVersion": 4,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-08-01T23:02:25.992Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "PREMIUM_CONTRARIAN",
+      "ctaId": "question_open",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "TRADING_DESK_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "TRADING_DESK_OVERLAY",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "silver_haired_pm"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0E0B08",
+        "primaryText": "#FFF7E6",
+        "accent1": "#FFB000",
+        "accent2": "#FF3B30"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "GENERAL",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:ANNOTATED_CHART:1081107518",
+        "structureFamily": "EDITORIAL_MYTH_BUST",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "TOP_STACK",
+        "sceneConceptIds": [
+          "EDITORIAL_MYTH_BUST:TRADING_DESK_OVERLAY:top:FILING_EXCERPT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:RISK_MATRIX",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-TOP_STACK",
+            "primaryEncoding": "typography",
+            "visualStyle": "TRADING_DESK_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:TRADING_DESK_OVERLAY:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_av8gp3"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
+            "promptFingerprint": "pf_o27k6l"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_9gfi0b"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
+            "promptFingerprint": "pf_u3xv36"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:RISK_MATRIX",
+            "promptFingerprint": "pf_93l5d4"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_f6d20"
           }
         ]
       }
