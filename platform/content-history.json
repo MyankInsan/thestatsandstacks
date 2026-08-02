@@ -2,148 +2,6 @@
   "schemaVersion": 4,
   "entries": [
     {
-      "date": "2026-06-19",
-      "topic": "U.S. Market Close: How the Dow Jones (^DJI) Performed Today: The 5-Question Risk Filter",
-      "hook": "\"Market dips are financial crises\" is wrong. Here is why",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "MEME_HUMOR",
-      "slideCount": 6,
-      "keywords": [
-        "Dow Jones close",
-        "market volatility",
-        "market correction",
-        "investing psychology"
-      ],
-      "visualSignature": "2026-06-19-27852163045",
-      "schemaVersion": 4,
-      "slotIndex": 6,
-      "postedAtUtc": "2026-06-19T23:04:17.961Z",
-      "tickersFeatured": [],
-      "topicCategory": "MACRO",
-      "hookFormulaId": "MYTH_STRIKE",
-      "ctaId": "comment_genuine_question",
-      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
-      "visualStylesUsed": [
-        "FUNNY_COMPARISON",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY"
-      ],
-      "coverVisualStyle": "FUNNY_COMPARISON",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "silver_haired_pm"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#09090D",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FF2E93"
-      },
-      "dominantSubjectClass": "TYPOGRAPHY",
-      "topicFamily": "INDEX_MOVE",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:SPLIT_CONTRAST:639235022",
-        "structureFamily": "EDITORIAL_MYTH_BUST",
-        "coverMechanism": "SPLIT_CONTRAST",
-        "coverLayoutFamily": "SPLIT_EDITORIAL",
-        "sceneConceptIds": [
-          "EDITORIAL_MYTH_BUST:FUNNY_COMPARISON:left:EARNINGS_TABLE",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "QUESTION_CARD:ARCHITECTURAL_OVERLAY",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-SPLIT_EDITORIAL",
-            "primaryEncoding": "typography",
-            "visualStyle": "FUNNY_COMPARISON",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:FUNNY_COMPARISON:left:EARNINGS_TABLE",
-            "promptFingerprint": "pf_2duv3y"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
-            "promptFingerprint": "pf_xu0atj"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "AERIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_3awwu9"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
-            "promptFingerprint": "pf_rqau5m"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
-            "promptFingerprint": "pf_bapf75"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "AERIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_63d99h"
-          }
-        ]
-      }
-    },
-    {
       "date": "2026-06-20",
       "topic": "PayPal at 8x Earnings: The 5-Question Value Trap Checklist for Turnaround Stocks",
       "hook": "PayPal is at 8x earnings. Should you care?",
@@ -37850,6 +37708,150 @@
             "motifTag": "NONE",
             "sceneConceptId": "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_yei020"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-02",
+      "topic": "Who actually owns Tesla? (TSLA Cap Table breakdown)",
+      "hook": "Who actually owns Tesla?",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 6,
+      "keywords": [
+        "TSLA ownership",
+        "Tesla cap table",
+        "who owns Tesla",
+        "Vanguard BlackRock Tesla",
+        "Elon Musk stake"
+      ],
+      "visualSignature": "2026-08-02-30757190683",
+      "schemaVersion": 4,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-08-02T16:43:02.098Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "CAP_TABLE",
+      "ctaId": "comment_genuine_question",
+      "angleId": "CAP_TABLE_INSTITUTIONAL",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "CAP_TABLE_GRID",
+        "EDITORIAL_STAT_CARD",
+        "AREA_CHART",
+        "CORPORATE_OFFICE_SPACE",
+        "SANKEY_DIAGRAM",
+        "MINIMALIST_CHECKLIST"
+      ],
+      "coverVisualStyle": "CAP_TABLE_GRID",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "immigrant_entrepreneur"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CAP_TABLE",
+      "sourceTier": "UNKNOWN",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:DATA_SNAPSHOT:DOCUMENT_RECEIPT:208340653",
+        "structureFamily": "DATA_SNAPSHOT",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "DATA_SNAPSHOT:CAP_TABLE_GRID:background:FILING_EXCERPT",
+          "DATA_SNAPSHOT:EDITORIAL_STAT_CARD:left:FILING_EXCERPT",
+          "DATA_SNAPSHOT:AREA_CHART:background:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:STORE_SCENE",
+          "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:PRICE_CHART",
+          "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "QUESTION_CARD:MINIMALIST_CHECKLIST",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CAP_TABLE_GRID:background:FILING_EXCERPT",
+            "promptFingerprint": "pf_etme8l"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "stat-card",
+            "visualStyle": "EDITORIAL_STAT_CARD",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:EDITORIAL_STAT_CARD:left:FILING_EXCERPT",
+            "promptFingerprint": "pf_xqjeoz"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "area",
+            "visualStyle": "AREA_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:AREA_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_hlttbz"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "architecture",
+            "visualStyle": "CORPORATE_OFFICE_SPACE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:STORE_SCENE",
+            "promptFingerprint": "pf_og69b2"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:PRICE_CHART",
+            "promptFingerprint": "pf_s4jkwv"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "checklist",
+            "visualStyle": "MINIMALIST_CHECKLIST",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_ajlcjc"
           }
         ]
       }
