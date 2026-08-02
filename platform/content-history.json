@@ -3,163 +3,6 @@
   "entries": [
     {
       "date": "2026-06-19",
-      "topic": "401k vs Roth IRA: Which Account Should Americans Use First?",
-      "hook": "Most Americans pick the wrong account first.",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
-      "slideCount": 7,
-      "keywords": [
-        "Stellar price",
-        "XLM crypto",
-        "crypto risk",
-        "crypto news"
-      ],
-      "visualSignature": "2026-06-19-27850217028",
-      "schemaVersion": 4,
-      "slotIndex": 5,
-      "postedAtUtc": "2026-06-19T22:04:29.866Z",
-      "tickersFeatured": [],
-      "topicCategory": "TAX_ACCT",
-      "hookFormulaId": "COHORT_TRUTH",
-      "ctaId": "share_use_case",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "SANKEY_DIAGRAM",
-        "TRADER_DESK_SILHOUETTE",
-        "RADAR_CHART",
-        "CROWD_PANIC",
-        "CANDLESTICK_CHART",
-        "NEON_TERMINAL",
-        "HEATMAP_GRID"
-      ],
-      "coverVisualStyle": "SANKEY_DIAGRAM",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "quiet_boomer_landlord"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0E0B08",
-        "primaryText": "#F5EFE6",
-        "accent1": "#E8C9A0",
-        "accent2": "#C9A227"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "CRYPTO",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "EVERGREEN_OR_TIMELY",
-      "visualPlan": {
-        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:ANNOTATED_CHART:82208646",
-        "structureFamily": "PREMIUM_LIFESTYLE",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "TOP_STACK",
-        "sceneConceptIds": [
-          "PREMIUM_LIFESTYLE:SANKEY_DIAGRAM:top:RISK_MATRIX",
-          "PREMIUM_LIFESTYLE:TRADER_DESK_SILHOUETTE:top:SOURCE_DOCUMENT",
-          "PREMIUM_LIFESTYLE:RADAR_CHART:background:SOURCE_DOCUMENT",
-          "PREMIUM_LIFESTYLE:CROWD_PANIC:top:SOURCE_DOCUMENT",
-          "PREMIUM_LIFESTYLE:CANDLESTICK_CHART:background:SOURCE_DOCUMENT",
-          "PREMIUM_LIFESTYLE:NEON_TERMINAL:top:SOURCE_DOCUMENT",
-          "PREMIUM_LIFESTYLE:HEATMAP_GRID:background:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "SEND_TO_FRIEND:HEATMAP_GRID",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-TOP_STACK",
-            "primaryEncoding": "sankey",
-            "visualStyle": "SANKEY_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:SANKEY_DIAGRAM:top:RISK_MATRIX",
-            "promptFingerprint": "pf_ubvr89"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "TRADER_DESK_SILHOUETTE",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:TRADER_DESK_SILHOUETTE:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_r9rkch"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "radar",
-            "visualStyle": "RADAR_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:RADAR_CHART:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_fwip1y"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CROWD_PANIC",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CROWD",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:CROWD_PANIC:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_wk5nkp"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "candlestick",
-            "visualStyle": "CANDLESTICK_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:CANDLESTICK_CHART:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_a7bj3b"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "terminal",
-            "visualStyle": "NEON_TERMINAL",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:NEON_TERMINAL:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_37v7mk"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "heatmap",
-            "visualStyle": "HEATMAP_GRID",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:HEATMAP_GRID:background:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_bv44v8"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-19",
       "topic": "U.S. Market Close: How the Dow Jones (^DJI) Performed Today: The 5-Question Risk Filter",
       "hook": "\"Market dips are financial crises\" is wrong. Here is why",
       "format": "WATCHLIST_EDUCATION",
@@ -37861,6 +37704,152 @@
             "motifTag": "NONE",
             "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_f6d20"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-02",
+      "topic": "The Nvidia (NVDA) Risk Map: The 1 Major Metric Nobody Is Talking About",
+      "hook": "The number nobody mentions about Nvidia",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 6,
+      "keywords": [
+        "Nvidia stock",
+        "NVDA risk",
+        "AI semiconductor market",
+        "risk management"
+      ],
+      "visualSignature": "2026-08-02-30753219279",
+      "schemaVersion": 4,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-08-02T14:58:20.792Z",
+      "tickersFeatured": [
+        "AMZN",
+        "META",
+        "GOOGL"
+      ],
+      "topicCategory": "EARNINGS",
+      "hookFormulaId": "QUIET_NUMBER",
+      "ctaId": "swipe_promise",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "ARCHITECTURAL_OVERLAY",
+        "CANDLESTICK_HERO",
+        "GLOWING_QUOTE",
+        "COMPARISON_TABLE",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "PRICE_TIMELINE_ANNOTATED"
+      ],
+      "coverVisualStyle": "ARCHITECTURAL_OVERLAY",
+      "portraitSubjects": [
+        "andy_jassy"
+      ],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00CFFF",
+        "accent2": "#FFB000"
+      },
+      "dominantSubjectClass": "BUILDING",
+      "topicFamily": "SINGLE_STOCK",
+      "sourceTier": "REPUTABLE_PRESS",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:NEWS_FLASH:CINEMATIC_SCENE:1793656750",
+        "structureFamily": "NEWS_FLASH",
+        "coverMechanism": "CINEMATIC_SCENE",
+        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
+        "sceneConceptIds": [
+          "NEWS_FLASH:ARCHITECTURAL_OVERLAY:background:RISK_MATRIX",
+          "NEWS_FLASH:CANDLESTICK_HERO:background:STORE_SCENE",
+          "NEWS_FLASH:GLOWING_QUOTE:center:EARNINGS_TABLE",
+          "NEWS_FLASH:COMPARISON_TABLE:left:EARNINGS_TABLE",
+          "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:EARNINGS_TABLE",
+          "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "MOTIF_CALLBACK:PRICE_TIMELINE_ANNOTATED",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "background",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:ARCHITECTURAL_OVERLAY:background:RISK_MATRIX",
+            "promptFingerprint": "pf_upt648"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:CANDLESTICK_HERO:background:STORE_SCENE",
+            "promptFingerprint": "pf_o2gg4y"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "pull-quote",
+            "visualStyle": "GLOWING_QUOTE",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:GLOWING_QUOTE:center:EARNINGS_TABLE",
+            "promptFingerprint": "pf_bugv5o"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:COMPARISON_TABLE:left:EARNINGS_TABLE",
+            "promptFingerprint": "pf_4uods1"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:EARNINGS_TABLE",
+            "promptFingerprint": "pf_n6az5m"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_yei020"
           }
         ]
       }
