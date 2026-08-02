@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-06-20",
-      "topic": "PayPal at 8x Earnings: The 5-Question Value Trap Checklist for Turnaround Stocks",
-      "hook": "PayPal is at 8x earnings. Should you care?",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
-      "slideCount": 6,
-      "keywords": [
-        "PayPal stock analysis",
-        "PYPL valuation",
-        "how to spot a value trap",
-        "turnaround investing strategy"
-      ],
-      "visualSignature": "2026-06-20-27875906017",
-      "schemaVersion": 4,
-      "slotIndex": 1,
-      "postedAtUtc": "2026-06-20T15:44:23.939Z",
-      "tickersFeatured": [],
-      "topicCategory": "EARNINGS",
-      "hookFormulaId": "QUIET_NUMBER",
-      "ctaId": "swipe_promise",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "PRICE_TIMELINE_ANNOTATED",
-        "EDITORIAL_SPLIT_LAYOUT",
-        "LINE_CHART",
-        "MINIMALIST_CHECKLIST",
-        "DONUT_CHART",
-        "EDITORIAL_STAT_CARD"
-      ],
-      "coverVisualStyle": "PRICE_TIMELINE_ANNOTATED",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "female_quant_30s"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0B0F14",
-        "primaryText": "#FFFFFF",
-        "accent1": "#00CFFF",
-        "accent2": "#FFB000"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "SINGLE_STOCK",
-      "sourceTier": "AGGREGATED",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:NEWS_FLASH:ANNOTATED_CHART:2022520105",
-        "structureFamily": "NEWS_FLASH",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "DASHBOARD_FILL",
-        "sceneConceptIds": [
-          "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:EARNINGS_TABLE",
-          "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:PRICE_CHART",
-          "NEWS_FLASH:LINE_CHART:background:SOURCE_DOCUMENT",
-          "NEWS_FLASH:MINIMALIST_CHECKLIST:left:PRODUCT_DETAIL",
-          "NEWS_FLASH:DONUT_CHART:background:RISK_MATRIX",
-          "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "MOTIF_CALLBACK:EDITORIAL_STAT_CARD",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-DASHBOARD_FILL",
-            "primaryEncoding": "annotated-timeline",
-            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:EARNINGS_TABLE",
-            "promptFingerprint": "pf_l5ufz"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "editorial-split",
-            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:PRICE_CHART",
-            "promptFingerprint": "pf_4ssxr7"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "line",
-            "visualStyle": "LINE_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:LINE_CHART:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_sbke4a"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "checklist",
-            "visualStyle": "MINIMALIST_CHECKLIST",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:MINIMALIST_CHECKLIST:left:PRODUCT_DETAIL",
-            "promptFingerprint": "pf_o3pljw"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "donut",
-            "visualStyle": "DONUT_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:DONUT_CHART:background:RISK_MATRIX",
-            "promptFingerprint": "pf_j6yskn"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "stat-card",
-            "visualStyle": "EDITORIAL_STAT_CARD",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_kcw5x4"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-20",
       "topic": "The $6.5 Million Early Retirement Equation: 4 Things to Calculate First",
       "hook": "What a $6.5M retiree actually owns",
       "format": "CAROUSEL",
@@ -37852,6 +37710,148 @@
             "motifTag": "NONE",
             "sceneConceptId": "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_ajlcjc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-02",
+      "topic": "Cardano Heat Check: What's Behind the Crypto Move and the Risks",
+      "hook": "If you buy altcoins, do this 1 thing first",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "Cardano price analysis",
+        "altcoin trading rules",
+        "on chain metrics",
+        "crypto risk management"
+      ],
+      "visualSignature": "2026-08-02-30763004388",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-08-02T19:19:26.117Z",
+      "tickersFeatured": [],
+      "topicCategory": "CRYPTO",
+      "hookFormulaId": "QUIET_COMPOUNDER",
+      "ctaId": "save_specific",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "EARNINGS_CARD",
+        "LUXURY_LIFESTYLE",
+        "DONUT_CHART",
+        "CARICATURE_PORTRAIT",
+        "MAP_DATA_OVERLAY",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "EARNINGS_CARD",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "young_retail_trader"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#FFFFFF",
+        "primaryText": "#0F172A",
+        "accent1": "#0E7C66",
+        "accent2": "#475569"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CRYPTO",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:HERO_NUMBER:899032361",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "HERO_NUMBER",
+        "coverLayoutFamily": "HERO_NUMBER",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:EARNINGS_CARD:center:EARNINGS_TABLE",
+          "COMPARISON_XRAY:LUXURY_LIFESTYLE:top:RISK_MATRIX",
+          "COMPARISON_XRAY:DONUT_CHART:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:RISK_MATRIX",
+          "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SAVE_CARD:MAGAZINE_COVER",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-HERO_NUMBER",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:EARNINGS_CARD:center:EARNINGS_TABLE",
+            "promptFingerprint": "pf_qrd9rz"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "COMPARISON_XRAY:LUXURY_LIFESTYLE:top:RISK_MATRIX",
+            "promptFingerprint": "pf_mcfrul"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:DONUT_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_cyoj8t"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_dfgiy9"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "choropleth",
+            "visualStyle": "MAP_DATA_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:RISK_MATRIX",
+            "promptFingerprint": "pf_uhe1b2"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_976iqh"
           }
         ]
       }
