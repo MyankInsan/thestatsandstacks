@@ -2,133 +2,6 @@
   "schemaVersion": 4,
   "entries": [
     {
-      "date": "2026-06-20",
-      "topic": "S&P 500 Near a 5-Year High: 5 Portfolio Rules for Investors (^GSPC) AI Trade Case Study: Signal, Risk, Watchlist",
-      "hook": "Waiting for a market crash is wrong. Here is why",
-      "format": "CAROUSEL",
-      "formatType": "MEME_HUMOR",
-      "slideCount": 5,
-      "keywords": [
-        "S&P 500 all time high",
-        "market timing strategy",
-        "dollar cost averaging vs lump sum",
-        "index fund investing rules"
-      ],
-      "visualSignature": "2026-06-20-27886734722",
-      "schemaVersion": 4,
-      "slotIndex": 6,
-      "postedAtUtc": "2026-06-20T23:16:51.901Z",
-      "tickersFeatured": [],
-      "topicCategory": "BEHAVIORAL",
-      "hookFormulaId": "MYTH_STRIKE",
-      "ctaId": "comment_genuine_question",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "BAR_CHART_HORIZONTAL",
-        "REDDIT_POST_SCREENSHOT",
-        "SANKEY_DIAGRAM",
-        "EXPERT_CUTOUT",
-        "HEATMAP_GRID"
-      ],
-      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "retiree_with_charts"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0E0B08",
-        "primaryText": "#FFF7E6",
-        "accent1": "#FFB000",
-        "accent2": "#FF3B30"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "INDEX_MOVE",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:ANNOTATED_CHART:733698483",
-        "structureFamily": "EDITORIAL_MYTH_BUST",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "TOP_STACK",
-        "sceneConceptIds": [
-          "EDITORIAL_MYTH_BUST:BAR_CHART_HORIZONTAL:top:RISK_MATRIX",
-          "EDITORIAL_MYTH_BUST:REDDIT_POST_SCREENSHOT:center:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:SANKEY_DIAGRAM:background:PRICE_CHART",
-          "EDITORIAL_MYTH_BUST:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:HEATMAP_GRID:background:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "QUESTION_CARD:HEATMAP_GRID",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-TOP_STACK",
-            "primaryEncoding": "bar",
-            "visualStyle": "BAR_CHART_HORIZONTAL",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:BAR_CHART_HORIZONTAL:top:RISK_MATRIX",
-            "promptFingerprint": "pf_8cujha"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "social-mock",
-            "visualStyle": "REDDIT_POST_SCREENSHOT",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:REDDIT_POST_SCREENSHOT:center:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_xcsy74"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "sankey",
-            "visualStyle": "SANKEY_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:SANKEY_DIAGRAM:background:PRICE_CHART",
-            "promptFingerprint": "pf_wwgxyz"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EXPERT_CUTOUT",
-            "bucket": "Human",
-            "visualPosition": "left",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_jcvgwx"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "heatmap",
-            "visualStyle": "HEATMAP_GRID",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:HEATMAP_GRID:background:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_pexdey"
-          }
-        ]
-      }
-    },
-    {
       "date": "2026-06-21",
       "topic": "Who actually owns Nvidia (NVDA)?",
       "hook": "Who actually owns Nvidia?",
@@ -37853,6 +37726,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_9mg9r3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-03",
+      "topic": "SpaceX's Public Earnings Debut: A Financial Breakdown of What to Watch",
+      "hook": "I pulled SpaceX's financial filing. Here's what's in it",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 7,
+      "keywords": [
+        "SpaceX earnings report",
+        "SpaceX financials",
+        "SpaceX balance sheet",
+        "Starlink IPO"
+      ],
+      "visualSignature": "2026-08-03-30837047587",
+      "schemaVersion": 4,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-08-03T17:36:30.341Z",
+      "tickersFeatured": [],
+      "topicCategory": "EARNINGS",
+      "hookFormulaId": "RECEIPT_DROP",
+      "ctaId": "comment_genuine_question",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "LINE_CHART",
+        "CORPORATE_OFFICE_SPACE",
+        "DONUT_CHART",
+        "CARICATURE_PORTRAIT",
+        "AREA_CHART",
+        "EXPERT_CUTOUT",
+        "MINIMALIST_CHECKLIST"
+      ],
+      "coverVisualStyle": "LINE_CHART",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_quant_30s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFB000",
+        "accent2": "#00CFFF"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "IPO",
+      "sourceTier": "AGGREGATED",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:459990510",
+        "structureFamily": "DATA_SNAPSHOT",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "DATA_SNAPSHOT:LINE_CHART:background:EARNINGS_TABLE",
+          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:FILING_EXCERPT",
+          "DATA_SNAPSHOT:DONUT_CHART:background:EARNINGS_TABLE",
+          "DATA_SNAPSHOT:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:AREA_CHART:background:RISK_MATRIX",
+          "DATA_SNAPSHOT:EXPERT_CUTOUT:left:FILING_EXCERPT",
+          "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "QUESTION_CARD:MINIMALIST_CHECKLIST",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "line",
+            "visualStyle": "LINE_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:LINE_CHART:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_rfvryb"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "architecture",
+            "visualStyle": "CORPORATE_OFFICE_SPACE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_9lrwnk"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:DONUT_CHART:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_j7f0i6"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_hezet0"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "area",
+            "visualStyle": "AREA_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:AREA_CHART:background:RISK_MATRIX",
+            "promptFingerprint": "pf_9aft52"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EXPERT_CUTOUT",
+            "bucket": "Human",
+            "visualPosition": "left",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:EXPERT_CUTOUT:left:FILING_EXCERPT",
+            "promptFingerprint": "pf_77l5ez"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "checklist",
+            "visualStyle": "MINIMALIST_CHECKLIST",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_1is2o1"
           }
         ]
       }
