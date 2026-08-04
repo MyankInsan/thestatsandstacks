@@ -2,148 +2,6 @@
   "schemaVersion": 4,
   "entries": [
     {
-      "date": "2026-06-21",
-      "topic": "If You Invested $10,000 in NVIDIA 5 Years Ago",
-      "hook": "What $10k in NVDA looks like today.",
-      "format": "CAROUSEL",
-      "formatType": "MEME_HUMOR",
-      "slideCount": 6,
-      "keywords": [
-        "CoreWeave Nasdaq 100",
-        "index rebalancing",
-        "Nasdaq ETF buying",
-        "tech stock catalysts"
-      ],
-      "visualSignature": "2026-06-21-27920562384",
-      "schemaVersion": 4,
-      "slotIndex": 6,
-      "postedAtUtc": "2026-06-21T23:19:18.219Z",
-      "tickersFeatured": [],
-      "topicCategory": "BEHAVIORAL",
-      "hookFormulaId": "REVERSE_SURVIVORSHIP",
-      "ctaId": "comment_genuine_question",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "CARICATURE_PORTRAIT",
-        "REDDIT_POST_SCREENSHOT",
-        "TWEET_STOCK_CHART_SPLIT",
-        "NEON_TERMINAL",
-        "SANKEY_DIAGRAM",
-        "MAGAZINE_COVER"
-      ],
-      "coverVisualStyle": "CARICATURE_PORTRAIT",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "silver_haired_pm"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0A0A0A",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF2E93",
-        "accent2": "#00CFFF"
-      },
-      "dominantSubjectClass": "PORTRAIT",
-      "topicFamily": "HYPOTHETICAL_RETURN",
-      "sourceTier": "REPUTABLE_PRESS",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:EDITORIAL_PORTRAIT:1662505968",
-        "structureFamily": "EDITORIAL_MYTH_BUST",
-        "coverMechanism": "EDITORIAL_PORTRAIT",
-        "coverLayoutFamily": "SPLIT_EDITORIAL",
-        "sceneConceptIds": [
-          "EDITORIAL_MYTH_BUST:CARICATURE_PORTRAIT:left:PRICE_CHART",
-          "EDITORIAL_MYTH_BUST:REDDIT_POST_SCREENSHOT:center:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:TWEET_STOCK_CHART_SPLIT:background:PRICE_CHART",
-          "EDITORIAL_MYTH_BUST:NEON_TERMINAL:top:PRICE_CHART",
-          "EDITORIAL_MYTH_BUST:SANKEY_DIAGRAM:background:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "QUESTION_CARD:MAGAZINE_COVER",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-SPLIT_EDITORIAL",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CARICATURE_PORTRAIT",
-            "bucket": "Human",
-            "visualPosition": "left",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:CARICATURE_PORTRAIT:left:PRICE_CHART",
-            "promptFingerprint": "pf_230j7h"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "social-mock",
-            "visualStyle": "REDDIT_POST_SCREENSHOT",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:REDDIT_POST_SCREENSHOT:center:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_5ymbml"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "social-chart-split",
-            "visualStyle": "TWEET_STOCK_CHART_SPLIT",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:TWEET_STOCK_CHART_SPLIT:background:PRICE_CHART",
-            "promptFingerprint": "pf_owbk1c"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "terminal",
-            "visualStyle": "NEON_TERMINAL",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:NEON_TERMINAL:top:PRICE_CHART",
-            "promptFingerprint": "pf_8r0xbk"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "sankey",
-            "visualStyle": "SANKEY_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:SANKEY_DIAGRAM:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_smrs6s"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "magazine",
-            "visualStyle": "MAGAZINE_COVER",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_k221xg"
-          }
-        ]
-      }
-    },
-    {
       "date": "2026-06-22",
       "topic": "The Big Tech Rotation: Why the Nasdaq is Slipping While the Dow Climbs",
       "hook": "The number nobody mentions about the Nasdaq.",
@@ -37913,6 +37771,148 @@
             "motifTag": "NONE",
             "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_2j33d1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-04",
+      "topic": "Micron Technology, Inc. (MU) AI Trade Case Study: Signal, Risk, Watchlist",
+      "hook": "MU is up YTD. Should you care?",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 6,
+      "keywords": [
+        "MU news",
+        "Micron Technology earnings",
+        "High Bandwidth Memory cycle",
+        "AI hardware stocks"
+      ],
+      "visualSignature": "2026-08-04-30927688124",
+      "schemaVersion": 4,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-08-04T16:18:02.231Z",
+      "tickersFeatured": [],
+      "topicCategory": "EARNINGS",
+      "hookFormulaId": "QUIET_NUMBER",
+      "ctaId": "swipe_promise",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "BAR_CHART_HORIZONTAL",
+        "ARCHITECTURAL_OVERLAY",
+        "TICKER_TAPE_HERO",
+        "MINIMALIST_CHECKLIST",
+        "PRICE_TIMELINE_ANNOTATED",
+        "EDITORIAL_STAT_CARD"
+      ],
+      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_quant_30s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFFFFF"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "SINGLE_STOCK",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:NEWS_FLASH:ANNOTATED_CHART:1662990638",
+        "structureFamily": "NEWS_FLASH",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "NEWS_FLASH:BAR_CHART_HORIZONTAL:background:EARNINGS_TABLE",
+          "NEWS_FLASH:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
+          "NEWS_FLASH:TICKER_TAPE_HERO:background:RISK_MATRIX",
+          "NEWS_FLASH:MINIMALIST_CHECKLIST:left:SOURCE_DOCUMENT",
+          "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:PRICE_CHART",
+          "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "MOTIF_CALLBACK:EDITORIAL_STAT_CARD",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "bar",
+            "visualStyle": "BAR_CHART_HORIZONTAL",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:BAR_CHART_HORIZONTAL:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_rb465y"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
+            "promptFingerprint": "pf_kuq6qp"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "ticker-tape",
+            "visualStyle": "TICKER_TAPE_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:TICKER_TAPE_HERO:background:RISK_MATRIX",
+            "promptFingerprint": "pf_b3e3zj"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "checklist",
+            "visualStyle": "MINIMALIST_CHECKLIST",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:MINIMALIST_CHECKLIST:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_7au4tv"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:PRICE_CHART",
+            "promptFingerprint": "pf_9hypo"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "stat-card",
+            "visualStyle": "EDITORIAL_STAT_CARD",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_kkn6vi"
           }
         ]
       }
