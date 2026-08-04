@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-06-22",
-      "topic": "Micron & Western Digital Heat Check: The 4-Step Semiconductor Cycle Audit",
-      "hook": "If you trade semiconductor stocks, do this first",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
-      "slideCount": 6,
-      "keywords": [
-        "Semiconductor cycle investing",
-        "Micron stock analysis",
-        "Cyclical stock valuation",
-        "How to analyze chip stocks"
-      ],
-      "visualSignature": "2026-06-22-27983301015",
-      "schemaVersion": 4,
-      "slotIndex": 3,
-      "postedAtUtc": "2026-06-22T21:02:14.950Z",
-      "tickersFeatured": [],
-      "topicCategory": "HOW_TO",
-      "hookFormulaId": "IF_THEN_LADDER",
-      "ctaId": "reference_save",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "SANKEY_DIAGRAM",
-        "CORPORATE_OFFICE_SPACE",
-        "MINIMALIST_CHECKLIST",
-        "TICKER_TAPE_HERO",
-        "LUXURY_LIFESTYLE",
-        "MAGAZINE_COVER"
-      ],
-      "coverVisualStyle": "SANKEY_DIAGRAM",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "boomer_diy_investor"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0B0F14",
-        "primaryText": "#FFFFFF",
-        "accent1": "#00E0A4",
-        "accent2": "#FF6B6B"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "SINGLE_STOCK",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:304220748",
-        "structureFamily": "DATA_SNAPSHOT",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
-        "sceneConceptIds": [
-          "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:PRICE_CHART",
-          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:EARNINGS_TABLE",
-          "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:PRODUCT_DETAIL",
-          "DATA_SNAPSHOT:TICKER_TAPE_HERO:background:PRICE_CHART",
-          "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:PRICE_CHART",
-          "DATA_SNAPSHOT:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "CHECKLIST_RECEIPT:MAGAZINE_COVER",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
-            "primaryEncoding": "sankey",
-            "visualStyle": "SANKEY_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:PRICE_CHART",
-            "promptFingerprint": "pf_1xks20"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "architecture",
-            "visualStyle": "CORPORATE_OFFICE_SPACE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:EARNINGS_TABLE",
-            "promptFingerprint": "pf_xeamz0"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "checklist",
-            "visualStyle": "MINIMALIST_CHECKLIST",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:PRODUCT_DETAIL",
-            "promptFingerprint": "pf_3anm16"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "ticker-tape",
-            "visualStyle": "TICKER_TAPE_HERO",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:TICKER_TAPE_HERO:background:PRICE_CHART",
-            "promptFingerprint": "pf_npe1fu"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "LUXURY_LIFESTYLE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "JET_LUXURY",
-            "sceneConceptId": "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:PRICE_CHART",
-            "promptFingerprint": "pf_df8q6l"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "magazine",
-            "visualStyle": "MAGAZINE_COVER",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_yg6bd0"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-22",
       "topic": "Alphabet Talent Risk Check: The 4-Question Key Employee Risk Filter",
       "hook": "The 'permanent tech moat' is wrong. Here is why.",
       "format": "WATCHLIST_EDUCATION",
@@ -37913,6 +37771,146 @@
             "motifTag": "NONE",
             "sceneConceptId": "COMPARISON_XRAY:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_z86z4n"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-04",
+      "topic": "If You Invested $10,000 in NVIDIA 5 Years Ago",
+      "hook": "What $10k in NVDA looks like today.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "S&P 500 close",
+        "market recap"
+      ],
+      "visualSignature": "2026-08-04-30951579961",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-08-04T21:23:18.560Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "REVERSE_SURVIVORSHIP",
+      "ctaId": "share_use_case",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "SANKEY_DIAGRAM",
+        "TRADER_DESK_SILHOUETTE",
+        "RADAR_CHART",
+        "CROWD_PANIC",
+        "AREA_CHART",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "SANKEY_DIAGRAM",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "boomer_diy_investor"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "HYPOTHETICAL_RETURN",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:46008742",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "TOP_STACK",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:SANKEY_DIAGRAM:top:PRICE_CHART",
+          "HUMAN_EDITORIAL:TRADER_DESK_SILHOUETTE:top:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:RADAR_CHART:background:PRICE_CHART",
+          "HUMAN_EDITORIAL:CROWD_PANIC:top:PRICE_CHART",
+          "HUMAN_EDITORIAL:AREA_CHART:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:MAGAZINE_COVER",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-TOP_STACK",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:SANKEY_DIAGRAM:top:PRICE_CHART",
+            "promptFingerprint": "pf_1lqlnk"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "TRADER_DESK_SILHOUETTE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TRADER_DESK_SILHOUETTE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_o2htqt"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:RADAR_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_ch7fd5"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CROWD_PANIC:top:PRICE_CHART",
+            "promptFingerprint": "pf_fsmmul"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "area",
+            "visualStyle": "AREA_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:AREA_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_pudqjh"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_epp0hk"
           }
         ]
       }
