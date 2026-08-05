@@ -3,163 +3,6 @@
   "entries": [
     {
       "date": "2026-06-23",
-      "topic": "Finfluencer Red Flags: 7 Phrases Investors Should Pause On",
-      "hook": "Good finance content does not need pressure.",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 7,
-      "keywords": [
-        "finfluencer red flags",
-        "investment scams social media",
-        "investing risk"
-      ],
-      "visualSignature": "2026-06-23-28045264538",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-06-23T17:51:18.534Z",
-      "tickersFeatured": [],
-      "topicCategory": "BEHAVIORAL",
-      "hookFormulaId": "PATTERN_SPOT",
-      "ctaId": "save_specific",
-      "angleId": "CAP_TABLE_INSTITUTIONAL",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "CARICATURE_PORTRAIT",
-        "EARNINGS_CARD",
-        "MINIMALIST_CHECKLIST",
-        "EDITORIAL_REACTION_CARICATURE",
-        "LINE_CHART",
-        "LUXURY_LIFESTYLE",
-        "EDITORIAL_STAT_CARD"
-      ],
-      "coverVisualStyle": "CARICATURE_PORTRAIT",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "retiree_with_charts"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0B0F14",
-        "primaryText": "#FFFFFF",
-        "accent1": "#00CFFF",
-        "accent2": "#FFD700"
-      },
-      "dominantSubjectClass": "PORTRAIT",
-      "topicFamily": "INVESTOR_PROTECTION",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:HUMAN_EDITORIAL:EDITORIAL_PORTRAIT:1977994833",
-        "structureFamily": "HUMAN_EDITORIAL",
-        "coverMechanism": "EDITORIAL_PORTRAIT",
-        "coverLayoutFamily": "SPLIT_EDITORIAL",
-        "sceneConceptIds": [
-          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:left:RISK_MATRIX",
-          "HUMAN_EDITORIAL:EARNINGS_CARD:center:PRICE_CHART",
-          "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:SOURCE_DOCUMENT",
-          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:LINE_CHART:background:PRICE_CHART",
-          "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
-          "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "SAVE_CARD:EDITORIAL_STAT_CARD",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-SPLIT_EDITORIAL",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CARICATURE_PORTRAIT",
-            "bucket": "Human",
-            "visualPosition": "left",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:left:RISK_MATRIX",
-            "promptFingerprint": "pf_1h6zz6"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "metric-card",
-            "visualStyle": "EARNINGS_CARD",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:PRICE_CHART",
-            "promptFingerprint": "pf_9nxvi0"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "checklist",
-            "visualStyle": "MINIMALIST_CHECKLIST",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_i1o2jz"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:FILING_EXCERPT",
-            "promptFingerprint": "pf_ce36ac"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "line",
-            "visualStyle": "LINE_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:LINE_CHART:background:PRICE_CHART",
-            "promptFingerprint": "pf_lky1s9"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "LUXURY_LIFESTYLE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "JET_LUXURY",
-            "sceneConceptId": "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_gc6c8x"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "stat-card",
-            "visualStyle": "EDITORIAL_STAT_CARD",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_q9ko3d"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-23",
       "topic": "TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?",
       "hook": "Most Canadians pick the wrong account first.",
       "format": "CAROUSEL",
@@ -37927,6 +37770,147 @@
             "motifTag": "NONE",
             "sceneConceptId": "DATA_SNAPSHOT:TYPOGRAPHIC_MEGA_NUMBER:center:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_udfash"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-05",
+      "topic": "The 10-Minute Portfolio Check Before You Invest Another Dollar",
+      "hook": "If you have cash, do this 1 thing first",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "portfolio checklist",
+        "investing routine",
+        "how to review assets"
+      ],
+      "visualSignature": "2026-08-05-31040570101",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-08-05T19:49:28.811Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "COMPARISON_LADDER",
+      "ctaId": "save_specific",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "CAP_TABLE_GRID",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "DONUT_CHART",
+        "CARICATURE_PORTRAIT",
+        "POSITION_CONCENTRATION_TREEMAP",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "CAP_TABLE_GRID",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "retiree_with_charts"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#FFFFFF",
+        "primaryText": "#0F172A",
+        "accent1": "#0E7C66",
+        "accent2": "#475569"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "GENERAL",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:DOCUMENT_RECEIPT:389023186",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:CAP_TABLE_GRID:center:PRICE_CHART",
+          "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:RISK_MATRIX",
+          "COMPARISON_XRAY:DONUT_CHART:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:CARICATURE_PORTRAIT:top:PRICE_CHART",
+          "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SAVE_CARD:MAGAZINE_COVER",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CAP_TABLE_GRID:center:PRICE_CHART",
+            "promptFingerprint": "pf_9mjxwo"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:RISK_MATRIX",
+            "promptFingerprint": "pf_xk9stl"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:DONUT_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_wpfsus"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CARICATURE_PORTRAIT:top:PRICE_CHART",
+            "promptFingerprint": "pf_ro2lgn"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "treemap",
+            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_6iiyfj"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_xhds5l"
           }
         ]
       }
