@@ -3,163 +3,6 @@
   "entries": [
     {
       "date": "2026-06-23",
-      "topic": "Credit Score Myths Canadians Still Believe",
-      "hook": "Some credit advice is just noise.",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
-      "slideCount": 7,
-      "keywords": [
-        "Coca Cola IRS tax dispute",
-        "corporate litigation risk",
-        "contingent liabilities 10K",
-        "blue chip dividend risk"
-      ],
-      "visualSignature": "2026-06-23-28059234452",
-      "schemaVersion": 4,
-      "slotIndex": 4,
-      "postedAtUtc": "2026-06-23T21:52:48.884Z",
-      "tickersFeatured": [],
-      "topicCategory": "MACRO",
-      "hookFormulaId": "REVERSE_SURVIVORSHIP",
-      "ctaId": "question_open",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "POSITION_CONCENTRATION_TREEMAP",
-        "CROWD_PANIC",
-        "MACRO_FLOW_DIAGRAM",
-        "NEON_TERMINAL",
-        "PRICE_TIMELINE_ANNOTATED",
-        "MAGAZINE_COVER",
-        "MAP_DATA_OVERLAY"
-      ],
-      "coverVisualStyle": "POSITION_CONCENTRATION_TREEMAP",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "seasoned_canadian_banker"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#FFFFFF",
-        "primaryText": "#0F172A",
-        "accent1": "#0E7C66",
-        "accent2": "#475569"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "CREDIT",
-      "sourceTier": "REPUTABLE_PRESS",
-      "topicMode": "EVERGREEN_OR_TIMELY",
-      "visualPlan": {
-        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:1459009353",
-        "structureFamily": "COMPARISON_XRAY",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "DOCUMENT_RECEIPT",
-        "sceneConceptIds": [
-          "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:center:RISK_MATRIX",
-          "COMPARISON_XRAY:CROWD_PANIC:top:SOURCE_DOCUMENT",
-          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
-          "COMPARISON_XRAY:NEON_TERMINAL:top:SOURCE_DOCUMENT",
-          "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:SOURCE_DOCUMENT",
-          "COMPARISON_XRAY:MAGAZINE_COVER:top:SOURCE_DOCUMENT",
-          "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "TWO_OPTION_PROMPT:MAP_DATA_OVERLAY",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
-            "primaryEncoding": "treemap",
-            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:POSITION_CONCENTRATION_TREEMAP:center:RISK_MATRIX",
-            "promptFingerprint": "pf_gkxroc"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CROWD_PANIC",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CROWD",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_t0t0aw"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "flow",
-            "visualStyle": "MACRO_FLOW_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_6qaels"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "terminal",
-            "visualStyle": "NEON_TERMINAL",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:NEON_TERMINAL:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_r5zmva"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "annotated-timeline",
-            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_s2e9fb"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "magazine",
-            "visualStyle": "MAGAZINE_COVER",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_a89wx7"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "choropleth",
-            "visualStyle": "MAP_DATA_OVERLAY",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_lua4v6"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-23",
       "topic": "If You Invested $10,000 in NVIDIA 5 Years Ago",
       "hook": "What $10k in NVDA looks like today.",
       "format": "CAROUSEL",
@@ -37895,6 +37738,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "HUMAN_EDITORIAL:CANDLESTICK_PATTERN_ANNOTATED:background:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_1bhee9"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-05",
+      "topic": "TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?",
+      "hook": "Most Canadians pick the wrong account first.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 7,
+      "keywords": [
+        "TFSA vs RRSP",
+        "FHSA Canada",
+        "Canadian investing"
+      ],
+      "visualSignature": "2026-08-05-31051240056",
+      "schemaVersion": 4,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-08-05T22:11:24.697Z",
+      "tickersFeatured": [],
+      "topicCategory": "TAX_ACCT",
+      "hookFormulaId": "TIME_CAPSULE",
+      "ctaId": "reference_save",
+      "angleId": "HYPOTHETICAL_REVERSAL",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "SANKEY_DIAGRAM",
+        "EXPERT_CUTOUT",
+        "RADAR_CHART",
+        "EDITORIAL_REACTION_CARICATURE",
+        "TRADING_DESK_OVERLAY",
+        "REDDIT_POST_SCREENSHOT",
+        "INSTITUTIONAL_FLOW_SANKEY"
+      ],
+      "coverVisualStyle": "SANKEY_DIAGRAM",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "seasoned_canadian_banker"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0B0E0C",
+        "primaryText": "#F2F2F0",
+        "accent1": "#7FB08A",
+        "accent2": "#D8C7A0"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "ACCT_COMPARISON",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:ANNOTATED_CHART:2022474022",
+        "structureFamily": "PREMIUM_LIFESTYLE",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "PREMIUM_LIFESTYLE:SANKEY_DIAGRAM:background:RISK_MATRIX",
+          "PREMIUM_LIFESTYLE:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:RADAR_CHART:background:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:TRADING_DESK_OVERLAY:background:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:REDDIT_POST_SCREENSHOT:center:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:INSTITUTIONAL_FLOW_SANKEY:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "CHECKLIST_RECEIPT:INSTITUTIONAL_FLOW_SANKEY",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:SANKEY_DIAGRAM:background:RISK_MATRIX",
+            "promptFingerprint": "pf_8wl6rg"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EXPERT_CUTOUT",
+            "bucket": "Human",
+            "visualPosition": "left",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_rv75nq"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:RADAR_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_x5xxp9"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_ed02m2"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "typography",
+            "visualStyle": "TRADING_DESK_OVERLAY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:TRADING_DESK_OVERLAY:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_9rnvhw"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "social-mock",
+            "visualStyle": "REDDIT_POST_SCREENSHOT",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:REDDIT_POST_SCREENSHOT:center:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_4n04y7"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "INSTITUTIONAL_FLOW_SANKEY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:INSTITUTIONAL_FLOW_SANKEY:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_3c4gd1"
           }
         ]
       }
