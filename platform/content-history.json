@@ -3,162 +3,6 @@
   "entries": [
     {
       "date": "2026-06-24",
-      "topic": "How President Trump's Policies Impact the Tech Sector",
-      "hook": "What the new policies mean for Tech.",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
-      "slideCount": 7,
-      "keywords": [
-        "how to evaluate stocks",
-        "stock watchlist",
-        "investing checklist"
-      ],
-      "visualSignature": "2026-06-24-28130666898",
-      "schemaVersion": 4,
-      "slotIndex": 4,
-      "postedAtUtc": "2026-06-24T21:34:05.120Z",
-      "tickersFeatured": [],
-      "topicCategory": "POLICY",
-      "hookFormulaId": "MYTH_STRIKE",
-      "ctaId": "question_open",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "BAR_CHART_HORIZONTAL",
-        "CROWD_PANIC",
-        "MACRO_FLOW_DIAGRAM",
-        "ARCHITECTURAL_OVERLAY",
-        "PRICE_TIMELINE_ANNOTATED",
-        "NEON_TERMINAL",
-        "MAP_DATA_OVERLAY"
-      ],
-      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
-      "portraitSubjects": [
-        "trump"
-      ],
-      "archetypesUsed": [],
-      "colorSchemeUsed": {
-        "bg": "#F8F9FA",
-        "primaryText": "#111827",
-        "accent1": "#2563EB",
-        "accent2": "#4B5563"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "GENERAL",
-      "sourceTier": "OFFICIAL",
-      "topicMode": "EVERGREEN_OR_TIMELY",
-      "visualPlan": {
-        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:612645958",
-        "structureFamily": "COMPARISON_XRAY",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "INTEGRATED_SCENE",
-        "sceneConceptIds": [
-          "COMPARISON_XRAY:BAR_CHART_HORIZONTAL:background:FILING_EXCERPT",
-          "COMPARISON_XRAY:CROWD_PANIC:top:SOURCE_DOCUMENT",
-          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:EARNINGS_TABLE",
-          "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:EARNINGS_TABLE",
-          "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:RISK_MATRIX",
-          "COMPARISON_XRAY:NEON_TERMINAL:top:EARNINGS_TABLE",
-          "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "TWO_OPTION_PROMPT:MAP_DATA_OVERLAY",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-INTEGRATED_SCENE",
-            "primaryEncoding": "bar",
-            "visualStyle": "BAR_CHART_HORIZONTAL",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:BAR_CHART_HORIZONTAL:background:FILING_EXCERPT",
-            "promptFingerprint": "pf_d4r2iy"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CROWD_PANIC",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CROWD",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_jrohu2"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "flow",
-            "visualStyle": "MACRO_FLOW_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:EARNINGS_TABLE",
-            "promptFingerprint": "pf_h1pfdw"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:EARNINGS_TABLE",
-            "promptFingerprint": "pf_prm14f"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "annotated-timeline",
-            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:RISK_MATRIX",
-            "promptFingerprint": "pf_kgybsg"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "terminal",
-            "visualStyle": "NEON_TERMINAL",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:NEON_TERMINAL:top:EARNINGS_TABLE",
-            "promptFingerprint": "pf_3370jv"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "choropleth",
-            "visualStyle": "MAP_DATA_OVERLAY",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:MAP_DATA_OVERLAY:background:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_k99rwd"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-24",
       "topic": "5 Money Leaks Quietly Keeping Canadians Broke",
       "hook": "These small leaks do the most damage.",
       "format": "CAROUSEL",
@@ -37939,6 +37783,150 @@
             "motifTag": "NONE",
             "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_a1pjnv"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-07",
+      "topic": "Who actually owns Apple? Institutional Cap Table Breakdown",
+      "hook": "Who actually owns Apple?",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "Apple shareholders",
+        "institutional ownership AAPL",
+        "who owns Apple",
+        "Vanguard BlackRock Apple",
+        "Berkshire Hathaway Apple sale"
+      ],
+      "visualSignature": "2026-08-07-31198439337",
+      "schemaVersion": 4,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-08-07T16:39:04.352Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "CAP_TABLE",
+      "ctaId": "save_specific",
+      "angleId": "CAP_TABLE_INSTITUTIONAL",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "CAP_TABLE_GRID",
+        "EXPERT_CUTOUT",
+        "INSTITUTIONAL_FLOW_SANKEY",
+        "CARICATURE_PORTRAIT",
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "EARNINGS_CARD"
+      ],
+      "coverVisualStyle": "CAP_TABLE_GRID",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "immigrant_entrepreneur"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CAP_TABLE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:DOCUMENT_RECEIPT:20400769",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:CAP_TABLE_GRID:center:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:INSTITUTIONAL_FLOW_SANKEY:background:STORE_SCENE",
+          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:EARNINGS_TABLE",
+          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRICE_CHART",
+          "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SAVE_CARD:EARNINGS_CARD",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CAP_TABLE_GRID:center:FILING_EXCERPT",
+            "promptFingerprint": "pf_ivhr89"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EXPERT_CUTOUT",
+            "bucket": "Human",
+            "visualPosition": "left",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:FILING_EXCERPT",
+            "promptFingerprint": "pf_ey1svi"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "INSTITUTIONAL_FLOW_SANKEY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:INSTITUTIONAL_FLOW_SANKEY:background:STORE_SCENE",
+            "promptFingerprint": "pf_j1swa2"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_y9dkve"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "mega-number",
+            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRICE_CHART",
+            "promptFingerprint": "pf_lao2eu"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_womtyu"
           }
         ]
       }
