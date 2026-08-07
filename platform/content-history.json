@@ -3,163 +3,6 @@
   "entries": [
     {
       "date": "2026-06-25",
-      "topic": "Finfluencer Red Flags: 7 Phrases Investors Should Pause On",
-      "hook": "Good finance content does not need pressure.",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
-      "slideCount": 7,
-      "keywords": [
-        "OpenAI IPO",
-        "Anthropic IPO",
-        "AI premium fading",
-        "S-1 filing explained"
-      ],
-      "visualSignature": "2026-06-25-28184433965",
-      "schemaVersion": 4,
-      "slotIndex": 1,
-      "postedAtUtc": "2026-06-25T16:30:37.980Z",
-      "tickersFeatured": [],
-      "topicCategory": "BEHAVIORAL",
-      "hookFormulaId": "CALENDAR_TRIGGER",
-      "ctaId": "swipe_promise",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "ARCHITECTURAL_OVERLAY",
-        "TICKER_TAPE_HERO",
-        "GLOWING_QUOTE",
-        "COMPARISON_TABLE",
-        "EDITORIAL_SPLIT_LAYOUT",
-        "PRICE_TIMELINE_ANNOTATED",
-        "EDITORIAL_STAT_CARD"
-      ],
-      "coverVisualStyle": "ARCHITECTURAL_OVERLAY",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "retiree_with_charts"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#050505",
-        "primaryText": "#FFFFFF",
-        "accent1": "#39FF14",
-        "accent2": "#00CFFF"
-      },
-      "dominantSubjectClass": "BUILDING",
-      "topicFamily": "IPO",
-      "sourceTier": "AGGREGATED",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:NEWS_FLASH:CINEMATIC_SCENE:827852440",
-        "structureFamily": "NEWS_FLASH",
-        "coverMechanism": "CINEMATIC_SCENE",
-        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
-        "sceneConceptIds": [
-          "NEWS_FLASH:ARCHITECTURAL_OVERLAY:background:FILING_EXCERPT",
-          "NEWS_FLASH:TICKER_TAPE_HERO:background:PRICE_CHART",
-          "NEWS_FLASH:GLOWING_QUOTE:center:SOURCE_DOCUMENT",
-          "NEWS_FLASH:COMPARISON_TABLE:left:FILING_EXCERPT",
-          "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:PRICE_CHART",
-          "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:SOURCE_DOCUMENT",
-          "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "MOTIF_CALLBACK:EDITORIAL_STAT_CARD",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "background",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:ARCHITECTURAL_OVERLAY:background:FILING_EXCERPT",
-            "promptFingerprint": "pf_sat9sh"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "ticker-tape",
-            "visualStyle": "TICKER_TAPE_HERO",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:TICKER_TAPE_HERO:background:PRICE_CHART",
-            "promptFingerprint": "pf_6ifgbq"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "pull-quote",
-            "visualStyle": "GLOWING_QUOTE",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:GLOWING_QUOTE:center:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_2jon6d"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "table",
-            "visualStyle": "COMPARISON_TABLE",
-            "bucket": "Data",
-            "visualPosition": "left",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:COMPARISON_TABLE:left:FILING_EXCERPT",
-            "promptFingerprint": "pf_uu5ykb"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "editorial-split",
-            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:PRICE_CHART",
-            "promptFingerprint": "pf_jfjwdm"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "annotated-timeline",
-            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:PRICE_TIMELINE_ANNOTATED:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_eas9ve"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "stat-card",
-            "visualStyle": "EDITORIAL_STAT_CARD",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_wixilu"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-25",
       "topic": "TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?",
       "hook": "Most Canadians pick the wrong account first.",
       "format": "CAROUSEL",
@@ -37929,6 +37772,149 @@
             "motifTag": "NONE",
             "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_6xa3t"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-07",
+      "topic": "If You Invested $10,000 in NVIDIA 5 Years Ago",
+      "hook": "What $10k in NVDA looks like today.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 6,
+      "keywords": [
+        "NVIDIA stock",
+        "if you invested",
+        "compound growth",
+        "tech stocks"
+      ],
+      "visualSignature": "2026-08-07-31220044518",
+      "schemaVersion": 4,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-08-07T21:34:13.175Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "QUIET_COMPOUNDER",
+      "ctaId": "share_use_case",
+      "angleId": "BEHAVIORAL_RECEIPT",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "TWEET_STOCK_CHART_SPLIT",
+        "MEME_COMIC_PLATE",
+        "SATIRICAL_METAPHOR",
+        "FUNNY_COMPARISON",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "TWEET_STOCK_CHART_SPLIT",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "young_retail_trader"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FFFFFF"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "HYPOTHETICAL_RETURN",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:DOCUMENT_RECEIPT:1646406091",
+        "structureFamily": "PREMIUM_LIFESTYLE",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "MOCK_SCREENSHOT",
+        "sceneConceptIds": [
+          "PREMIUM_LIFESTYLE:TWEET_STOCK_CHART_SPLIT:center:PRICE_CHART",
+          "PREMIUM_LIFESTYLE:MEME_COMIC_PLATE:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:SATIRICAL_METAPHOR:top:PRICE_CHART",
+          "PREMIUM_LIFESTYLE:FUNNY_COMPARISON:top:PRICE_CHART",
+          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-MOCK_SCREENSHOT",
+            "primaryEncoding": "social-chart-split",
+            "visualStyle": "TWEET_STOCK_CHART_SPLIT",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:TWEET_STOCK_CHART_SPLIT:center:PRICE_CHART",
+            "promptFingerprint": "pf_1y38bi"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "MEME_COMIC_PLATE",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:MEME_COMIC_PLATE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_pou7r6"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "SATIRICAL_METAPHOR",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:SATIRICAL_METAPHOR:top:PRICE_CHART",
+            "promptFingerprint": "pf_829j9o"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "FUNNY_COMPARISON",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:FUNNY_COMPARISON:top:PRICE_CHART",
+            "promptFingerprint": "pf_kcehty"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_nj9y4b"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_mk8sgx"
           }
         ]
       }
