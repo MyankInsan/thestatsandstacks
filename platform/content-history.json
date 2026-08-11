@@ -3,149 +3,6 @@
   "entries": [
     {
       "date": "2026-06-28",
-      "topic": "Who actually owns Nvidia?",
-      "hook": "Who actually owns Nvidia?",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 6,
-      "keywords": [
-        "Nvidia ownership",
-        "NVDA cap table",
-        "who owns Nvidia",
-        "institutional investors"
-      ],
-      "visualSignature": "2026-06-28-28329312661",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-06-28T16:56:56.456Z",
-      "tickersFeatured": [],
-      "topicCategory": "CAP_TABLE",
-      "hookFormulaId": "CAP_TABLE",
-      "ctaId": "save_specific",
-      "angleId": "CAP_TABLE_INSTITUTIONAL",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "EDITORIAL_REACTION_CARICATURE",
-        "TYPOGRAPHIC_MEGA_NUMBER",
-        "POSITION_CONCENTRATION_TREEMAP",
-        "LUXURY_LIFESTYLE",
-        "EARNINGS_CARD",
-        "MINIMALIST_CHECKLIST"
-      ],
-      "coverVisualStyle": "EDITORIAL_REACTION_CARICATURE",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "silver_haired_pm"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0A0A0A",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FF3B30"
-      },
-      "dominantSubjectClass": "PORTRAIT",
-      "topicFamily": "CAP_TABLE",
-      "sourceTier": "REPUTABLE_PRESS",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:HUMAN_EDITORIAL:EDITORIAL_PORTRAIT:1861808137",
-        "structureFamily": "HUMAN_EDITORIAL",
-        "coverMechanism": "EDITORIAL_PORTRAIT",
-        "coverLayoutFamily": "SPLIT_EDITORIAL",
-        "sceneConceptIds": [
-          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:left:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:POSITION_CONCENTRATION_TREEMAP:background:EXECUTIVE_CONTEXT",
-          "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:EARNINGS_CARD:center:PRICE_CHART",
-          "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "SAVE_CARD:MINIMALIST_CHECKLIST",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-SPLIT_EDITORIAL",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
-            "bucket": "Human",
-            "visualPosition": "left",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:left:EARNINGS_TABLE",
-            "promptFingerprint": "pf_kz4721"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "mega-number",
-            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:FILING_EXCERPT",
-            "promptFingerprint": "pf_dekclp"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "treemap",
-            "visualStyle": "POSITION_CONCENTRATION_TREEMAP",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:POSITION_CONCENTRATION_TREEMAP:background:EXECUTIVE_CONTEXT",
-            "promptFingerprint": "pf_epq9xi"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "LUXURY_LIFESTYLE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "JET_LUXURY",
-            "sceneConceptId": "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top:FILING_EXCERPT",
-            "promptFingerprint": "pf_kv59z9"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "metric-card",
-            "visualStyle": "EARNINGS_CARD",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:PRICE_CHART",
-            "promptFingerprint": "pf_c1m3wq"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "checklist",
-            "visualStyle": "MINIMALIST_CHECKLIST",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_ronyqd"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-28",
       "topic": "Stock Watchlist Rule: 5 Checks Before You Buy Any Stock",
       "hook": "If you buy stocks, run this 5-step filter first",
       "format": "WATCHLIST_EDUCATION",
@@ -37858,6 +37715,148 @@
             "motifTag": "NONE",
             "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_ijkbs2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-11",
+      "topic": "Micron Technology (MU) Heat Check: What the Memory Chip Cycle Shift Actually Means",
+      "hook": "MU is up 593% over 1Y. Should you care?",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
+      "slideCount": 6,
+      "keywords": [
+        "MU stock analysis",
+        "Micron Technology cycle",
+        "semiconductor inventory levels",
+        "DRAM supply demand"
+      ],
+      "visualSignature": "2026-08-11-31503868881",
+      "schemaVersion": 4,
+      "slotIndex": 1,
+      "postedAtUtc": "2026-08-11T14:53:42.414Z",
+      "tickersFeatured": [],
+      "topicCategory": "EARNINGS",
+      "hookFormulaId": "ANTI_FOMO",
+      "ctaId": "follow_authority",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "BAR_CHART_HORIZONTAL",
+        "GLOWING_QUOTE",
+        "COMPARISON_TABLE",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "CANDLESTICK_HERO",
+        "EDITORIAL_STAT_CARD"
+      ],
+      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_cfo_50s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00CFFF",
+        "accent2": "#FFB000"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "SINGLE_STOCK",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:NEWS_FLASH:ANNOTATED_CHART:1717051516",
+        "structureFamily": "NEWS_FLASH",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "TOP_STACK",
+        "sceneConceptIds": [
+          "NEWS_FLASH:BAR_CHART_HORIZONTAL:top:EARNINGS_TABLE",
+          "NEWS_FLASH:GLOWING_QUOTE:center:STORE_SCENE",
+          "NEWS_FLASH:COMPARISON_TABLE:left:SOURCE_DOCUMENT",
+          "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
+          "NEWS_FLASH:CANDLESTICK_HERO:background:PRODUCT_DETAIL",
+          "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "EDITORIAL_SIGNOFF:EDITORIAL_STAT_CARD",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-TOP_STACK",
+            "primaryEncoding": "bar",
+            "visualStyle": "BAR_CHART_HORIZONTAL",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:BAR_CHART_HORIZONTAL:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_nbwt7z"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "pull-quote",
+            "visualStyle": "GLOWING_QUOTE",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:GLOWING_QUOTE:center:STORE_SCENE",
+            "promptFingerprint": "pf_ajbidr"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:COMPARISON_TABLE:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_tnckod"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_p3qx77"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:CANDLESTICK_HERO:background:PRODUCT_DETAIL",
+            "promptFingerprint": "pf_pvho4d"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "stat-card",
+            "visualStyle": "EDITORIAL_STAT_CARD",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_pvy8n6"
           }
         ]
       }
