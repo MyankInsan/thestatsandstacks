@@ -2,163 +2,6 @@
   "schemaVersion": 4,
   "entries": [
     {
-      "date": "2026-07-01",
-      "topic": "Why the First $100K Feels So Slow for Canadian Investors",
-      "hook": "The first $100K feels slow.",
-      "format": "CAROUSEL",
-      "formatType": "MEME_HUMOR",
-      "slideCount": 7,
-      "keywords": [
-        "first 100k investing",
-        "compound growth Canada",
-        "beginner investing Canada"
-      ],
-      "visualSignature": "2026-07-01-28554078489",
-      "schemaVersion": 4,
-      "slotIndex": 6,
-      "postedAtUtc": "2026-07-01T23:24:09.784Z",
-      "tickersFeatured": [],
-      "topicCategory": "BEHAVIORAL",
-      "hookFormulaId": "MYTH_STRIKE",
-      "ctaId": "comment_genuine_question",
-      "angleId": "BEHAVIORAL_RECEIPT",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY"
-      ],
-      "coverVisualStyle": "ARCHITECTURAL_OVERLAY",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "boomer_diy_investor"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#09090D",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FF2E93"
-      },
-      "dominantSubjectClass": "BUILDING",
-      "topicFamily": "GENERAL",
-      "sourceTier": "OFFICIAL",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:CINEMATIC_SCENE:562814593",
-        "structureFamily": "EDITORIAL_MYTH_BUST",
-        "coverMechanism": "CINEMATIC_SCENE",
-        "coverLayoutFamily": "INTEGRATED_SCENE",
-        "sceneConceptIds": [
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:background:PRICE_CHART",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRODUCT_DETAIL",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "QUESTION_CARD:ARCHITECTURAL_OVERLAY",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-INTEGRATED_SCENE",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "background",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:background:PRICE_CHART",
-            "promptFingerprint": "pf_2m16an"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_qmq420"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "AERIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_e65ek0"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRODUCT_DETAIL",
-            "promptFingerprint": "pf_d4syvh"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_sovsrd"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "AERIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
-            "promptFingerprint": "pf_txiubq"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_e3yxyb"
-          }
-        ]
-      }
-    },
-    {
       "date": "2026-07-02",
       "topic": "US Job Growth Falls to 57K: Why the Dow is Soaring While Tech Slides",
       "hook": "The number nobody mentions about the jobs report",
@@ -37728,6 +37571,162 @@
             "motifTag": "NONE",
             "sceneConceptId": "COMPARISON_XRAY:EDITORIAL_REACTION_CARICATURE:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_dwzmuk"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-14",
+      "topic": "Why the First $100K Feels So Slow for Canadian Investors",
+      "hook": "The first $100K feels slow.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 7,
+      "keywords": [
+        "earnings report explained",
+        "stock earnings checklist",
+        "beginner investing"
+      ],
+      "visualSignature": "2026-08-14-31841496626",
+      "schemaVersion": 4,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-08-14T21:21:38.590Z",
+      "tickersFeatured": [],
+      "topicCategory": "EARNINGS",
+      "hookFormulaId": "TIME_CAPSULE",
+      "ctaId": "share_use_case",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "EARNINGS_HEAT_TABLE",
+        "PORTFOLIO_BAR_RACE",
+        "TWEET_STOCK_CHART_SPLIT",
+        "MEME_COMIC_PLATE",
+        "SATIRICAL_METAPHOR",
+        "FUNNY_COMPARISON",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "EARNINGS_HEAT_TABLE",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_cfo_50s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0E0B08",
+        "primaryText": "#F5EFE6",
+        "accent1": "#E8C9A0",
+        "accent2": "#C9A227"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "SINGLE_STOCK",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:ANNOTATED_CHART:1562172458",
+        "structureFamily": "PREMIUM_LIFESTYLE",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "PREMIUM_LIFESTYLE:EARNINGS_HEAT_TABLE:background:EARNINGS_TABLE",
+          "PREMIUM_LIFESTYLE:PORTFOLIO_BAR_RACE:background:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:TWEET_STOCK_CHART_SPLIT:background:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:MEME_COMIC_PLATE:top:PRODUCT_DETAIL",
+          "PREMIUM_LIFESTYLE:SATIRICAL_METAPHOR:top:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:FUNNY_COMPARISON:top:PRICE_CHART",
+          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "heat-table",
+            "visualStyle": "EARNINGS_HEAT_TABLE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:EARNINGS_HEAT_TABLE:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_l4pv1w"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "bar-race",
+            "visualStyle": "PORTFOLIO_BAR_RACE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:PORTFOLIO_BAR_RACE:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_oj28bu"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "social-chart-split",
+            "visualStyle": "TWEET_STOCK_CHART_SPLIT",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:TWEET_STOCK_CHART_SPLIT:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_sla8r"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "MEME_COMIC_PLATE",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:MEME_COMIC_PLATE:top:PRODUCT_DETAIL",
+            "promptFingerprint": "pf_tbh66e"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "SATIRICAL_METAPHOR",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:SATIRICAL_METAPHOR:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_e9704a"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "FUNNY_COMPARISON",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:FUNNY_COMPARISON:top:PRICE_CHART",
+            "promptFingerprint": "pf_tvb7o3"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_wrlbis"
           }
         ]
       }
