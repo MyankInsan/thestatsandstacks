@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-07-02",
-      "topic": "Inside a $1 Billion Portfolio: What the Latest Financial Disclosures Reveal About Asset Mixes",
-      "hook": "If you build a portfolio, do this first",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
-      "slideCount": 6,
-      "keywords": [
-        "asset allocation",
-        "portfolio diversification",
-        "financial disclosures",
-        "how to invest"
-      ],
-      "visualSignature": "2026-07-02-28616744939",
-      "schemaVersion": 4,
-      "slotIndex": 3,
-      "postedAtUtc": "2026-07-02T19:43:53.748Z",
-      "tickersFeatured": [],
-      "topicCategory": "HOW_TO",
-      "hookFormulaId": "IF_THEN_LADDER",
-      "ctaId": "reference_save",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "CANDLESTICK_HERO",
-        "CORPORATE_OFFICE_SPACE",
-        "DONUT_CHART",
-        "LUXURY_LIFESTYLE",
-        "LINE_CHART",
-        "MINIMALIST_CHECKLIST"
-      ],
-      "coverVisualStyle": "CANDLESTICK_HERO",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "millennial_dad_with_laptop"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0A0A0A",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFB000",
-        "accent2": "#00CFFF"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "GENERAL",
-      "sourceTier": "AGGREGATED",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:1526745036",
-        "structureFamily": "DATA_SNAPSHOT",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "TOP_STACK",
-        "sceneConceptIds": [
-          "DATA_SNAPSHOT:CANDLESTICK_HERO:top:FILING_EXCERPT",
-          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:STORE_SCENE",
-          "DATA_SNAPSHOT:DONUT_CHART:background:SOURCE_DOCUMENT",
-          "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:EARNINGS_TABLE",
-          "DATA_SNAPSHOT:LINE_CHART:background:RISK_MATRIX",
-          "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "CHECKLIST_RECEIPT:MINIMALIST_CHECKLIST",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-TOP_STACK",
-            "primaryEncoding": "candlestick",
-            "visualStyle": "CANDLESTICK_HERO",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:CANDLESTICK_HERO:top:FILING_EXCERPT",
-            "promptFingerprint": "pf_yaq3eb"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "architecture",
-            "visualStyle": "CORPORATE_OFFICE_SPACE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:STORE_SCENE",
-            "promptFingerprint": "pf_wed8nc"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "donut",
-            "visualStyle": "DONUT_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:DONUT_CHART:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_xyacz9"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "LUXURY_LIFESTYLE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "JET_LUXURY",
-            "sceneConceptId": "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:EARNINGS_TABLE",
-            "promptFingerprint": "pf_bxsra1"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "line",
-            "visualStyle": "LINE_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:LINE_CHART:background:RISK_MATRIX",
-            "promptFingerprint": "pf_w4h3hs"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "checklist",
-            "visualStyle": "MINIMALIST_CHECKLIST",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_mg2gqz"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-02",
       "topic": "Credit Score Myths Canadians Still Believe",
       "hook": "Some credit advice is just noise.",
       "format": "CAROUSEL",
@@ -37741,6 +37599,149 @@
             "motifTag": "NONE",
             "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_p9lrek"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-15",
+      "topic": "Who actually owns Microsoft? (MSFT)",
+      "hook": "Who actually owns Microsoft?",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "Microsoft ownership",
+        "MSFT institutional holders",
+        "Vanguard BlackRock MSFT",
+        "13F filings Microsoft"
+      ],
+      "visualSignature": "2026-08-15-31894652623",
+      "schemaVersion": 4,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-08-15T16:10:51.477Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "RECEIPT_DROP",
+      "ctaId": "save_specific",
+      "angleId": "CAP_TABLE_INSTITUTIONAL",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "CAP_TABLE_GRID",
+        "CARICATURE_PORTRAIT",
+        "INSTITUTIONAL_FLOW_SANKEY",
+        "EDITORIAL_REACTION_CARICATURE",
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "EARNINGS_CARD"
+      ],
+      "coverVisualStyle": "CAP_TABLE_GRID",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "silver_haired_pm"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00CFFF",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CAP_TABLE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:DOCUMENT_RECEIPT:288382603",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "DOCUMENT_RECEIPT",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:CAP_TABLE_GRID:center:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:INSTITUTIONAL_FLOW_SANKEY:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:EARNINGS_TABLE",
+          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:STORE_SCENE",
+          "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SAVE_CARD:EARNINGS_CARD",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CAP_TABLE_GRID:center:FILING_EXCERPT",
+            "promptFingerprint": "pf_q2idnz"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_7wp6nl"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "INSTITUTIONAL_FLOW_SANKEY",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:INSTITUTIONAL_FLOW_SANKEY:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_r57ooa"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_932ua4"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "mega-number",
+            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:STORE_SCENE",
+            "promptFingerprint": "pf_uh6rpw"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_nbsfvk"
           }
         ]
       }
