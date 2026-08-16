@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-07-04",
-      "topic": "Bitcoin ETF Outflows: The 5-Point Crypto Sentiment Checklist",
-      "hook": "The number nobody mentions about Bitcoin ETFs",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
-      "slideCount": 6,
-      "keywords": [
-        "Bitcoin ETF outflows",
-        "spot BTC ETF holdings",
-        "crypto market sentiment",
-        "institutional crypto trends"
-      ],
-      "visualSignature": "2026-07-04-28710095312",
-      "schemaVersion": 4,
-      "slotIndex": 1,
-      "postedAtUtc": "2026-07-04T15:03:34.149Z",
-      "tickersFeatured": [],
-      "topicCategory": "CRYPTO",
-      "hookFormulaId": "QUIET_NUMBER",
-      "ctaId": "follow_authority",
-      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
-      "visualStylesUsed": [
-        "BAR_CHART_HORIZONTAL",
-        "GLOWING_QUOTE",
-        "COMPARISON_TABLE",
-        "EDITORIAL_SPLIT_LAYOUT",
-        "CANDLESTICK_HERO",
-        "EDITORIAL_STAT_CARD"
-      ],
-      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "crypto_native_founder"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#050505",
-        "primaryText": "#FFFFFF",
-        "accent1": "#39FF14",
-        "accent2": "#00CFFF"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "CRYPTO",
-      "sourceTier": "REPUTABLE_PRESS",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:NEWS_FLASH:ANNOTATED_CHART:1717051516",
-        "structureFamily": "NEWS_FLASH",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "TOP_STACK",
-        "sceneConceptIds": [
-          "NEWS_FLASH:BAR_CHART_HORIZONTAL:top:FILING_EXCERPT",
-          "NEWS_FLASH:GLOWING_QUOTE:center:STORE_SCENE",
-          "NEWS_FLASH:COMPARISON_TABLE:left:SOURCE_DOCUMENT",
-          "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:FILING_EXCERPT",
-          "NEWS_FLASH:CANDLESTICK_HERO:background:RISK_MATRIX",
-          "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "EDITORIAL_SIGNOFF:EDITORIAL_STAT_CARD",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-TOP_STACK",
-            "primaryEncoding": "bar",
-            "visualStyle": "BAR_CHART_HORIZONTAL",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:BAR_CHART_HORIZONTAL:top:FILING_EXCERPT",
-            "promptFingerprint": "pf_a2soto"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "pull-quote",
-            "visualStyle": "GLOWING_QUOTE",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:GLOWING_QUOTE:center:STORE_SCENE",
-            "promptFingerprint": "pf_rvs9mk"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "table",
-            "visualStyle": "COMPARISON_TABLE",
-            "bucket": "Data",
-            "visualPosition": "left",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:COMPARISON_TABLE:left:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_er8yot"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "editorial-split",
-            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:EDITORIAL_SPLIT_LAYOUT:left:FILING_EXCERPT",
-            "promptFingerprint": "pf_44m8v6"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "candlestick",
-            "visualStyle": "CANDLESTICK_HERO",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:CANDLESTICK_HERO:background:RISK_MATRIX",
-            "promptFingerprint": "pf_dvkbqo"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "stat-card",
-            "visualStyle": "EDITORIAL_STAT_CARD",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_26fyos"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-04",
       "topic": "Who actually owns Microsoft?",
       "hook": "Who actually owns Microsoft?",
       "format": "CAROUSEL",
@@ -37734,6 +37592,148 @@
             "motifTag": "NONE",
             "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_bu8fby"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-16",
+      "topic": "Crypto Market Heat Check: 5 Things Beginners Get Wrong in a Pullback",
+      "hook": "Crypto always bounces back is wrong. Here is why",
+      "format": "CAROUSEL",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 6,
+      "keywords": [
+        "bitcoin pullback",
+        "crypto market cycle",
+        "liquidation cascade",
+        "altcoin risk"
+      ],
+      "visualSignature": "2026-08-16-31976058844",
+      "schemaVersion": 4,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-08-16T22:27:00.360Z",
+      "tickersFeatured": [],
+      "topicCategory": "CRYPTO",
+      "hookFormulaId": "MYTH_STRIKE",
+      "ctaId": "question_open",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "PRICE_TIMELINE_ANNOTATED",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "PRICE_TIMELINE_ANNOTATED",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "crypto_native_founder"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0E0B08",
+        "primaryText": "#FFF7E6",
+        "accent1": "#FFB000",
+        "accent2": "#FF3B30"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CRYPTO",
+      "sourceTier": "AGGREGATED",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:ANNOTATED_CHART:1366861521",
+        "structureFamily": "EDITORIAL_MYTH_BUST",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "INTEGRATED_SCENE",
+        "sceneConceptIds": [
+          "EDITORIAL_MYTH_BUST:PRICE_TIMELINE_ANNOTATED:background:RISK_MATRIX",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-INTEGRATED_SCENE",
+            "primaryEncoding": "annotated-timeline",
+            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:PRICE_TIMELINE_ANNOTATED:background:RISK_MATRIX",
+            "promptFingerprint": "pf_qr8wb6"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
+            "promptFingerprint": "pf_7y5ba8"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
+            "promptFingerprint": "pf_weaqho"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_o33zup"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
+            "promptFingerprint": "pf_4t105n"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_kqwlpj"
           }
         ]
       }
