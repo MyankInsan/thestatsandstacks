@@ -2,149 +2,6 @@
   "schemaVersion": 4,
   "entries": [
     {
-      "date": "2026-07-10",
-      "topic": "If you had skipped Micron and bought the index",
-      "hook": "If you'd skipped Micron and bought the index",
-      "format": "CAROUSEL",
-      "formatType": "MEME_HUMOR",
-      "slideCount": 6,
-      "keywords": [
-        "Micron stock",
-        "S&P 500 vs individual stocks",
-        "cyclical tech stocks",
-        "investing FOMO"
-      ],
-      "visualSignature": "2026-07-10-29129188791",
-      "schemaVersion": 4,
-      "slotIndex": 6,
-      "postedAtUtc": "2026-07-10T23:04:38.451Z",
-      "tickersFeatured": [],
-      "topicCategory": "BEHAVIORAL",
-      "hookFormulaId": "REVERSE_SURVIVORSHIP",
-      "ctaId": "comment_genuine_question",
-      "angleId": "HYPOTHETICAL_REVERSAL",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "MAP_DATA_OVERLAY",
-        "MEME_COMIC_PLATE",
-        "SATIRICAL_METAPHOR",
-        "FUNNY_COMPARISON",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY"
-      ],
-      "coverVisualStyle": "MAP_DATA_OVERLAY",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "immigrant_entrepreneur"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#09090D",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FF2E93"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "INDEX_MOVE",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:ANNOTATED_CHART:1608232984",
-        "structureFamily": "EDITORIAL_MYTH_BUST",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "DASHBOARD_FILL",
-        "sceneConceptIds": [
-          "EDITORIAL_MYTH_BUST:MAP_DATA_OVERLAY:background:PRICE_CHART",
-          "EDITORIAL_MYTH_BUST:MEME_COMIC_PLATE:top:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:SATIRICAL_METAPHOR:top:EARNINGS_TABLE",
-          "EDITORIAL_MYTH_BUST:FUNNY_COMPARISON:top:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "QUESTION_CARD:ARCHITECTURAL_OVERLAY",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-DASHBOARD_FILL",
-            "primaryEncoding": "choropleth",
-            "visualStyle": "MAP_DATA_OVERLAY",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:MAP_DATA_OVERLAY:background:PRICE_CHART",
-            "promptFingerprint": "pf_m18l6h"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "MEME_COMIC_PLATE",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:MEME_COMIC_PLATE:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_f54uy3"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "SATIRICAL_METAPHOR",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:SATIRICAL_METAPHOR:top:EARNINGS_TABLE",
-            "promptFingerprint": "pf_6zhxp4"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "FUNNY_COMPARISON",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:FUNNY_COMPARISON:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_tvj964"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_7ajj9g"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "AERIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_fwz92t"
-          }
-        ]
-      }
-    },
-    {
       "date": "2026-07-11",
       "topic": "Trump Accounts Explained: How the Proposed $1,000 Savings System Works",
       "hook": "The number nobody mentions about Trump Accounts",
@@ -37641,6 +37498,178 @@
             "motifTag": "NONE",
             "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_ozfr7c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-23",
+      "topic": "The Bitcoin Proxy Catalyst Map: What to Watch on MSTR",
+      "hook": "If you trade MicroStrategy, do this 1 thing first",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 8,
+      "keywords": [
+        "MicroStrategy convertible debt",
+        "MSTR NAV premium",
+        "Michael Saylor Bitcoin strategy",
+        "crypto proxy risks"
+      ],
+      "visualSignature": "2026-08-23-32658498339",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-08-23T18:36:52.862Z",
+      "tickersFeatured": [],
+      "topicCategory": "CRYPTO",
+      "hookFormulaId": "IF_THEN_LADDER",
+      "ctaId": "reference_save",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "AREA_CHART",
+        "CORPORATE_OFFICE_SPACE",
+        "DONUT_CHART",
+        "LUXURY_LIFESTYLE",
+        "SANKEY_DIAGRAM",
+        "TRADER_DESK_SILHOUETTE",
+        "TICKER_TAPE_HERO",
+        "EDITORIAL_SPLIT_LAYOUT"
+      ],
+      "coverVisualStyle": "AREA_CHART",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "young_retail_trader"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#050505",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#39FF14"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CRYPTO",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:235346757",
+        "structureFamily": "DATA_SNAPSHOT",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "DATA_SNAPSHOT:AREA_CHART:background:RISK_MATRIX",
+          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:RISK_MATRIX",
+          "DATA_SNAPSHOT:DONUT_CHART:background:PRICE_CHART",
+          "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:PRICE_CHART",
+          "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:RISK_MATRIX",
+          "DATA_SNAPSHOT:TRADER_DESK_SILHOUETTE:top:RISK_MATRIX",
+          "DATA_SNAPSHOT:TICKER_TAPE_HERO:background:PRICE_CHART",
+          "DATA_SNAPSHOT:EDITORIAL_SPLIT_LAYOUT:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "CHECKLIST_RECEIPT:EDITORIAL_SPLIT_LAYOUT",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "area",
+            "visualStyle": "AREA_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:AREA_CHART:background:RISK_MATRIX",
+            "promptFingerprint": "pf_hha06w"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "architecture",
+            "visualStyle": "CORPORATE_OFFICE_SPACE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:RISK_MATRIX",
+            "promptFingerprint": "pf_8fk9ap"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:DONUT_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_o3apms"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:PRICE_CHART",
+            "promptFingerprint": "pf_oj2avw"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:RISK_MATRIX",
+            "promptFingerprint": "pf_no31oi"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "TRADER_DESK_SILHOUETTE",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:TRADER_DESK_SILHOUETTE:top:RISK_MATRIX",
+            "promptFingerprint": "pf_81ycvs"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "ticker-tape",
+            "visualStyle": "TICKER_TAPE_HERO",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:TICKER_TAPE_HERO:background:PRICE_CHART",
+            "promptFingerprint": "pf_eqzjeu"
+          },
+          {
+            "slideNumber": 8,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:EDITORIAL_SPLIT_LAYOUT:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_n9k5n4"
           }
         ]
       }
