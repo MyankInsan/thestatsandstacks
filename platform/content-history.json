@@ -2,178 +2,6 @@
   "schemaVersion": 4,
   "entries": [
     {
-      "date": "2026-07-11",
-      "topic": "HISA vs GIC vs ETF: Where Should Short-Term Money Go?",
-      "hook": "Do not invest money you need soon.",
-      "format": "CAROUSEL",
-      "formatType": "MEME_HUMOR",
-      "slideCount": 8,
-      "keywords": [
-        "HISA vs GIC",
-        "ETF Canada",
-        "short term savings Canada"
-      ],
-      "visualSignature": "2026-07-11-29171129994",
-      "schemaVersion": 4,
-      "slotIndex": 6,
-      "postedAtUtc": "2026-07-11T22:53:53.107Z",
-      "tickersFeatured": [],
-      "topicCategory": "BEHAVIORAL",
-      "hookFormulaId": "PREMIUM_CONTRARIAN",
-      "ctaId": "comment_genuine_question",
-      "angleId": "COMPARISON_LADDER",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "FUNNY_COMPARISON",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY",
-        "ARCHITECTURAL_OVERLAY"
-      ],
-      "coverVisualStyle": "FUNNY_COMPARISON",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "retiree_with_charts"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0E0B08",
-        "primaryText": "#FFF7E6",
-        "accent1": "#FFB000",
-        "accent2": "#FF3B30"
-      },
-      "dominantSubjectClass": "TYPOGRAPHY",
-      "topicFamily": "ETF_FEES",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:SPLIT_CONTRAST:694426004",
-        "structureFamily": "EDITORIAL_MYTH_BUST",
-        "coverMechanism": "SPLIT_CONTRAST",
-        "coverLayoutFamily": "SPLIT_EDITORIAL",
-        "sceneConceptIds": [
-          "EDITORIAL_MYTH_BUST:FUNNY_COMPARISON:left:PRICE_CHART",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:RISK_MATRIX",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
-          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "QUESTION_CARD:ARCHITECTURAL_OVERLAY",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-SPLIT_EDITORIAL",
-            "primaryEncoding": "typography",
-            "visualStyle": "FUNNY_COMPARISON",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:FUNNY_COMPARISON:left:PRICE_CHART",
-            "promptFingerprint": "pf_8er385"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_kv6uzw"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "AERIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_8u3wqb"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:RISK_MATRIX",
-            "promptFingerprint": "pf_8vfy9b"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_1zxsi5"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "AERIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
-            "promptFingerprint": "pf_xmdh9d"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "LOW_ANGLE_HERO",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
-            "promptFingerprint": "pf_t1yk2g"
-          },
-          {
-            "slideNumber": 8,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "typography",
-            "visualStyle": "ARCHITECTURAL_OVERLAY",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_43opbp"
-          }
-        ]
-      }
-    },
-    {
       "date": "2026-07-12",
       "topic": "Google's Custom AI Chip Strategy: The Emerging Shift in the Nvidia Watchlist",
       "hook": "Nvidia is up YTD. Should you care?",
@@ -37672,6 +37500,150 @@
             "motifTag": "NONE",
             "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_SPLIT_LAYOUT:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_x6jio4"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-24",
+      "topic": "How a 1% MER actually compounds over 30 years",
+      "hook": "1% sounds small. Here is the 30-year math",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 6,
+      "keywords": [
+        "MER",
+        "mutual fund fees",
+        "expense ratio",
+        "compounding interest",
+        "ETF vs Mutual Fund"
+      ],
+      "visualSignature": "2026-08-24-32764310941",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-08-24T18:48:29.350Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "QUIET_COMPOUNDER",
+      "ctaId": "reference_save",
+      "angleId": "FEE_TEARDOWN",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "LINE_CHART",
+        "CORPORATE_OFFICE_SPACE",
+        "COMPARISON_TABLE",
+        "EXPERT_CUTOUT",
+        "SANKEY_DIAGRAM",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "LINE_CHART",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_quant_30s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFB000",
+        "accent2": "#00CFFF"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "ETF_FEES",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:421164011",
+        "structureFamily": "DATA_SNAPSHOT",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "DATA_SNAPSHOT:LINE_CHART:background:PRICE_CHART",
+          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:PRICE_CHART",
+          "DATA_SNAPSHOT:COMPARISON_TABLE:left:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "CHECKLIST_RECEIPT:MAGAZINE_COVER",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "line",
+            "visualStyle": "LINE_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:LINE_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_cs3vub"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "architecture",
+            "visualStyle": "CORPORATE_OFFICE_SPACE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:PRICE_CHART",
+            "promptFingerprint": "pf_cy4w9h"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "table",
+            "visualStyle": "COMPARISON_TABLE",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:COMPARISON_TABLE:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_9u34k7"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EXPERT_CUTOUT",
+            "bucket": "Human",
+            "visualPosition": "left",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:EXPERT_CUTOUT:left:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_13coxh"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_gim14u"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_kwk0hw"
           }
         ]
       }
