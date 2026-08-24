@@ -3,149 +3,6 @@
   "entries": [
     {
       "date": "2026-07-12",
-      "topic": "Who actually owns Nvidia?",
-      "hook": "Who actually owns Nvidia?",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 6,
-      "keywords": [
-        "Nvidia ownership",
-        "NVDA institutional holders",
-        "Jensen Huang net worth",
-        "Who owns Nvidia"
-      ],
-      "visualSignature": "2026-07-12-29200553170",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-07-12T16:42:32.489Z",
-      "tickersFeatured": [],
-      "topicCategory": "CAP_TABLE",
-      "hookFormulaId": "CAP_TABLE",
-      "ctaId": "save_specific",
-      "angleId": "CAP_TABLE_INSTITUTIONAL",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "BAR_CHART_HORIZONTAL",
-        "EXPERT_CUTOUT",
-        "COMPARISON_TABLE",
-        "CARICATURE_PORTRAIT",
-        "TYPOGRAPHIC_MEGA_NUMBER",
-        "EARNINGS_CARD"
-      ],
-      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "silver_haired_pm"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#000000",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF3B30",
-        "accent2": "#FFD700"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "CAP_TABLE",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:1634493665",
-        "structureFamily": "HUMAN_EDITORIAL",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
-        "sceneConceptIds": [
-          "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:background:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:COMPARISON_TABLE:left:PRICE_CHART",
-          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:STORE_SCENE",
-          "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "SAVE_CARD:EARNINGS_CARD",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
-            "primaryEncoding": "bar",
-            "visualStyle": "BAR_CHART_HORIZONTAL",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:background:FILING_EXCERPT",
-            "promptFingerprint": "pf_duw24e"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EXPERT_CUTOUT",
-            "bucket": "Human",
-            "visualPosition": "left",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:FILING_EXCERPT",
-            "promptFingerprint": "pf_wz5wj5"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "table",
-            "visualStyle": "COMPARISON_TABLE",
-            "bucket": "Data",
-            "visualPosition": "left",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:COMPARISON_TABLE:left:PRICE_CHART",
-            "promptFingerprint": "pf_y33qmb"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CARICATURE_PORTRAIT",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:EARNINGS_TABLE",
-            "promptFingerprint": "pf_972pgl"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "mega-number",
-            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:STORE_SCENE",
-            "promptFingerprint": "pf_dvy1tw"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "metric-card",
-            "visualStyle": "EARNINGS_CARD",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_zf9028"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-12",
       "topic": "Same ETF, three accounts. Look what you keep",
       "hook": "Most Canadians pick the wrong account first",
       "format": "CAROUSEL",
@@ -37644,6 +37501,162 @@
             "motifTag": "NONE",
             "sceneConceptId": "COMPARISON_XRAY:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_t5woy8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-24",
+      "topic": "How President Trump's Policies Impact the Tech Sector",
+      "hook": "What the new policies mean for Tech.",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
+      "slideCount": 7,
+      "keywords": [
+        "earnings report explained",
+        "stock earnings checklist",
+        "beginner investing"
+      ],
+      "visualSignature": "2026-08-24-32778674053",
+      "schemaVersion": 4,
+      "slotIndex": 5,
+      "postedAtUtc": "2026-08-24T21:25:42.364Z",
+      "tickersFeatured": [],
+      "topicCategory": "EARNINGS",
+      "hookFormulaId": "COHORT_TRUTH",
+      "ctaId": "share_use_case",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "PORTFOLIO_DOUGHNUT_PORTRAIT",
+        "EARNINGS_HEAT_TABLE",
+        "PORTFOLIO_BAR_RACE",
+        "MEME_COMIC_PLATE",
+        "SATIRICAL_METAPHOR",
+        "FUNNY_COMPARISON",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "PORTFOLIO_DOUGHNUT_PORTRAIT",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "female_quant_30s"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0B0E0C",
+        "primaryText": "#F2F2F0",
+        "accent1": "#7FB08A",
+        "accent2": "#D8C7A0"
+      },
+      "dominantSubjectClass": "PORTRAIT",
+      "topicFamily": "SINGLE_STOCK",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:EDITORIAL_PORTRAIT:1082775",
+        "structureFamily": "PREMIUM_LIFESTYLE",
+        "coverMechanism": "EDITORIAL_PORTRAIT",
+        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
+        "sceneConceptIds": [
+          "PREMIUM_LIFESTYLE:PORTFOLIO_DOUGHNUT_PORTRAIT:background:EARNINGS_TABLE",
+          "PREMIUM_LIFESTYLE:EARNINGS_HEAT_TABLE:background:SOURCE_DOCUMENT",
+          "PREMIUM_LIFESTYLE:PORTFOLIO_BAR_RACE:background:EARNINGS_TABLE",
+          "PREMIUM_LIFESTYLE:MEME_COMIC_PLATE:top:EARNINGS_TABLE",
+          "PREMIUM_LIFESTYLE:SATIRICAL_METAPHOR:top:RISK_MATRIX",
+          "PREMIUM_LIFESTYLE:FUNNY_COMPARISON:top:EARNINGS_TABLE",
+          "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SEND_TO_FRIEND:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
+            "primaryEncoding": "donut-portrait",
+            "visualStyle": "PORTFOLIO_DOUGHNUT_PORTRAIT",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:PORTFOLIO_DOUGHNUT_PORTRAIT:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_tphfcm"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "heat-table",
+            "visualStyle": "EARNINGS_HEAT_TABLE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:EARNINGS_HEAT_TABLE:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_s0sfc5"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "bar-race",
+            "visualStyle": "PORTFOLIO_BAR_RACE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:PORTFOLIO_BAR_RACE:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_fkd9lf"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "MEME_COMIC_PLATE",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:MEME_COMIC_PLATE:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_bdae48"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "SATIRICAL_METAPHOR",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:SATIRICAL_METAPHOR:top:RISK_MATRIX",
+            "promptFingerprint": "pf_4tjvcq"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "FUNNY_COMPARISON",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:FUNNY_COMPARISON:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_qy24kq"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_31jrrl"
           }
         ]
       }
