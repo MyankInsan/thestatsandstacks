@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-07-13",
-      "topic": "Volatility Is Spiking: What a Rising VIX Actually Means for Your Portfolio",
-      "hook": "Panic-selling when VIX spikes is wrong. Here is why",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
-      "slideCount": 6,
-      "keywords": [
-        "VIX spike",
-        "market volatility",
-        "fear gauge",
-        "S&P 500 correction"
-      ],
-      "visualSignature": "2026-07-13-29284717609",
-      "schemaVersion": 4,
-      "slotIndex": 4,
-      "postedAtUtc": "2026-07-13T21:08:02.249Z",
-      "tickersFeatured": [],
-      "topicCategory": "MACRO",
-      "hookFormulaId": "MYTH_STRIKE",
-      "ctaId": "question_open",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "BAR_CHART_HORIZONTAL",
-        "EDITORIAL_SPLIT_LAYOUT",
-        "MACRO_FLOW_DIAGRAM",
-        "CROWD_PANIC",
-        "PRICE_TIMELINE_ANNOTATED",
-        "GLOWING_QUOTE"
-      ],
-      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "silver_haired_pm"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#F4F1EA",
-        "primaryText": "#1A1A1A",
-        "accent1": "#B0341E",
-        "accent2": "#6B6B6B"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "INDEX_MOVE",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "EVERGREEN_OR_TIMELY",
-      "visualPlan": {
-        "compositionSignature": "vp1:COMPARISON_XRAY:ANNOTATED_CHART:274132816",
-        "structureFamily": "COMPARISON_XRAY",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "TOP_STACK",
-        "sceneConceptIds": [
-          "COMPARISON_XRAY:BAR_CHART_HORIZONTAL:top:PRICE_CHART",
-          "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
-          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:PRICE_CHART",
-          "COMPARISON_XRAY:CROWD_PANIC:top:PRICE_CHART",
-          "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:RISK_MATRIX",
-          "COMPARISON_XRAY:GLOWING_QUOTE:center:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "TWO_OPTION_PROMPT:GLOWING_QUOTE",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-TOP_STACK",
-            "primaryEncoding": "bar",
-            "visualStyle": "BAR_CHART_HORIZONTAL",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:BAR_CHART_HORIZONTAL:top:PRICE_CHART",
-            "promptFingerprint": "pf_q4wtpv"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "editorial-split",
-            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_qmxyum"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "flow",
-            "visualStyle": "MACRO_FLOW_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:PRICE_CHART",
-            "promptFingerprint": "pf_ccdca3"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CROWD_PANIC",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CROWD",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:CROWD_PANIC:top:PRICE_CHART",
-            "promptFingerprint": "pf_4aedak"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "annotated-timeline",
-            "visualStyle": "PRICE_TIMELINE_ANNOTATED",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:PRICE_TIMELINE_ANNOTATED:background:RISK_MATRIX",
-            "promptFingerprint": "pf_8ujk34"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "pull-quote",
-            "visualStyle": "GLOWING_QUOTE",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "COMPARISON_XRAY:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_q63cnh"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-13",
       "topic": "TSX dividend aristocrats: the 25-year list",
       "hook": "What $10k in TSX Aristocrats looks like",
       "format": "CAROUSEL",
@@ -37642,6 +37500,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "PREMIUM_LIFESTYLE:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_5o1yoh"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-25",
+      "topic": "The S-1 Filing Tear-Down: What a Fresh IPO Filing Reveals About Market Liquidity",
+      "hook": "Everyone says SPACs are dead. The disclosure says otherwise.",
+      "format": "CAROUSEL",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 7,
+      "keywords": [
+        "how to read an S-1 filing",
+        "Haymaker Acquisition Corp V",
+        "SPAC SEC filings 2026",
+        "IPO risk factors"
+      ],
+      "visualSignature": "2026-08-25-32906183547",
+      "schemaVersion": 4,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-08-25T22:32:24.149Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "PREMIUM_CONTRARIAN",
+      "ctaId": "question_open",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "EARNINGS_HEAT_TABLE",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "EARNINGS_HEAT_TABLE",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "millennial_dad_with_laptop"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0E0B08",
+        "primaryText": "#FFF7E6",
+        "accent1": "#FFB000",
+        "accent2": "#FF3B30"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "IPO",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:ANNOTATED_CHART:1982877175",
+        "structureFamily": "EDITORIAL_MYTH_BUST",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "EDITORIAL_MYTH_BUST:EARNINGS_HEAT_TABLE:background:FILING_EXCERPT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRODUCT_DETAIL",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "heat-table",
+            "visualStyle": "EARNINGS_HEAT_TABLE",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:EARNINGS_HEAT_TABLE:background:FILING_EXCERPT",
+            "promptFingerprint": "pf_eurt35"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_cbuqib"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_j9ob6b"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:STORE_SCENE",
+            "promptFingerprint": "pf_tss0sp"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRODUCT_DETAIL",
+            "promptFingerprint": "pf_dc8vkb"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_sic103"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_g8xbw8"
           }
         ]
       }
