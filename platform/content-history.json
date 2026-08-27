@@ -3,163 +3,6 @@
   "entries": [
     {
       "date": "2026-07-14",
-      "topic": "TFSA vs RRSP vs FHSA: Which Account Should Canadians Use First?",
-      "hook": "Most Canadians pick the wrong account first.",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_LUXURY_LIFESTYLE",
-      "slideCount": 7,
-      "keywords": [
-        "TFSA vs RRSP",
-        "FHSA Canada",
-        "Canadian investing"
-      ],
-      "visualSignature": "2026-07-14-29370599193",
-      "schemaVersion": 4,
-      "slotIndex": 5,
-      "postedAtUtc": "2026-07-14T21:52:15.247Z",
-      "tickersFeatured": [],
-      "topicCategory": "TAX_ACCT",
-      "hookFormulaId": "QUIET_COMPOUNDER",
-      "ctaId": "share_use_case",
-      "angleId": "HYPOTHETICAL_REVERSAL",
-      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
-      "visualStylesUsed": [
-        "RADAR_CHART",
-        "NEON_TERMINAL",
-        "CANDLESTICK_CHART",
-        "EDITORIAL_REACTION_CARICATURE",
-        "HEATMAP_GRID",
-        "REDDIT_POST_SCREENSHOT",
-        "CANDLESTICK_HERO"
-      ],
-      "coverVisualStyle": "RADAR_CHART",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "seasoned_canadian_banker"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0A0A0A",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FFFFFF"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "ACCT_COMPARISON",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "EVERGREEN_OR_TIMELY",
-      "visualPlan": {
-        "compositionSignature": "vp1:PREMIUM_LIFESTYLE:ANNOTATED_CHART:89918211",
-        "structureFamily": "PREMIUM_LIFESTYLE",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "TOP_STACK",
-        "sceneConceptIds": [
-          "PREMIUM_LIFESTYLE:RADAR_CHART:top:RISK_MATRIX",
-          "PREMIUM_LIFESTYLE:NEON_TERMINAL:top:SOURCE_DOCUMENT",
-          "PREMIUM_LIFESTYLE:CANDLESTICK_CHART:background:SOURCE_DOCUMENT",
-          "PREMIUM_LIFESTYLE:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
-          "PREMIUM_LIFESTYLE:HEATMAP_GRID:background:SOURCE_DOCUMENT",
-          "PREMIUM_LIFESTYLE:REDDIT_POST_SCREENSHOT:center:SOURCE_DOCUMENT",
-          "PREMIUM_LIFESTYLE:CANDLESTICK_HERO:background:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "SEND_TO_FRIEND:CANDLESTICK_HERO",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-TOP_STACK",
-            "primaryEncoding": "radar",
-            "visualStyle": "RADAR_CHART",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:RADAR_CHART:top:RISK_MATRIX",
-            "promptFingerprint": "pf_vnw6bv"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "terminal",
-            "visualStyle": "NEON_TERMINAL",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:NEON_TERMINAL:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_ftzyb2"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "candlestick",
-            "visualStyle": "CANDLESTICK_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:CANDLESTICK_CHART:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_pkbu8p"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:EDITORIAL_REACTION_CARICATURE:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_vvggib"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "heatmap",
-            "visualStyle": "HEATMAP_GRID",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:HEATMAP_GRID:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_3p3pg1"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "social-mock",
-            "visualStyle": "REDDIT_POST_SCREENSHOT",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:REDDIT_POST_SCREENSHOT:center:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_6icbam"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "candlestick",
-            "visualStyle": "CANDLESTICK_HERO",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "PREMIUM_LIFESTYLE:CANDLESTICK_HERO:background:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_vvi9d"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-14",
       "topic": "5 Money Leaks Quietly Keeping Canadians Broke",
       "hook": "These small leaks do the most damage.",
       "format": "CAROUSEL",
@@ -37625,6 +37468,149 @@
             "motifTag": "NONE",
             "sceneConceptId": "PREMIUM_LIFESTYLE:CANDLESTICK_HERO:background:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_7ecmq3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-26",
+      "topic": "Rolex Submariner vs. S&P 500: The Real Wealth Winner",
+      "hook": "If you'd skipped the Rolex and bought the index",
+      "format": "CAROUSEL",
+      "formatType": "MEME_HUMOR",
+      "slideCount": 6,
+      "keywords": [
+        "Rolex vs SP500",
+        "opportunity cost",
+        "luxury investing",
+        "behavioral finance"
+      ],
+      "visualSignature": "2026-08-26-33034898030",
+      "schemaVersion": 4,
+      "slotIndex": 6,
+      "postedAtUtc": "2026-08-27T03:04:02.012Z",
+      "tickersFeatured": [],
+      "topicCategory": "BEHAVIORAL",
+      "hookFormulaId": "REVERSE_SURVIVORSHIP",
+      "ctaId": "question_open",
+      "angleId": "COMPARISON_LADDER",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "FUNNY_COMPARISON",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY",
+        "ARCHITECTURAL_OVERLAY"
+      ],
+      "coverVisualStyle": "FUNNY_COMPARISON",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "immigrant_entrepreneur"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF2E93",
+        "accent2": "#00CFFF"
+      },
+      "dominantSubjectClass": "TYPOGRAPHY",
+      "topicFamily": "INDEX_MOVE",
+      "sourceTier": "AGGREGATED",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:EDITORIAL_MYTH_BUST:SPLIT_CONTRAST:639235022",
+        "structureFamily": "EDITORIAL_MYTH_BUST",
+        "coverMechanism": "SPLIT_CONTRAST",
+        "coverLayoutFamily": "SPLIT_EDITORIAL",
+        "sceneConceptIds": [
+          "EDITORIAL_MYTH_BUST:FUNNY_COMPARISON:left:PRICE_CHART",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:RISK_MATRIX",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOCIAL_SCREENSHOT",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:RISK_MATRIX",
+          "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "TWO_OPTION_PROMPT:ARCHITECTURAL_OVERLAY",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-SPLIT_EDITORIAL",
+            "primaryEncoding": "typography",
+            "visualStyle": "FUNNY_COMPARISON",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:FUNNY_COMPARISON:left:PRICE_CHART",
+            "promptFingerprint": "pf_zbi4ga"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:RISK_MATRIX",
+            "promptFingerprint": "pf_k30f1l"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:PRICE_CHART",
+            "promptFingerprint": "pf_dzpmwn"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:SOCIAL_SCREENSHOT",
+            "promptFingerprint": "pf_aig5qd"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:RISK_MATRIX",
+            "promptFingerprint": "pf_ybaukt"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "AERIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "EDITORIAL_MYTH_BUST:ARCHITECTURAL_OVERLAY:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_v0j5bi"
           }
         ]
       }
