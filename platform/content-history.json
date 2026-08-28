@@ -3,163 +3,6 @@
   "entries": [
     {
       "date": "2026-07-15",
-      "topic": "How President Trump's Policies Impact the Tech Sector",
-      "hook": "What the new policies mean for Tech.",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 7,
-      "keywords": [
-        "semiconductor stock selloff",
-        "Micron stock MU",
-        "Western Digital stock WDC",
-        "ASML earnings 2026"
-      ],
-      "visualSignature": "2026-07-15-29434708042",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-07-15T17:09:27.096Z",
-      "tickersFeatured": [],
-      "topicCategory": "EARNINGS",
-      "hookFormulaId": "CAP_TABLE",
-      "ctaId": "save_specific",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "BAR_CHART_HORIZONTAL",
-        "CARICATURE_PORTRAIT",
-        "COMPARISON_TABLE",
-        "EDITORIAL_REACTION_CARICATURE",
-        "TYPOGRAPHIC_MEGA_NUMBER",
-        "EARNINGS_CARD",
-        "MINIMALIST_CHECKLIST"
-      ],
-      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "female_cfo_50s"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#000000",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF3B30",
-        "accent2": "#FFD700"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "INDEX_MOVE",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:1288315124",
-        "structureFamily": "HUMAN_EDITORIAL",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "TOP_STACK",
-        "sceneConceptIds": [
-          "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
-          "HUMAN_EDITORIAL:COMPARISON_TABLE:left:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:RISK_MATRIX",
-          "HUMAN_EDITORIAL:EARNINGS_CARD:center:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "SAVE_CARD:MINIMALIST_CHECKLIST",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-TOP_STACK",
-            "primaryEncoding": "bar",
-            "visualStyle": "BAR_CHART_HORIZONTAL",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top:EARNINGS_TABLE",
-            "promptFingerprint": "pf_oo7of9"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CARICATURE_PORTRAIT",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_fgwfre"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "table",
-            "visualStyle": "COMPARISON_TABLE",
-            "bucket": "Data",
-            "visualPosition": "left",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:COMPARISON_TABLE:left:EARNINGS_TABLE",
-            "promptFingerprint": "pf_f44to"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:EARNINGS_TABLE",
-            "promptFingerprint": "pf_lurqeg"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "mega-number",
-            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:RISK_MATRIX",
-            "promptFingerprint": "pf_51lgkg"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "metric-card",
-            "visualStyle": "EARNINGS_CARD",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:EARNINGS_TABLE",
-            "promptFingerprint": "pf_fdumrv"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "checklist",
-            "visualStyle": "MINIMALIST_CHECKLIST",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_htyido"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-15",
       "topic": "The S-1 Filing Checklist: How to Scan an IPO Before It Goes Public",
       "hook": "If you buy IPOs, do this 1 thing first",
       "format": "CAROUSEL",
@@ -37597,6 +37440,149 @@
             "motifTag": "NONE",
             "sceneConceptId": "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_v1e4vn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-27",
+      "topic": "What's actually inside XEQT/VFV/etc",
+      "hook": "XEQT vs VFV in 2026: the real winner",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 6,
+      "keywords": [
+        "XEQT",
+        "VFV",
+        "Canadian ETFs",
+        "Vanguard",
+        "iShares",
+        "TFSA investing"
+      ],
+      "visualSignature": "2026-08-27-33134858306",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-08-28T02:10:09.320Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "COMPARISON_LADDER",
+      "ctaId": "reference_save",
+      "angleId": "ETF_XRAY",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "LINE_CHART",
+        "CORPORATE_OFFICE_SPACE",
+        "CAP_TABLE_GRID",
+        "LUXURY_LIFESTYLE",
+        "SANKEY_DIAGRAM",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "LINE_CHART",
+      "portraitSubjects": [],
+      "archetypesUsed": [],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFB000",
+        "accent2": "#00CFFF"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "ACCT_COMPARISON",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:1818721937",
+        "structureFamily": "DATA_SNAPSHOT",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "TOP_STACK",
+        "sceneConceptIds": [
+          "DATA_SNAPSHOT:LINE_CHART:top:PRICE_CHART",
+          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:RISK_MATRIX",
+          "DATA_SNAPSHOT:CAP_TABLE_GRID:left:FILING_EXCERPT",
+          "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "CHECKLIST_RECEIPT:MAGAZINE_COVER",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-TOP_STACK",
+            "primaryEncoding": "line",
+            "visualStyle": "LINE_CHART",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:LINE_CHART:top:PRICE_CHART",
+            "promptFingerprint": "pf_9ljdh6"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "architecture",
+            "visualStyle": "CORPORATE_OFFICE_SPACE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:RISK_MATRIX",
+            "promptFingerprint": "pf_w6e62o"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "left",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CAP_TABLE_GRID:left:FILING_EXCERPT",
+            "promptFingerprint": "pf_yeikci"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_3ft2bv"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "sankey",
+            "visualStyle": "SANKEY_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:SANKEY_DIAGRAM:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_666wz3"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_h1jhd1"
           }
         ]
       }
