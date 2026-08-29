@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-07-16",
-      "topic": "Who actually owns Micron Technology?",
-      "hook": "Who actually owns Micron Technology?",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 6,
-      "keywords": [
-        "Micron Technology ownership",
-        "MU institutional holders",
-        "who owns MU stock"
-      ],
-      "visualSignature": "2026-07-16-29517790914",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-07-16T17:05:57.476Z",
-      "tickersFeatured": [],
-      "topicCategory": "CAP_TABLE",
-      "hookFormulaId": "BEHIND_THE_SCENES",
-      "ctaId": "save_specific",
-      "angleId": "CAP_TABLE_INSTITUTIONAL",
-      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
-      "visualStylesUsed": [
-        "CAP_TABLE_GRID",
-        "EXPERT_CUTOUT",
-        "COMPARISON_TABLE",
-        "CARICATURE_PORTRAIT",
-        "TYPOGRAPHIC_MEGA_NUMBER",
-        "EARNINGS_CARD"
-      ],
-      "coverVisualStyle": "CAP_TABLE_GRID",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "female_cfo_50s"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0A0A0A",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FFD700",
-        "accent2": "#FF3B30"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "CAP_TABLE",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:HUMAN_EDITORIAL:DOCUMENT_RECEIPT:1532774930",
-        "structureFamily": "HUMAN_EDITORIAL",
-        "coverMechanism": "DOCUMENT_RECEIPT",
-        "coverLayoutFamily": "DOCUMENT_RECEIPT",
-        "sceneConceptIds": [
-          "HUMAN_EDITORIAL:CAP_TABLE_GRID:center:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:COMPARISON_TABLE:left:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "SAVE_CARD:EARNINGS_CARD",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-DOCUMENT_RECEIPT",
-            "primaryEncoding": "logo-grid",
-            "visualStyle": "CAP_TABLE_GRID",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:CAP_TABLE_GRID:center:FILING_EXCERPT",
-            "promptFingerprint": "pf_o62xgh"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EXPERT_CUTOUT",
-            "bucket": "Human",
-            "visualPosition": "left",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:FILING_EXCERPT",
-            "promptFingerprint": "pf_6ew8h"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "table",
-            "visualStyle": "COMPARISON_TABLE",
-            "bucket": "Data",
-            "visualPosition": "left",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:COMPARISON_TABLE:left:FILING_EXCERPT",
-            "promptFingerprint": "pf_tbxug9"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CARICATURE_PORTRAIT",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:EARNINGS_TABLE",
-            "promptFingerprint": "pf_a129g3"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "mega-number",
-            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:FILING_EXCERPT",
-            "promptFingerprint": "pf_iqvfnh"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "metric-card",
-            "visualStyle": "EARNINGS_CARD",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_ukawo9"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-16",
       "topic": "Finfluencer Red Flags: 7 Phrases Investors Should Pause On",
       "hook": "Good finance content does not need pressure.",
       "format": "CAROUSEL",
@@ -37612,6 +37470,149 @@
             "motifTag": "NONE",
             "sceneConceptId": "HUMAN_EDITORIAL:GLOWING_QUOTE:center:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_liin1f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-28",
+      "topic": "S-1 Filing Checklist: 4 Risks to Scan Before a Company Goes Public",
+      "hook": "If you research upcoming IPOs, check this first",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
+      "slideCount": 6,
+      "keywords": [
+        "how to read S-1",
+        "IPO investing risks",
+        "SEC filings explained",
+        "SEC Edgar database",
+        "IPO lock up period"
+      ],
+      "visualSignature": "2026-08-28-33226752265",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-08-29T01:39:40.063Z",
+      "tickersFeatured": [],
+      "topicCategory": "HOW_TO",
+      "hookFormulaId": "IF_THEN_LADDER",
+      "ctaId": "reference_save",
+      "narrativeArc": "MYTH_FACT_PROOF_CTA",
+      "visualStylesUsed": [
+        "CANDLESTICK_HERO",
+        "CORPORATE_OFFICE_SPACE",
+        "DONUT_CHART",
+        "LUXURY_LIFESTYLE",
+        "AREA_CHART",
+        "EDITORIAL_SPLIT_LAYOUT"
+      ],
+      "coverVisualStyle": "CANDLESTICK_HERO",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "retiree_with_charts"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00E0A4",
+        "accent2": "#FF6B6B"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "IPO",
+      "sourceTier": "OFFICIAL",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:623929339",
+        "structureFamily": "DATA_SNAPSHOT",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "TOP_STACK",
+        "sceneConceptIds": [
+          "DATA_SNAPSHOT:CANDLESTICK_HERO:top:FILING_EXCERPT",
+          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:FILING_EXCERPT",
+          "DATA_SNAPSHOT:DONUT_CHART:background:PRICE_CHART",
+          "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
+          "DATA_SNAPSHOT:AREA_CHART:background:EARNINGS_TABLE",
+          "DATA_SNAPSHOT:EDITORIAL_SPLIT_LAYOUT:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "CHECKLIST_RECEIPT:EDITORIAL_SPLIT_LAYOUT",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-TOP_STACK",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_HERO",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CANDLESTICK_HERO:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_jaqp85"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "architecture",
+            "visualStyle": "CORPORATE_OFFICE_SPACE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_ze3zrc"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:DONUT_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_cvvsv"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_rncrvr"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "area",
+            "visualStyle": "AREA_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:AREA_CHART:background:EARNINGS_TABLE",
+            "promptFingerprint": "pf_2k9ezg"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "DATA_SNAPSHOT:EDITORIAL_SPLIT_LAYOUT:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_n0g5vi"
           }
         ]
       }
