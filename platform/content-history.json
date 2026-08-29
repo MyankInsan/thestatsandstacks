@@ -3,162 +3,6 @@
   "entries": [
     {
       "date": "2026-07-17",
-      "topic": "How President Trump's Policies Impact the Tech Sector",
-      "hook": "What the new policies mean for Tech.",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_NEWS_FLASH",
-      "slideCount": 7,
-      "keywords": [
-        "Trump tech stocks",
-        "market news",
-        "macro economics",
-        "stock market update"
-      ],
-      "visualSignature": "2026-07-17-29590898963",
-      "schemaVersion": 4,
-      "slotIndex": 1,
-      "postedAtUtc": "2026-07-17T15:20:51.234Z",
-      "tickersFeatured": [],
-      "topicCategory": "MACRO",
-      "hookFormulaId": "QUIET_NUMBER",
-      "ctaId": "swipe_promise",
-      "angleId": "INDEX_REBALANCE",
-      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
-      "visualStylesUsed": [
-        "SANKEY_DIAGRAM",
-        "TRADER_DESK_SILHOUETTE",
-        "RADAR_CHART",
-        "HEATMAP_GRID",
-        "CROWD_PANIC",
-        "AREA_CHART",
-        "EDITORIAL_STAT_CARD"
-      ],
-      "coverVisualStyle": "SANKEY_DIAGRAM",
-      "portraitSubjects": [],
-      "archetypesUsed": [],
-      "colorSchemeUsed": {
-        "bg": "#0A0A0A",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF3B30",
-        "accent2": "#FFFFFF"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "MACRO",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:NEWS_FLASH:ANNOTATED_CHART:1159568794",
-        "structureFamily": "NEWS_FLASH",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "TOP_STACK",
-        "sceneConceptIds": [
-          "NEWS_FLASH:SANKEY_DIAGRAM:top:FILING_EXCERPT",
-          "NEWS_FLASH:TRADER_DESK_SILHOUETTE:top:SOURCE_DOCUMENT",
-          "NEWS_FLASH:RADAR_CHART:background:EARNINGS_TABLE",
-          "NEWS_FLASH:HEATMAP_GRID:background:EARNINGS_TABLE",
-          "NEWS_FLASH:CROWD_PANIC:top:RISK_MATRIX",
-          "NEWS_FLASH:AREA_CHART:background:EARNINGS_TABLE",
-          "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "MOTIF_CALLBACK:EDITORIAL_STAT_CARD",
-        "usedFallback": true,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-TOP_STACK",
-            "primaryEncoding": "sankey",
-            "visualStyle": "SANKEY_DIAGRAM",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:SANKEY_DIAGRAM:top:FILING_EXCERPT",
-            "promptFingerprint": "pf_ubej5h"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "TRADER_DESK_SILHOUETTE",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:TRADER_DESK_SILHOUETTE:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_awr9xk"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "radar",
-            "visualStyle": "RADAR_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:RADAR_CHART:background:EARNINGS_TABLE",
-            "promptFingerprint": "pf_l1gnop"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "heatmap",
-            "visualStyle": "HEATMAP_GRID",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:HEATMAP_GRID:background:EARNINGS_TABLE",
-            "promptFingerprint": "pf_ogzkhf"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CROWD_PANIC",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CROWD",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:CROWD_PANIC:top:RISK_MATRIX",
-            "promptFingerprint": "pf_jnk475"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "area",
-            "visualStyle": "AREA_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:AREA_CHART:background:EARNINGS_TABLE",
-            "promptFingerprint": "pf_l656hx"
-          },
-          {
-            "slideNumber": 7,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "stat-card",
-            "visualStyle": "EDITORIAL_STAT_CARD",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_d5s3al"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-17",
       "topic": "Why the First $100K Feels So Slow for Canadian Investors",
       "hook": "The first $100K feels slow.",
       "format": "CAROUSEL",
@@ -37555,6 +37399,150 @@
             "motifTag": "NONE",
             "sceneConceptId": "NEWS_FLASH:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_tqn7xc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-29",
+      "topic": "Who actually owns Nvidia? (NVDA Cap Table Breakdown)",
+      "hook": "Who actually owns Nvidia?",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 6,
+      "keywords": [
+        "Nvidia ownership",
+        "NVDA cap table",
+        "institutional investors",
+        "Jensen Huang stake",
+        "13F filings"
+      ],
+      "visualSignature": "2026-08-29-33269551100",
+      "schemaVersion": 4,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-08-29T19:00:07.180Z",
+      "tickersFeatured": [],
+      "topicCategory": "CAP_TABLE",
+      "hookFormulaId": "CAP_TABLE",
+      "ctaId": "save_specific",
+      "angleId": "CAP_TABLE_INSTITUTIONAL",
+      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
+      "visualStylesUsed": [
+        "BAR_CHART_HORIZONTAL",
+        "EXPERT_CUTOUT",
+        "DONUT_CHART",
+        "CARICATURE_PORTRAIT",
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "EARNINGS_CARD"
+      ],
+      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "crypto_native_founder"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0A0A0A",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FFD700",
+        "accent2": "#FF3B30"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CAP_TABLE",
+      "sourceTier": "UNKNOWN",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:412515966",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "TOP_STACK",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:STORE_SCENE",
+          "HUMAN_EDITORIAL:DONUT_CHART:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:PRICE_CHART",
+          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRICE_CHART",
+          "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SAVE_CARD:EARNINGS_CARD",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-TOP_STACK",
+            "primaryEncoding": "bar",
+            "visualStyle": "BAR_CHART_HORIZONTAL",
+            "bucket": "Data",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_2yr1qi"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EXPERT_CUTOUT",
+            "bucket": "Human",
+            "visualPosition": "left",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:STORE_SCENE",
+            "promptFingerprint": "pf_7w579r"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:DONUT_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_tvnuj4"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:PRICE_CHART",
+            "promptFingerprint": "pf_o83et2"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "mega-number",
+            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:PRICE_CHART",
+            "promptFingerprint": "pf_x6w9sh"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_3w4j6g"
           }
         ]
       }
