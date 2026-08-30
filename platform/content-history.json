@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-07-18",
-      "topic": "The AI Rotation Heat Check: What the Tech Selloff Means for Your Watchlist",
-      "hook": "Funds just sold tech. Three times in a row.",
-      "format": "WATCHLIST_EDUCATION",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 6,
-      "keywords": [
-        "AI stock selloff",
-        "Nasdaq correction",
-        "tech rotation",
-        "semiconductor watchlist"
-      ],
-      "visualSignature": "2026-07-18-29652407936",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-07-18T16:41:47.020Z",
-      "tickersFeatured": [],
-      "topicCategory": "MACRO",
-      "hookFormulaId": "PATTERN_SPOT",
-      "ctaId": "save_specific",
-      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
-      "visualStylesUsed": [
-        "CARICATURE_PORTRAIT",
-        "COMPARISON_TABLE",
-        "MINIMALIST_CHECKLIST",
-        "EDITORIAL_REACTION_CARICATURE",
-        "TYPOGRAPHIC_MEGA_NUMBER",
-        "EARNINGS_CARD"
-      ],
-      "coverVisualStyle": "CARICATURE_PORTRAIT",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "silver_haired_pm"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#000000",
-        "primaryText": "#FFFFFF",
-        "accent1": "#FF3B30",
-        "accent2": "#FFD700"
-      },
-      "dominantSubjectClass": "PORTRAIT",
-      "topicFamily": "INDEX_MOVE",
-      "sourceTier": "MARKET_DATA",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:HUMAN_EDITORIAL:EDITORIAL_PORTRAIT:64980596",
-        "structureFamily": "HUMAN_EDITORIAL",
-        "coverMechanism": "EDITORIAL_PORTRAIT",
-        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
-        "sceneConceptIds": [
-          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:background:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:COMPARISON_TABLE:left:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:EARNINGS_TABLE",
-          "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "SAVE_CARD:EARNINGS_CARD",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CARICATURE_PORTRAIT",
-            "bucket": "Human",
-            "visualPosition": "background",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:background:FILING_EXCERPT",
-            "promptFingerprint": "pf_dcvr3z"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "table",
-            "visualStyle": "COMPARISON_TABLE",
-            "bucket": "Data",
-            "visualPosition": "left",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:COMPARISON_TABLE:left:FILING_EXCERPT",
-            "promptFingerprint": "pf_r14wd5"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "checklist",
-            "visualStyle": "MINIMALIST_CHECKLIST",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:MINIMALIST_CHECKLIST:left:EARNINGS_TABLE",
-            "promptFingerprint": "pf_x6ukg0"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:EARNINGS_TABLE",
-            "promptFingerprint": "pf_57p78f"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "mega-number",
-            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:EARNINGS_TABLE",
-            "promptFingerprint": "pf_qg0y49"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "metric-card",
-            "visualStyle": "EARNINGS_CARD",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_8551wj"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-18",
       "topic": "Advanced Micro Devices (AMD) Heat Check: What Smart Investors Check Before Reacting",
       "hook": "If you buy tech stocks, check this first",
       "format": "WATCHLIST_EDUCATION",
@@ -37513,6 +37371,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "NEWS_FLASH:TICKER_TAPE_HERO:background:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_ytm9r7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-30",
+      "topic": "Western Digital (WDC) Case Study: How Tariffs Impact Your Semiconductor Watchlist",
+      "hook": "I pulled Western Digital's filing. Here's what's in it",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 7,
+      "keywords": [
+        "Western Digital stock",
+        "WDC tariff risk",
+        "semiconductor stocks drop",
+        "tech regulatory risk"
+      ],
+      "visualSignature": "2026-08-30-33329224262",
+      "schemaVersion": 4,
+      "slotIndex": 2,
+      "postedAtUtc": "2026-08-30T18:53:54.238Z",
+      "tickersFeatured": [],
+      "topicCategory": "POLICY",
+      "hookFormulaId": "RECEIPT_DROP",
+      "ctaId": "save_specific",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "EXPERT_CUTOUT",
+        "TYPOGRAPHIC_MEGA_NUMBER",
+        "DONUT_CHART",
+        "CARICATURE_PORTRAIT",
+        "EARNINGS_CARD",
+        "LUXURY_LIFESTYLE",
+        "EDITORIAL_STAT_CARD"
+      ],
+      "coverVisualStyle": "EXPERT_CUTOUT",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "millennial_dad_with_laptop"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#0B0F14",
+        "primaryText": "#FFFFFF",
+        "accent1": "#00CFFF",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "PORTRAIT",
+      "topicFamily": "MACRO",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:EDITORIAL_PORTRAIT:340867591",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "EDITORIAL_PORTRAIT",
+        "coverLayoutFamily": "SPLIT_EDITORIAL",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:DONUT_CHART:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:FILING_EXCERPT",
+          "HUMAN_EDITORIAL:EARNINGS_CARD:center:EARNINGS_TABLE",
+          "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top:EARNINGS_TABLE",
+          "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "SAVE_CARD:EDITORIAL_STAT_CARD",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-SPLIT_EDITORIAL",
+            "primaryEncoding": "portrait",
+            "visualStyle": "EXPERT_CUTOUT",
+            "bucket": "Human",
+            "visualPosition": "left",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EXPERT_CUTOUT:left:FILING_EXCERPT",
+            "promptFingerprint": "pf_wbunkq"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "mega-number",
+            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
+            "bucket": "Layout",
+            "visualPosition": "center",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:FILING_EXCERPT",
+            "promptFingerprint": "pf_u7jygp"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "donut",
+            "visualStyle": "DONUT_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:DONUT_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_rve8di"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_nhai4e"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:EARNINGS_TABLE",
+            "promptFingerprint": "pf_mh2gzg"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "cinematic-object",
+            "visualStyle": "LUXURY_LIFESTYLE",
+            "bucket": "Metaphor",
+            "visualPosition": "top",
+            "dominantSubjectClass": "METAPHOR_OBJECT",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "JET_LUXURY",
+            "sceneConceptId": "HUMAN_EDITORIAL:LUXURY_LIFESTYLE:top:EARNINGS_TABLE",
+            "promptFingerprint": "pf_n02x6x"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "stat-card",
+            "visualStyle": "EDITORIAL_STAT_CARD",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_STAT_CARD:left:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_cy9ioo"
           }
         ]
       }
