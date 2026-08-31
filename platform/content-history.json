@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-07-19",
-      "topic": "Fed Inflation Threat Check: What the New Flags Mean for Your Portfolio",
-      "hook": "If you hold growth stocks, do this 1 thing first",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_MARKET_UPDATE",
-      "slideCount": 6,
-      "keywords": [
-        "Fed rate decision",
-        "inflation impact on stocks",
-        "macro economics",
-        "bond yields explained"
-      ],
-      "visualSignature": "2026-07-19-29700139841",
-      "schemaVersion": 4,
-      "slotIndex": 3,
-      "postedAtUtc": "2026-07-19T19:19:30.995Z",
-      "tickersFeatured": [],
-      "topicCategory": "MACRO",
-      "hookFormulaId": "DECISION_FORK",
-      "ctaId": "reference_save",
-      "narrativeArc": "MYTH_FACT_PROOF_CTA",
-      "visualStylesUsed": [
-        "AREA_CHART",
-        "CORPORATE_OFFICE_SPACE",
-        "MINIMALIST_CHECKLIST",
-        "EARNINGS_HEAT_TABLE",
-        "LUXURY_LIFESTYLE",
-        "MAGAZINE_COVER"
-      ],
-      "coverVisualStyle": "AREA_CHART",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "female_cfo_50s"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0B0F14",
-        "primaryText": "#FFFFFF",
-        "accent1": "#00E0A4",
-        "accent2": "#FF6B6B"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "MACRO",
-      "sourceTier": "OFFICIAL",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:DATA_SNAPSHOT:ANNOTATED_CHART:1558273585",
-        "structureFamily": "DATA_SNAPSHOT",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "DASHBOARD_FILL",
-        "sceneConceptIds": [
-          "DATA_SNAPSHOT:AREA_CHART:background:PRICE_CHART",
-          "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:RISK_MATRIX",
-          "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:SOURCE_DOCUMENT",
-          "DATA_SNAPSHOT:EARNINGS_HEAT_TABLE:background:SOURCE_DOCUMENT",
-          "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:RISK_MATRIX",
-          "DATA_SNAPSHOT:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "CHECKLIST_RECEIPT:MAGAZINE_COVER",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-DASHBOARD_FILL",
-            "primaryEncoding": "area",
-            "visualStyle": "AREA_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:AREA_CHART:background:PRICE_CHART",
-            "promptFingerprint": "pf_pegztp"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "architecture",
-            "visualStyle": "CORPORATE_OFFICE_SPACE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "BUILDING",
-            "cameraTreatment": "WIDE_ESTABLISHING",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:CORPORATE_OFFICE_SPACE:top:RISK_MATRIX",
-            "promptFingerprint": "pf_r9rhj2"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "split-left",
-            "primaryEncoding": "checklist",
-            "visualStyle": "MINIMALIST_CHECKLIST",
-            "bucket": "Layout",
-            "visualPosition": "left",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_bw0285"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "heat-table",
-            "visualStyle": "EARNINGS_HEAT_TABLE",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "ISOMETRIC_DIAGRAM",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:EARNINGS_HEAT_TABLE:background:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_e1uygg"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "cinematic-object",
-            "visualStyle": "LUXURY_LIFESTYLE",
-            "bucket": "Metaphor",
-            "visualPosition": "top",
-            "dominantSubjectClass": "METAPHOR_OBJECT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "JET_LUXURY",
-            "sceneConceptId": "DATA_SNAPSHOT:LUXURY_LIFESTYLE:top:RISK_MATRIX",
-            "promptFingerprint": "pf_6uugyn"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "magazine",
-            "visualStyle": "MAGAZINE_COVER",
-            "bucket": "Layout",
-            "visualPosition": "top",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "DATA_SNAPSHOT:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_tzifzf"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-19",
       "topic": "Tesla (TSLA) Earnings Watchlist: 5 Metrics to Check Before July 22",
       "hook": "Only watching TSLA deliveries is wrong. Here is why.",
       "format": "WATCHLIST_EDUCATION",
@@ -37513,6 +37371,163 @@
             "motifTag": "NONE",
             "sceneConceptId": "DATA_SNAPSHOT:MINIMALIST_CHECKLIST:left:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_nyjp2s"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-31",
+      "topic": "Why the First $100K Feels So Slow for Canadian Investors",
+      "hook": "The first $100K feels slow.",
+      "format": "CAROUSEL",
+      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
+      "slideCount": 7,
+      "keywords": [
+        "MSTR stock",
+        "MicroStrategy Bitcoin buy",
+        "corporate treasury strategy",
+        "Bitcoin strategy"
+      ],
+      "visualSignature": "2026-08-31-33451634212",
+      "schemaVersion": 4,
+      "slotIndex": 4,
+      "postedAtUtc": "2026-08-31T23:44:43.377Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "REVERSE_SURVIVORSHIP",
+      "ctaId": "comment_genuine_question",
+      "narrativeArc": "HOOK_PROBLEM_REVEAL_FRAMEWORK_CTA",
+      "visualStylesUsed": [
+        "RADAR_CHART",
+        "CROWD_PANIC",
+        "CANDLESTICK_CHART",
+        "ARCHITECTURAL_OVERLAY",
+        "HEATMAP_GRID",
+        "NEON_TERMINAL",
+        "CANDLESTICK_PATTERN_ANNOTATED"
+      ],
+      "coverVisualStyle": "RADAR_CHART",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "seasoned_canadian_banker"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#000000",
+        "primaryText": "#FFFFFF",
+        "accent1": "#FF3B30",
+        "accent2": "#FFD700"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "CRYPTO",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "EVERGREEN_OR_TIMELY",
+      "visualPlan": {
+        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:531153952",
+        "structureFamily": "HUMAN_EDITORIAL",
+        "coverMechanism": "ANNOTATED_CHART",
+        "coverLayoutFamily": "FULL_BLEED_EDITORIAL",
+        "sceneConceptIds": [
+          "HUMAN_EDITORIAL:RADAR_CHART:background:PRICE_CHART",
+          "HUMAN_EDITORIAL:CROWD_PANIC:top:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:CANDLESTICK_CHART:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:ARCHITECTURAL_OVERLAY:top:PRODUCT_DETAIL",
+          "HUMAN_EDITORIAL:HEATMAP_GRID:background:SOURCE_DOCUMENT",
+          "HUMAN_EDITORIAL:NEON_TERMINAL:top:PRICE_CHART",
+          "HUMAN_EDITORIAL:CANDLESTICK_PATTERN_ANNOTATED:background:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "QUESTION_CARD:CANDLESTICK_PATTERN_ANNOTATED",
+        "usedFallback": true,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-FULL_BLEED_EDITORIAL",
+            "primaryEncoding": "radar",
+            "visualStyle": "RADAR_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:RADAR_CHART:background:PRICE_CHART",
+            "promptFingerprint": "pf_chmyqn"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CROWD_PANIC",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "CROWD",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CROWD_PANIC:top:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_yb5ydy"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_CHART",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CANDLESTICK_CHART:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_am4zxf"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "typography",
+            "visualStyle": "ARCHITECTURAL_OVERLAY",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "BUILDING",
+            "cameraTreatment": "LOW_ANGLE_HERO",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:ARCHITECTURAL_OVERLAY:top:PRODUCT_DETAIL",
+            "promptFingerprint": "pf_mubzj0"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "heatmap",
+            "visualStyle": "HEATMAP_GRID",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:HEATMAP_GRID:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_k1q5lh"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "terminal",
+            "visualStyle": "NEON_TERMINAL",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:NEON_TERMINAL:top:PRICE_CHART",
+            "promptFingerprint": "pf_893rqo"
+          },
+          {
+            "slideNumber": 7,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "candlestick",
+            "visualStyle": "CANDLESTICK_PATTERN_ANNOTATED",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "SCREEN_CAPTURE",
+            "motifTag": "NONE",
+            "sceneConceptId": "HUMAN_EDITORIAL:CANDLESTICK_PATTERN_ANNOTATED:background:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_taxal4"
           }
         ]
       }
