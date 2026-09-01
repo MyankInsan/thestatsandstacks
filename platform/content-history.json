@@ -3,148 +3,6 @@
   "entries": [
     {
       "date": "2026-07-20",
-      "topic": "If You Invested $10,000 in NVIDIA 5 Years Ago",
-      "hook": "What $10k in NVDA looks like today.",
-      "format": "CAROUSEL",
-      "formatType": "PHOTOREALISTIC_EXPERT_SHOCK",
-      "slideCount": 6,
-      "keywords": [
-        "Reformation Inc IPO",
-        "Reformation S-1 filing",
-        "how to analyze IPOs",
-        "new stock listings 2026"
-      ],
-      "visualSignature": "2026-07-20-29762747680",
-      "schemaVersion": 4,
-      "slotIndex": 2,
-      "postedAtUtc": "2026-07-20T17:25:29.962Z",
-      "tickersFeatured": [],
-      "topicCategory": "HOW_TO",
-      "hookFormulaId": "BEHIND_THE_SCENES",
-      "ctaId": "save_specific",
-      "narrativeArc": "TIMECAPSULE_SETUP_RESULT_LESSON_CTA",
-      "visualStylesUsed": [
-        "BAR_CHART_HORIZONTAL",
-        "CARICATURE_PORTRAIT",
-        "DONUT_CHART",
-        "EDITORIAL_REACTION_CARICATURE",
-        "TYPOGRAPHIC_MEGA_NUMBER",
-        "EARNINGS_CARD"
-      ],
-      "coverVisualStyle": "BAR_CHART_HORIZONTAL",
-      "portraitSubjects": [],
-      "archetypesUsed": [
-        "millennial_dad_with_laptop"
-      ],
-      "colorSchemeUsed": {
-        "bg": "#0B0F14",
-        "primaryText": "#FFFFFF",
-        "accent1": "#00CFFF",
-        "accent2": "#FFD700"
-      },
-      "dominantSubjectClass": "CHART",
-      "topicFamily": "IPO",
-      "sourceTier": "OFFICIAL",
-      "topicMode": "TIMELY_FIRST",
-      "visualPlan": {
-        "compositionSignature": "vp1:HUMAN_EDITORIAL:ANNOTATED_CHART:539277468",
-        "structureFamily": "HUMAN_EDITORIAL",
-        "coverMechanism": "ANNOTATED_CHART",
-        "coverLayoutFamily": "TOP_STACK",
-        "sceneConceptIds": [
-          "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top:FILING_EXCERPT",
-          "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
-          "HUMAN_EDITORIAL:DONUT_CHART:background:PRICE_CHART",
-          "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:PRICE_CHART",
-          "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:SOURCE_DOCUMENT",
-          "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT"
-        ],
-        "ctaConceptId": "SAVE_CARD:EARNINGS_CARD",
-        "usedFallback": false,
-        "slides": [
-          {
-            "slideNumber": 1,
-            "layoutArchetype": "cover-TOP_STACK",
-            "primaryEncoding": "bar",
-            "visualStyle": "BAR_CHART_HORIZONTAL",
-            "bucket": "Data",
-            "visualPosition": "top",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:BAR_CHART_HORIZONTAL:top:FILING_EXCERPT",
-            "promptFingerprint": "pf_nvrwlr"
-          },
-          {
-            "slideNumber": 2,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "CARICATURE_PORTRAIT",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:CARICATURE_PORTRAIT:top:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_92rjbj"
-          },
-          {
-            "slideNumber": 3,
-            "layoutArchetype": "full-bleed",
-            "primaryEncoding": "donut",
-            "visualStyle": "DONUT_CHART",
-            "bucket": "Data",
-            "visualPosition": "background",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "OVERHEAD_FLATLAY",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:DONUT_CHART:background:PRICE_CHART",
-            "promptFingerprint": "pf_7cy9j8"
-          },
-          {
-            "slideNumber": 4,
-            "layoutArchetype": "top-stack",
-            "primaryEncoding": "portrait",
-            "visualStyle": "EDITORIAL_REACTION_CARICATURE",
-            "bucket": "Human",
-            "visualPosition": "top",
-            "dominantSubjectClass": "PORTRAIT",
-            "cameraTreatment": "MACRO_CLOSEUP",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EDITORIAL_REACTION_CARICATURE:top:PRICE_CHART",
-            "promptFingerprint": "pf_5ogowr"
-          },
-          {
-            "slideNumber": 5,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "mega-number",
-            "visualStyle": "TYPOGRAPHIC_MEGA_NUMBER",
-            "bucket": "Layout",
-            "visualPosition": "center",
-            "dominantSubjectClass": "TYPOGRAPHY",
-            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:TYPOGRAPHIC_MEGA_NUMBER:center:SOURCE_DOCUMENT",
-            "promptFingerprint": "pf_alx7p3"
-          },
-          {
-            "slideNumber": 6,
-            "layoutArchetype": "centered-overlay",
-            "primaryEncoding": "metric-card",
-            "visualStyle": "EARNINGS_CARD",
-            "bucket": "Data",
-            "visualPosition": "center",
-            "dominantSubjectClass": "CHART",
-            "cameraTreatment": "SCREEN_CAPTURE",
-            "motifTag": "NONE",
-            "sceneConceptId": "HUMAN_EDITORIAL:EARNINGS_CARD:center:CHECKLIST_RECEIPT",
-            "promptFingerprint": "pf_9ce526"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-20",
       "topic": "401k vs Roth IRA: Which Account Should Americans Use First?",
       "hook": "Most Americans pick the wrong account first.",
       "format": "CAROUSEL",
@@ -37516,6 +37374,148 @@
             "motifTag": "NONE",
             "sceneConceptId": "DATA_SNAPSHOT:TYPOGRAPHIC_MEGA_NUMBER:center:CHECKLIST_RECEIPT",
             "promptFingerprint": "pf_xm78tc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-01",
+      "topic": "Nasdaq Drops and VIX Spikes: The 5-Step Volatility Survival Plan",
+      "hook": "If your portfolio drops, do this 1 thing first",
+      "format": "WATCHLIST_EDUCATION",
+      "formatType": "PHOTOREALISTIC_MINIMAL_TECH",
+      "slideCount": 6,
+      "keywords": [
+        "Nasdaq selloff",
+        "VIX spike",
+        "market volatility checklist",
+        "portfolio risk management"
+      ],
+      "visualSignature": "2026-09-01-33557544398",
+      "schemaVersion": 4,
+      "slotIndex": 3,
+      "postedAtUtc": "2026-09-01T20:54:29.683Z",
+      "tickersFeatured": [],
+      "topicCategory": "MACRO",
+      "hookFormulaId": "DECISION_FORK",
+      "ctaId": "comment_genuine_question",
+      "narrativeArc": "SCOREBOARD_WHY_SOWHAT_CTA",
+      "visualStylesUsed": [
+        "CAP_TABLE_GRID",
+        "EDITORIAL_SPLIT_LAYOUT",
+        "MACRO_FLOW_DIAGRAM",
+        "CARICATURE_PORTRAIT",
+        "EARNINGS_CARD",
+        "MAGAZINE_COVER"
+      ],
+      "coverVisualStyle": "CAP_TABLE_GRID",
+      "portraitSubjects": [],
+      "archetypesUsed": [
+        "silver_haired_pm"
+      ],
+      "colorSchemeUsed": {
+        "bg": "#F4F1EA",
+        "primaryText": "#1A1A1A",
+        "accent1": "#B0341E",
+        "accent2": "#6B6B6B"
+      },
+      "dominantSubjectClass": "CHART",
+      "topicFamily": "INDEX_MOVE",
+      "sourceTier": "MARKET_DATA",
+      "topicMode": "TIMELY_FIRST",
+      "visualPlan": {
+        "compositionSignature": "vp1:COMPARISON_XRAY:DOCUMENT_RECEIPT:1875264702",
+        "structureFamily": "COMPARISON_XRAY",
+        "coverMechanism": "DOCUMENT_RECEIPT",
+        "coverLayoutFamily": "DASHBOARD_FILL",
+        "sceneConceptIds": [
+          "COMPARISON_XRAY:CAP_TABLE_GRID:background:RISK_MATRIX",
+          "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:STORE_SCENE",
+          "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
+          "COMPARISON_XRAY:CARICATURE_PORTRAIT:top:FILING_EXCERPT",
+          "COMPARISON_XRAY:EARNINGS_CARD:center:RISK_MATRIX",
+          "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT"
+        ],
+        "ctaConceptId": "QUESTION_CARD:MAGAZINE_COVER",
+        "usedFallback": false,
+        "slides": [
+          {
+            "slideNumber": 1,
+            "layoutArchetype": "cover-DASHBOARD_FILL",
+            "primaryEncoding": "logo-grid",
+            "visualStyle": "CAP_TABLE_GRID",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "ISOMETRIC_DIAGRAM",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CAP_TABLE_GRID:background:RISK_MATRIX",
+            "promptFingerprint": "pf_kzc4to"
+          },
+          {
+            "slideNumber": 2,
+            "layoutArchetype": "split-left",
+            "primaryEncoding": "editorial-split",
+            "visualStyle": "EDITORIAL_SPLIT_LAYOUT",
+            "bucket": "Layout",
+            "visualPosition": "left",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:EDITORIAL_SPLIT_LAYOUT:left:STORE_SCENE",
+            "promptFingerprint": "pf_eykqaq"
+          },
+          {
+            "slideNumber": 3,
+            "layoutArchetype": "full-bleed",
+            "primaryEncoding": "flow",
+            "visualStyle": "MACRO_FLOW_DIAGRAM",
+            "bucket": "Data",
+            "visualPosition": "background",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "OVERHEAD_FLATLAY",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MACRO_FLOW_DIAGRAM:background:SOURCE_DOCUMENT",
+            "promptFingerprint": "pf_tmtnzf"
+          },
+          {
+            "slideNumber": 4,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "portrait",
+            "visualStyle": "CARICATURE_PORTRAIT",
+            "bucket": "Human",
+            "visualPosition": "top",
+            "dominantSubjectClass": "PORTRAIT",
+            "cameraTreatment": "MACRO_CLOSEUP",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:CARICATURE_PORTRAIT:top:FILING_EXCERPT",
+            "promptFingerprint": "pf_2keotv"
+          },
+          {
+            "slideNumber": 5,
+            "layoutArchetype": "centered-overlay",
+            "primaryEncoding": "metric-card",
+            "visualStyle": "EARNINGS_CARD",
+            "bucket": "Data",
+            "visualPosition": "center",
+            "dominantSubjectClass": "CHART",
+            "cameraTreatment": "WIDE_ESTABLISHING",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:EARNINGS_CARD:center:RISK_MATRIX",
+            "promptFingerprint": "pf_yzv4mq"
+          },
+          {
+            "slideNumber": 6,
+            "layoutArchetype": "top-stack",
+            "primaryEncoding": "magazine",
+            "visualStyle": "MAGAZINE_COVER",
+            "bucket": "Layout",
+            "visualPosition": "top",
+            "dominantSubjectClass": "TYPOGRAPHY",
+            "cameraTreatment": "EYE_LEVEL_EDITORIAL",
+            "motifTag": "NONE",
+            "sceneConceptId": "COMPARISON_XRAY:MAGAZINE_COVER:top:CHECKLIST_RECEIPT",
+            "promptFingerprint": "pf_s4bpwe"
           }
         ]
       }
